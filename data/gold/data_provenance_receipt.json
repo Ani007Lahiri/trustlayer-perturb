@@ -1,0 +1,22 @@
+{
+  "file": "GWCD4i.DE_stats.h5ad",
+  "source_url": "https://genome-scale-tcell-perturb-seq.s3.amazonaws.com/marson2025_data/GWCD4i.DE_stats.h5ad",
+  "provenance": "CZI Virtual Cells Platform (public S3, MIT license); Zhu/Dann/Pritchard/Marson 2025",
+  "size_bytes": 16786240107,
+  "size_match_s3": true,
+  "shape": [
+    33983,
+    10282
+  ],
+  "layers": [
+    "log_fc",
+    "zscore",
+    "p_value",
+    "adj_p_value",
+    "baseMean",
+    "lfcSE"
+  ],
+  "endpoint_fingerprint_sha256_1MB_headtail": "abf22e30d71d73479df8754a",
+  "downloaded_utc": "2026-07-08T18:25:02.433670+00:00",
+  "note": "Precomputed DE deltas (~17GB) per v3 Day-0 escape; NOT the 1.7TB cell-level data."
+}

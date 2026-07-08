@@ -3,7 +3,13 @@
 *Live decision log + state tracker. Current as of **v3 BUILD, Day 0-1**. Supersedes Iteration 2 (which pre-dates the v3 PRKCQ reversal). See `revised_plans/PLAN_OF_ATTACK_v3.html` for the governing plan.*
 
 ## Current stage
-BUILD IN PROGRESS — Day 0-1 foundation shipped ("checks before model"). Environment, live genetics gates, tiered cited gold set, and the deterministic commit_gate() veto are all built and passing on REAL data. Perturb-seq DE_stats delta file (16.79 GB) downloading from CZI VCP S3.
+BUILD — Day 0-1 foundation COMPLETE ("checks before model"). Environment, live genetics gates, tiered cited gold set, deterministic commit_gate() veto, and frozen leakage-safe splits are all built and passing on REAL data (11/11 tests). The 16.79 GB Perturb-seq DE_stats delta file is downloaded, byte-verified against S3, and confirmed to open as 33,983×10,282 with log_fc+zscore layers. Ready for Day 2 (base predictor + UCell axis).
+
+## Data (verified this session)
+- `data/raw/GWCD4i.DE_stats.h5ad` — 16.79 GB, from CZI Virtual Cells Platform public S3 (MIT license). Byte-exact match to S3 content-length; opens 33983×10282, layers log_fc/zscore/p_value/adj_p_value/baseMean/lfcSE; all trio + gold genes present. Provenance: `data/gold/data_provenance_receipt.json`.
+- `data/raw/*.suppl_table.csv` — DE_stats obs table, guide KD efficiency, sgRNA library, sample metadata, autoimmune enrichment (from GitHub mirror).
+- Source found via: CZI VCP page https://virtualcellmodels.cziscience.com/dataset/genome-scale-tcell-perturb-seq → S3 bucket `s3://genome-scale-tcell-perturb-seq/marson2025_data/`.
+- NOTE for Day 3: donor-blocked LODO conformal (v3 Fix 6) needs `GWCD4i.DE_stats.by_donors.h5mu` (16.87 GB, same bucket) — not yet pulled; splits currently mark donor_blocking=UNAVAILABLE.
 
 ## v3 corrections applied this session (vs Iteration 2)
 - **Target hierarchy reversed** (v3 Fix 1): CD226 = ANCHOR (genetic_association 0.834), RASGRP1 = novel BET (0.506), PRKCQ = DEMOTED cross-trait control (0.162). Verified live via Open Targets — hierarchy PASSES.

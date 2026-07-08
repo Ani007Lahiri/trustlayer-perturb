@@ -5,4 +5,6 @@ day0-1	gwas_snps=rs763361(1e-9),rs72727394(4e-10)	done	GWAS Catalog live-confirm
 day0-1	goldset_n=8 (T1+T2 perturbed)	done	Tiered cited gold set; retired MEOX1/CD1E/LGALS3BP/CD247 (no/weak T1D signal); INS dropped (not perturbed)
 day0-1	commit_gate_tests=7/7 pass	done	Deterministic veto: CD226 GO, RASGRP1 WITHHELD (no cell-type eQTL), PRKCQ WITHHELD (below floor)
 day0-1	data_facts=33983 pairs, 4 donors, xdonor_r_med=0.41, 26% r<0.2	done	Real DE_stats table confirms effective-N argument (Fix 6); RASGRP1 n_downstream=992 but r=0.072
-day0-1	de_stats_download=16.79GB	in_progress	Pulling GWCD4i.DE_stats.h5ad from public CZI VCP S3 (anonymous HTTPS)
+day0-1	de_stats_download=16.79GB verified	done	GWCD4i.DE_stats.h5ad pulled from public CZI VCP S3; byte-exact, opens as 33983x10282 with log_fc+zscore layers
+day0-1	frozen_splits hash=45ca2893cbe7e282	done	Leakage-safe splits: train=5529/calib=3686/test=2311; 8 gold genes forced into test, never calibration
+day0-1	tests=11/11 pass	done	7 commit_gate + 4 splits tests green
