@@ -19,3 +19,8 @@ day3	by_donors.h5mu pulled 16.87GB, 6 pairs/4 donors	done	Per-donor-pair DE = 25
 day4	recovery treg AUROC=0.439 p=0.72 (n=8) NULL	done	Honest negative: Treg axis does NOT recover gold genes above chance at n=8; underpowered case study (v3 Fix 6)
 day4	specificity: treg beats no control, beats no mag baseline	done	Axis-swap control + magnitude baseline; no Treg-specific signal at this N; correctly scoped as absence-of-evidence
 day4	critique Gate-1 BLOCKx2->PASS, Gate-2 PASS	done	Fixed IFN-control confound (IFIH1 is IFN+gold) + magnitude confound; Mann-Whitney+perm null; negative reported honestly
+day5	believe/veto: CD226 GO, RASGRP1+PRKCQ WITHHELD (deterministic)	done	End-to-end critic->verdict->commit_gate on live receipts + real conformal trust
+day5	trust NON-BINDING: CD226=0.85 RASGRP1=0.82 PRKCQ=0.88 (all>=0.65)	done	Hard fail-closed assert; PRKCQ highest trust yet WITHHELD -> genetics/eQTL drive decisions not trust
+day5	counterfactuals: RASGRP1+eQTL->GO, PRKCQ+GA0.50->WITHHELD	done	Gate keys on FACTS not gene names; trust never binds
+day5	critique Gate-1 BLOCKx2+framing->PASS, Gate-2 PASS	done	Fixed co-equal-trust-gate + incommensurable estimators; reframed as propagator-not-discovery-engine
+day5	tests=20/20 pass	done	7 gate + 4 splits + 4 day2 + 7 day5 (includes PRKCQ-highest-trust-yet-withheld honesty test)

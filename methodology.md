@@ -313,3 +313,105 @@ study, NOT a headline.*
   powered validation (v3 Fix 6). The headline remains Day-3 coverage.
 - Control axes are curated, not exhaustive; a negative specificity result at n=8 does not
   disprove Treg relevance, only that this dataset/N cannot resolve it.
+
+---
+
+# Methodology — Day 5: Critic -> Structured Verdict -> commit_gate (end-to-end veto)
+
+*Days 0-4 built the pieces: genetics gates, gold set, base predictor, Treg axis, the
+Day-3 conformal trust, and the deterministic commit_gate (Day 1, 7 tests). Day 5 wires
+them into ONE end-to-end pipeline where a critic produces a structured CriticVerdict per
+target, and the deterministic gate is the SOLE writer of a nomination. The demo's
+believe/veto split (CD226 GO / RASGRP1 WITHHELD / PRKCQ WITHHELD) now runs on REAL trust
+numbers, not placeholders.*
+
+## Research Question & Hypothesis
+- **Q:** When the commit_gate is fed a critic verdict built from LIVE evidence
+  (genetics receipt + Day-3 conformal trust + Day-2/4 leakage audit), does it reproduce
+  the v3 believe/veto split deterministically -- and does the RASGRP1 veto fire for
+  data-grounded reasons, not hand-tuned thresholds?
+- **H:** CD226 -> GO (genetics-secure, cell-type eQTL direction-consistent, trust>=floor,
+  leakage-clean). RASGRP1 -> WITHHELD (no cell-type eQTL + low cross-donor reproducibility).
+  PRKCQ -> WITHHELD (genetic_association 0.162 below the 0.20 floor). All three
+  deterministic (same inputs -> same content hash).
+
+## Data Sources (all already produced, no new compute)
+- data/gold/genetics_gate_receipt.json (Open Targets + GWAS, live).
+- data/gold/conformal_lodo_receipt.json (Day-3 trust machinery).
+- data/gold/data_facts_receipt.json (RASGRP1 cross-donor r=0.072, n_downstream=992).
+- data/gold/frozen_splits.json (leakage audit inputs).
+
+## Critic -> Verdict construction (the only new logic)
+For each target, the critic assembles a CriticVerdict from EXISTING receipts (no LLM call
+inside the gate; the gate stays deterministic per v3 Fix 4):
+  - genetic_association  <- genetics_gate_receipt (live Open Targets)
+  - genome_wide_sig_snp  <- GWAS Catalog lead-SNP evidence
+  - celltype_matched_eqtl / eqtl_direction_consistent / proxy_tissue_only <- the v3 ruling
+    (CD226 GoF cell-type-consistent; RASGRP1 proxy-only; PRKCQ unanchorable)
+  - trust_score          <- a REAL number derived from the Day-3 conformal machinery
+    (not a placeholder). Derivation stated explicitly and computed, not hand-typed.
+  - leakage_audit_passed <- assert gene not in program axis AND splits frozen (hash match)
+
+## Trust-score derivation (replaces the Day-1 placeholder) — CRITIQUE-CORRECTED
+The Day-3 conformal layer yields, per perturbation, an ensemble spread. For the trio,
+compute per-gene trust = 1 - normalized(mean ensemble spread over that gene's test rows),
+clipped to [0,1]. Provenance differs by gene and is RECORDED per verdict:
+  - RASGRP1: present in all 6 donor pairs -> donor-blocked spread (guaranteed machinery).
+  - CD226 / PRKCQ: absent/sparse in donor-pair data -> POOLED proxy spread (NOT the
+    guaranteed estimator; a different scale).
+
+**BLOCKING FIX #1 + #2 (trust is a co-equal gate + incommensurable estimators):**
+Because the 0.50 trust floor is applied uniformly but the estimators differ, and because
+`commit_gate.evaluate()` makes trust a NECESSARY (AND) gate (trust<0.50 blocks regardless
+of genetics), we do NOT claim "trust is secondary." Instead:
+  (a) The runner computes and REPORTS each gene's real trust value up front.
+  (b) It ASSERTS that for the demo trio, trust is NEVER the binding constraint: every gene
+      either clears the 0.50 floor by a margin (so genetics/eQTL carry the GO/WITHHELD) OR
+      is already blocked by genetics/eQTL. If this assertion fails, the DEMO CLAIM changes
+      -- the threshold does NOT.
+  (c) Each emitted decision lists its BINDING constraint(s), so a trust-driven flip can
+      never masquerade as a genetics story.
+  (d) Trust provenance (donor-blocked vs pooled-proxy) is stamped on every verdict; the
+      uniform floor is applied only after confirming trust is non-binding for the trio.
+
+## Analysis Pipeline
+1. Load all receipts; build CriticVerdict per target from live evidence.
+2. Run commit_gate.evaluate() + commit() -> GO or BLOCKED artifact per gene.
+3. Assert the split matches v3 (CD226 GO, RASGRP1/PRKCQ WITHHELD) and is deterministic.
+4. Emit an end-to-end lineage receipt: every gate decision -> the exact receipt fields
+   and hashes it depended on (auditable provenance chain).
+
+## Controls & Validation
+- **Determinism:** run the gate twice; content hashes must match (already tested Day 1).
+- **Counterfactual (shown, not hand-waved):** flip RASGRP1's celltype_matched_eqtl to True
+  -> gate flips to GO. Demonstrates the veto is driven by the eQTL fact, not a hard-coded
+  gene name. (A test, not a claim.)
+- **Threshold provenance:** the 0.20 genetic floor and 0.50 trust floor are pre-registered
+  in commit_gate.py; changing them is a code+test change (already the case).
+
+## Statistical Plan
+- No new statistics; Day 5 is integration + determinism. The trust numbers carry the
+  Day-3 CIs already reported. The believe/veto split is a deterministic function, not an
+  estimate.
+
+## Compute Requirements
+- CPU only; reads existing receipts. No GPU, no spend.
+
+## Limitations & Assumptions — CRITIQUE-CORRECTED (honest framing of what the gate proves)
+- **The commit_gate is a deterministic PROPAGATOR, not a discovery engine.** It proves that
+  a fixed body of evidence yields a reproducible, auditable, fail-closed nomination with a
+  content hash -- NOT that CD226 is a true target or RASGRP1 a true veto. This is an
+  engineering/governance guarantee (determinism, default-deny, sole-writer, threshold
+  provenance in code), not a biological validation.
+- **Two of the three decisive fields are human-curated inputs**, so the believe/veto split
+  is a WORKED EXAMPLE of the governance layer, not independent evidence the ruling is right:
+    * eQTL cell-type-match / direction booleans encode the v3 human ruling (cited: rs763361
+      GoF cell-type-consistent for CD226; RASGRP1 GTEx LCL-proxy-only; PRKCQ unanchorable).
+      A fully-automated eQTL-direction call is future work.
+    * trust estimator is provenance-mixed (donor-blocked for RASGRP1, pooled proxy for
+      CD226/PRKCQ) and is confirmed non-binding for the trio before the floor is applied.
+  Only the PRKCQ genetic-floor veto (GA=0.162 < 0.20) is driven by LIVE data independent of
+  the desired outcome.
+- The counterfactual test (flip RASGRP1 eQTL -> GO) proves the gate keys on the eQTL FACT,
+  not the gene string. It does NOT prove the boolean was assigned correctly -- that rests on
+  the cited human ruling.

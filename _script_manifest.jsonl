@@ -15,3 +15,4 @@
 {"script": "src/run_recovery_specificity.py", "output": "data/gold/recovery_specificity_receipt.json", "size_bytes": 4072, "sha256": "2b46e1aeb284a1f0"}
 {"script": "src/run_recovery_specificity.py", "output": "data/gold/axes_manifest.json", "size_bytes": 2183, "sha256": "a179d89af8e89b36"}
 {"script": "src/run_recovery_specificity.py", "output": "figures/recovery_specificity.png", "size_bytes": 55807, "sha256": "48cac6cee90a014f"}
+{"script": "src/run_pipeline_day5.py", "output": "data/gold/pipeline_day5_receipt.json", "size_bytes": 2876, "sha256": "31aae01ad6309622"}

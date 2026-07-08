@@ -1,0 +1,90 @@
+{
+  "framing": "commit_gate is a DETERMINISTIC PROPAGATOR, not a discovery engine. Proves reproducible/auditable/fail-closed governance, NOT that the biology ruling is correct. Only PRKCQ's genetic-floor veto is live-data independent of the desired outcome.",
+  "trust_margin_registered": 0.65,
+  "trust_non_binding_for_trio": true,
+  "trust_scores": {
+    "CD226": {
+      "trust": 0.8527,
+      "raw_spread": 0.02001,
+      "normalizer": [
+        0.00079,
+        0.1312
+      ],
+      "provenance": "pooled-proxy (absent/sparse in donor-pair data)"
+    },
+    "PRKCQ": {
+      "trust": 0.8834,
+      "raw_spread": 0.016,
+      "normalizer": [
+        0.00079,
+        0.1312
+      ],
+      "provenance": "pooled-proxy (absent/sparse in donor-pair data)"
+    },
+    "RASGRP1": {
+      "trust": 0.817,
+      "raw_spread": 0.01705,
+      "normalizer": [
+        0.00186,
+        0.08487
+      ],
+      "provenance": "donor-blocked (present in all 6 donor pairs)"
+    }
+  },
+  "genetic_association": {
+    "CD226": 0.834,
+    "RASGRP1": 0.506,
+    "PRKCQ": 0.162
+  },
+  "eqtl_ruling_cited": {
+    "CD226": "rs763361 (Ser307) GoF; cell-type-consistent; KD mimics protection",
+    "RASGRP1": "rs72727394 p=4e-10; GTEx LCL-proxy only; NO CD4/Treg eQTL",
+    "PRKCQ": "sub-GWS; thyroid/allergy locus; direction unanchorable"
+  },
+  "believe_veto_split": [
+    {
+      "gene": "CD226",
+      "role": "ANCHOR",
+      "decision": "GO",
+      "genetic_association": 0.834,
+      "trust": 0.8527,
+      "trust_provenance": "pooled-proxy (absent/sparse in donor-pair data)",
+      "binding_constraints": [],
+      "hash": "a692d5d955322638"
+    },
+    {
+      "gene": "RASGRP1",
+      "role": "BET",
+      "decision": "WITHHELD",
+      "genetic_association": 0.506,
+      "trust": 0.817,
+      "trust_provenance": "donor-blocked (present in all 6 donor pairs)",
+      "binding_constraints": [
+        "BLOCK: no cell-type-matched (CD4/Treg) eQTL for the risk allele (proxy-tissue only)"
+      ],
+      "hash": "301f00e7ffcdea08"
+    },
+    {
+      "gene": "PRKCQ",
+      "role": "CONTROL",
+      "decision": "WITHHELD",
+      "genetic_association": 0.162,
+      "trust": 0.8834,
+      "trust_provenance": "pooled-proxy (absent/sparse in donor-pair data)",
+      "binding_constraints": [
+        "BLOCK: genetic_association=0.162 below floor 0.2",
+        "BLOCK: no cell-type-matched (CD4/Treg) eQTL for the risk allele (proxy-tissue only)"
+      ],
+      "hash": "5db70474d8d2419f"
+    }
+  ],
+  "counterfactuals": {
+    "RASGRP1_add_celltype_eqtl": "GO",
+    "PRKCQ_raise_GA_to_0.50": "WITHHELD"
+  },
+  "lineage": {
+    "genetics_source": "data/gold/genetics_gate_receipt.json (Open Targets+GWAS live)",
+    "trust_source": "conformal machinery (trust.py); provenance per gene",
+    "rasgrp1_secondary_data_veto": "cross-donor r=0.072, n_downstream=992 (data_facts_receipt.json)"
+  }
+}

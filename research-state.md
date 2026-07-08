@@ -29,8 +29,23 @@ Blinded recovery (pooled, n=8 case study) + axis-swap specificity control. Metho
 - Both critique gates PASS. Figure: figures/recovery_specificity.png.
 - Pre-COMPUTE Gate-1 (Day-4) cycle 1: BLOCKINGx2 (IFN control confounded by IFIH1; magnitude confound uncontrolled) → cycle 2 PASS (IFN dropped + cholesterol/ribosome controls + magnitude baseline + residualization; Mann-Whitney + exact perm null). Gate-2 PASS.
 
-## Next (Day 5)
-Wire critic → commit_gate; the believe/veto split gets a real trust_score from the conformal layer. The RASGRP1 veto is strengthened by two independent real-data facts now: (1) no cell-type-matched eQTL, (2) low cross-donor reproducibility (r=0.072, n_downstream=992).
+## Day 5 (in progress) — critic → commit_gate end-to-end
+Methodology PASSED critique after 1 fix cycle.
+- Pre-COMPUTE Gate-1 (Day-5) cycle 1: **BLOCKINGx2 + framing** — (1) code makes trust a co-equal AND-gate, contradicting "trust is secondary" (a pooled-proxy trust dip could flip CD226 and be misattributed to genetics); (2) uniform 0.50 floor across incommensurable estimators (donor-blocked RASGRP1 vs pooled CD226/PRKCQ); (Point 4) the demo is partially circular — 2 of 3 decisive fields are human-curated, so it proves GOVERNANCE not biology.
+- cycle 2 (after fix): **PASS.** Fixes: report real trust up front; hard-assert trust non-binding for the trio (margin); stamp binding constraint per decision; reframe as "deterministic propagator, not discovery engine — only PRKCQ's genetic-floor veto is outcome-independent live data." Implementation cautions: fail-closed assert, numeric margin (>=0.65 for GO), add PRKCQ counterfactual.
+
+## Day 5 results — end-to-end critic → commit_gate (FINAL build milestone)
+- **Believe/veto split on live evidence + real conformal trust:** CD226 → GO; RASGRP1 → WITHHELD (binding: no cell-type eQTL); PRKCQ → WITHHELD (binding: GA 0.162 < 0.20 AND no eQTL). Deterministic (content-hashed).
+- **Trust is provably NON-BINDING** (critique fix): CD226=0.853, RASGRP1=0.817 (donor-blocked), PRKCQ=0.883 (pooled-proxy) — all ≥ 0.65 margin, enforced by a hard fail-closed `assert`. **PRKCQ has the HIGHEST trust yet is WITHHELD** — dispositive proof that genetics/eQTL drive the decisions, not trust.
+- **Counterfactuals (gate keys on FACTS, not gene names):** RASGRP1 + cell-type eQTL → flips to GO; PRKCQ + hypothetical GA=0.50 → still WITHHELD (trust never binds).
+- **Honest framing (critique-required):** the commit_gate is a *deterministic propagator, not a discovery engine* — it proves reproducible/auditable/fail-closed governance, NOT that the biology ruling is correct. Only PRKCQ's genetic-floor veto is live-data independent of the desired outcome; the eQTL booleans are human-curated (cited).
+- Both critique gates PASS. 20/20 tests. Pre-COMPUTE Gate-1 cycle 1: BLOCKx2 (trust co-equal gate mislabeled "secondary"; incommensurable estimators under one floor) + framing → cycle 2 PASS. Gate-2 PASS ("honest and internally consistent").
+
+## BUILD COMPLETE (Days 0–5)
+All five build days done, each passing pre- and post-COMPUTE critique. 8 blocking issues caught and fixed before contaminating results. Headline = Day-3 donor-blocked conformal coverage (80/90/95% all contain nominal). Recovery = honest null (n=8 case study). Veto = deterministic, lineage-backed, trust-non-binding.
+
+## Next (Day 6, optional)
+Reconcile deck/README to v3; final honesty pass; assemble figures for the demo.
 
 ## Critique history
 - Pre-COMPUTE Gate-1 (Day-2 methodology), cycle 1: **BLOCKING** — target-feature circularity: effect_magnitude=||zscore|| contained the on-target gene, and ontarget_effect_size was a feature (target = sqrt(ontarget² + Σtrans²)). On-target is typically the largest norm component → non-negligible leak.
