@@ -1,0 +1,171 @@
+{
+  "method": "Donor-blocked leave-one-donor-out split-conformal (v3 Fix 6)",
+  "donors": [
+    "CE0006864",
+    "CE0008162",
+    "CE0008678",
+    "CE0010866"
+  ],
+  "n_donor_pairs": 6,
+  "lodo_construction": {
+    "CE0006864": {
+      "calibration_pairs": [
+        "CE0008162_CE0008678",
+        "CE0008162_CE0010866",
+        "CE0008678_CE0010866"
+      ],
+      "test_pairs": [
+        "CE0006864_CE0008162",
+        "CE0006864_CE0008678",
+        "CE0006864_CE0010866"
+      ]
+    },
+    "CE0008162": {
+      "calibration_pairs": [
+        "CE0006864_CE0008678",
+        "CE0006864_CE0010866",
+        "CE0008678_CE0010866"
+      ],
+      "test_pairs": [
+        "CE0006864_CE0008162",
+        "CE0008162_CE0008678",
+        "CE0008162_CE0010866"
+      ]
+    },
+    "CE0008678": {
+      "calibration_pairs": [
+        "CE0006864_CE0008162",
+        "CE0006864_CE0010866",
+        "CE0008162_CE0010866"
+      ],
+      "test_pairs": [
+        "CE0006864_CE0008678",
+        "CE0008162_CE0008678",
+        "CE0008678_CE0010866"
+      ]
+    },
+    "CE0010866": {
+      "calibration_pairs": [
+        "CE0006864_CE0008162",
+        "CE0006864_CE0008678",
+        "CE0008162_CE0008678"
+      ],
+      "test_pairs": [
+        "CE0006864_CE0010866",
+        "CE0008162_CE0010866",
+        "CE0008678_CE0010866"
+      ]
+    }
+  },
+  "n_eff_unique_perturbations_in_test": 2591,
+  "pooled_coverage": {
+    "0.8": {
+      "nominal": 0.8,
+      "fold_mean": 0.7932,
+      "fold_std": 0.0101,
+      "fold_values": [
+        0.798,
+        0.8054,
+        0.7916,
+        0.7778
+      ],
+      "fold_interval_lo": 0.783,
+      "fold_interval_hi": 0.8033,
+      "fold_interval_contains_nominal": true,
+      "row_empirical": 0.7932,
+      "row_cp_lo": 0.7899,
+      "row_cp_hi": 0.7965,
+      "row_cp_note": "row-level CP is OVERCONFIDENT (non-independent rows); use fold_std as the honest uncertainty",
+      "n_rows": 58558
+    },
+    "0.9": {
+      "nominal": 0.9,
+      "fold_mean": 0.8955,
+      "fold_std": 0.0055,
+      "fold_values": [
+        0.8912,
+        0.9037,
+        0.8973,
+        0.8898
+      ],
+      "fold_interval_lo": 0.89,
+      "fold_interval_hi": 0.901,
+      "fold_interval_contains_nominal": true,
+      "row_empirical": 0.8955,
+      "row_cp_lo": 0.893,
+      "row_cp_hi": 0.898,
+      "row_cp_note": "row-level CP is OVERCONFIDENT (non-independent rows); use fold_std as the honest uncertainty",
+      "n_rows": 58558
+    },
+    "0.95": {
+      "nominal": 0.95,
+      "fold_mean": 0.9486,
+      "fold_std": 0.005,
+      "fold_values": [
+        0.942,
+        0.9516,
+        0.9551,
+        0.9458
+      ],
+      "fold_interval_lo": 0.9436,
+      "fold_interval_hi": 0.9537,
+      "fold_interval_contains_nominal": true,
+      "row_empirical": 0.9486,
+      "row_cp_lo": 0.9468,
+      "row_cp_hi": 0.9504,
+      "row_cp_note": "row-level CP is OVERCONFIDENT (non-independent rows); use fold_std as the honest uncertainty",
+      "n_rows": 58558
+    }
+  },
+  "per_donor_coverage": {
+    "CE0006864": {
+      "n_test": 14640,
+      "coverage": {
+        "0.8": 0.7979508196721311,
+        "0.9": 0.891188524590164,
+        "0.95": 0.9420081967213115
+      }
+    },
+    "CE0008162": {
+      "n_test": 14639,
+      "coverage": {
+        "0.8": 0.8053828813443541,
+        "0.9": 0.9036819454880798,
+        "0.95": 0.9515677300362047
+      }
+    },
+    "CE0008678": {
+      "n_test": 14639,
+      "coverage": {
+        "0.8": 0.7915841245986748,
+        "0.9": 0.8973290525309106,
+        "0.95": 0.9550515745611039
+      }
+    },
+    "CE0010866": {
+      "n_test": 14640,
+      "coverage": {
+        "0.8": 0.7778005464480874,
+        "0.9": 0.8897540983606558,
+        "0.95": 0.9458333333333333
+      }
+    }
+  },
+  "selective_risk": {
+    "aurc_model": 0.1151,
+    "permutation_null": {
+      "aurc_observed": 0.1151,
+      "aurc_null_mean": 0.11826,
+      "aurc_null_std": 0.00047,
+      "p_value_one_sided": 0.0005,
+      "n_permutations": 2000,
+      "significant_at_0.05": true
+    },
+    "claim": "Trust ordering gives a MODEST but statistically-supported reduction in selective risk"
+  },
+  "honesty_notes": [
+    "Coverage evaluated ONLY on the ~2591-gene cross-donor-reproducible core (per-donor-pair DE) -> the hard, honest regime.",
+    "CP interval is WIDE by design at small effective-N; report width, not per-level discrimination.",
+    "Trust score + AURC computed on held-out-donor TEST pairs only (three-way separation); shuffle-trust control included."
+  ]
+}

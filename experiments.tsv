@@ -12,3 +12,7 @@ day2	base_predictor test R2=+0.096 Spearman=+0.356	done	Leakage-safe covariate p
 day2	treg_axis built (13 POS/10 NEG, gold-disjoint)	done	CTLA4/FOXP3/IL2RA dropped (in gold set); per-row on-target exclusion ON; RASGRP1 KD -> +Treg direction
 day2	critique Gate-1 BLOCK->PASS, Gate-2 PASS	done	Fixed target-feature circularity (trans-only target); both critique gates clean
 day2	tests=15/15 pass	done	7 gate + 4 splits + 4 day2-leakage
+day3	LODO coverage 80/90/95%=0.793/0.895/0.949 (all contain nominal)	done	Donor-blocked leave-one-donor-out split-conformal on 2591 cross-donor-reproducible genes; HEADLINE (Fix 6)
+day3	selective-risk AURC=0.1151 vs null 0.1183, p=0.0005	done	Trust ordering modest but significant vs 2000-permutation null; diverse bootstrap ensemble
+day3	critique Gate-1 BLOCKx3->PASS, Gate-2 BLOCKx1->fixed	done	Fixed exchangeability(donor-disjoint)/power(fold-std)/circularity(3-way); fixed degenerate ensemble+added perm null
+day3	by_donors.h5mu pulled 16.87GB, 6 pairs/4 donors	done	Per-donor-pair DE = 2591 reproducible-core genes; CD226+6/8 gold absent -> recovery stays pooled case study

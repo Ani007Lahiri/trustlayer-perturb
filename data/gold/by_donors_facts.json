@@ -1,0 +1,24 @@
+{
+  "file": "GWCD4i.DE_stats.by_donors.h5mu",
+  "n_donor_pairs": 6,
+  "donors": [
+    "CE0006864",
+    "CE0008162",
+    "CE0008678",
+    "CE0010866"
+  ],
+  "rows_per_pair": "~4880 perturbation-conditions",
+  "unique_genes_per_pair": 2591,
+  "note": "Per-donor-pair DE retains ONLY perturbations reproducibly detected in BOTH donors of the pair -> same 2591-gene reproducible core in every pair. This is the concrete 'effective N is small' evidence (v3 Fix 6).",
+  "consequence_for_design": {
+    "donor_blocked_conformal_evaluable_on": "the 2591 reproducible-core genes only",
+    "recovery_gold_genes_in_donor_pairs": "CD226 and 6/8 gold genes ABSENT from donor-pair set -> blinded recovery MUST use the pooled (perturbation-blocked) data; donor-blocked conformal is the headline, recovery stays a pooled-data case study (reinforces Fix 6).",
+    "trio_in_donor_pairs": {
+      "CD226": "0/6 (absent)",
+      "RASGRP1": "6/6",
+      "PRKCQ": "6/6",
+      "TYK2": "6/6"
+    },
+    "rasgrp1_veto_bonus": "RASGRP1 present in all 6 pairs -> can show its LOW cross-donor reproducibility directly on donor-resolved data (strengthens the veto)."
+  }
+}

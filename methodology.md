@@ -132,3 +132,96 @@ ontarget_significant, ontarget_effect_category} before fitting.
 - ESM-2 embeddings are a frozen prior; we do not fine-tune (v3: precomputed feature).
 - UCell axis gene set is curated from canonical Treg biology, not learned — and must be
   gold-set-disjoint, which slightly weakens it but is required for non-circularity.
+
+---
+
+# Methodology — Day 3: Calibrated Trust Layer (the product)
+
+*The Day-2 predictor exists to be calibrated. Day 3 builds the actual contribution:
+a conformal trust score with a coverage guarantee, headlined via DONOR-blocked
+leave-one-donor-out (LODO), per v3 Fix 6.*
+
+## Research Question & Hypothesis (Day-3 scope)
+- **Question:** Does a conformal prediction interval on the trans-effect prediction achieve
+  its target coverage under an HONEST donor-blocked split, and does selective prediction
+  (abstaining on low-confidence calls) monotonically reduce risk?
+- **Hypothesis:** MAPIE split-conformal intervals calibrated on held-out donors achieve
+  ~90% empirical coverage at nominal 90%, and the selective-risk (AURC) curve shows that
+  filtering to high-trust predictions lowers error — i.e., the trust score is USABLE for
+  triage.
+- **Success criteria (critique-aligned):**
+  1. The Clopper-Pearson interval on pooled donor-blocked coverage CONTAINS the nominal
+     level (80/90/95), with the CP interval WIDTH reported as a first-class result. At
+     n_eff ~ tens the CP interval is expected to be WIDE (~12 test points pooled) — so
+     "contains nominal" is reported alongside width, not as a discrimination claim.
+  2. Selective-risk curve below the no-selection baseline on held-out-donor test pairs,
+     with the shuffle-residual control curve FLAT (guards circularity).
+  3. Coverage assessed under DONOR-blocked LODO (harder, honest regime) AND
+     perturbation-blocked (both reported; donor-block is the headline).
+
+## Data Sources (added Day 3)
+- `data/raw/GWCD4i.DE_stats.by_donors.h5mu` (16.87 GB): per-donor-pair DE modalities
+  (one AnnData per disjoint donor pair). Enables donor-blocked calibration: calibrate on
+  donor-pairs excluding a held-out donor, test on the held-out donor's pairs.
+- Reuse: frozen_splits.json (perturbation blocking), base_predictor_preds.parquet (residuals).
+
+## Analysis Pipeline
+### Step 1: Deep ensemble (3-5 seeds) of the base predictor
+- Refit the HGBR base predictor at 3-5 random seeds; ensemble mean = point prediction,
+  ensemble spread = a heuristic uncertainty (feeds the conformal nonconformity score).
+- Rationale (simplicity): a small ensemble is the lightest way to get a variance signal
+  without deep nets. If spread adds nothing over absolute-residual CQR, drop it (log as
+  negative result).
+
+### Step 2: MAPIE split-conformal (SplitConformalRegressor, MAPIE 1.4.1)
+- Nonconformity: absolute residual (and CQR variant if quantile base is added).
+- Calibrate on the calibration fold; evaluate coverage + interval width on test.
+- Target levels: 0.80, 0.90, 0.95.
+
+### Step 3: DONOR-blocked LODO conformal (the headline, Fix 6) — CRITIQUE-CORRECTED
+**Exchangeability fix (Gate-1 BLOCKING #1):** donor-pairs SHARE donors, so leaving out
+only pairs *containing* d is necessary but NOT sufficient — calibration pairs would still
+share the other donors with test pairs, breaking exchangeability. Correct construction:
+  - Held-out donor d: **calibration set = pairs whose BOTH members != d** (drawn only from
+    the other 3 donors); **test set = pairs containing d.**
+  - Assert donor-disjointness: no member of any calibration pair equals d (fail-closed).
+  - With 4 donors (6 disjoint pairs), holding out d leaves C(3,2)=3 clean calibration pairs
+    and 3 test pairs.
+- Pre-register effective-N per fold (independent perturbations), NOT raw 33,983.
+
+### Step 4: Selective prediction / coverage curves — CRITIQUE-CORRECTED
+**Circularity fix (Gate-1 BLOCKING #3):** three-way separation. Conformal quantiles/widths
+are fit ONLY on the calibration set (Step 3). The trust score AND the selective-risk/AURC
+curve are computed ONLY on the held-out-donor TEST pairs — never on calibration data; no
+width/threshold is tuned on test pairs.
+- Trust score = f(interval width, ensemble spread), evaluated on test pairs only.
+- Sort test predictions by trust; plot risk vs coverage; compute AURC.
+- Competing curve: mean/shuffle baseline (must be worse).
+
+## Controls & Validation
+- **Coverage calibration plot:** empirical vs nominal coverage (diagonal = perfect).
+- **Negative control:** shuffle residuals -> selective-risk curve should be FLAT (no gain).
+- **Donor-block vs perturbation-block:** report both; donor-block is the honest headline.
+
+## Statistical Plan — CRITIQUE-CORRECTED (Gate-1 BLOCKING #2 + Q4)
+- **Power honesty:** at n_eff ~ tens with 4 LODO folds, coverage estimates CANNOT
+  discriminate 80 vs 90 vs 95%. So the claim is DEMOTED from "within-tolerance calibration
+  at 3 levels" to **"the Clopper-Pearson interval contains the nominal level"**, and the CP
+  interval WIDTH is reported as a first-class result (not a footnote). Coverage is POOLED
+  across folds rather than claimed per-level-per-fold.
+- **Selective risk:** AURC on held-out-donor test pairs. Report Clopper-Pearson/CP as the
+  primary uncertainty statement. A donor-block bootstrap is noted but has near-zero
+  resolution at 4 clusters (~35 distinct resamples) — reported as a limitation, not a
+  headline CI. Pair-level bootstrap understates variance (pairs non-independent) — avoided
+  as primary.
+- Honesty: every interval reported with the effective-N caveat; recovery (Day 4) stays a
+  CI-shown case study.
+
+## Compute Requirements
+- All CPU / laptop (small ensemble + MAPIE + curves). No GPU. No spend.
+
+## Limitations & Assumptions
+- Conformal validity assumes exchangeability WITHIN the calibration/test block; donor
+  blocking is the honest way to approximate this given only 4 donors.
+- The ensemble uncertainty is heuristic, not Bayesian; the conformal GUARANTEE is what
+  carries the coverage claim, not the ensemble spread.
