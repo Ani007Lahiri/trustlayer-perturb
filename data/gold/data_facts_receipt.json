@@ -1,0 +1,158 @@
+{
+  "source": "GWCD4i DE_stats (CZI VCP; GitHub suppl_table mirror)",
+  "n_perturbation_condition_pairs": 33983,
+  "n_unique_perturbed_genes": 11526,
+  "conditions": {
+    "Stim8hr": 11415,
+    "Rest": 11287,
+    "Stim48hr": 11281
+  },
+  "n_donors": 4,
+  "effective_N_evidence": {
+    "pairs_with_crossdonor_estimate": 4775,
+    "pairs_total": 33983,
+    "crossdonor_r_median": 0.412,
+    "crossdonor_r_mean": 0.371,
+    "crossdonor_r_q25": 0.19,
+    "crossdonor_r_q75": 0.57,
+    "frac_low_reproducibility_r_lt_0.2": 0.2588,
+    "interpretation": "Only a minority of perturbations have any cross-donor estimate, and cross-donor r is modest -> effective N is tens per slice, not thousands. Headline calibration/coverage curves; demote n=8 recovery to a CI-shown case study (v3 Fix 6)."
+  },
+  "trio_coverage": {
+    "CD226": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 3,
+      "max_n_downstream": 1,
+      "crossdonor_r_mean": null
+    },
+    "RASGRP1": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 3,
+      "max_n_downstream": 992,
+      "crossdonor_r_mean": 0.072
+    },
+    "PRKCQ": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 3,
+      "max_n_downstream": 144,
+      "crossdonor_r_mean": 0.317
+    }
+  },
+  "gold_coverage": {
+    "PTPN22": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 3,
+      "max_n_downstream": 1,
+      "crossdonor_r_mean": null
+    },
+    "CTLA4": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 2,
+      "max_n_downstream": 2,
+      "crossdonor_r_mean": null
+    },
+    "IL2RA": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 3,
+      "max_n_downstream": 24,
+      "crossdonor_r_mean": null
+    },
+    "IFIH1": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 3,
+      "max_n_downstream": 5,
+      "crossdonor_r_mean": null
+    },
+    "SH2B3": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 3,
+      "max_n_downstream": 1,
+      "crossdonor_r_mean": null
+    },
+    "BACH2": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 2,
+      "max_n_downstream": 14,
+      "crossdonor_r_mean": null
+    },
+    "TYK2": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 3,
+      "max_n_downstream": 53,
+      "crossdonor_r_mean": 0.691
+    },
+    "CTSH": {
+      "perturbed": true,
+      "n_conditions": 3,
+      "conditions": [
+        "Rest",
+        "Stim48hr",
+        "Stim8hr"
+      ],
+      "ontarget_significant": 3,
+      "max_n_downstream": 0,
+      "crossdonor_r_mean": null
+    }
+  },
+  "rasgrp1_veto_data_rationale": "RASGRP1 has a large downstream footprint (max_n_downstream=992) but low cross-donor reproducibility (r=0.072): the effect is big but NOT donor-robust -> a data-grounded reason to withhold, complementing the missing cell-type eQTL."
+}

@@ -1,0 +1,11 @@
+gene	tier	ot_genetic_association	lead_snp	gwas_t1d_p	citation
+PTPN22	T1	0.759	rs2476601	5e-135	GWAS Catalog rs2476601 (T1D 5e-135)
+CTLA4	T1	0.921	rs3087243	4e-23	GWAS Catalog rs3087243 (T1D 4e-23)
+IL2RA	T1	0.703	rs12722495	1e-38	GWAS Catalog rs12722495 (T1D 1e-38)
+IFIH1	T1	0.721	rs1990760	2e-15	GWAS Catalog rs1990760 (T1D 2e-15)
+SH2B3	T1	0.931	rs3184504	5e-49	GWAS Catalog rs3184504 (T1D 5e-49)
+BACH2	T1	0.855	rs11755527	5e-12	GWAS Catalog rs11755527 (T1D 5e-12)
+TYK2	T1	0.858	rs34536443	4e-15	GWAS Catalog rs34536443 (T1D 4e-15)
+CTSH	T2	0.868			Open Targets genetic_association=0.868 (T1D MONDO_0005147)
+INS	T2	0.753			Open Targets genetic_association=0.753 (T1D MONDO_0005147)
+FOXP3	T4	None			master Treg lineage TF (mechanism-only; IPEX monogenic, not a T1D GWAS locus)

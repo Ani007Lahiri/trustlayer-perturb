@@ -1,4 +1,13 @@
-data/*
+# Large raw data (never commit) — DE_stats h5ad (~17GB), suppl CSVs, pseudobulk
+data/raw/
+data/interim/
+# Keep the small, reproducible lineage-backed receipts under data/gold/
+!data/gold/
+data/gold/nominations/*.json
+
 figures/*.png
 __pycache__/
 *.pyc
+.venv/
+logs/*.log
+logs/*.pid

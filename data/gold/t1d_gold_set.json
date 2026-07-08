@@ -1,0 +1,177 @@
+{
+  "disease": {
+    "name": "type 1 diabetes mellitus",
+    "id": "MONDO_0005147"
+  },
+  "note": "Tiered, per-gene cited gold set (v3 Fix 2). T1+T2 = genetics-anchored blinded positive set for recovery. T4 labeled mechanism-only.",
+  "retired_from_v2.1": {
+    "MEOX1": "not associated with T1D in Open Targets; zero GWAS-Catalog T1D hits",
+    "CD1E": "not associated with T1D in Open Targets",
+    "LGALS3BP": "Open Targets rank ~#2402/5887; far outside top-250",
+    "CD247": "Open Targets rank ~#1074/5887; outside top-250"
+  },
+  "genes": [
+    {
+      "gene": "PTPN22",
+      "tier": "T1",
+      "tier_desc": "GWAS genome-wide-significant",
+      "ot_genetic_association": 0.759,
+      "lead_snp": "rs2476601",
+      "gwas_t1d": {
+        "rsid": "rs2476601",
+        "pvalue": "5e-135",
+        "genome_wide_sig": true
+      },
+      "citation": "GWAS Catalog rs2476601 (T1D 5e-135)",
+      "provenance": "Open Targets v4 + GWAS Catalog REST (live)",
+      "in_perturbseq": true
+    },
+    {
+      "gene": "CTLA4",
+      "tier": "T1",
+      "tier_desc": "GWAS genome-wide-significant",
+      "ot_genetic_association": 0.921,
+      "lead_snp": "rs3087243",
+      "gwas_t1d": {
+        "rsid": "rs3087243",
+        "pvalue": "4e-23",
+        "genome_wide_sig": true
+      },
+      "citation": "GWAS Catalog rs3087243 (T1D 4e-23)",
+      "provenance": "Open Targets v4 + GWAS Catalog REST (live)",
+      "in_perturbseq": true
+    },
+    {
+      "gene": "IL2RA",
+      "tier": "T1",
+      "tier_desc": "GWAS genome-wide-significant",
+      "ot_genetic_association": 0.703,
+      "lead_snp": "rs12722495",
+      "gwas_t1d": {
+        "rsid": "rs12722495",
+        "pvalue": "1e-38",
+        "genome_wide_sig": true
+      },
+      "citation": "GWAS Catalog rs12722495 (T1D 1e-38)",
+      "provenance": "Open Targets v4 + GWAS Catalog REST (live)",
+      "in_perturbseq": true
+    },
+    {
+      "gene": "IFIH1",
+      "tier": "T1",
+      "tier_desc": "GWAS genome-wide-significant",
+      "ot_genetic_association": 0.721,
+      "lead_snp": "rs1990760",
+      "gwas_t1d": {
+        "rsid": "rs1990760",
+        "pvalue": "2e-15",
+        "genome_wide_sig": true
+      },
+      "citation": "GWAS Catalog rs1990760 (T1D 2e-15)",
+      "provenance": "Open Targets v4 + GWAS Catalog REST (live)",
+      "in_perturbseq": true
+    },
+    {
+      "gene": "SH2B3",
+      "tier": "T1",
+      "tier_desc": "GWAS genome-wide-significant",
+      "ot_genetic_association": 0.931,
+      "lead_snp": "rs3184504",
+      "gwas_t1d": {
+        "rsid": "rs3184504",
+        "pvalue": "5e-49",
+        "genome_wide_sig": true
+      },
+      "citation": "GWAS Catalog rs3184504 (T1D 5e-49)",
+      "provenance": "Open Targets v4 + GWAS Catalog REST (live)",
+      "in_perturbseq": true
+    },
+    {
+      "gene": "BACH2",
+      "tier": "T1",
+      "tier_desc": "GWAS genome-wide-significant",
+      "ot_genetic_association": 0.855,
+      "lead_snp": "rs11755527",
+      "gwas_t1d": {
+        "rsid": "rs11755527",
+        "pvalue": "5e-12",
+        "genome_wide_sig": true
+      },
+      "citation": "GWAS Catalog rs11755527 (T1D 5e-12)",
+      "provenance": "Open Targets v4 + GWAS Catalog REST (live)",
+      "in_perturbseq": true
+    },
+    {
+      "gene": "TYK2",
+      "tier": "T1",
+      "tier_desc": "GWAS genome-wide-significant",
+      "ot_genetic_association": 0.858,
+      "lead_snp": "rs34536443",
+      "gwas_t1d": {
+        "rsid": "rs34536443",
+        "pvalue": "4e-15",
+        "genome_wide_sig": true
+      },
+      "citation": "GWAS Catalog rs34536443 (T1D 4e-15)",
+      "provenance": "Open Targets v4 + GWAS Catalog REST (live)",
+      "in_perturbseq": true
+    },
+    {
+      "gene": "CTSH",
+      "tier": "T2",
+      "tier_desc": "Open Targets genetic_association (top-of-list)",
+      "ot_genetic_association": 0.868,
+      "lead_snp": null,
+      "gwas_t1d": null,
+      "citation": "Open Targets genetic_association=0.868 (T1D MONDO_0005147)",
+      "provenance": "Open Targets v4 GraphQL (live)",
+      "in_perturbseq": true
+    },
+    {
+      "gene": "INS",
+      "tier": "T2",
+      "tier_desc": "Open Targets genetic_association (top-of-list)",
+      "ot_genetic_association": 0.753,
+      "lead_snp": null,
+      "gwas_t1d": null,
+      "citation": "Open Targets genetic_association=0.753 (T1D MONDO_0005147)",
+      "provenance": "Open Targets v4 GraphQL (live)",
+      "in_perturbseq": false
+    },
+    {
+      "gene": "FOXP3",
+      "tier": "T4",
+      "tier_desc": "mechanism-only (NOT genetics-derived)",
+      "ot_genetic_association": null,
+      "lead_snp": null,
+      "gwas_t1d": null,
+      "citation": "master Treg lineage TF (mechanism-only; IPEX monogenic, not a T1D GWAS locus)",
+      "provenance": "literature/mechanism (labeled)"
+    }
+  ],
+  "recovery_positive_set": [
+    "PTPN22",
+    "CTLA4",
+    "IL2RA",
+    "IFIH1",
+    "SH2B3",
+    "BACH2",
+    "TYK2",
+    "CTSH"
+  ],
+  "recovery_dropped_not_perturbed": [
+    "INS"
+  ],
+  "axis_forbidden_genes": [
+    "BACH2",
+    "CTLA4",
+    "CTSH",
+    "FOXP3",
+    "IFIH1",
+    "IL2RA",
+    "INS",
+    "PTPN22",
+    "SH2B3",
+    "TYK2"
+  ]
+}

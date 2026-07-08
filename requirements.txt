@@ -1,0 +1,15 @@
+# Core scientific stack (Day 0-1 foundation)
+numpy
+scipy
+pandas
+scikit-learn
+matplotlib
+seaborn
+requests
+h5py
+# Single-cell + Perturb-seq
+anndata
+scanpy
+# Conformal / calibrated trust engine (v3 method fix R2)
+mapie
+# Deferred to Day 2 (base predictor): pertpy, fair-esm

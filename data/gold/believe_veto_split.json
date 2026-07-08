@@ -1,0 +1,23 @@
+[
+  {
+    "gene": "CD226",
+    "role": "ANCHOR",
+    "decision": "GO",
+    "hash": "d194a965d27a6981",
+    "artifact": "data/gold/nominations/CD226_GO_d194a965d27a6981.json"
+  },
+  {
+    "gene": "RASGRP1",
+    "role": "BET",
+    "decision": "WITHHELD",
+    "hash": "a974f9007b5ff682",
+    "artifact": "data/gold/nominations/RASGRP1_BLOCKED_a974f9007b5ff682.json"
+  },
+  {
+    "gene": "PRKCQ",
+    "role": "CONTROL",
+    "decision": "WITHHELD",
+    "hash": "e4df3ecf7e22ef08",
+    "artifact": "data/gold/nominations/PRKCQ_BLOCKED_e4df3ecf7e22ef08.json"
+  }
+]

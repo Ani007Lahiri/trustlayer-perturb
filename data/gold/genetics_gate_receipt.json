@@ -1,0 +1,277 @@
+{
+  "generated_utc": "2026-07-08T15:31:52.957420+00:00",
+  "disease": {
+    "name": "type 1 diabetes mellitus",
+    "id": "MONDO_0005147"
+  },
+  "source": "Open Targets Platform v4 GraphQL + GWAS Catalog REST (live)",
+  "total_t1d_targets": 5887,
+  "trio": {
+    "CD226": {
+      "symbol": "CD226",
+      "ensembl_id": "ENSG00000150637",
+      "overall_score": 0.533,
+      "genetic_association": 0.834,
+      "datatypes": {
+        "literature": 0.861,
+        "genetic_association": 0.834
+      },
+      "rank": 16,
+      "total_targets": 5887,
+      "status": "OK"
+    },
+    "RASGRP1": {
+      "symbol": "RASGRP1",
+      "ensembl_id": "ENSG00000172575",
+      "overall_score": 0.32,
+      "genetic_association": 0.506,
+      "datatypes": {
+        "literature": 0.423,
+        "genetic_association": 0.506
+      },
+      "rank": 148,
+      "total_targets": 5887,
+      "status": "OK"
+    },
+    "PRKCQ": {
+      "symbol": "PRKCQ",
+      "ensembl_id": "ENSG00000065675",
+      "overall_score": 0.101,
+      "genetic_association": 0.162,
+      "datatypes": {
+        "literature": 0.079,
+        "genetic_association": 0.162
+      },
+      "rank": 556,
+      "total_targets": 5887,
+      "status": "OK"
+    }
+  },
+  "gold_candidates": {
+    "SH2B3": {
+      "symbol": "SH2B3",
+      "ensembl_id": "ENSG00000111252",
+      "overall_score": 0.618,
+      "genetic_association": 0.931,
+      "datatypes": {
+        "literature": 0.378,
+        "genetic_association": 0.931,
+        "genetic_literature": 0.304
+      },
+      "rank": 4,
+      "total_targets": 5887,
+      "status": "OK"
+    },
+    "CTSH": {
+      "symbol": "CTSH",
+      "ensembl_id": "ENSG00000103811",
+      "overall_score": 0.545,
+      "genetic_association": 0.868,
+      "datatypes": {
+        "literature": 0.571,
+        "genetic_association": 0.868
+      },
+      "rank": 13,
+      "total_targets": 5887,
+      "status": "OK"
+    },
+    "PTPN22": {
+      "symbol": "PTPN22",
+      "ensembl_id": "ENSG00000134242",
+      "overall_score": 0.61,
+      "genetic_association": 0.759,
+      "datatypes": {
+        "literature": 0.952,
+        "rna_expression": 0.046,
+        "genetic_association": 0.759,
+        "genetic_literature": 0.304
+      },
+      "rank": 5,
+      "total_targets": 5887,
+      "status": "OK"
+    },
+    "INS": {
+      "symbol": "INS",
+      "ensembl_id": "ENSG00000254647",
+      "overall_score": 0.692,
+      "genetic_association": 0.753,
+      "datatypes": {
+        "literature": 0.997,
+        "animal_model": 0.695,
+        "genetic_association": 0.753,
+        "genetic_literature": 0.865
+      },
+      "rank": 2,
+      "total_targets": 5887,
+      "status": "OK"
+    },
+    "IL2RA": {
+      "symbol": "IL2RA",
+      "ensembl_id": "ENSG00000134460",
+      "overall_score": 0.568,
+      "genetic_association": 0.703,
+      "datatypes": {
+        "literature": 0.935,
+        "genetic_association": 0.703,
+        "clinical": 0.609,
+        "genetic_literature": 0.608
+      },
+      "rank": 8,
+      "total_targets": 5887,
+      "status": "OK"
+    },
+    "CTLA4": {
+      "symbol": "CTLA4",
+      "ensembl_id": "ENSG00000163599",
+      "overall_score": 0.589,
+      "genetic_association": 0.921,
+      "datatypes": {
+        "literature": 0.938,
+        "genetic_association": 0.921
+      },
+      "rank": 7,
+      "total_targets": 5887,
+      "status": "OK"
+    },
+    "IFIH1": {
+      "symbol": "IFIH1",
+      "ensembl_id": "ENSG00000115267",
+      "overall_score": 0.467,
+      "genetic_association": 0.721,
+      "datatypes": {
+        "literature": 0.929,
+        "genetic_association": 0.721
+      },
+      "rank": 29,
+      "total_targets": 5887,
+      "status": "OK"
+    },
+    "BACH2": {
+      "symbol": "BACH2",
+      "ensembl_id": "ENSG00000112182",
+      "overall_score": 0.535,
+      "genetic_association": 0.855,
+      "datatypes": {
+        "literature": 0.498,
+        "genetic_association": 0.855
+      },
+      "rank": 15,
+      "total_targets": 5887,
+      "status": "OK"
+    },
+    "TYK2": {
+      "symbol": "TYK2",
+      "ensembl_id": "ENSG00000105397",
+      "overall_score": 0.546,
+      "genetic_association": 0.858,
+      "datatypes": {
+        "literature": 0.822,
+        "genetic_association": 0.858
+      },
+      "rank": 12,
+      "total_targets": 5887,
+      "status": "OK"
+    }
+  },
+  "lead_snp_evidence": {
+    "CD226": [
+      {
+        "rsid": "rs763361",
+        "pvalue": 1e-08,
+        "pvalueMantissa": 1,
+        "pvalueExponent": -8,
+        "traits": [
+          "type 1 diabetes mellitus"
+        ]
+      },
+      {
+        "rsid": "rs763361",
+        "pvalue": 1e-09,
+        "pvalueMantissa": 1,
+        "pvalueExponent": -9,
+        "traits": [
+          "type 1 diabetes mellitus"
+        ]
+      },
+      {
+        "rsid": "rs763361",
+        "pvalue": 2e-10,
+        "pvalueMantissa": 2,
+        "pvalueExponent": -10,
+        "traits": [
+          "body height"
+        ]
+      },
+      {
+        "rsid": "rs763361",
+        "pvalue": 2e-07,
+        "pvalueMantissa": 2,
+        "pvalueExponent": -7,
+        "traits": [
+          "autoimmune thyroid disease"
+        ]
+      },
+      {
+        "rsid": "rs763361",
+        "pvalue": 4e-17,
+        "pvalueMantissa": 4,
+        "pvalueExponent": -17,
+        "traits": [
+          "reticulocyte amount"
+        ]
+      },
+      {
+        "rsid": "rs763361",
+        "pvalue": 4.9999999999999995e-11,
+        "pvalueMantissa": 5,
+        "pvalueExponent": -11,
+        "traits": [
+          "autoimmune thyroid disease"
+        ]
+      },
+      {
+        "rsid": "rs763361",
+        "pvalue": 3e-17,
+        "pvalueMantissa": 3,
+        "pvalueExponent": -17,
+        "traits": [
+          "reticulocyte count"
+        ]
+      }
+    ],
+    "RASGRP1": [
+      {
+        "rsid": "rs72727394",
+        "pvalue": 5e-12,
+        "pvalueMantissa": 5,
+        "pvalueExponent": -12,
+        "traits": [
+          "Crohn disease"
+        ]
+      },
+      {
+        "rsid": "rs72727394",
+        "pvalue": 4e-10,
+        "pvalueMantissa": 4,
+        "pvalueExponent": -10,
+        "traits": [
+          "type 1 diabetes mellitus"
+        ]
+      }
+    ]
+  },
+  "v3_hierarchy_assertion": {
+    "rule": "genetic_association(CD226) > RASGRP1 > PRKCQ",
+    "values": {
+      "CD226": 0.834,
+      "RASGRP1": 0.506,
+      "PRKCQ": 0.162
+    },
+    "passes": true
+  },
+  "roles": {
+    "CD226": "ANCHOR (calibration anchor / GO exemplar)",
+    "RASGRP1": "BET (novel bet / veto exemplar, proxy-flagged)",
+    "PRKCQ": "DEMOTED (excluded cross-trait control)"
+  }
+}
