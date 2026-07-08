@@ -17,8 +17,20 @@ BUILD — Day 2 COMPLETE. Base predictor + Treg axis built on real data, both cr
 - **Honesty**: row-level CP is overconfident (non-independent rows); report fold-std across 4 donors as the interval. Recovery stays a pooled-data case study (CD226 + 6/8 gold genes absent from donor-pair data — the 2591-gene reproducible core is what donor-blocking can evaluate).
 - Data: by_donors.h5mu (16.87GB, 6 pairs / 4 donors) pulled + verified.
 
-## Next (Day 4)
-Blinded recovery (pooled data, n=8 case study) + axis-swap specificity control (≥3 non-Treg axes). Then Day 5: wire critic → commit_gate; the believe/veto split now gets a real trust_score from the conformal layer.
+## Day 4 (in progress)
+Blinded recovery (pooled, n=8 case study) + axis-swap specificity control. Methodology PASSED critique after 1 fix cycle.
+- Pre-COMPUTE Gate-1 (Day-4) cycle 1: **BLOCKINGx2** — (1) interferon control confounded (IFIH1 is a gold gene AND an IFN-pathway gene → shared mechanism, not orthogonal); (2) magnitude confound only detected, not controlled.
+- cycle 2 (after fix): **PASS** — (1) IFN dropped, replaced with cholesterol/metabolic + ribosome-biogenesis controls, + leave-IFIH1-out sensitivity; (2) magnitude-only baseline axis the Treg axis must beat + residualize-on-magnitude. Primary metric → Mann-Whitney U + exact permutation null (AUROC descriptive only). Expect an honest negative at n=8 as the modal outcome.
+
+## Day 4 results (HONEST NEGATIVE — correctly scoped)
+- **Blinded recovery (n=8 case study):** the Treg axis does NOT recover the 8 genetics-anchored T1D genes above chance (AUROC=0.439, perm p=0.72). No control axis, IFN-shared, or magnitude baseline is significant either.
+- **Specificity:** Treg beats no control and does not beat the magnitude baseline. Residualizing on magnitude and leaving IFIH1 out don't change the null.
+- **Interpretation (critique-verified honest):** this is *absence of evidence* at n=8 (underpowered), NOT *evidence of absence* (method disproven). Recovery was always scoped as a case study (v3 Fix 6); the **Day-3 donor-blocked coverage remains the headline**. The project honestly reports its secondary validation as null rather than p-hacking a positive — which *is* the intellectual-honesty thesis in action.
+- Both critique gates PASS. Figure: figures/recovery_specificity.png.
+- Pre-COMPUTE Gate-1 (Day-4) cycle 1: BLOCKINGx2 (IFN control confounded by IFIH1; magnitude confound uncontrolled) → cycle 2 PASS (IFN dropped + cholesterol/ribosome controls + magnitude baseline + residualization; Mann-Whitney + exact perm null). Gate-2 PASS.
+
+## Next (Day 5)
+Wire critic → commit_gate; the believe/veto split gets a real trust_score from the conformal layer. The RASGRP1 veto is strengthened by two independent real-data facts now: (1) no cell-type-matched eQTL, (2) low cross-donor reproducibility (r=0.072, n_downstream=992).
 
 ## Critique history
 - Pre-COMPUTE Gate-1 (Day-2 methodology), cycle 1: **BLOCKING** — target-feature circularity: effect_magnitude=||zscore|| contained the on-target gene, and ontarget_effect_size was a feature (target = sqrt(ontarget² + Σtrans²)). On-target is typically the largest norm component → non-negligible leak.

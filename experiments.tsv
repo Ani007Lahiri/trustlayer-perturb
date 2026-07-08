@@ -16,3 +16,6 @@ day3	LODO coverage 80/90/95%=0.793/0.895/0.949 (all contain nominal)	done	Donor-
 day3	selective-risk AURC=0.1151 vs null 0.1183, p=0.0005	done	Trust ordering modest but significant vs 2000-permutation null; diverse bootstrap ensemble
 day3	critique Gate-1 BLOCKx3->PASS, Gate-2 BLOCKx1->fixed	done	Fixed exchangeability(donor-disjoint)/power(fold-std)/circularity(3-way); fixed degenerate ensemble+added perm null
 day3	by_donors.h5mu pulled 16.87GB, 6 pairs/4 donors	done	Per-donor-pair DE = 2591 reproducible-core genes; CD226+6/8 gold absent -> recovery stays pooled case study
+day4	recovery treg AUROC=0.439 p=0.72 (n=8) NULL	done	Honest negative: Treg axis does NOT recover gold genes above chance at n=8; underpowered case study (v3 Fix 6)
+day4	specificity: treg beats no control, beats no mag baseline	done	Axis-swap control + magnitude baseline; no Treg-specific signal at this N; correctly scoped as absence-of-evidence
+day4	critique Gate-1 BLOCKx2->PASS, Gate-2 PASS	done	Fixed IFN-control confound (IFIH1 is IFN+gold) + magnitude confound; Mann-Whitney+perm null; negative reported honestly

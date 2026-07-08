@@ -1,0 +1,127 @@
+{
+  "axes_used": {
+    "treg": {
+      "pos_used": [
+        "IKZF2",
+        "IL2RB",
+        "IL10",
+        "TNFRSF18",
+        "TNFRSF4",
+        "IKZF4",
+        "LRRC32",
+        "ENTPD1",
+        "NT5E",
+        "TGFB1",
+        "LGALS1",
+        "CCR8",
+        "TIGIT"
+      ],
+      "neg_used": [
+        "IFNG",
+        "TBX21",
+        "RORC",
+        "IL21",
+        "CSF2",
+        "IL23R",
+        "RUNX3",
+        "STAT4",
+        "IL12RB2",
+        "CCR6"
+      ]
+    },
+    "cellcycle": {
+      "pos_used": [
+        "MKI67",
+        "PCNA",
+        "TOP2A",
+        "CCNB1",
+        "CCNB2",
+        "CDK1",
+        "CCNA2",
+        "AURKB",
+        "BUB1",
+        "CENPA",
+        "CENPE",
+        "FOXM1",
+        "PLK1",
+        "TYMS",
+        "MCM2",
+        "MCM6"
+      ],
+      "neg_used": [
+        "CDKN1A",
+        "CDKN1B",
+        "CDKN2A",
+        "RB1"
+      ]
+    },
+    "cholesterol": {
+      "pos_used": [
+        "HMGCS1",
+        "LDLR",
+        "SREBF2",
+        "SQLE",
+        "DHCR7",
+        "DHCR24",
+        "MVD",
+        "FDPS",
+        "IDI1",
+        "MSMO1",
+        "INSIG1",
+        "CYP51A1",
+        "ACAT2"
+      ],
+      "neg_used": [
+        "ABCG1"
+      ]
+    },
+    "apoptosis": {
+      "pos_used": [
+        "BAX",
+        "BAK1",
+        "CASP3",
+        "CASP7",
+        "CASP9",
+        "BBC3",
+        "PMAIP1",
+        "BID",
+        "APAF1",
+        "FAS",
+        "TNFRSF10B"
+      ],
+      "neg_used": [
+        "BCL2",
+        "BCL2L1",
+        "BIRC5",
+        "XIAP"
+      ]
+    },
+    "ribosome": {
+      "pos_used": [],
+      "neg_used": []
+    },
+    "ifn_shared": {
+      "pos_used": [
+        "ISG15",
+        "MX1",
+        "MX2",
+        "OAS1",
+        "OAS2",
+        "OAS3",
+        "IFIT1",
+        "IFIT3",
+        "IRF7",
+        "STAT1",
+        "STAT2",
+        "RSAD2",
+        "USP18",
+        "IFI6",
+        "IFI44"
+      ],
+      "neg_used": []
+    }
+  },
+  "gold_disjoint": true,
+  "per_row_ontarget_exclusion": true,
+  "ifn_note": "ifn_shared retained ONLY as a shared-mechanism positive-leaning control (IFIH1 is a gold gene AND an IFN-pathway gene); NOT a clean orthogonal negative."
+}

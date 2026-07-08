@@ -12,3 +12,6 @@
 {"script": "src/run_conformal_lodo.py", "output": "data/gold/conformal_lodo_receipt.json", "size_bytes": 4496, "sha256": "9ff56d4dc9f1373c"}
 {"script": "src/run_conformal_lodo.py", "output": "figures/coverage_calibration.png", "size_bytes": 50589, "sha256": "05fa3aeed0b747ef"}
 {"script": "(inspect)", "output": "data/gold/by_donors_facts.json", "size_bytes": 1145, "sha256": "76daa0da6b38330f"}
+{"script": "src/run_recovery_specificity.py", "output": "data/gold/recovery_specificity_receipt.json", "size_bytes": 4072, "sha256": "2b46e1aeb284a1f0"}
+{"script": "src/run_recovery_specificity.py", "output": "data/gold/axes_manifest.json", "size_bytes": 2183, "sha256": "a179d89af8e89b36"}
+{"script": "src/run_recovery_specificity.py", "output": "figures/recovery_specificity.png", "size_bytes": 55807, "sha256": "48cac6cee90a014f"}

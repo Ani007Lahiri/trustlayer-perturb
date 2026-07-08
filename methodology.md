@@ -225,3 +225,91 @@ width/threshold is tuned on test pairs.
   blocking is the honest way to approximate this given only 4 donors.
 - The ensemble uncertainty is heuristic, not Bayesian; the conformal GUARANTEE is what
   carries the coverage claim, not the ensemble spread.
+
+---
+
+# Methodology — Day 4: Blinded Recovery + Axis-Swap Specificity Control
+
+*The coverage headline (Day 3) proves calibration. Day 4 tests two orthogonal claims:
+(A) does the trust layer, applied blind, RECOVER known T1D genes it never saw in
+calibration? and (B) is the Treg axis SPECIFIC to Treg biology, or a generic
+"big-effect" detector? Per v3 Fix 6, recovery is an underpowered (n=8) CI-shown case
+study, NOT a headline.*
+
+## Research Questions & Hypotheses
+- **Q-A (recovery):** Ranking held-out perturbations by (Treg-axis effect x trust), do the
+  8 genetics-anchored T1D genes (never in train/calibration) rank higher than chance?
+- **Q-B (specificity):** Is the Treg-axis signal distinguishable from generic transcriptional
+  magnitude? A gene that just "does a lot" should NOT automatically score high on the Treg
+  axis unless it genuinely moves Treg biology.
+- **H-A:** The 8 gold genes rank above the median of all perturbations on the combined
+  Treg-axis-x-trust score, but with WIDE CIs (n=8) -> case study, not proof.
+- **H-B:** The Treg axis correlates with gold-gene recovery MORE than >=3 orthogonal
+  non-Treg control axes (e.g. cell-cycle, interferon, apoptosis) do. If a random/off-target
+  axis recovers gold genes equally well, the Treg axis is not specific -> honest negative.
+
+## Data Sources
+- Pooled DE_stats (data/interim/day2_feature_table.parquet + treg_axis_scores.parquet):
+  recovery runs on POOLED data because CD226 + 6/8 gold genes are absent from donor-pair
+  data (by_donors_facts.json).
+- frozen_splits.json: 8 gold genes are in the TEST fold only (never calibration).
+- base_predictor_preds.parquet: trust proxy from Day 2 (upgraded conceptually by the
+  Day-3 conformal machinery; here we use the ensemble-spread trust on pooled test).
+
+## Analysis Pipeline
+### Step 1: Blinded recovery ranking (Q-A) — CRITIQUE-CORRECTED
+- For every perturbation in the TEST fold, compute a nomination score =
+  |Treg-axis score| combined with trust (trust = POOLED Day-2 ensemble spread, stated
+  plainly — NOT the guaranteed Day-3 conformal trust, which is donor-blocked and excludes
+  6/8 gold genes).
+- Rank test-fold perturbations; locate the 8 gold genes' ranks.
+- **Primary metric (small-N appropriate):** Mann-Whitney U / rank-sum test of gold vs
+  non-gold nomination percentiles, with an EXACT permutation null (permute the 8 gold
+  labels across all test perturbations, >=10000 perms). AUROC reported as a descriptive
+  monotone summary of U, NOT as the inferential statistic.
+- Report the permutation p-value + CI. Explicitly n=8 underpowered case study.
+
+### Step 2: Axis-swap specificity control (Q-B)  [the real scientific control] — CRITIQUE-CORRECTED
+- Build >=3 orthogonal control axes on the SAME zscore matrix, each gold-disjoint with
+  per-row on-target exclusion (same construction as the Treg axis):
+    * cell-cycle / proliferation axis
+    * **cholesterol/metabolic axis** (orthogonal replacement for interferon)
+    * apoptosis axis
+    * ribosome-biogenesis axis (4th, for margin)
+- **BLOCKING FIX #1 — interferon is NOT a clean control:** IFIH1 (a gold gene) is a
+  canonical IFN-pathway gene, so an IFN axis shares mechanism with the positives. IFN is
+  therefore DROPPED as a negative control. If reported at all, it is labeled a
+  "shared-mechanism positive-leaning control", and every axis also gets a
+  leave-IFIH1-out sensitivity check.
+- **BLOCKING FIX #2 — magnitude confound CONTROLLED (not just detected):**
+    (a) MAGNITUDE-ONLY baseline axis = rank by trans_effect_magnitude alone; the Treg axis
+        must beat this baseline, else recovery is a "big-effect" artifact.
+    (b) Partial out magnitude: rank on residual of Treg-axis regressed on
+        trans_effect_magnitude; re-run the rank-sum test on residualized scores.
+- Specificity holds ONLY IF the Treg axis beats each control AND the magnitude-only baseline
+  by a margin that survives the n=8 permutation test. Otherwise report an honest negative.
+
+## Controls & Validation
+- **Random-axis control:** a random signed gene set (matched size) -> expected null.
+- **Magnitude-only baseline:** explicit competing axis (Fix #2a) the Treg axis must beat.
+- **Leave-IFIH1-out sensitivity:** re-run all axes dropping IFIH1 (Fix #1).
+- **Leakage:** gold genes never in calibration; all axes gold-disjoint; per-row on-target
+  exclusion (all enforced + asserted).
+
+## Statistical Plan — CRITIQUE-CORRECTED
+- Primary: Mann-Whitney U rank-sum (gold vs non-gold) with EXACT permutation p-value
+  (>=10000 label permutations). AUROC = descriptive monotone summary only.
+- Specificity: Treg-vs-control and Treg-vs-magnitude-baseline rank-sum differences.
+  Multiple axes -> comparisons are DESCRIPTIVE (pre-registered as such; at n=8 nothing is
+  expected to reach corrected significance). Do NOT claim specificity if the permutation
+  CI overlaps the null.
+- Explicitly label n=8 as underpowered; report effect + CI width prominently.
+
+## Compute Requirements
+- CPU / laptop only (gene-set contrasts + ranking + bootstrap). No GPU, no spend.
+
+## Limitations & Assumptions
+- n=8 recovery is underpowered; this is a CASE STUDY illustrating the workflow, not a
+  powered validation (v3 Fix 6). The headline remains Day-3 coverage.
+- Control axes are curated, not exhaustive; a negative specificity result at n=8 does not
+  disprove Treg relevance, only that this dataset/N cannot resolve it.

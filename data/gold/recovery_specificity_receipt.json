@@ -1,0 +1,149 @@
+{
+  "n_gold_in_test": 8,
+  "gold_present": [
+    "BACH2",
+    "CTLA4",
+    "CTSH",
+    "IFIH1",
+    "IL2RA",
+    "PTPN22",
+    "SH2B3",
+    "TYK2"
+  ],
+  "n_test_perturbations": 2311,
+  "axes": {
+    "treg": {
+      "obs_mean_gold_percentile": 0.4396,
+      "null_mean": 0.4998,
+      "null_std": 0.1016,
+      "p_value_one_sided": 0.7218,
+      "auroc_descriptive": 0.4392,
+      "n_gold": 8,
+      "n_total": 2311
+    },
+    "cellcycle": {
+      "obs_mean_gold_percentile": 0.5588,
+      "null_mean": 0.5015,
+      "null_std": 0.1029,
+      "p_value_one_sided": 0.2913,
+      "auroc_descriptive": 0.5588,
+      "n_gold": 8,
+      "n_total": 2311
+    },
+    "cholesterol": {
+      "obs_mean_gold_percentile": 0.4194,
+      "null_mean": 0.4986,
+      "null_std": 0.102,
+      "p_value_one_sided": 0.7779,
+      "auroc_descriptive": 0.4189,
+      "n_gold": 8,
+      "n_total": 2311
+    },
+    "apoptosis": {
+      "obs_mean_gold_percentile": 0.3575,
+      "null_mean": 0.5019,
+      "null_std": 0.1035,
+      "p_value_one_sided": 0.9176,
+      "auroc_descriptive": 0.3568,
+      "n_gold": 8,
+      "n_total": 2311
+    },
+    "ribosome": {
+      "obs_mean_gold_percentile": 0.5002,
+      "null_mean": 0.5002,
+      "null_std": 0.0,
+      "p_value_one_sided": 1.0,
+      "auroc_descriptive": 0.5,
+      "n_gold": 8,
+      "n_total": 2311
+    },
+    "ifn_shared": {
+      "obs_mean_gold_percentile": 0.5754,
+      "null_mean": 0.5001,
+      "null_std": 0.1016,
+      "p_value_one_sided": 0.2352,
+      "auroc_descriptive": 0.5754,
+      "n_gold": 8,
+      "n_total": 2311
+    },
+    "magnitude_baseline": {
+      "obs_mean_gold_percentile": 0.5439,
+      "null_mean": 0.5021,
+      "null_std": 0.1008,
+      "p_value_one_sided": 0.3442,
+      "auroc_descriptive": 0.5439,
+      "n_gold": 8,
+      "n_total": 2311
+    },
+    "treg_residualized_on_magnitude": {
+      "obs_mean_gold_percentile": 0.4329,
+      "null_mean": 0.4994,
+      "null_std": 0.101,
+      "p_value_one_sided": 0.7416,
+      "auroc_descriptive": 0.4324,
+      "n_gold": 8,
+      "n_total": 2311
+    }
+  },
+  "leave_IFIH1_out": {
+    "treg": {
+      "obs_mean_gold_percentile": 0.4631,
+      "null_mean": 0.5007,
+      "null_std": 0.1087,
+      "p_value_one_sided": 0.6329,
+      "auroc_descriptive": 0.4628,
+      "n_gold": 7,
+      "n_total": 2310
+    },
+    "cellcycle": {
+      "obs_mean_gold_percentile": 0.565,
+      "null_mean": 0.501,
+      "null_std": 0.1092,
+      "p_value_one_sided": 0.2817,
+      "auroc_descriptive": 0.565,
+      "n_gold": 7,
+      "n_total": 2310
+    },
+    "cholesterol": {
+      "obs_mean_gold_percentile": 0.3591,
+      "null_mean": 0.4981,
+      "null_std": 0.1093,
+      "p_value_one_sided": 0.8975,
+      "auroc_descriptive": 0.3584,
+      "n_gold": 7,
+      "n_total": 2310
+    },
+    "apoptosis": {
+      "obs_mean_gold_percentile": 0.3715,
+      "null_mean": 0.5017,
+      "null_std": 0.109,
+      "p_value_one_sided": 0.879,
+      "auroc_descriptive": 0.3709,
+      "n_gold": 7,
+      "n_total": 2310
+    },
+    "ribosome": {
+      "obs_mean_gold_percentile": 0.5002,
+      "null_mean": 0.5002,
+      "null_std": 0.0,
+      "p_value_one_sided": 1.0,
+      "auroc_descriptive": 0.5,
+      "n_gold": 7,
+      "n_total": 2310
+    }
+  },
+  "specificity_verdict": {
+    "treg_recovery_p": 0.7218,
+    "treg_auroc_descriptive": 0.4392,
+    "treg_beats_all_controls": false,
+    "treg_beats_magnitude_baseline": false,
+    "significant_at_0.05": false,
+    "honest_conclusion": "Treg recovery NOT significant at n=8 -> underpowered; consistent with v3's expectation that recovery is a case study, not a powered validation."
+  },
+  "caveats": [
+    "n=8 gold genes -> underpowered CASE STUDY, not a headline (v3 Fix 6).",
+    "Permutation null assumes pooled-test exchangeability (recovery is pooled, not donor-blocked, because CD226+6/8 gold genes are absent from donor-pair data).",
+    "Trust proxy = pooled Day-2 ensemble/residual, NOT the guaranteed Day-3 conformal trust.",
+    "Control comparisons are DESCRIPTIVE (multiple axes at n=8); no family-wise claim."
+  ]
+}
