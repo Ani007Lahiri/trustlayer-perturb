@@ -1,0 +1,11 @@
+{"script": "src/trustlayer/features.py", "output": "data/interim/day2_feature_table.parquet", "size_bytes": 1493418, "sha256": "93088a66f8509d28"}
+{"script": "src/train_base_predictor.py", "output": "data/gold/base_predictor_metrics.json", "size_bytes": 1554, "sha256": "4fd19481aeea3f72"}
+{"script": "src/train_base_predictor.py", "output": "data/interim/base_predictor_preds.parquet", "size_bytes": 1225732, "sha256": "674e654d35fbd0dc"}
+{"script": "src/train_base_predictor.py", "output": "models/base_predictor.joblib", "size_bytes": 129904, "sha256": "71c73a58f46cccd3"}
+{"script": "src/build_treg_axis.py", "output": "data/interim/treg_axis_scores.parquet", "size_bytes": 457897, "sha256": "f20b507e13de2ce2"}
+{"script": "src/build_treg_axis.py", "output": "data/gold/treg_axis_manifest.json", "size_bytes": 573, "sha256": "45bbd5abf1063650"}
+{"script": "src/run_genetics_gate.py", "output": "data/gold/genetics_gate_receipt.json", "size_bytes": 6546, "sha256": "3de9868b5bca0fd4"}
+{"script": "src/build_gold_set.py", "output": "data/gold/t1d_gold_set.json", "size_bytes": 5118, "sha256": "7dbdcf44e8b91731"}
+{"script": "src/build_gold_set.py", "output": "data/gold/t1d_gold_set.tsv", "size_bytes": 775, "sha256": "a044f1fcd98f951d"}
+{"script": "src/data_facts.py", "output": "data/gold/data_facts_receipt.json", "size_bytes": 3880, "sha256": "dc40d7b0f301a6f1"}
+{"script": "src/run_commit_gate.py", "output": "data/gold/believe_veto_split.json", "size_bytes": 557, "sha256": "a0360889ae788f47"}

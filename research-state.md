@@ -3,7 +3,20 @@
 *Live decision log + state tracker. Current as of **v3 BUILD, Day 0-1**. Supersedes Iteration 2 (which pre-dates the v3 PRKCQ reversal). See `revised_plans/PLAN_OF_ATTACK_v3.html` for the governing plan.*
 
 ## Current stage
-BUILD — Day 0-1 foundation COMPLETE ("checks before model"). Environment, live genetics gates, tiered cited gold set, deterministic commit_gate() veto, and frozen leakage-safe splits are all built and passing on REAL data (11/11 tests). The 16.79 GB Perturb-seq DE_stats delta file is downloaded, byte-verified against S3, and confirmed to open as 33,983×10,282 with log_fc+zscore layers. Ready for Day 2 (base predictor + UCell axis).
+BUILD — Day 2 COMPLETE. Base predictor + Treg axis built on real data, both critique gates PASS, 15/15 tests. Day-2 methodology written, PASSED pre-COMPUTE critique (1 fix cycle) and post-COMPUTE critique. Day 0-1 foundation COMPLETE.
+
+## Day 2 results
+- **Base predictor** (leakage-safe, 5 covariate features, HGBR): test R²=+0.096, Spearman=+0.356; mean baseline R²≈0; shuffle R²<0. Modest R² is the IDEAL regime — signal exists but leaves headroom for the trust layer to matter (v3 §1). Target = log1p(||trans zscore, on-target excluded||).
+- **Treg program axis** (Fix 3 dependency): 13 POS + 10 NEG genes, gold-set-disjoint (CTLA4/FOXP3/IL2RA dropped), per-row on-target exclusion. RASGRP1 KD pushes toward Treg program (+0.85 Rest) — consistent with KD-mimics-protection thesis.
+- **Leakage fix (critique-driven):** original ||zscore|| target contained the on-target gene → circularity with ontarget_effect_size feature. Fixed to trans-only target + forbidden-feature assertion. Critique confirmed "circularity genuinely severed."
+- Provenance: _script_manifest.jsonl (11 output entries, sha256).
+
+## Next (Day 3)
+Deep ensemble → MAPIE conformal → selective-risk/coverage curves (the HEADLINE metric, v3 Fix 6). Needs decision: pull by_donors.h5mu (16.87GB) for true donor-blocked LODO, or use perturbation-blocked conformal as v1.
+
+## Critique history
+- Pre-COMPUTE Gate-1 (Day-2 methodology), cycle 1: **BLOCKING** — target-feature circularity: effect_magnitude=||zscore|| contained the on-target gene, and ontarget_effect_size was a feature (target = sqrt(ontarget² + Σtrans²)). On-target is typically the largest norm component → non-negligible leak.
+- Pre-COMPUTE Gate-1, cycle 2 (after fix): **PASS** — "core circularity genuinely severed." Fixes: (1) target = trans-only ||zscore|| (perturbed gene excluded); (2) all DE-derived quantities forbidden as features (build-time assertion); (3) Treg axis excludes perturbed gene per-row. Non-blocking note: target_baseMean predicting trans-effect is legitimate signal, not leakage. Environment, live genetics gates, tiered cited gold set, deterministic commit_gate() veto, and frozen leakage-safe splits are all built and passing on REAL data (11/11 tests). The 16.79 GB Perturb-seq DE_stats delta file is downloaded, byte-verified against S3, and confirmed to open as 33,983×10,282 with log_fc+zscore layers. Ready for Day 2 (base predictor + UCell axis).
 
 ## Data (verified this session)
 - `data/raw/GWCD4i.DE_stats.h5ad` — 16.79 GB, from CZI Virtual Cells Platform public S3 (MIT license). Byte-exact match to S3 content-length; opens 33983×10282, layers log_fc/zscore/p_value/adj_p_value/baseMean/lfcSE; all trio + gold genes present. Provenance: `data/gold/data_provenance_receipt.json`.

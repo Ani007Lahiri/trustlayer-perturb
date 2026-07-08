@@ -8,3 +8,7 @@ day0-1	data_facts=33983 pairs, 4 donors, xdonor_r_med=0.41, 26% r<0.2	done	Real 
 day0-1	de_stats_download=16.79GB verified	done	GWCD4i.DE_stats.h5ad pulled from public CZI VCP S3; byte-exact, opens as 33983x10282 with log_fc+zscore layers
 day0-1	frozen_splits hash=45ca2893cbe7e282	done	Leakage-safe splits: train=5529/calib=3686/test=2311; 8 gold genes forced into test, never calibration
 day0-1	tests=11/11 pass	done	7 commit_gate + 4 splits tests green
+day2	base_predictor test R2=+0.096 Spearman=+0.356	done	Leakage-safe covariate predictor; beats mean(R2~0)+shuffle(R2<0); modest R2 = ideal calibration regime
+day2	treg_axis built (13 POS/10 NEG, gold-disjoint)	done	CTLA4/FOXP3/IL2RA dropped (in gold set); per-row on-target exclusion ON; RASGRP1 KD -> +Treg direction
+day2	critique Gate-1 BLOCK->PASS, Gate-2 PASS	done	Fixed target-feature circularity (trans-only target); both critique gates clean
+day2	tests=15/15 pass	done	7 gate + 4 splits + 4 day2-leakage

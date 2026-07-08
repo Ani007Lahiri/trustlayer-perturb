@@ -1,0 +1,37 @@
+{
+  "axis": "Treg stable/suppressive (POS) minus ex-Treg/effector (NEG)",
+  "pos_genes_used": [
+    "IKZF2",
+    "IL2RB",
+    "IL10",
+    "TNFRSF18",
+    "TNFRSF4",
+    "IKZF4",
+    "LRRC32",
+    "ENTPD1",
+    "NT5E",
+    "TGFB1",
+    "LGALS1",
+    "CCR8",
+    "TIGIT"
+  ],
+  "neg_genes_used": [
+    "IFNG",
+    "TBX21",
+    "RORC",
+    "IL21",
+    "CSF2",
+    "IL23R",
+    "RUNX3",
+    "STAT4",
+    "IL12RB2",
+    "CCR6"
+  ],
+  "dropped_because_in_gold_set": [
+    "CTLA4",
+    "FOXP3",
+    "IL2RA"
+  ],
+  "per_row_ontarget_exclusion": true,
+  "forbidden_disjoint": true
+}
