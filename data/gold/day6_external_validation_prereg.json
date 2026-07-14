@@ -1,0 +1,45 @@
+{
+ "purpose": "Day-6 RETROSPECTIVE external validation: pre-registration of the INDEPENDENT ground-truth label set, written BEFORE any label fetch or scoring.",
+ "claim_under_test": "The calibrated gate's GO/WITHHOLD ranking predicts which scored genes are backed by INDEPENDENT real-world therapeutic evidence (approved drugs / clinical-trial targets for autoimmune indications) BETTER than function-blind baselines (random, OT-association-alone, eQTL-count-alone).",
+ "why_external": "The pipeline's own Check-A rule was built from {immune-GO, OT_T1D>T2D, GWAS-T2D-tag, measured Treg direction}. It NEVER used drug approval or clinical-trial precedent. Drug/clinical-precedent labels are therefore not constructed by this project's rule => a validation that can fail.",
+ "external_truth_source": "Open Targets Platform Disease.drugAndClinicalCandidates (known + investigational drugs) for a FIXED, pre-registered set of autoimmune / immune-mediated indications. A scored gene is labelled POSITIVE iff it is the mechanistic target of >=1 such drug meeting the tier threshold.",
+ "prereg_autoimmune_indications": {
+  "type_1_diabetes": "MONDO_0005147",
+  "rheumatoid_arthritis": "EFO_0000685",
+  "inflammatory_bowel_disease": "EFO_0003767",
+  "crohns_disease": "EFO_0000384",
+  "ulcerative_colitis": "EFO_0000729",
+  "psoriasis": "EFO_0000676",
+  "psoriatic_arthritis": "EFO_0003778",
+  "multiple_sclerosis": "MONDO_0005301",
+  "systemic_lupus_erythematosus": "EFO_0002690",
+  "ankylosing_spondylitis": "EFO_0003898",
+  "celiac_disease": "EFO_0001060",
+  "atopic_dermatitis": "EFO_0000274",
+  "vitiligo": "EFO_0004208",
+  "alopecia_areata": "EFO_0004192",
+  "asthma": "EFO_0000270"
+ },
+ "tier_definitions": {
+  "tier2_PRIMARY_any_clinical": "target of a drug at ANY clinical stage (maxClinicalStage >= 1, i.e. Phase I and above, incl. Approved) for any pre-registered autoimmune indication",
+  "tier1_STRICT_approved_or_late": "target of a drug that is Approved OR Phase III+ (maxClinicalStage >= 3) for any pre-registered autoimmune indication"
+ },
+ "primary_tier": "tier2_PRIMARY_any_clinical",
+ "scoring_set": "All 44 genes that received a gate GO/WITHHOLD call in day0_checkA_enriched_execution_receipt.json (sha256 25081a891594cbe29d11e2e63dec6dc9c8758074df3241a3b6ce9e49ee730bd1). Includes the trio CD226/RASGRP1/PRKCQ.",
+ "sensitivity_set": "35-gene subset excluding the 9 pure-metabolic NOGO-arm distractors (ABCC8,GIPR,HNF4A,IRS1,JAZF1,NOTCH2,PDX1,PPARG,THADA), reported as robustness.",
+ "predictors_compared": {
+  "gate": "binary claude_go (GO=1/WITHHOLD=0) from the calibrated gate/adjudication",
+  "ot_alone": "OT T1D association score (ot_t1d_assoc) - function-blind continuous baseline",
+  "eqtl_alone": "eQTL n_significant count - function-blind continuous baseline",
+  "random": "uniform random scores, 2000 permutations"
+ },
+ "metrics": "AUROC (primary) and average precision; bootstrap 95% CI (2000 resamples); DeLong/permutation for gate-vs-OT. Small n acknowledged.",
+ "decision_rule": {
+  "yes": "gate AUROC point estimate > best baseline AND gate-vs-best-baseline advantage 95% CI excludes 0",
+  "marginal": "gate AUROC > best baseline but CI includes 0",
+  "no": "gate AUROC <= best baseline",
+  "underpowered": "n_external_positives < 4 OR bootstrap CI so wide no ranking is distinguishable"
+ },
+ "honesty_note": "OT association score is PARTLY informed by the same known-drug datasource, making ot_alone a DELIBERATELY STRONG (conservative) baseline. If the binary gate ties/loses to OT-alone we report that honestly. Labels are frozen with a hash before any AUROC is computed. A NEGATIVE result will be reported as NEGATIVE.",
+ "date_utc": "2026-07-11"
+}

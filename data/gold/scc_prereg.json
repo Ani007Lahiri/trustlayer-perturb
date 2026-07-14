@@ -1,0 +1,33 @@
+{
+ "name": "Synergy-Conditioned Conformal (SCC) \u2014 falsification test",
+ "date": "2026-07-12",
+ "one_line": "For double perturbations, does conditioning conformal interval width on a PRIOR expectation of synergy give better CONDITIONAL coverage across the synergy spectrum than vanilla split conformal (constant width) at matched marginal coverage?",
+ "scientific_gap": "arXiv:2603.02204 (perturbation-structured conformal) uses only a causal-descendant axis on SINGLE interventions. No published conformal method conditions calibration on COMBINATORIAL SYNERGY (deviation from additivity in double perturbations). This is the open wedge.",
+ "substrate": "Norman 2019 (GSE133344): 105 single-gene perturbations, 131 double perturbations, all doubles have both constituent singles measured. Pseudobulk CP10K->log1p, effect = pert - control.",
+ "target": "y = magnitude of the DOUBLE perturbation's transcriptional effect ||e_AB||. Predictor = ADDITIVE baseline ||e_A + e_B|| (the biologically principled null). Residual = |y - additive|.",
+ "the_conditioner": "predicted synergy prior s_hat(A,B): a leakage-safe estimate of expected non-additivity available WITHOUT seeing the double \u2014 from single-perturbation properties only (e.g. cosine of the two single-effect directions; co-functional pathway overlap; sum of single magnitudes). NOTE: the TRUE synergy uses the double; s_hat must NOT.",
+ "method": "SCC: isotonic sigma(s_hat) fit on calibration residuals; interval = additive_pred +/- sigma(s_hat)*Q_{1-alpha}(normalized scores). Compared to vanilla split conformal.",
+ "protocol": {
+  "cv": "leave-one-double-out or K-fold over the 131 doubles (K>=10)",
+  "alpha": 0.1,
+  "primary_endpoint": "conditional-coverage gap = max over synergy terciles |emp_coverage - 0.90|, at matched marginal ~0.90",
+  "secondary": "mean interval width on high-synergy tercile (should be WIDER for SCC if it works)",
+  "null": "permutation of s_hat labels across pairs, target perm p<0.01 for SCC-beats-vanilla on cond gap"
+ },
+ "prereg_falsifiers": [
+  "F1: SCC does NOT beat vanilla on conditional-coverage gap (perm p>=0.01) -> synergy prior carries no calibration information -> stays ~77",
+  "F2: the leakage-safe s_hat does NOT correlate with true synergy (rho ~0) -> no predictable synergy signal to condition on -> negative",
+  "F3: SCC beats vanilla ONLY because it widens everything uniformly (no tercile-specific gain) -> reduces to a global width rescale, not adaptive"
+ ],
+ "tier_rule": {
+  "clears_80": "SCC beats vanilla on conditional-coverage gap with perm p<0.01 AND the gain is concentrated on the high-synergy tercile AND s_hat is leakage-safe -> novel validated positive (first synergy-conditioned calibration) -> 80-83",
+  "stays_77": "any falsifier fires -> honest negative, stays 76-79",
+  "honest_prior": "~40/60 (harder substrate, n=131, but genuine synergy dynamic range exists: synergy_frac 0.37-1.8)"
+ },
+ "leakage_guards": [
+  "s_hat computed from SINGLES only, never the double",
+  "predictor (additive) uses only singles",
+  "CV holds out whole doubles"
+ ],
+ "prereg_sha256": "7c97f9d681dc3119c2f50f5be5d3e347166bdb04b0f18dd91949399d7fe6a9b1"
+}

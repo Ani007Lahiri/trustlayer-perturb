@@ -1,0 +1,46 @@
+{
+  "calibration_eval": "Isotonic calibrator mapping s -> P(sign correct), CROSS-FIT across the 4 donor folds (fit on 3 folds' edges, apply to the 4th), pooled. Reliability diagram + Expected Calibration Error (10 equal-count bins).",
+  "confidence_score": "s = |mean_calib log_fc| / (sd_calib log_fc + 0.05), a consensus-strength (t-like) score from the 3 calibration pairs ONLY. Higher s = more confident sign.",
+  "data": {
+    "common_contrasts": "4879 (target_contrast x culture_condition) present in ALL 6 pairs \u2014 the aligned unit set.",
+    "file": "data/raw/GWCD4i.DE_stats.by_donors.h5mu",
+    "layers_used": "log_fc (signed downstream effect); adj_p_value only for descriptive base-rate reporting.",
+    "readout_panel": "Downstream readout = the 2298 genes that are BOTH measured AND are themselves perturbation targets in the reproducible core (the regulatory network AMONG perturbed genes). Principled, symmetric 'downstream program', not arbitrary.",
+    "structure": "6 donor-pair modalities from 4 donors; each pair = perturbations reproducibly detected in BOTH its donors (reproducible core)."
+  },
+  "date_utc": "2026-07-11T23:09:53.948700+00:00",
+  "honesty_contract": "Prereg frozen (sha256 over content, timestamp EXCLUDED) BEFORE any scoring. Success criteria stated a priori. An effect must SURVIVE the self-knockdown exclusion AND beat the constant-sign baseline to count. No tuning after seeing results. If NULL/trivial/underpowered, reported as such.",
+  "lodo_design": {
+    "calibration": "For held-out donor d: the 3 pairs whose BOTH members != d (pairs_excluding).",
+    "edge_selection_per_fold": "Candidate edge iff median over the 3 CALIBRATION pairs of |log_fc| >= tau_mag (an effect exists to have a sign). tau_mag = 0.5 log2FC (primary); sensitivity at 0.25 and 1.0.",
+    "folds": "4 leave-one-donor-out folds (same as Lever A / conformal.py).",
+    "test": "The 3 pairs containing d (pairs_containing). Exchangeability assertion: no calib pair contains d."
+  },
+  "metrics": [
+    "base_rate = overall sign-correctness at 100% coverage",
+    "constant_majority_baseline accuracy at each coverage",
+    "selective_accuracy vs coverage curve",
+    "selective_accuracy MINUS constant_baseline at coverage=50% (primary lift), bootstrap 95% CI",
+    "risk-coverage permutation p-value",
+    "ECE of the calibrated sign confidence"
+  ],
+  "one_line": "Can the trust layer be calibrated to trust the SIGN (up vs down) of a perturbation's downstream transcriptional effect on a defined readout, held-out across donors, with a valid abstention when the sign is uncertain \u2014 ABOVE the trivial/constant-sign baseline?",
+  "prereg_sha256": "7c28ee0f1db5ec8ec4fb00d9f6559099f9fa867e6decf81e8351d97630ebc97b",
+  "relation_to_prior": "Lever A calibrated effect MAGNITUDE within-assay (AUROC 0.709). The gate currently trusts magnitude only. This attacks a named narrowness: it asks whether direction can be trusted with valid abstention. NOTE: distinct from day8_outcome_direction (that was clinical-trial drug success/failure); this is TRANSCRIPTIONAL sign of downstream regulation.",
+  "risk_coverage_significance": "AURC-style: error = 1 - correct, trust = s; permutation null (2000 shuffles of s) for whether s orders sign-correctness better than random. Reuses conformal.aurc / aurc_permutation_test.",
+  "seed": 20260708,
+  "selective_prediction": "Rank edges by s (pooled across the 4 folds). Sweep coverage from 100% down to 10%; at each coverage predict on the top-s fraction, abstain on the rest. Selective accuracy = sign-correct fraction among non-abstained. (Set-valued analog: {up},{down}, or {up,down}=ABSTAIN.)",
+  "sign_task_defined": "For each edge, predict the SIGN (up=+1 / down=-1) of its downstream log_fc on the HELD-OUT donor, using ONLY calibration-donor evidence, with an ABSTENTION option. Prediction = sign(mean_calib log_fc). Ground-truth = sign(mean_test log_fc) on the held-out-donor pairs. This is calibrated cross-donor sign trust: output a calibrated confidence that the estimated sign will hold on an unseen donor, and abstain when it will not.",
+  "success_bar_a_priori": {
+    "no_or_underpowered": "Selective accuracy does not exceed the constant baseline, OR the lift CI includes 0, OR the effective edge/donor count is too small to resolve the bar. Reported plainly as NULL/underpowered per the honesty contract.",
+    "partial": "Some but not all of the above (e.g. beats base rate but calibration weak, or lift positive but CI touches 0).",
+    "real_new_capability_YES_requires_ALL": [
+      "At coverage=50%: (selective_accuracy - constant_majority_baseline) > 0 with bootstrap 95% CI lower bound > 0 (paired over folds/bootstraps).",
+      "Risk-coverage permutation p < 0.05 (abstention genuinely orders sign-correctness).",
+      "ECE < 0.10 (confidence is calibrated) AND reliability non-degenerate."
+    ]
+  },
+  "title": "Calibrated DIRECTION / SIGN trust \u2014 a pre-registered scope expansion of the CD4+ Perturb-seq commit-gate (T1D)",
+  "trivial_guard": "(1) SELF-KNOCKDOWN EXCLUDED: every edge with g_j == g_i is removed (self-knockdown sign is ~always down = the trivial artifact). (2) CONSTANT-SIGN BASELINE: on the exact same non-abstained edge set at every coverage, compare against the majority-sign constant classifier accuracy = max(p_up, p_down). A win requires BEATING this on non-trivial downstream edges. (3) Edge universe selected using CALIBRATION donors ONLY (no held-out leakage). (4) Base rate (overall sign-correctness at full coverage) and constant-baseline reported first-class.",
+  "unit_of_analysis": "An EDGE = (contrast row c = perturbed target g_i under a culture condition, downstream readout gene g_j), with g_j in the 2298-gene panel."
+}

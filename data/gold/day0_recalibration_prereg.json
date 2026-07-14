@@ -1,0 +1,31 @@
+{
+  "check": "External calibration RECALIBRATION test (turn iter4 negative into scoped positive-or-not)",
+  "written_utc": "2026-07-11T07:23:10Z",
+  "claim_under_test": "Frozen Marson T1D conformal quantiles do NOT transfer cross-assay (iter4 HONEST NEGATIVE: 80/90/95 -> 4.8/7.6/17.1 on Norman K562). BUT if we RE-CALIBRATE conformal quantiles on Norman's OWN calibration split (same split-conformal method, new data), empirical coverage on a held-out Norman test split should be restored to near-nominal -- showing the METHOD generalizes even though the specific frozen quantiles do not.",
+  "external_dataset": "Norman et al. 2019 K562 Perturb-seq (GSE133344); 105 single-gene perturbations, 11855 NegCtrl control cells; group stats in data/interim/norman_group_stats.npz.",
+  "exchangeable_units": "105 single-gene perturbations (each >=25 cells, already filtered by iter4).",
+  "target_definition": "y = log1p( L2norm( Welch DE zscore over 9780-gene shared readout panel, on-target gene excluded ) ) -- IDENTICAL to Marson conformal.py; reproduces iter4 frozen residual mean/sd 0.604/0.295 and frozen coverage 0.048/0.076/0.171 EXACTLY (verified before this prereg).",
+  "method": "split-conformal, identical to src/trustlayer/conformal.py",
+  "base_predictor_PRIMARY": "FRESH HistGradientBoostingRegressor (max_iter=300, lr=0.05, max_depth=4, l2=1.0, random_state=SEED) fit on Norman CALIBRATION split only. Full method re-applied to new data.",
+  "conformal_quantile_rule": "q = np.quantile(calib_abs_residual, L, method='higher') -- byte-identical call to conformal.py.",
+  "coverage_metric": "fraction of held-out Norman TEST perturbations with |y-pred| <= q, per level.",
+  "split_PRIMARY": {
+    "calib_frac": 0.5,
+    "seed": 20260711,
+    "note": "single pre-registered 50/50 split = primary headline"
+  },
+  "robustness": {
+    "n_random_splits": 500,
+    "seeds": "20260711..20260711+499",
+    "report": "mean+/-sd coverage across splits"
+  },
+  "sensitivity_frozen_base": "variant keeping the frozen near-constant Marson base predictor and recalibrating ONLY the quantiles on Norman calib residuals -- isolates the conformal step from base-predictor refit.",
+  "PREREGISTERED_success_criterion": "method_generalizes = 'yes' iff the mean-across-splits recalibrated coverage at ALL THREE levels lands within +/-0.05 of nominal (0.75-0.85 / 0.85-0.95 / 0.90-1.00); 'partial' if some-but-not-all levels within band OR within +/-0.08; 'no' if it fails the band at multiple levels even after recalibration. Chosen BEFORE scoring; no tuning to cross it.",
+  "honesty_note": "If recalibration does NOT restore coverage, that is reported as a DEEPER (scale) problem, not reframed.",
+  "levels": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "_prereg_sha256": "565d7cf5fe46989e92ae9cf3746cab3917a3426207f9a286ecfeeb186e5514f5"
+}

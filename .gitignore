@@ -1,13 +1,65 @@
 # Large raw data (never commit) — DE_stats h5ad (~17GB), suppl CSVs, pseudobulk
 data/raw/
 data/interim/
+# Large public external datasets (re-fetchable from GEO/Zenodo; GitHub rejects >100MB)
+data/external/
+release/*.tar.gz
+*.mtx.gz
+*.tar.gz
 # Keep the small, reproducible lineage-backed receipts under data/gold/
 !data/gold/
 data/gold/nominations/*.json
 
-figures/*.png
+# figures: publication PNGs ARE committed (judges read them); ignore scratch subdir
+figures/aux/
+data/aux/
+src/aux/
+
 __pycache__/
 *.pyc
 .venv/
+.pytest_cache/
+.ruff_cache/
+.context/
+.DS_Store
+.tmp_ignore
 logs/*.log
 logs/*.pid
+
+# ---- Internal process machinery: kept on disk, NOT in the public judged repo ----
+# Self-scoring / merit-tracking
+merit_score_log.json
+data/gold/merit_score_log.json
+# Claude-council verdicts and rubric-strategy planning docs
+AUX_*.md
+Council_*.md
+Plan_v*_Council_Revised.md
+Plus20_*.md
+Further_Improvements_*.md
+Hackathon_Winning_Strategy.md
+Impact_and_GPU_Strategy.md
+ROUND4_FIXES_APPLIED.md
+improvement-research-report.md
+*_view_*.png
+frontier1_difficulty_verdict.png
+# Cross-platform handoff snapshots (internal)
+handoff/
+HANDOFF_*.md
+Progress*Report*.md
+COMMIT_PLAN.md
+
+# Internal 50-angle strategy register / planning
+revised_plans/
+_script_manifest.jsonl
+
+# Remaining internal planning / rubric-gap / placement strategy docs
+winning-plan.md
+BUILD_PLAN_*.md
+Rubric_Gap_Analysis.md
+PLACEMENT_REPORT.md
+Aitiome_teamup_assessment.md
+Data_Incorporation_Plan.md
+Novelty_Scope_Interface_Plan.md
+Calibration_Crown_Consolidated.md
+MODIFICATIONS.md
+.github/workflows/ci.yml

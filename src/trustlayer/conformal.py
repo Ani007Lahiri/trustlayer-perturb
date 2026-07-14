@@ -26,6 +26,7 @@ first-class result; do not claim per-level discrimination at n_eff ~ tens.
 
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass, field
 from itertools import combinations
@@ -39,6 +40,13 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 H5MU = Path("data/raw/GWCD4i.DE_stats.by_donors.h5mu")
 DONORS = ["CE0006864", "CE0008162", "CE0008678", "CE0010866"]
 SEED = 20260708
+
+
+def _stable_hash(s: str) -> int:
+    """RP01 FIX: deterministic per-key seed. Python's built-in hash() is salted per
+    process (PYTHONHASHSEED), so SEED + hash(d) made the AURC receipt non-reproducible
+    across runs. md5-derived int is stable across processes and machines."""
+    return int(hashlib.md5(s.encode()).hexdigest(), 16) % 100000
 
 
 # ---------------------------------------------------------------- data access
@@ -162,6 +170,7 @@ def run_lodo(levels=(0.80, 0.90, 0.95)) -> LODOResult:
         covered = {
             L: [] for L in levels
         }  # bool per test row (at 90% for pooling headline)
+        width_by_level = {L: [] for L in levels}  # ST02: 2*q per fold/level (log2FC)
         per_donor = {}
         all_test_errors, all_test_trust = [], []
         all_test_genes = set()
@@ -190,19 +199,30 @@ def run_lodo(levels=(0.80, 0.90, 0.95)) -> LODOResult:
             test_abs_err = np.abs(test["y"] - test_pred)
 
             fold_cov = {}
+            fold_width = {}
             for L in levels:
                 q = np.quantile(calib_res, L, method="higher")
                 cov = test_abs_err <= q
                 covered[L].extend(cov.tolist())
                 fold_cov[L] = float(cov.mean())
-            per_donor[d] = {"n_test": int(len(test["y"])), "coverage": fold_cov}
+                # ST02 FIX: q IS the conformal half-width in log2FC units. The full
+                # prediction interval is pred +/- q, so interval WIDTH = 2*q. This is the
+                # actionable confidence signal ("how wide, in log2FC?") and was previously
+                # discarded. Record it per fold/level.
+                fold_width[L] = float(2.0 * q)
+                width_by_level[L].append(float(2.0 * q))
+            per_donor[d] = {
+                "n_test": int(len(test["y"])),
+                "coverage": fold_cov,
+                "interval_width_log2fc": {L: round(fold_width[L], 4) for L in levels},
+            }
 
             # Trust score for selective prediction = negative ensemble spread (low
             # disagreement across bootstrap models => high trust). Split-conformal width is
             # CONSTANT per level, so it cannot rank predictions; the ensemble spread gives a
             # per-prediction reliability signal. Each fold uses an INDEPENDENT bootstrap
             # ensemble (distinct seeds per model AND per fold) so the spread is not degenerate.
-            fold_seed = SEED + hash(d) % 100000
+            fold_seed = SEED + _stable_hash(d)
             spreads = _ensemble_spread(calib, test, n_models=8, base_seed=fold_seed)
             trust = -spreads  # low spread = high trust
             all_test_errors.append(test_abs_err)
@@ -236,6 +256,11 @@ def run_lodo(levels=(0.80, 0.90, 0.95)) -> LODOResult:
                 "row_cp_note": "row-level CP is OVERCONFIDENT (non-independent rows); "
                 "use fold_std as the honest uncertainty",
                 "n_rows": n,
+                # ST02 FIX: the actionable confidence signal — interval WIDTH in log2FC.
+                "interval_width_log2fc_mean": round(float(np.mean(width_by_level[L])), 4),
+                "interval_width_log2fc_by_fold": [round(w, 4) for w in width_by_level[L]],
+                "interval_width_note": "full conformal interval is pred +/- q; width = 2*q in "
+                "log2FC units. This is the deliverable confidence signal ('how wide?'), now reported.",
             }
         res.per_donor_coverage = per_donor
 

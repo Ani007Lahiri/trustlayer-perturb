@@ -1,0 +1,25 @@
+{
+ "name": "IMP4 \u2014 conditional conformal vs the absolute high-synergy coverage bar",
+ "date": "2026-07-12",
+ "status": "PRE-REGISTERED BEFORE RUNNING. Frozen so a failure is an honest negative.",
+ "motivation": "The SCC scalar-normalizer reduces the miscoverage SLOPE but does not clear the ABSOLUTE high-synergy coverage bar (top-50% high-synergy coverage CI includes 0.90 from below on Norman; not cleared on CaRPool). Question: does an explicitly GROUP-CONDITIONAL conformal method (Mondrian by synergy tercile) or a covariate-conditional method (Gibbs-Cherian-Candes) clear the ABSOLUTE bar without redefining it?",
+ "methods_compared": [
+  "vanilla_split_conformal (baseline)",
+  "scc_scalar_prior (current method)",
+  "mondrian_synergy_tercile (per-group quantile)",
+  "conditional_quantile_shat (regress nonconformity quantile on synergy prior)"
+ ],
+ "primary_endpoint": "high-synergy (top-50%) empirical coverage with 5000x bootstrap 95% CI; a method CLEARS iff its high-synergy coverage CI CONTAINS 0.90 AND its point coverage >= 0.88, on BOTH datasets, at nominal 0.90.",
+ "secondary": "mean interval width (efficiency) and marginal coverage; a method that clears by inflating width to infinity is noted as trivial.",
+ "datasets": [
+  "Norman n=131",
+  "CaRPool-seq n=142/158"
+ ],
+ "no_phacking_guards": [
+  "the 0.90 nominal and top-50% split are fixed from the SCC prereg, not re-chosen",
+  "width reported alongside coverage so trivial-inflation is visible",
+  "all methods use identical LOPO folds and identical nonconformity base score |y-additive|"
+ ],
+ "honest_prior": "40% that any conditional method cleanly clears the absolute bar on BOTH datasets; conditional methods typically restore coverage at a width cost.",
+ "prereg_sha256": "9b8887f3c4f5805ec5fa4f4bb1339b733d88cf7bb96ca1268d2a5696ad54b778"
+}

@@ -1,0 +1,55 @@
+{
+  "_prereg_sha256": "d98447dfe713c264b4023ea6380518a79f177c217441e56591ce23ef86275611",
+  "all_methods_distribution_free": true,
+  "coverage_targets": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "datasets": {
+    "marson_t1d_lodo": {
+      "exchangeable_unit": "perturbation gene within donor-pair; pooled test rows across 4 folds",
+      "pipeline": "committed src/trustlayer/conformal.py run_lodo (4 donors, 6 donor-pairs, LODO)",
+      "raw": "data/raw/GWCD4i.DE_stats.by_donors.h5mu",
+      "target": "y = log1p(L2norm(DE zscore over trans genes, on-target excluded))"
+    },
+    "norman_k562": {
+      "cache": "data/interim/norman_group_stats.npz + norman_meta.json",
+      "exchangeable_unit": "single-gene perturbation (105 perts, >=25 cells)",
+      "pipeline": "recalibrated split-conformal, identical method, per run_norman_recalibration.py",
+      "target": "y = log1p(L2norm(Welch DE zscore over 9780-gene panel, on-target excluded))"
+    }
+  },
+  "headline_level": 0.9,
+  "honesty_contract": "prereg frozen before scoring fixes; residual gap reported plainly; committed pipeline scored (not a surrogate); a partial fix is a valid honest outcome; do NOT claim full closure with a deployable method unless worst-stratum coverage meets the preset band.",
+  "methods": {
+    "baseline": "committed global split-conformal (single per-fold quantile of |resid|)",
+    "cqr": "(c) Conformalized Quantile Regression (Romano, Patterson, Candes 2019): GBM quantile regressors at alpha/2 and 1-alpha/2, conformalize with E=max(q_lo-y, y-q_hi)",
+    "mondrian_oracle": "(a') ORACLE effect-magnitude Mondrian: bins by TRUE y (uses label; NON-DEPLOYABLE upper bound, labeled as oracle) \u2014 quantifies the ceiling of bin-conditional CP",
+    "mondrian_pred": "(a) DEPLOYABLE effect-magnitude Mondrian: bins by PREDICTED magnitude (pred), per-bin calibration quantile applied to test rows in same predicted bin (Vovk Mondrian CP)",
+    "normalized": "(b) normalized/localized conformal (Lei et al 2018; Papadopoulos 2008): score s=|y-pred|/sigma_hat(x), sigma_hat from a difficulty regressor fit on calib |resid|"
+  },
+  "metrics": {
+    "marginal_coverage": "pooled coverage across all test rows (must remain valid, guardrail)",
+    "max_coverage_deviation": "max over strata of |per_stratum_coverage - nominal| (PRIMARY)",
+    "mean_interval_width": "mean half-width in target units (efficiency guardrail)",
+    "per_stratum_coverage": "fraction of stratum test rows with |y-pred| <= interval half-width",
+    "worst_stratum_coverage": "min over strata of per-stratum coverage (PRIMARY)"
+  },
+  "power": {
+    "bootstrap": "cluster bootstrap resampling exchangeable units (perturbation genes) with replacement",
+    "n_boot": 2000,
+    "report": "95% percentile CI on per-stratum coverage, worst-stratum coverage, marginal coverage"
+  },
+  "problem": "Under donor-blocked leave-one-donor-out (LODO) split-conformal (committed src/trustlayer/conformal.py), MARGINAL coverage is valid (0.793/0.895/0.949 at nominal 0.80/0.90/0.95) but CONDITIONAL coverage on the LARGEST TRUE-EFFECT-MAGNITUDE stratum collapses (~0.60-0.68 at nominal 0.90). The gate grants false trust exactly where effects are biggest. Reproduced on the committed pipeline before this prereg.",
+  "seed": 20260711,
+  "strata": {
+    "definition": "effect-magnitude quantile bins on the TRUE target y (the axis the break is disclosed on)",
+    "primary_K": 5,
+    "secondary_K": 4,
+    "worst_stratum": "the top (largest-effect) quantile bin is the pre-registered worst stratum of interest; worst-stratum coverage is reported as min over all strata"
+  },
+  "success_criterion_preset": "PRIMARY (deployable methods only): 'fully_closes' iff worst-stratum coverage >= nominal-0.05 at ALL THREE levels; 'partial' iff worst-stratum coverage improves by >=0.05 over baseline at the 0.90 headline but stays below nominal-0.05; 'no' iff no material improvement. The oracle Mondrian is reported separately as the non-deployable ceiling and does NOT count toward the deployable verdict.",
+  "title": "A3 conditional-coverage break: pre-registered evaluation of principled conformal fixes",
+  "written_before_scoring_fixes": true
+}

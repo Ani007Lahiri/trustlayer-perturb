@@ -1,0 +1,47 @@
+{
+ "pipeline_A_allgenes": {
+  "pipeline": "all-genes pseudobulk, min_cells=15, 158 pairs, scalar-magnitude nonconformity",
+  "interaction": 0.542,
+  "perm_p": 0.018,
+  "ci": [
+   0.204,
+   1.005
+  ],
+  "van_hi": 0.785,
+  "van_hi_ci": [
+   0.684,
+   0.873
+  ],
+  "scc_hi": 0.848,
+  "scc_hi_ci": [
+   0.759,
+   0.924
+  ],
+  "c1": true,
+  "c2": true,
+  "c3": true,
+  "clears": true
+ },
+ "pipeline_B_hvg": {
+  "pipeline": "HVG-2000, min_cells=25, 142 pairs, per-gene nonconformity",
+  "interaction": 2.202,
+  "perm_p": 0.0005,
+  "ci": [
+   1.362,
+   4.028
+  ],
+  "van_hi": 0.859,
+  "van_hi_ci": [
+   0.76,
+   0.922
+  ],
+  "scc_hi": 0.944,
+  "c1": true,
+  "c2": false,
+  "c3": true,
+  "clears": false
+ },
+ "robust_finding": "directional method x synergy interaction replicates positively on CaRPool (2nd dataset, Cas13 knockdown, THP-1) in BOTH pipelines, permutation p<0.05",
+ "fragile_finding": "strict frozen composite clearing is preprocessing-sensitive (clears under all-gene pseudobulk, not under HVG-2000); therefore NOT claimed as a clean composite clear",
+ "honest_verdict": "CROSS-MODALITY DIRECTIONAL REPLICATION (within-tier strengthening). NOT a tier jump: composite fragile + still single-modality-family + no wet-lab."
+}

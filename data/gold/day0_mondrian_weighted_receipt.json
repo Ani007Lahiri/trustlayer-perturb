@@ -1,0 +1,277 @@
+{
+  "check": "Principled conformal under donor covariate shift (naive-LODO vs Mondrian vs weighted)",
+  "generated_utc": "2026-07-11T07:24:51.023172+00:00",
+  "prereg_sha256": "b7743cae256bc859bbbb192f248e8bf0c90f65bd57c102ae84a4ae5309962509",
+  "levels": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "coverage": {
+    "naive_LODO": {
+      "0.8": {
+        "nominal": 0.8,
+        "row_empirical": 0.7932,
+        "row_cp_lo": 0.7899,
+        "row_cp_hi": 0.7965,
+        "n_rows": 58558
+      },
+      "0.9": {
+        "nominal": 0.9,
+        "row_empirical": 0.8955,
+        "row_cp_lo": 0.893,
+        "row_cp_hi": 0.898,
+        "n_rows": 58558
+      },
+      "0.95": {
+        "nominal": 0.95,
+        "row_empirical": 0.9486,
+        "row_cp_lo": 0.9468,
+        "row_cp_hi": 0.9504,
+        "n_rows": 58558
+      }
+    },
+    "mondrian_by_condition": {
+      "0.8": {
+        "nominal": 0.8,
+        "row_empirical": 0.7951,
+        "row_cp_lo": 0.7918,
+        "row_cp_hi": 0.7984,
+        "n_rows": 58558
+      },
+      "0.9": {
+        "nominal": 0.9,
+        "row_empirical": 0.896,
+        "row_cp_lo": 0.8935,
+        "row_cp_hi": 0.8984,
+        "n_rows": 58558
+      },
+      "0.95": {
+        "nominal": 0.95,
+        "row_empirical": 0.9478,
+        "row_cp_lo": 0.946,
+        "row_cp_hi": 0.9496,
+        "n_rows": 58558
+      }
+    },
+    "weighted_covariate_shift": {
+      "0.8": {
+        "nominal": 0.8,
+        "row_empirical": 0.794,
+        "row_cp_lo": 0.7907,
+        "row_cp_hi": 0.7973,
+        "n_rows": 58558
+      },
+      "0.9": {
+        "nominal": 0.9,
+        "row_empirical": 0.8961,
+        "row_cp_lo": 0.8936,
+        "row_cp_hi": 0.8986,
+        "n_rows": 58558
+      },
+      "0.95": {
+        "nominal": 0.95,
+        "row_empirical": 0.9488,
+        "row_cp_lo": 0.947,
+        "row_cp_hi": 0.9506,
+        "n_rows": 58558
+      }
+    }
+  },
+  "coverage_arrays": {
+    "naive": [
+      0.7932,
+      0.8955,
+      0.9486
+    ],
+    "mondrian": [
+      0.7951,
+      0.896,
+      0.9478
+    ],
+    "weighted": [
+      0.794,
+      0.8961,
+      0.9488
+    ],
+    "nominal": [
+      0.8,
+      0.9,
+      0.95
+    ]
+  },
+  "abs_deviation_from_nominal": {
+    "naive": [
+      0.0068,
+      0.0045,
+      0.0014
+    ],
+    "mondrian": [
+      0.0049,
+      0.004,
+      0.0022
+    ],
+    "weighted": [
+      0.006,
+      0.0039,
+      0.0012
+    ]
+  },
+  "domain_shift": {
+    "domain_classifier_auc_by_fold": {
+      "CE0006864": 0.5478,
+      "CE0008162": 0.5023,
+      "CE0008678": 0.5221,
+      "CE0010866": 0.5347
+    },
+    "domain_classifier_auc_mean": 0.5267,
+    "interpretation": "AUC ~0.5 => negligible covariate shift (naive already near-valid); AUC >> 0.5 => real shift, weighting/Mondrian expected to matter.",
+    "mondrian_conditional_coverage": {
+      "Rest": {
+        "0.8": 0.7969,
+        "0.9": 0.8951,
+        "0.95": 0.9479
+      },
+      "Stim8hr": {
+        "0.8": 0.7961,
+        "0.9": 0.8968,
+        "0.95": 0.9481
+      },
+      "Stim48hr": {
+        "0.8": 0.7923,
+        "0.9": 0.8959,
+        "0.95": 0.9476
+      }
+    },
+    "naive_conditional_coverage": {
+      "Rest": {
+        "0.8": 0.7763,
+        "0.9": 0.887,
+        "0.95": 0.9447
+      },
+      "Stim8hr": {
+        "0.8": 0.7899,
+        "0.9": 0.887,
+        "0.95": 0.94
+      },
+      "Stim48hr": {
+        "0.8": 0.8133,
+        "0.9": 0.9129,
+        "0.95": 0.9617
+      }
+    }
+  },
+  "per_fold": {
+    "CE0006864": {
+      "n_test": 14640,
+      "domain_auc": 0.5478,
+      "naive_q": {
+        "0.8": 0.1685,
+        "0.9": 0.2277,
+        "0.95": 0.2998
+      },
+      "mondrian_q": {
+        "0.8": {
+          "Rest": 0.1778,
+          "Stim8hr": 0.1703,
+          "Stim48hr": 0.1586
+        },
+        "0.9": {
+          "Rest": 0.236,
+          "Stim8hr": 0.2371,
+          "Stim48hr": 0.213
+        },
+        "0.95": {
+          "Rest": 0.3054,
+          "Stim8hr": 0.324,
+          "Stim48hr": 0.2691
+        }
+      }
+    },
+    "CE0008162": {
+      "n_test": 14639,
+      "domain_auc": 0.5023,
+      "naive_q": {
+        "0.8": 0.1745,
+        "0.9": 0.2328,
+        "0.95": 0.3019
+      },
+      "mondrian_q": {
+        "0.8": {
+          "Rest": 0.1846,
+          "Stim8hr": 0.1738,
+          "Stim48hr": 0.1654
+        },
+        "0.9": {
+          "Rest": 0.2424,
+          "Stim8hr": 0.2384,
+          "Stim48hr": 0.2168
+        },
+        "0.95": {
+          "Rest": 0.3113,
+          "Stim8hr": 0.3188,
+          "Stim48hr": 0.276
+        }
+      }
+    },
+    "CE0008678": {
+      "n_test": 14639,
+      "domain_auc": 0.5221,
+      "naive_q": {
+        "0.8": 0.1719,
+        "0.9": 0.2293,
+        "0.95": 0.3069
+      },
+      "mondrian_q": {
+        "0.8": {
+          "Rest": 0.1716,
+          "Stim8hr": 0.1795,
+          "Stim48hr": 0.1649
+        },
+        "0.9": {
+          "Rest": 0.227,
+          "Stim8hr": 0.2419,
+          "Stim48hr": 0.2163
+        },
+        "0.95": {
+          "Rest": 0.3062,
+          "Stim8hr": 0.3406,
+          "Stim48hr": 0.2778
+        }
+      }
+    },
+    "CE0010866": {
+      "n_test": 14640,
+      "domain_auc": 0.5347,
+      "naive_q": {
+        "0.8": 0.1691,
+        "0.9": 0.2258,
+        "0.95": 0.2978
+      },
+      "mondrian_q": {
+        "0.8": {
+          "Rest": 0.18,
+          "Stim8hr": 0.169,
+          "Stim48hr": 0.1613
+        },
+        "0.9": {
+          "Rest": 0.2369,
+          "Stim8hr": 0.2296,
+          "Stim48hr": 0.2118
+        },
+        "0.95": {
+          "Rest": 0.3127,
+          "Stim8hr": 0.3134,
+          "Stim48hr": 0.2697
+        }
+      }
+    }
+  },
+  "guarantee_statements": {
+    "naive_LODO": "NO valid conformal guarantee: donor-blocking makes calibration and test non-exchangeable (different donor composition). Coverage is empirical only.",
+    "mondrian_by_condition": "Valid marginal coverage 1-alpha IF cal u test are exchangeable WITHIN each culture_condition stratum (donor does not shift residuals conditional on condition). Strictly weaker assumption than global exchangeability.",
+    "weighted_covariate_shift": "Valid marginal coverage 1-alpha under PURE COVARIATE SHIFT P_test(Y|X)=P_cal(Y|X) with correct density ratio w(x) (Tibshirani et al. 2019). This is the defensible guarantee statement the naive version lacks."
+  },
+  "wall_seconds": 19.0,
+  "_sha256_self": "66cf367110b1f93d026c7993538cd3038941ef3d480ad23040751d92db85f9f9"
+}

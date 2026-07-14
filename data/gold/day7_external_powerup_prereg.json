@@ -1,0 +1,1995 @@
+{
+  "purpose": "Day-7 POWER-UP of the Day-6 retrospective external validation. Expands the scored gene universe (44 -> 277) and the external truth set under a PRE-REGISTERED, label-blind membership rule, to test whether the calibrated gate's advantage over function-blind baselines converts from MARGINAL (iter4) to a CLEAN WIN or fails honestly.",
+  "claim_under_test": "The calibrated gate's blinded GO/WITHHOLD adjudication (Claude free-text biological synthesis from ONLY {symbol, OT-T1D-assoc, eQTL n_sig}) ranks genes backed by INDEPENDENT real-world therapeutic evidence (approved/clinical drug targets for a fixed autoimmune indication list) ABOVE function-blind baselines (OT-assoc-alone, eQTL-count-alone, random), with the gate-minus-best-baseline 95% CI EXCLUDING 0.",
+  "gate_definition": "IDENTICAL to Day-6/Check-A: blinded prompt gives ONLY gene symbol, OT-T1D genetic-association score, and CD4/Treg cis-eQTL n_sig; Claude returns GO:YES/NO. Reproduced here via host.llm (project rule: pasted API key NOT used). Reasoning-class model.",
+  "membership_rule_LABEL_BLIND": {
+    "text": "A gene is a CANDIDATE iff: perturbed in the Marson CD4 Perturb-seq sgRNA library AND NOT in the T1D gold set or any program-axis gene list AND ( it ranks in the top 120 of Open Targets T1D genetic-association among perturbed non-forbidden genes OR it ranks in the top 200 of Open Targets autoimmune-disease (MONDO_0007179) overall association among perturbed non-forbidden genes ). Uses ONLY objective OT rankings + perturbation membership; NO drug/clinical-trial/label information enters the rule.",
+    "K_t1d": 120,
+    "K_autoimmune": 200,
+    "perturbed_source": "data/raw/sgrna_library_metadata.suppl_table.csv target_gene_name",
+    "forbidden": "t1d_gold_set.json genes + axes_manifest.json all-axes pos/neg + treg dropped-in-gold"
+  },
+  "n_candidate_genes": 277,
+  "scored_gene_set": [
+    "ACAP1",
+    "AFF3",
+    "AGO1",
+    "AIRE",
+    "AKAP11",
+    "ALOX5",
+    "ANKRD55",
+    "ANKS1A",
+    "ANXA1",
+    "APOBR",
+    "ARHGAP12",
+    "ATM",
+    "ATP2C1",
+    "ATP6V1B2",
+    "ATP6V1C1",
+    "ATRIP",
+    "AXL",
+    "BANK1",
+    "BLK",
+    "BMP2K",
+    "BMS1",
+    "BTK",
+    "C1QTNF6",
+    "C1S",
+    "C5",
+    "CARD11",
+    "CARMIL1",
+    "CASP10",
+    "CASP8",
+    "CCR1",
+    "CD2",
+    "CD226",
+    "CD3E",
+    "CD40",
+    "CD52",
+    "CD58",
+    "CD6",
+    "CD69",
+    "CD80",
+    "CD83",
+    "CD86",
+    "CDK12",
+    "CDK4",
+    "CDKAL1",
+    "CDKN1C",
+    "CENPW",
+    "CLEC16A",
+    "CLNK",
+    "CSF2RB",
+    "CSNK1A1",
+    "CXCR2",
+    "DCLRE1B",
+    "DDX39B",
+    "DHODH",
+    "DIPK1A",
+    "DNMT3A",
+    "DPP4",
+    "ELMO1",
+    "EOMES",
+    "ERAP1",
+    "ETS1",
+    "FADS2",
+    "FASLG",
+    "FCGR2A",
+    "FCGR2B",
+    "FCGRT",
+    "FCRL3",
+    "FGFR1",
+    "FGFR2",
+    "FKBP1A",
+    "FLT1",
+    "FLT4",
+    "FOXK1",
+    "FOXN3",
+    "FRMD4A",
+    "FTO",
+    "GABBR1",
+    "GATA3",
+    "GIPR",
+    "GLIS3",
+    "GPD2",
+    "GSDMB",
+    "GSK3B",
+    "GTF2I",
+    "HBP1",
+    "HHEX",
+    "HMGCR",
+    "HNF1A",
+    "ICA1",
+    "IDUA",
+    "IFNAR1",
+    "IFNAR2",
+    "IFNGR2",
+    "IGF1R",
+    "IKBKB",
+    "IKBKE",
+    "IL12A",
+    "IL17A",
+    "IL17RA",
+    "IL1R1",
+    "IL23A",
+    "IL2RG",
+    "IL4R",
+    "IL6R",
+    "IL7R",
+    "IMPDH1",
+    "IMPDH2",
+    "INSR",
+    "IRAK1",
+    "IRF4",
+    "IRF5",
+    "ITGA4",
+    "ITGB1",
+    "ITGB7",
+    "ITPR3",
+    "JAK1",
+    "JAK2",
+    "JAK3",
+    "JAZF1",
+    "KCNA2",
+    "KCNA3",
+    "KCNA6",
+    "KCNC3",
+    "KCNC4",
+    "KCND1",
+    "KCNG3",
+    "KCNH2",
+    "KCNH3",
+    "KCNH4",
+    "KCNQ1",
+    "KCNQ5",
+    "KEAP1",
+    "KRAS",
+    "LAMTOR3",
+    "LBH",
+    "LBR",
+    "LSM6",
+    "MACF1",
+    "MAPK14",
+    "MED1",
+    "MIF",
+    "MLN",
+    "MPL",
+    "MS4A1",
+    "MTMR3",
+    "MTOR",
+    "NCF2",
+    "NDUFA1",
+    "NDUFA10",
+    "NDUFA11",
+    "NDUFA12",
+    "NDUFA13",
+    "NDUFA2",
+    "NDUFA3",
+    "NDUFA5",
+    "NDUFA6",
+    "NDUFA7",
+    "NDUFA8",
+    "NDUFA9",
+    "NDUFAB1",
+    "NDUFAF1",
+    "NDUFAF2",
+    "NDUFAF3",
+    "NDUFAF4",
+    "NDUFB1",
+    "NDUFB10",
+    "NDUFB11",
+    "NDUFB2",
+    "NDUFB3",
+    "NDUFB4",
+    "NDUFB5",
+    "NDUFB6",
+    "NDUFB7",
+    "NDUFB8",
+    "NDUFB9",
+    "NDUFC2",
+    "NDUFS1",
+    "NDUFS2",
+    "NDUFS3",
+    "NDUFS4",
+    "NDUFS5",
+    "NDUFS6",
+    "NDUFS7",
+    "NDUFS8",
+    "NDUFV1",
+    "NDUFV2",
+    "NDUFV3",
+    "NFATC1",
+    "NFKB1",
+    "NFKBIE",
+    "NR1H2",
+    "NR3C1",
+    "NRAS",
+    "NUP205",
+    "PADI4",
+    "PAM",
+    "PDE4A",
+    "PDE4B",
+    "PDE4D",
+    "PDGFRB",
+    "PGM1",
+    "PHTF1",
+    "PI4KB",
+    "PIK3CB",
+    "PIKFYVE",
+    "PLXNA4",
+    "PMP22",
+    "PPARG",
+    "PPAT",
+    "PPIA",
+    "PPP1R10",
+    "PRKCD",
+    "PSAP",
+    "PTGER4",
+    "PTGS1",
+    "PTGS2",
+    "PTPN1",
+    "PTPN2",
+    "PTPRC",
+    "PXK",
+    "RAB7A",
+    "RAMP1",
+    "RAMP3",
+    "RASGRP1",
+    "REL",
+    "RGS1",
+    "RIOK2",
+    "RIPK1",
+    "RNASET2",
+    "RNLS",
+    "RPS26",
+    "RRP15",
+    "RUNX1",
+    "S1PR1",
+    "S1PR2",
+    "S1PR4",
+    "S1PR5",
+    "SAMHD1",
+    "SCN8A",
+    "SHC4",
+    "SIAE",
+    "SIRPG",
+    "SKAP2",
+    "SLC5A2",
+    "SMPD1",
+    "SMPD4",
+    "SON",
+    "SPRED2",
+    "SPTLC2",
+    "STAT3",
+    "STK39",
+    "SULT1A1",
+    "SUOX",
+    "SYK",
+    "TAOK1",
+    "TARS2",
+    "TCF7L2",
+    "TG",
+    "TGFBR2",
+    "TNF",
+    "TNFAIP3",
+    "TNFRSF1A",
+    "TNFSF11",
+    "TNFSF13B",
+    "TNFSF4",
+    "TNIP1",
+    "TNPO3",
+    "TNRC18",
+    "TPP2",
+    "TRAF3IP2",
+    "TREX1",
+    "TRPS1",
+    "UBASH3A",
+    "VDR",
+    "WDFY4",
+    "ZAP70",
+    "ZFP36L1"
+  ],
+  "gene_meta_label_blind": {
+    "ACAP1": {
+      "ot_t1d_assoc": 0.3401,
+      "ot_t1d_rank": 132,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "AFF3": {
+      "ot_t1d_assoc": 0.4071,
+      "ot_t1d_rank": 41,
+      "ot_autoimmune_assoc": 0.4877,
+      "arm": "t1d"
+    },
+    "AGO1": {
+      "ot_t1d_assoc": 0.3381,
+      "ot_t1d_rank": 134,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "AIRE": {
+      "ot_t1d_assoc": 0.3145,
+      "ot_t1d_rank": 158,
+      "ot_autoimmune_assoc": 0.8797,
+      "arm": "both"
+    },
+    "AKAP11": {
+      "ot_t1d_assoc": 0.2662,
+      "ot_t1d_rank": 259,
+      "ot_autoimmune_assoc": 0.6061,
+      "arm": "autoimmune"
+    },
+    "ALOX5": {
+      "ot_t1d_assoc": 0.0245,
+      "ot_t1d_rank": 1744,
+      "ot_autoimmune_assoc": 0.6027,
+      "arm": "autoimmune"
+    },
+    "ANKRD55": {
+      "ot_t1d_assoc": 0.3783,
+      "ot_t1d_rank": 108,
+      "ot_autoimmune_assoc": 0.4634,
+      "arm": "t1d"
+    },
+    "ANKS1A": {
+      "ot_t1d_assoc": 0.3011,
+      "ot_t1d_rank": 177,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "ANXA1": {
+      "ot_t1d_assoc": 0.3341,
+      "ot_t1d_rank": 138,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "APOBR": {
+      "ot_t1d_assoc": 0.4719,
+      "ot_t1d_rank": 28,
+      "ot_autoimmune_assoc": 0.4985,
+      "arm": "t1d"
+    },
+    "ARHGAP12": {
+      "ot_t1d_assoc": 0.3249,
+      "ot_t1d_rank": 144,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "ATM": {
+      "ot_t1d_assoc": 0.3443,
+      "ot_t1d_rank": 128,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "ATP2C1": {
+      "ot_t1d_assoc": 0.0055,
+      "ot_t1d_rank": 3374,
+      "ot_autoimmune_assoc": 0.7583,
+      "arm": "autoimmune"
+    },
+    "ATP6V1B2": {
+      "ot_t1d_assoc": 0.002,
+      "ot_t1d_rank": 5123,
+      "ot_autoimmune_assoc": 0.5183,
+      "arm": "autoimmune"
+    },
+    "ATP6V1C1": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.523,
+      "arm": "autoimmune"
+    },
+    "ATRIP": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5679,
+      "arm": "autoimmune"
+    },
+    "AXL": {
+      "ot_t1d_assoc": 0.0037,
+      "ot_t1d_rank": 4311,
+      "ot_autoimmune_assoc": 0.5522,
+      "arm": "autoimmune"
+    },
+    "BANK1": {
+      "ot_t1d_assoc": 0.0229,
+      "ot_t1d_rank": 1812,
+      "ot_autoimmune_assoc": 0.577,
+      "arm": "autoimmune"
+    },
+    "BLK": {
+      "ot_t1d_assoc": 0.0093,
+      "ot_t1d_rank": 2751,
+      "ot_autoimmune_assoc": 0.6685,
+      "arm": "autoimmune"
+    },
+    "BMP2K": {
+      "ot_t1d_assoc": 0.0032,
+      "ot_t1d_rank": 4537,
+      "ot_autoimmune_assoc": 0.5361,
+      "arm": "autoimmune"
+    },
+    "BMS1": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5373,
+      "arm": "autoimmune"
+    },
+    "BTK": {
+      "ot_t1d_assoc": 0.0754,
+      "ot_t1d_rank": 746,
+      "ot_autoimmune_assoc": 0.6331,
+      "arm": "autoimmune"
+    },
+    "C1QTNF6": {
+      "ot_t1d_assoc": 0.3888,
+      "ot_t1d_rank": 102,
+      "ot_autoimmune_assoc": 0.5614,
+      "arm": "both"
+    },
+    "C1S": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.6641,
+      "arm": "autoimmune"
+    },
+    "C5": {
+      "ot_t1d_assoc": 0.0153,
+      "ot_t1d_rank": 2214,
+      "ot_autoimmune_assoc": 0.597,
+      "arm": "autoimmune"
+    },
+    "CARD11": {
+      "ot_t1d_assoc": 0.0014,
+      "ot_t1d_rank": 5805,
+      "ot_autoimmune_assoc": 0.5501,
+      "arm": "autoimmune"
+    },
+    "CARMIL1": {
+      "ot_t1d_assoc": 0.3997,
+      "ot_t1d_rank": 47,
+      "ot_autoimmune_assoc": 0.4745,
+      "arm": "t1d"
+    },
+    "CASP10": {
+      "ot_t1d_assoc": 0.0566,
+      "ot_t1d_rank": 930,
+      "ot_autoimmune_assoc": 0.7242,
+      "arm": "autoimmune"
+    },
+    "CASP8": {
+      "ot_t1d_assoc": 0.0657,
+      "ot_t1d_rank": 844,
+      "ot_autoimmune_assoc": 0.751,
+      "arm": "autoimmune"
+    },
+    "CCR1": {
+      "ot_t1d_assoc": 0.0139,
+      "ot_t1d_rank": 2314,
+      "ot_autoimmune_assoc": 0.5767,
+      "arm": "autoimmune"
+    },
+    "CD2": {
+      "ot_t1d_assoc": 0.1017,
+      "ot_t1d_rank": 553,
+      "ot_autoimmune_assoc": 0.5393,
+      "arm": "autoimmune"
+    },
+    "CD226": {
+      "ot_t1d_assoc": 0.5332,
+      "ot_t1d_rank": 16,
+      "ot_autoimmune_assoc": 0.5658,
+      "arm": "both"
+    },
+    "CD3E": {
+      "ot_t1d_assoc": 0.5641,
+      "ot_t1d_rank": 9,
+      "ot_autoimmune_assoc": 0.5897,
+      "arm": "both"
+    },
+    "CD40": {
+      "ot_t1d_assoc": 0.1012,
+      "ot_t1d_rank": 555,
+      "ot_autoimmune_assoc": 0.6274,
+      "arm": "autoimmune"
+    },
+    "CD52": {
+      "ot_t1d_assoc": 0.344,
+      "ot_t1d_rank": 129,
+      "ot_autoimmune_assoc": 0.6802,
+      "arm": "both"
+    },
+    "CD58": {
+      "ot_t1d_assoc": 0.0071,
+      "ot_t1d_rank": 3180,
+      "ot_autoimmune_assoc": 0.542,
+      "arm": "autoimmune"
+    },
+    "CD6": {
+      "ot_t1d_assoc": 0.3547,
+      "ot_t1d_rank": 124,
+      "ot_autoimmune_assoc": 0.5879,
+      "arm": "both"
+    },
+    "CD69": {
+      "ot_t1d_assoc": 0.3879,
+      "ot_t1d_rank": 103,
+      "ot_autoimmune_assoc": 0.4625,
+      "arm": "t1d"
+    },
+    "CD80": {
+      "ot_t1d_assoc": 0.1229,
+      "ot_t1d_rank": 480,
+      "ot_autoimmune_assoc": 0.7026,
+      "arm": "autoimmune"
+    },
+    "CD83": {
+      "ot_t1d_assoc": 0.0353,
+      "ot_t1d_rank": 1362,
+      "ot_autoimmune_assoc": 0.5216,
+      "arm": "autoimmune"
+    },
+    "CD86": {
+      "ot_t1d_assoc": 0.1225,
+      "ot_t1d_rank": 481,
+      "ot_autoimmune_assoc": 0.7316,
+      "arm": "autoimmune"
+    },
+    "CDK12": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.533,
+      "arm": "autoimmune"
+    },
+    "CDK4": {
+      "ot_t1d_assoc": 0.024,
+      "ot_t1d_rank": 1769,
+      "ot_autoimmune_assoc": 0.5595,
+      "arm": "autoimmune"
+    },
+    "CDKAL1": {
+      "ot_t1d_assoc": 0.4146,
+      "ot_t1d_rank": 37,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "CDKN1C": {
+      "ot_t1d_assoc": 0.037,
+      "ot_t1d_rank": 1310,
+      "ot_autoimmune_assoc": 0.5431,
+      "arm": "autoimmune"
+    },
+    "CENPW": {
+      "ot_t1d_assoc": 0.4134,
+      "ot_t1d_rank": 38,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "CLEC16A": {
+      "ot_t1d_assoc": 0.3601,
+      "ot_t1d_rank": 118,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "CLNK": {
+      "ot_t1d_assoc": 0.0355,
+      "ot_t1d_rank": 1356,
+      "ot_autoimmune_assoc": 0.5206,
+      "arm": "autoimmune"
+    },
+    "CSF2RB": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5347,
+      "arm": "autoimmune"
+    },
+    "CSNK1A1": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5281,
+      "arm": "autoimmune"
+    },
+    "CXCR2": {
+      "ot_t1d_assoc": 0.3021,
+      "ot_t1d_rank": 175,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "DCLRE1B": {
+      "ot_t1d_assoc": 0.3579,
+      "ot_t1d_rank": 122,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "DDX39B": {
+      "ot_t1d_assoc": 0.0028,
+      "ot_t1d_rank": 4724,
+      "ot_autoimmune_assoc": 0.5294,
+      "arm": "autoimmune"
+    },
+    "DHODH": {
+      "ot_t1d_assoc": 0.0584,
+      "ot_t1d_rank": 915,
+      "ot_autoimmune_assoc": 0.6197,
+      "arm": "autoimmune"
+    },
+    "DIPK1A": {
+      "ot_t1d_assoc": 0.3049,
+      "ot_t1d_rank": 169,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "DNMT3A": {
+      "ot_t1d_assoc": 0.0078,
+      "ot_t1d_rank": 2971,
+      "ot_autoimmune_assoc": 0.5389,
+      "arm": "autoimmune"
+    },
+    "DPP4": {
+      "ot_t1d_assoc": 0.4001,
+      "ot_t1d_rank": 45,
+      "ot_autoimmune_assoc": 0.4623,
+      "arm": "t1d"
+    },
+    "ELMO1": {
+      "ot_t1d_assoc": 0.0134,
+      "ot_t1d_rank": 2339,
+      "ot_autoimmune_assoc": 0.5227,
+      "arm": "autoimmune"
+    },
+    "EOMES": {
+      "ot_t1d_assoc": 0.0105,
+      "ot_t1d_rank": 2615,
+      "ot_autoimmune_assoc": 0.5353,
+      "arm": "autoimmune"
+    },
+    "ERAP1": {
+      "ot_t1d_assoc": 0.0212,
+      "ot_t1d_rank": 1901,
+      "ot_autoimmune_assoc": 0.53,
+      "arm": "autoimmune"
+    },
+    "ETS1": {
+      "ot_t1d_assoc": 0.0275,
+      "ot_t1d_rank": 1651,
+      "ot_autoimmune_assoc": 0.5324,
+      "arm": "autoimmune"
+    },
+    "FADS2": {
+      "ot_t1d_assoc": 0.3073,
+      "ot_t1d_rank": 163,
+      "ot_autoimmune_assoc": 0.5633,
+      "arm": "both"
+    },
+    "FASLG": {
+      "ot_t1d_assoc": 0.2571,
+      "ot_t1d_rank": 278,
+      "ot_autoimmune_assoc": 0.7781,
+      "arm": "autoimmune"
+    },
+    "FCGR2A": {
+      "ot_t1d_assoc": 0.012,
+      "ot_t1d_rank": 2458,
+      "ot_autoimmune_assoc": 0.5596,
+      "arm": "autoimmune"
+    },
+    "FCGR2B": {
+      "ot_t1d_assoc": 0.0407,
+      "ot_t1d_rank": 1201,
+      "ot_autoimmune_assoc": 0.574,
+      "arm": "autoimmune"
+    },
+    "FCGRT": {
+      "ot_t1d_assoc": 0.0224,
+      "ot_t1d_rank": 1837,
+      "ot_autoimmune_assoc": 0.6103,
+      "arm": "autoimmune"
+    },
+    "FCRL3": {
+      "ot_t1d_assoc": 0.0204,
+      "ot_t1d_rank": 1939,
+      "ot_autoimmune_assoc": 0.656,
+      "arm": "autoimmune"
+    },
+    "FGFR1": {
+      "ot_t1d_assoc": 0.0094,
+      "ot_t1d_rank": 2746,
+      "ot_autoimmune_assoc": 0.6154,
+      "arm": "autoimmune"
+    },
+    "FGFR2": {
+      "ot_t1d_assoc": 0.0068,
+      "ot_t1d_rank": 3194,
+      "ot_autoimmune_assoc": 0.6543,
+      "arm": "autoimmune"
+    },
+    "FKBP1A": {
+      "ot_t1d_assoc": 0.3998,
+      "ot_t1d_rank": 46,
+      "ot_autoimmune_assoc": 0.4706,
+      "arm": "t1d"
+    },
+    "FLT1": {
+      "ot_t1d_assoc": 0.0811,
+      "ot_t1d_rank": 688,
+      "ot_autoimmune_assoc": 0.5607,
+      "arm": "autoimmune"
+    },
+    "FLT4": {
+      "ot_t1d_assoc": 0.0746,
+      "ot_t1d_rank": 760,
+      "ot_autoimmune_assoc": 0.5928,
+      "arm": "autoimmune"
+    },
+    "FOXK1": {
+      "ot_t1d_assoc": 0.0037,
+      "ot_t1d_rank": 4179,
+      "ot_autoimmune_assoc": 0.5238,
+      "arm": "autoimmune"
+    },
+    "FOXN3": {
+      "ot_t1d_assoc": 0.3035,
+      "ot_t1d_rank": 173,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "FRMD4A": {
+      "ot_t1d_assoc": 0.3059,
+      "ot_t1d_rank": 167,
+      "ot_autoimmune_assoc": 0.4675,
+      "arm": "t1d"
+    },
+    "FTO": {
+      "ot_t1d_assoc": 0.4591,
+      "ot_t1d_rank": 31,
+      "ot_autoimmune_assoc": 0.5331,
+      "arm": "both"
+    },
+    "GABBR1": {
+      "ot_t1d_assoc": 0.0096,
+      "ot_t1d_rank": 2711,
+      "ot_autoimmune_assoc": 0.6165,
+      "arm": "autoimmune"
+    },
+    "GATA3": {
+      "ot_t1d_assoc": 0.3248,
+      "ot_t1d_rank": 145,
+      "ot_autoimmune_assoc": 0.5541,
+      "arm": "both"
+    },
+    "GIPR": {
+      "ot_t1d_assoc": 0.3804,
+      "ot_t1d_rank": 106,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "GLIS3": {
+      "ot_t1d_assoc": 0.4628,
+      "ot_t1d_rank": 30,
+      "ot_autoimmune_assoc": 0.4913,
+      "arm": "t1d"
+    },
+    "GPD2": {
+      "ot_t1d_assoc": 0.3965,
+      "ot_t1d_rank": 51,
+      "ot_autoimmune_assoc": 0.4941,
+      "arm": "t1d"
+    },
+    "GSDMB": {
+      "ot_t1d_assoc": 0.3354,
+      "ot_t1d_rank": 136,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "GSK3B": {
+      "ot_t1d_assoc": 0.0348,
+      "ot_t1d_rank": 1380,
+      "ot_autoimmune_assoc": 0.5564,
+      "arm": "autoimmune"
+    },
+    "GTF2I": {
+      "ot_t1d_assoc": 0.0037,
+      "ot_t1d_rank": 4380,
+      "ot_autoimmune_assoc": 0.5775,
+      "arm": "autoimmune"
+    },
+    "HBP1": {
+      "ot_t1d_assoc": 0.3601,
+      "ot_t1d_rank": 119,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "HHEX": {
+      "ot_t1d_assoc": 0.3744,
+      "ot_t1d_rank": 111,
+      "ot_autoimmune_assoc": 0.458,
+      "arm": "t1d"
+    },
+    "HMGCR": {
+      "ot_t1d_assoc": 0.3027,
+      "ot_t1d_rank": 174,
+      "ot_autoimmune_assoc": 0.6311,
+      "arm": "both"
+    },
+    "HNF1A": {
+      "ot_t1d_assoc": 0.6931,
+      "ot_t1d_rank": 1,
+      "ot_autoimmune_assoc": 0.6938,
+      "arm": "both"
+    },
+    "ICA1": {
+      "ot_t1d_assoc": 0.3157,
+      "ot_t1d_rank": 157,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "IDUA": {
+      "ot_t1d_assoc": 0.3171,
+      "ot_t1d_rank": 153,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "IFNAR1": {
+      "ot_t1d_assoc": 0.0091,
+      "ot_t1d_rank": 2778,
+      "ot_autoimmune_assoc": 0.6287,
+      "arm": "autoimmune"
+    },
+    "IFNAR2": {
+      "ot_t1d_assoc": 0.0454,
+      "ot_t1d_rank": 1099,
+      "ot_autoimmune_assoc": 0.7561,
+      "arm": "autoimmune"
+    },
+    "IFNGR2": {
+      "ot_t1d_assoc": 0.0055,
+      "ot_t1d_rank": 3375,
+      "ot_autoimmune_assoc": 0.5183,
+      "arm": "autoimmune"
+    },
+    "IGF1R": {
+      "ot_t1d_assoc": 0.0493,
+      "ot_t1d_rank": 1030,
+      "ot_autoimmune_assoc": 0.6825,
+      "arm": "autoimmune"
+    },
+    "IKBKB": {
+      "ot_t1d_assoc": 0.0126,
+      "ot_t1d_rank": 2401,
+      "ot_autoimmune_assoc": 0.5696,
+      "arm": "autoimmune"
+    },
+    "IKBKE": {
+      "ot_t1d_assoc": 0.0147,
+      "ot_t1d_rank": 2259,
+      "ot_autoimmune_assoc": 0.5188,
+      "arm": "autoimmune"
+    },
+    "IL12A": {
+      "ot_t1d_assoc": 0.2142,
+      "ot_t1d_rank": 352,
+      "ot_autoimmune_assoc": 0.7353,
+      "arm": "autoimmune"
+    },
+    "IL17A": {
+      "ot_t1d_assoc": 0.1324,
+      "ot_t1d_rank": 467,
+      "ot_autoimmune_assoc": 0.6361,
+      "arm": "autoimmune"
+    },
+    "IL17RA": {
+      "ot_t1d_assoc": 0.0556,
+      "ot_t1d_rank": 938,
+      "ot_autoimmune_assoc": 0.5693,
+      "arm": "autoimmune"
+    },
+    "IL1R1": {
+      "ot_t1d_assoc": 0.2258,
+      "ot_t1d_rank": 328,
+      "ot_autoimmune_assoc": 0.5979,
+      "arm": "autoimmune"
+    },
+    "IL23A": {
+      "ot_t1d_assoc": 0.2147,
+      "ot_t1d_rank": 351,
+      "ot_autoimmune_assoc": 0.6346,
+      "arm": "autoimmune"
+    },
+    "IL2RG": {
+      "ot_t1d_assoc": 0.3843,
+      "ot_t1d_rank": 104,
+      "ot_autoimmune_assoc": 0.5917,
+      "arm": "both"
+    },
+    "IL4R": {
+      "ot_t1d_assoc": 0.027,
+      "ot_t1d_rank": 1663,
+      "ot_autoimmune_assoc": 0.5184,
+      "arm": "autoimmune"
+    },
+    "IL6R": {
+      "ot_t1d_assoc": 0.0915,
+      "ot_t1d_rank": 612,
+      "ot_autoimmune_assoc": 0.7824,
+      "arm": "autoimmune"
+    },
+    "IL7R": {
+      "ot_t1d_assoc": 0.4577,
+      "ot_t1d_rank": 32,
+      "ot_autoimmune_assoc": 0.6683,
+      "arm": "both"
+    },
+    "IMPDH1": {
+      "ot_t1d_assoc": 0.1154,
+      "ot_t1d_rank": 494,
+      "ot_autoimmune_assoc": 0.5367,
+      "arm": "autoimmune"
+    },
+    "IMPDH2": {
+      "ot_t1d_assoc": 0.1149,
+      "ot_t1d_rank": 495,
+      "ot_autoimmune_assoc": 0.5414,
+      "arm": "autoimmune"
+    },
+    "INSR": {
+      "ot_t1d_assoc": 0.629,
+      "ot_t1d_rank": 3,
+      "ot_autoimmune_assoc": 0.6767,
+      "arm": "both"
+    },
+    "IRAK1": {
+      "ot_t1d_assoc": 0.0135,
+      "ot_t1d_rank": 2334,
+      "ot_autoimmune_assoc": 0.5221,
+      "arm": "autoimmune"
+    },
+    "IRF4": {
+      "ot_t1d_assoc": 0.2949,
+      "ot_t1d_rank": 194,
+      "ot_autoimmune_assoc": 0.6411,
+      "arm": "autoimmune"
+    },
+    "IRF5": {
+      "ot_t1d_assoc": 0.0215,
+      "ot_t1d_rank": 1887,
+      "ot_autoimmune_assoc": 0.6484,
+      "arm": "autoimmune"
+    },
+    "ITGA4": {
+      "ot_t1d_assoc": 0.0231,
+      "ot_t1d_rank": 1809,
+      "ot_autoimmune_assoc": 0.6837,
+      "arm": "autoimmune"
+    },
+    "ITGB1": {
+      "ot_t1d_assoc": 0.2323,
+      "ot_t1d_rank": 323,
+      "ot_autoimmune_assoc": 0.656,
+      "arm": "autoimmune"
+    },
+    "ITGB7": {
+      "ot_t1d_assoc": 0.0227,
+      "ot_t1d_rank": 1824,
+      "ot_autoimmune_assoc": 0.6103,
+      "arm": "autoimmune"
+    },
+    "ITPR3": {
+      "ot_t1d_assoc": 0.4459,
+      "ot_t1d_rank": 33,
+      "ot_autoimmune_assoc": 0.4767,
+      "arm": "t1d"
+    },
+    "JAK1": {
+      "ot_t1d_assoc": 0.2895,
+      "ot_t1d_rank": 207,
+      "ot_autoimmune_assoc": 0.7842,
+      "arm": "autoimmune"
+    },
+    "JAK2": {
+      "ot_t1d_assoc": 0.28,
+      "ot_t1d_rank": 229,
+      "ot_autoimmune_assoc": 0.7519,
+      "arm": "autoimmune"
+    },
+    "JAK3": {
+      "ot_t1d_assoc": 0.0791,
+      "ot_t1d_rank": 709,
+      "ot_autoimmune_assoc": 0.6901,
+      "arm": "autoimmune"
+    },
+    "JAZF1": {
+      "ot_t1d_assoc": 0.3203,
+      "ot_t1d_rank": 149,
+      "ot_autoimmune_assoc": 0.5996,
+      "arm": "both"
+    },
+    "KCNA2": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5976,
+      "arm": "autoimmune"
+    },
+    "KCNA3": {
+      "ot_t1d_assoc": 0.0107,
+      "ot_t1d_rank": 2591,
+      "ot_autoimmune_assoc": 0.6162,
+      "arm": "autoimmune"
+    },
+    "KCNA6": {
+      "ot_t1d_assoc": 0.0103,
+      "ot_t1d_rank": 2632,
+      "ot_autoimmune_assoc": 0.598,
+      "arm": "autoimmune"
+    },
+    "KCNC3": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5954,
+      "arm": "autoimmune"
+    },
+    "KCNC4": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.6862,
+      "arm": "autoimmune"
+    },
+    "KCND1": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5954,
+      "arm": "autoimmune"
+    },
+    "KCNG3": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.6139,
+      "arm": "autoimmune"
+    },
+    "KCNH2": {
+      "ot_t1d_assoc": 0.0044,
+      "ot_t1d_rank": 3687,
+      "ot_autoimmune_assoc": 0.7116,
+      "arm": "autoimmune"
+    },
+    "KCNH3": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5954,
+      "arm": "autoimmune"
+    },
+    "KCNH4": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5954,
+      "arm": "autoimmune"
+    },
+    "KCNQ1": {
+      "ot_t1d_assoc": 0.4154,
+      "ot_t1d_rank": 36,
+      "ot_autoimmune_assoc": 0.7087,
+      "arm": "both"
+    },
+    "KCNQ5": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5976,
+      "arm": "autoimmune"
+    },
+    "KEAP1": {
+      "ot_t1d_assoc": 0.3256,
+      "ot_t1d_rank": 142,
+      "ot_autoimmune_assoc": 0.6524,
+      "arm": "both"
+    },
+    "KRAS": {
+      "ot_t1d_assoc": 0.006,
+      "ot_t1d_rank": 3296,
+      "ot_autoimmune_assoc": 0.7479,
+      "arm": "autoimmune"
+    },
+    "LAMTOR3": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.528,
+      "arm": "autoimmune"
+    },
+    "LBH": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5295,
+      "arm": "autoimmune"
+    },
+    "LBR": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5489,
+      "arm": "autoimmune"
+    },
+    "LSM6": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5389,
+      "arm": "autoimmune"
+    },
+    "MACF1": {
+      "ot_t1d_assoc": 0.3253,
+      "ot_t1d_rank": 143,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "MAPK14": {
+      "ot_t1d_assoc": 0.2567,
+      "ot_t1d_rank": 280,
+      "ot_autoimmune_assoc": 0.5971,
+      "arm": "autoimmune"
+    },
+    "MED1": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5433,
+      "arm": "autoimmune"
+    },
+    "MIF": {
+      "ot_t1d_assoc": 0.0985,
+      "ot_t1d_rank": 562,
+      "ot_autoimmune_assoc": 0.6845,
+      "arm": "autoimmune"
+    },
+    "MLN": {
+      "ot_t1d_assoc": 0.3401,
+      "ot_t1d_rank": 131,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "MPL": {
+      "ot_t1d_assoc": 0.0109,
+      "ot_t1d_rank": 2576,
+      "ot_autoimmune_assoc": 0.6326,
+      "arm": "autoimmune"
+    },
+    "MS4A1": {
+      "ot_t1d_assoc": 0.1095,
+      "ot_t1d_rank": 521,
+      "ot_autoimmune_assoc": 0.6182,
+      "arm": "autoimmune"
+    },
+    "MTMR3": {
+      "ot_t1d_assoc": 0.0853,
+      "ot_t1d_rank": 652,
+      "ot_autoimmune_assoc": 0.5913,
+      "arm": "autoimmune"
+    },
+    "MTOR": {
+      "ot_t1d_assoc": 0.0695,
+      "ot_t1d_rank": 804,
+      "ot_autoimmune_assoc": 0.5875,
+      "arm": "autoimmune"
+    },
+    "NCF2": {
+      "ot_t1d_assoc": 0.0094,
+      "ot_t1d_rank": 2743,
+      "ot_autoimmune_assoc": 0.5692,
+      "arm": "autoimmune"
+    },
+    "NDUFA1": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 83,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFA10": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 81,
+      "ot_autoimmune_assoc": 0.4641,
+      "arm": "t1d"
+    },
+    "NDUFA11": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 72,
+      "ot_autoimmune_assoc": 0.4881,
+      "arm": "t1d"
+    },
+    "NDUFA12": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 74,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFA13": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 90,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFA2": {
+      "ot_t1d_assoc": 0.395,
+      "ot_t1d_rank": 59,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFA3": {
+      "ot_t1d_assoc": 0.3957,
+      "ot_t1d_rank": 56,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFA5": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 82,
+      "ot_autoimmune_assoc": 0.5603,
+      "arm": "both"
+    },
+    "NDUFA6": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 84,
+      "ot_autoimmune_assoc": 0.5618,
+      "arm": "both"
+    },
+    "NDUFA7": {
+      "ot_t1d_assoc": 0.3948,
+      "ot_t1d_rank": 64,
+      "ot_autoimmune_assoc": 0.4778,
+      "arm": "t1d"
+    },
+    "NDUFA8": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 71,
+      "ot_autoimmune_assoc": 0.6507,
+      "arm": "both"
+    },
+    "NDUFA9": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 95,
+      "ot_autoimmune_assoc": 0.6,
+      "arm": "both"
+    },
+    "NDUFAB1": {
+      "ot_t1d_assoc": 0.395,
+      "ot_t1d_rank": 60,
+      "ot_autoimmune_assoc": 0.6111,
+      "arm": "both"
+    },
+    "NDUFAF1": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 77,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFAF2": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 75,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFAF3": {
+      "ot_t1d_assoc": 0.3973,
+      "ot_t1d_rank": 50,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFAF4": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 78,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFB1": {
+      "ot_t1d_assoc": 0.3942,
+      "ot_t1d_rank": 70,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFB10": {
+      "ot_t1d_assoc": 0.3964,
+      "ot_t1d_rank": 52,
+      "ot_autoimmune_assoc": 0.537,
+      "arm": "both"
+    },
+    "NDUFB11": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 91,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFB2": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 89,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFB3": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 96,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFB4": {
+      "ot_t1d_assoc": 0.3949,
+      "ot_t1d_rank": 61,
+      "ot_autoimmune_assoc": 0.5365,
+      "arm": "both"
+    },
+    "NDUFB5": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 92,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFB6": {
+      "ot_t1d_assoc": 0.3946,
+      "ot_t1d_rank": 65,
+      "ot_autoimmune_assoc": 0.4926,
+      "arm": "t1d"
+    },
+    "NDUFB7": {
+      "ot_t1d_assoc": 0.3943,
+      "ot_t1d_rank": 69,
+      "ot_autoimmune_assoc": 0.6073,
+      "arm": "both"
+    },
+    "NDUFB8": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 97,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFB9": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 87,
+      "ot_autoimmune_assoc": 0.5874,
+      "arm": "both"
+    },
+    "NDUFC2": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 80,
+      "ot_autoimmune_assoc": 0.5878,
+      "arm": "both"
+    },
+    "NDUFS1": {
+      "ot_t1d_assoc": 0.3948,
+      "ot_t1d_rank": 63,
+      "ot_autoimmune_assoc": 0.621,
+      "arm": "both"
+    },
+    "NDUFS2": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 73,
+      "ot_autoimmune_assoc": 0.6082,
+      "arm": "both"
+    },
+    "NDUFS3": {
+      "ot_t1d_assoc": 0.4027,
+      "ot_t1d_rank": 44,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFS4": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 79,
+      "ot_autoimmune_assoc": 0.4895,
+      "arm": "t1d"
+    },
+    "NDUFS5": {
+      "ot_t1d_assoc": 0.3948,
+      "ot_t1d_rank": 62,
+      "ot_autoimmune_assoc": 0.6405,
+      "arm": "both"
+    },
+    "NDUFS6": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 88,
+      "ot_autoimmune_assoc": 0.4772,
+      "arm": "t1d"
+    },
+    "NDUFS7": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 86,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NDUFS8": {
+      "ot_t1d_assoc": 0.3989,
+      "ot_t1d_rank": 48,
+      "ot_autoimmune_assoc": 0.5886,
+      "arm": "both"
+    },
+    "NDUFV1": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 93,
+      "ot_autoimmune_assoc": 0.5425,
+      "arm": "both"
+    },
+    "NDUFV2": {
+      "ot_t1d_assoc": 0.3938,
+      "ot_t1d_rank": 76,
+      "ot_autoimmune_assoc": 0.6337,
+      "arm": "both"
+    },
+    "NDUFV3": {
+      "ot_t1d_assoc": 0.3951,
+      "ot_t1d_rank": 58,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "NFATC1": {
+      "ot_t1d_assoc": 0.0122,
+      "ot_t1d_rank": 2447,
+      "ot_autoimmune_assoc": 0.5301,
+      "arm": "autoimmune"
+    },
+    "NFKB1": {
+      "ot_t1d_assoc": 0.0422,
+      "ot_t1d_rank": 1164,
+      "ot_autoimmune_assoc": 0.6531,
+      "arm": "autoimmune"
+    },
+    "NFKBIE": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5294,
+      "arm": "autoimmune"
+    },
+    "NR1H2": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5205,
+      "arm": "autoimmune"
+    },
+    "NR3C1": {
+      "ot_t1d_assoc": 0.0419,
+      "ot_t1d_rank": 1171,
+      "ot_autoimmune_assoc": 0.761,
+      "arm": "autoimmune"
+    },
+    "NRAS": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.6912,
+      "arm": "autoimmune"
+    },
+    "NUP205": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5283,
+      "arm": "autoimmune"
+    },
+    "PADI4": {
+      "ot_t1d_assoc": 0.0781,
+      "ot_t1d_rank": 718,
+      "ot_autoimmune_assoc": 0.677,
+      "arm": "autoimmune"
+    },
+    "PAM": {
+      "ot_t1d_assoc": 0.3683,
+      "ot_t1d_rank": 114,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "PDE4A": {
+      "ot_t1d_assoc": 0.0059,
+      "ot_t1d_rank": 3306,
+      "ot_autoimmune_assoc": 0.6102,
+      "arm": "autoimmune"
+    },
+    "PDE4B": {
+      "ot_t1d_assoc": 0.007,
+      "ot_t1d_rank": 3190,
+      "ot_autoimmune_assoc": 0.645,
+      "arm": "autoimmune"
+    },
+    "PDE4D": {
+      "ot_t1d_assoc": 0.0037,
+      "ot_t1d_rank": 4465,
+      "ot_autoimmune_assoc": 0.6671,
+      "arm": "autoimmune"
+    },
+    "PDGFRB": {
+      "ot_t1d_assoc": 0.1018,
+      "ot_t1d_rank": 551,
+      "ot_autoimmune_assoc": 0.6556,
+      "arm": "autoimmune"
+    },
+    "PGM1": {
+      "ot_t1d_assoc": 0.4096,
+      "ot_t1d_rank": 39,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "PHTF1": {
+      "ot_t1d_assoc": 0.3164,
+      "ot_t1d_rank": 154,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "PI4KB": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5259,
+      "arm": "autoimmune"
+    },
+    "PIK3CB": {
+      "ot_t1d_assoc": 0.0347,
+      "ot_t1d_rank": 1386,
+      "ot_autoimmune_assoc": 0.5786,
+      "arm": "autoimmune"
+    },
+    "PIKFYVE": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5252,
+      "arm": "autoimmune"
+    },
+    "PLXNA4": {
+      "ot_t1d_assoc": 0.3182,
+      "ot_t1d_rank": 151,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "PMP22": {
+      "ot_t1d_assoc": 0.0373,
+      "ot_t1d_rank": 1300,
+      "ot_autoimmune_assoc": 0.5996,
+      "arm": "autoimmune"
+    },
+    "PPARG": {
+      "ot_t1d_assoc": 0.3789,
+      "ot_t1d_rank": 107,
+      "ot_autoimmune_assoc": 0.4945,
+      "arm": "t1d"
+    },
+    "PPAT": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.6039,
+      "arm": "autoimmune"
+    },
+    "PPIA": {
+      "ot_t1d_assoc": 0.3436,
+      "ot_t1d_rank": 130,
+      "ot_autoimmune_assoc": 0.5805,
+      "arm": "both"
+    },
+    "PPP1R10": {
+      "ot_t1d_assoc": 0.0046,
+      "ot_t1d_rank": 3596,
+      "ot_autoimmune_assoc": 0.5186,
+      "arm": "autoimmune"
+    },
+    "PRKCD": {
+      "ot_t1d_assoc": 0.0112,
+      "ot_t1d_rank": 2530,
+      "ot_autoimmune_assoc": 0.7263,
+      "arm": "autoimmune"
+    },
+    "PSAP": {
+      "ot_t1d_assoc": 0.008,
+      "ot_t1d_rank": 2934,
+      "ot_autoimmune_assoc": 0.5514,
+      "arm": "autoimmune"
+    },
+    "PTGER4": {
+      "ot_t1d_assoc": 0.3222,
+      "ot_t1d_rank": 146,
+      "ot_autoimmune_assoc": 0.5045,
+      "arm": "t1d"
+    },
+    "PTGS1": {
+      "ot_t1d_assoc": 0.0941,
+      "ot_t1d_rank": 583,
+      "ot_autoimmune_assoc": 0.6275,
+      "arm": "autoimmune"
+    },
+    "PTGS2": {
+      "ot_t1d_assoc": 0.1066,
+      "ot_t1d_rank": 530,
+      "ot_autoimmune_assoc": 0.6443,
+      "arm": "autoimmune"
+    },
+    "PTPN1": {
+      "ot_t1d_assoc": 0.3037,
+      "ot_t1d_rank": 172,
+      "ot_autoimmune_assoc": 0.5869,
+      "arm": "both"
+    },
+    "PTPN2": {
+      "ot_t1d_assoc": 0.4793,
+      "ot_t1d_rank": 25,
+      "ot_autoimmune_assoc": 0.6219,
+      "arm": "both"
+    },
+    "PTPRC": {
+      "ot_t1d_assoc": 0.0467,
+      "ot_t1d_rank": 1072,
+      "ot_autoimmune_assoc": 0.5539,
+      "arm": "autoimmune"
+    },
+    "PXK": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5591,
+      "arm": "autoimmune"
+    },
+    "RAB7A": {
+      "ot_t1d_assoc": 0.0037,
+      "ot_t1d_rank": 4385,
+      "ot_autoimmune_assoc": 0.5188,
+      "arm": "autoimmune"
+    },
+    "RAMP1": {
+      "ot_t1d_assoc": 0.3901,
+      "ot_t1d_rank": 99,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "RAMP3": {
+      "ot_t1d_assoc": 0.3897,
+      "ot_t1d_rank": 101,
+      "ot_autoimmune_assoc": 0.4579,
+      "arm": "t1d"
+    },
+    "RASGRP1": {
+      "ot_t1d_assoc": 0.3203,
+      "ot_t1d_rank": 148,
+      "ot_autoimmune_assoc": 0.6153,
+      "arm": "both"
+    },
+    "REL": {
+      "ot_t1d_assoc": 0.0105,
+      "ot_t1d_rank": 2607,
+      "ot_autoimmune_assoc": 0.5302,
+      "arm": "autoimmune"
+    },
+    "RGS1": {
+      "ot_t1d_assoc": 0.3127,
+      "ot_t1d_rank": 161,
+      "ot_autoimmune_assoc": 0.4965,
+      "arm": "t1d"
+    },
+    "RIOK2": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.6104,
+      "arm": "autoimmune"
+    },
+    "RIPK1": {
+      "ot_t1d_assoc": 0.0293,
+      "ot_t1d_rank": 1606,
+      "ot_autoimmune_assoc": 0.5238,
+      "arm": "autoimmune"
+    },
+    "RNASET2": {
+      "ot_t1d_assoc": 0.0057,
+      "ot_t1d_rank": 3350,
+      "ot_autoimmune_assoc": 0.5356,
+      "arm": "autoimmune"
+    },
+    "RNLS": {
+      "ot_t1d_assoc": 0.3589,
+      "ot_t1d_rank": 121,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "RPS26": {
+      "ot_t1d_assoc": 0.4043,
+      "ot_t1d_rank": 43,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "RRP15": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5226,
+      "arm": "autoimmune"
+    },
+    "RUNX1": {
+      "ot_t1d_assoc": 0.0088,
+      "ot_t1d_rank": 2833,
+      "ot_autoimmune_assoc": 0.5754,
+      "arm": "autoimmune"
+    },
+    "S1PR1": {
+      "ot_t1d_assoc": 0.01,
+      "ot_t1d_rank": 2668,
+      "ot_autoimmune_assoc": 0.6288,
+      "arm": "autoimmune"
+    },
+    "S1PR2": {
+      "ot_t1d_assoc": 0.0015,
+      "ot_t1d_rank": 5429,
+      "ot_autoimmune_assoc": 0.6221,
+      "arm": "autoimmune"
+    },
+    "S1PR4": {
+      "ot_t1d_assoc": 0.0052,
+      "ot_t1d_rank": 3464,
+      "ot_autoimmune_assoc": 0.6714,
+      "arm": "autoimmune"
+    },
+    "S1PR5": {
+      "ot_t1d_assoc": 0.0078,
+      "ot_t1d_rank": 2957,
+      "ot_autoimmune_assoc": 0.6111,
+      "arm": "autoimmune"
+    },
+    "SAMHD1": {
+      "ot_t1d_assoc": 0.0022,
+      "ot_t1d_rank": 5046,
+      "ot_autoimmune_assoc": 0.7002,
+      "arm": "autoimmune"
+    },
+    "SCN8A": {
+      "ot_t1d_assoc": 0.3064,
+      "ot_t1d_rank": 164,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "SHC4": {
+      "ot_t1d_assoc": 0.3538,
+      "ot_t1d_rank": 125,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "SIAE": {
+      "ot_t1d_assoc": 0.0198,
+      "ot_t1d_rank": 1974,
+      "ot_autoimmune_assoc": 0.6639,
+      "arm": "autoimmune"
+    },
+    "SIRPG": {
+      "ot_t1d_assoc": 0.5324,
+      "ot_t1d_rank": 18,
+      "ot_autoimmune_assoc": 0.5476,
+      "arm": "both"
+    },
+    "SKAP2": {
+      "ot_t1d_assoc": 0.3742,
+      "ot_t1d_rank": 112,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "SLC5A2": {
+      "ot_t1d_assoc": 0.606,
+      "ot_t1d_rank": 6,
+      "ot_autoimmune_assoc": 0.608,
+      "arm": "both"
+    },
+    "SMPD1": {
+      "ot_t1d_assoc": 0.0194,
+      "ot_t1d_rank": 2002,
+      "ot_autoimmune_assoc": 0.5342,
+      "arm": "autoimmune"
+    },
+    "SMPD4": {
+      "ot_t1d_assoc": 0.3721,
+      "ot_t1d_rank": 113,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "SON": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5177,
+      "arm": "autoimmune"
+    },
+    "SPRED2": {
+      "ot_t1d_assoc": 0.0037,
+      "ot_t1d_rank": 4404,
+      "ot_autoimmune_assoc": 0.5287,
+      "arm": "autoimmune"
+    },
+    "SPTLC2": {
+      "ot_t1d_assoc": 0.0033,
+      "ot_t1d_rank": 4521,
+      "ot_autoimmune_assoc": 0.5221,
+      "arm": "autoimmune"
+    },
+    "STAT3": {
+      "ot_t1d_assoc": 0.0749,
+      "ot_t1d_rank": 756,
+      "ot_autoimmune_assoc": 0.8368,
+      "arm": "autoimmune"
+    },
+    "STK39": {
+      "ot_t1d_assoc": 0.3142,
+      "ot_t1d_rank": 160,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "SULT1A1": {
+      "ot_t1d_assoc": 0.3159,
+      "ot_t1d_rank": 156,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "SUOX": {
+      "ot_t1d_assoc": 0.5161,
+      "ot_t1d_rank": 22,
+      "ot_autoimmune_assoc": 0.5566,
+      "arm": "both"
+    },
+    "SYK": {
+      "ot_t1d_assoc": 0.0073,
+      "ot_t1d_rank": 3173,
+      "ot_autoimmune_assoc": 0.5866,
+      "arm": "autoimmune"
+    },
+    "TAOK1": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5311,
+      "arm": "autoimmune"
+    },
+    "TARS2": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.5409,
+      "arm": "autoimmune"
+    },
+    "TCF7L2": {
+      "ot_t1d_assoc": 0.5267,
+      "ot_t1d_rank": 19,
+      "ot_autoimmune_assoc": 0.5266,
+      "arm": "both"
+    },
+    "TG": {
+      "ot_t1d_assoc": 0.0514,
+      "ot_t1d_rank": 999,
+      "ot_autoimmune_assoc": 0.7205,
+      "arm": "autoimmune"
+    },
+    "TGFBR2": {
+      "ot_t1d_assoc": 0.0093,
+      "ot_t1d_rank": 2752,
+      "ot_autoimmune_assoc": 0.5279,
+      "arm": "autoimmune"
+    },
+    "TNF": {
+      "ot_t1d_assoc": 0.3302,
+      "ot_t1d_rank": 139,
+      "ot_autoimmune_assoc": 0.7308,
+      "arm": "both"
+    },
+    "TNFAIP3": {
+      "ot_t1d_assoc": 0.1885,
+      "ot_t1d_rank": 393,
+      "ot_autoimmune_assoc": 0.6509,
+      "arm": "autoimmune"
+    },
+    "TNFRSF1A": {
+      "ot_t1d_assoc": 0.057,
+      "ot_t1d_rank": 927,
+      "ot_autoimmune_assoc": 0.6857,
+      "arm": "autoimmune"
+    },
+    "TNFSF11": {
+      "ot_t1d_assoc": 0.1192,
+      "ot_t1d_rank": 487,
+      "ot_autoimmune_assoc": 0.53,
+      "arm": "autoimmune"
+    },
+    "TNFSF13B": {
+      "ot_t1d_assoc": 0.0382,
+      "ot_t1d_rank": 1267,
+      "ot_autoimmune_assoc": 0.6233,
+      "arm": "autoimmune"
+    },
+    "TNFSF4": {
+      "ot_t1d_assoc": 0.0942,
+      "ot_t1d_rank": 582,
+      "ot_autoimmune_assoc": 0.6081,
+      "arm": "autoimmune"
+    },
+    "TNIP1": {
+      "ot_t1d_assoc": 0.0044,
+      "ot_t1d_rank": 3658,
+      "ot_autoimmune_assoc": 0.5438,
+      "arm": "autoimmune"
+    },
+    "TNPO3": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.542,
+      "arm": "autoimmune"
+    },
+    "TNRC18": {
+      "ot_t1d_assoc": 0.3515,
+      "ot_t1d_rank": 126,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "TPP2": {
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_rank": null,
+      "ot_autoimmune_assoc": 0.6854,
+      "arm": "autoimmune"
+    },
+    "TRAF3IP2": {
+      "ot_t1d_assoc": 0.0046,
+      "ot_t1d_rank": 3643,
+      "ot_autoimmune_assoc": 0.7537,
+      "arm": "autoimmune"
+    },
+    "TREX1": {
+      "ot_t1d_assoc": 0.0353,
+      "ot_t1d_rank": 1364,
+      "ot_autoimmune_assoc": 0.8241,
+      "arm": "autoimmune"
+    },
+    "TRPS1": {
+      "ot_t1d_assoc": 0.3764,
+      "ot_t1d_rank": 110,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "UBASH3A": {
+      "ot_t1d_assoc": 0.4844,
+      "ot_t1d_rank": 24,
+      "ot_autoimmune_assoc": 0.5782,
+      "arm": "both"
+    },
+    "VDR": {
+      "ot_t1d_assoc": 0.4062,
+      "ot_t1d_rank": 42,
+      "ot_autoimmune_assoc": null,
+      "arm": "t1d"
+    },
+    "WDFY4": {
+      "ot_t1d_assoc": 0.0044,
+      "ot_t1d_rank": 3665,
+      "ot_autoimmune_assoc": 0.5547,
+      "arm": "autoimmune"
+    },
+    "ZAP70": {
+      "ot_t1d_assoc": 0.0182,
+      "ot_t1d_rank": 2054,
+      "ot_autoimmune_assoc": 0.6983,
+      "arm": "autoimmune"
+    },
+    "ZFP36L1": {
+      "ot_t1d_assoc": 0.4205,
+      "ot_t1d_rank": 35,
+      "ot_autoimmune_assoc": 0.4793,
+      "arm": "t1d"
+    }
+  },
+  "external_truth_source": "Open Targets Platform Disease.drugAndClinicalCandidates (known + investigational drugs) for the FIXED pre-registered autoimmune indication list. A gene is POSITIVE (tier2) iff it is the mechanistic target of >=1 drug at >=Phase I (maxClinicalStage>=1, incl. Approved) for >=1 listed indication. tier1 = Approved or Phase III+ (maxClinicalStage>=3). SAME rule as iter4; independent of the gate.",
+  "prereg_autoimmune_indications": {
+    "type_1_diabetes": "MONDO_0005147",
+    "rheumatoid_arthritis": "EFO_0000685",
+    "inflammatory_bowel_disease": "EFO_0003767",
+    "crohns_disease": "EFO_0000384",
+    "ulcerative_colitis": "EFO_0000729",
+    "psoriasis": "EFO_0000676",
+    "psoriatic_arthritis": "EFO_0003778",
+    "multiple_sclerosis": "MONDO_0005301",
+    "systemic_lupus_erythematosus": "EFO_0002690",
+    "ankylosing_spondylitis": "EFO_0003898",
+    "celiac_disease": "EFO_0001060",
+    "atopic_dermatitis": "EFO_0000274",
+    "vitiligo": "EFO_0004208",
+    "alopecia_areata": "EFO_0004192",
+    "asthma": "EFO_0000270"
+  },
+  "primary_tier": "tier2_any_clinical",
+  "predictors_compared": {
+    "gate": "binary GO=1/WITHHOLD=0 from blinded Claude adjudication",
+    "ot_alone": "OT T1D genetic-association score (continuous, function-blind)",
+    "ot_ai_alone": "OT autoimmune-disease association score (continuous, function-blind) -- ADDED as an even stronger baseline",
+    "eqtl_alone": "CD4/Treg cis-eQTL n_sig (continuous, function-blind)",
+    "random": "uniform random, 2000 permutations"
+  },
+  "metrics": "AUROC (primary) + average precision; bootstrap 95% CI (2000 resamples) on gate AUROC and on gate-minus-best-baseline advantage; label-permutation p (2000) for gate beats best baseline.",
+  "decision_rule": {
+    "CLEAN_WIN": "gate AUROC > best baseline AND gate-minus-best-baseline 95% CI excludes 0 (lower bound > 0)",
+    "STILL_MARGINAL": "gate AUROC > best baseline but advantage CI includes 0",
+    "WEAKENED": "gate AUROC > best baseline but by less than iter4 AND CI includes 0 (advantage shrank vs iter4's [-0.003,0.369])",
+    "NEGATIVE": "gate AUROC <= best baseline",
+    "UNDERPOWERED": "n_external_positives < 12"
+  },
+  "power_target": "n_external_positives >= 12-15 (iter4 had 5).",
+  "honesty_contract": "Labels frozen with a hash BEFORE any AUROC computed. No indication added/dropped to inflate AUROC. No gene added/dropped for its label. OT-assoc baselines are DELIBERATELY strong (partly informed by the same known-drug datasource). A NEGATIVE/MARGINAL result is reported as such. Everything traces to Open Targets rows.",
+  "date_utc": "2026-07-11T07:27:41Z",
+  "supersedes": "day6_external_validation_prereg.json (prereg_sha256 bf5d9804...)",
+  "prereg_sha256": "370e1abd007226ec0b3abaa54d04584b55a28d526632eece0a385c148f52d6e7"
+}

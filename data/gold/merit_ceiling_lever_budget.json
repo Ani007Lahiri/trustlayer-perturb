@@ -1,0 +1,51 @@
+{
+  "current_honest_merit": 52,
+  "target": 72,
+  "required_delta": 20,
+  "levers": [
+    {
+      "lever": "Novelty framing ('pLDDT for perturbation biology')",
+      "honest_max": 2.0,
+      "rationale": "Fresh, timely framing that resonates with the field's live calibration anxiety (Systema, PerturBench). But framing is not validation, and the space is crowded: conformal-scRNA (Bioinformatics 2025), PRESCRIBE (2025), CILANTRO-SL (2025) all do calibrated uncertainty for single-cell/perturbation. Application-novel, not method-novel.",
+      "in_scope": true
+    },
+    {
+      "lever": "Prior-art benchmark WIN vs named SOTA uncertainty method",
+      "honest_max": 5.0,
+      "rationale": "The single largest LEGITIMATE computational lever. GEARS MC-dropout variance is documented as poorly calibrated; a clean, powered head-to-head where the conformal/Mondrian gate beats a named SOTA UQ baseline on a recognized dataset (rank/decision or coverage metric) is plausible AND creditable. Must be the COMMITTED gate, not a surrogate (the two retracted iter6 'wins' are the cautionary case).",
+      "in_scope": true
+    },
+    {
+      "lever": "Powered external validation WITH FAILURES",
+      "honest_max": 3.0,
+      "rationale": "Potentially the biggest lever (+8..12) IF a benchmark with genuine negatives existed. It does not, in-scope: every attempt returned null/all-success/underpowered (mouse-KO MCC -0.15 p=0.68; clinical 7/98 all-success; ClinVar 9 genes; recovery n=8 p=0.72). In-scope realistic contribution is only marginal power improvement.",
+      "in_scope": false
+    },
+    {
+      "lever": "Methodological extension beyond current Mondrian/weighted conformal",
+      "honest_max": 4.0,
+      "rationale": "Real, computable depth: distribution-free risk control (RCPS/LTT), group-conditional / adaptive coverage, calibration under the honestly-flagged exchangeability violation (LODO covariate shift). Creditable methods work, but still 'incremental methods' on borrowed foundations.",
+      "in_scope": true
+    },
+    {
+      "lever": "Scale (universe-scale run, robustness, stress tests)",
+      "honest_max": 2.0,
+      "rationale": "Universe-scale conformal + donor/gene robustness sweeps strengthen the well-powered claim for the CALIBRATION result. Does not touch the unvalidated biology payload.",
+      "in_scope": true
+    },
+    {
+      "lever": "Reproducibility (hash-stamped receipts, frozen splits, tests)",
+      "honest_max": 1.0,
+      "rationale": "Genuinely strong here and a differentiator, but ~half already priced into the current ~52. Marginal new gain small.",
+      "in_scope": true
+    }
+  ],
+  "naive_additive_sum": 69.0,
+  "why_naive_sum_is_wrong": "The 65 line is a QUALITATIVE gate ('>65 REQUIRES validated well-powered NOVEL science'), not a point total. Every in-scope lever improves one story: 'solid incremental methods, well-powered' (the conformal coverage crown). Stacking benchmark-win + methods-extension + scale yields a better METHODS contribution, not 'validated novel SCIENCE'. The levers therefore compress (diminishing returns) rather than add, and the one lever that could cross the gate (powered external outcomes WITH FAILURES) is structurally out-of-scope.",
+  "realistic_ceiling_range": [
+    60,
+    64
+  ],
+  "best_case_reach": 65,
+  "verdict_on_plus20_merit": "NO (72 out of reach; even 65 is a best-case stretch)"
+}

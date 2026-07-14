@@ -1,0 +1,21 @@
+{
+  "dataset": "CaRPool-seq THP1 (GSE213957)",
+  "source": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE213nnn/GSE213957/suppl",
+  "tar_file": "GSE213957_THP1-CaRPool-seq_and_GSE213957_HEX293FTstabRNA.tar.gz",
+  "tar_bytes": 810623314,
+  "tar_sha256": "0e13c092c8128cd71406ce24c6d92a662651125cbbd886fd5af038eec86c199f",
+  "metadata_file": "GSE213957_THP1-CaRPool-seq.metadata.tsv.gz",
+  "metadata_sha256": "878b3ad4a86f65e20494baf1761753ce72f28f708186c7ea96b710952e1f0c79",
+  "composition_verified": {
+    "n_cells_metadata": 30707,
+    "n_dual": 158,
+    "n_single": 28,
+    "n_NT": 1,
+    "n_single_genes": 28
+  },
+  "testable_doubles": 158,
+  "power_floor_F3": ">=40 required; 158 available -> PASS",
+  "gex_matrices": "GEXGDO1-4, 21052 genes x (8112+18194+23013+22662) cells across 4 lanes",
+  "citation": "Wessels & Satija, Nat Methods 2023, PMID 36550277",
+  "license": "GEO public"
+}

@@ -1,0 +1,30 @@
+{
+  "track": "A3 \u2014 universe-scale calibration + robustness sweeps (CACHED PATH ONLY)",
+  "created_utc": "2026-07-11T17:53:28.715211+00:00",
+  "data_sources_cached_only": {
+    "universe_pooled": "data/interim/base_predictor_preds.parquet (33983 rows, 11526 genes, gene-level train/calib/test folds)",
+    "universe_features": "data/interim/day2_feature_table.parquet (strata: condition, target_baseMean, trans_effect_magnitude, n_cells)",
+    "reproducible_core": "data/gold/conformal_lodo_receipt.json (donor-blocked LODO, 2591 core genes, per-donor coverage) \u2014 REUSED, h5mu NOT re-streamed"
+  },
+  "method": {
+    "conformal": "split-conformal absolute-residual; nonconformity=|y-pred|; q_L=quantile(|r_calib|, L, method='higher'); coverage_L = mean(|r_test|<=q_L)",
+    "fit": "base predictor fit on TRAIN genes only (cached); calib fold -> quantile; test fold -> coverage. Gene-level folds => leakage-clean (disjoint gene sets).",
+    "levels": [
+      0.8,
+      0.9,
+      0.95
+    ]
+  },
+  "robustness_sweeps_preregistered": {
+    "1_across_donors": "leave-each-donor-out coverage from cached LODO receipt (4 held-out donors); report mean+-sd and worst-case per level",
+    "2_across_gene_subsets_bins": "universe test rows stratified by: condition(3), target_baseMean quartiles, trans_effect_magnitude(y) quartiles, n_cells quartiles; conditional coverage per stratum per level",
+    "3_across_conformal_seed": "re-partition pooled (calib+test) GENES into calib/test at each of 20 seeds (gene-level to preserve leakage structure), recompute coverage; report mean+-sd across seeds"
+  },
+  "verdict_rule_prereg": {
+    "robust_if": "worst-case per-stratum coverage within 0.03 (abs) of nominal at 0.90 across ALL sweeps AND seed-sweep sd<0.01",
+    "mostly_if": "worst-case within 0.05 of nominal but one or more strata deviate 0.03-0.05",
+    "not_robust_if": "any stratum deviates > 0.05 (abs) from nominal at 0.90",
+    "note": "reported HONESTLY either way; deviations named explicitly, no post-hoc tuning"
+  },
+  "prereg_sha256_16": "07788d2d912bb73e"
+}

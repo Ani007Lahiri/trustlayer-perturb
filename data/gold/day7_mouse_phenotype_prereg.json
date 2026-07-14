@@ -1,0 +1,50 @@
+{
+ "purpose": "Day-7 SECOND independent external axis: MOUSE-KNOCKOUT / MODEL-ORGANISM phenotype evidence (IMPC/MGI via Open Targets mousePhenotypes, + NOD-mouse literature via PubMed). Pre-registered BEFORE any phenotype fetch or scoring.",
+ "claim_under_test": "The calibrated gate's binary GO/WITHHOLD call predicts which gate-scored genes produce an IMMUNE-DYSREGULATION / AUTOIMMUNE phenotype on knockout/perturbation in mouse (orthogonal to human GWAS/eQTL) BETTER than function-blind baselines (OT T1D association score alone, eQTL-count alone, random).",
+ "why_independent": "The gate/adjudication rule was constructed from {curated immune-GO, OT_T1D>T2D human association, GWAS T2D-tag, measured Treg direction, human cis-eQTL}. It NEVER used mouse-knockout phenotype data. IMPC/MGI mouse-KO phenotypes are generated in an orthogonal model system (mouse germline/conditional KO), so a validation against them CAN fail.",
+ "axis_source_primary": "Open Targets target.mousePhenotypes (aggregates IMPC + MGI). Each row carries modelPhenotypeLabel + modelPhenotypeClasses (Mammalian Phenotype ontology top-level classes).",
+ "axis_source_secondary": "PubMed NOD-mouse / model-organism T1D literature (independent of IMPC/MGI curation).",
+ "disclosure": "During a connectivity probe BEFORE writing this prereg, the top-level MP CLASS LABELS (not scores) of 5 genes (IL2,PTPN2,CTLA4,PRKCQ,INSR) were observed. The MP top-level class vocabulary is a FIXED public ontology; the rule below is defined over that fixed vocabulary, not tuned to any gene's data. CD226 was observed to have 0 OT mousePhenotype rows (covered by NOD literature axis).",
+ "mouse_support_rule_FROZEN": {
+  "MOUSE_IMMUNE_SUPPORT (primary binary label y_mouse_immune)": "1 iff the gene has >=1 OT mousePhenotype row whose modelPhenotypeClasses include ANY of: 'immune system phenotype' OR 'hematopoietic system phenotype'; else 0.",
+  "MOUSE_DIABETES_SUPPORT (secondary binary label y_mouse_dm)": "1 iff the gene has >=1 mousePhenotype row whose modelPhenotypeLabel (case-insensitive) matches ANY of the frozen term list below, else 0.",
+  "diabetes_term_list": [
+   "diabet",
+   "hyperglycemi",
+   "hyperglycaemi",
+   "glucose",
+   "insulin",
+   "glucose tolerance",
+   "islet",
+   "hypoglycemi",
+   "glycemi"
+  ],
+  "MOUSE_ANY_SUPPORT (y_mouse_any)": "1 iff y_mouse_immune==1 OR y_mouse_dm==1.",
+  "no_data_handling": "Genes with 0 mousePhenotype rows from OT get y_mouse_immune=0,y_mouse_dm=0 from the IMPC/MGI axis; they are separately checked against the NOD-literature axis and flagged has_mouse_record=0 so the underpowered/no-data fraction is reported honestly (NOT silently counted as negatives in the headline)."
+ },
+ "nod_literature_protocol_FROZEN": {
+  "genes_queried": "trio CD226/RASGRP1/PRKCQ + all GO_arm genes + a frozen sample of the 98-gene eligible universe (every gene that ALSO received a gate call). Query = PubMed '<SYMBOL> AND (NOD mouse OR nonobese diabetic OR autoimmune diabetes OR insulitis)'.",
+  "support_call": "lit_nod_support=1 iff PubMed total_count>=1 for the frozen query AND >=1 of the top-5 returned titles/abstracts is judged (by fixed adjudication prompt) to describe a mouse/NOD phenotype of the gene relevant to autoimmune diabetes / immune dysregulation; else 0. Counts + PMIDs recorded as receipts.",
+  "note": "Literature axis is confirmatory/illustrative for key genes; the POWERED headline metric uses the IMPC/MGI axis over all 44 gate genes."
+ },
+ "scoring_FROZEN": {
+  "scoring_set": "All 44 genes with a gate GO/WITHHOLD call in day6_external_frozen_scoring_table.json (labels_sha256 fcddae61...).",
+  "predictors_compared": {
+   "gate": "binary gate_go (GO=1/WITHHOLD=0)",
+   "ot_alone": "OT T1D association score (continuous, function-blind baseline)",
+   "eqtl_alone": "eQTL n_significant (continuous, function-blind baseline)",
+   "random": "uniform random, 2000 permutations"
+  },
+  "primary_metric": "AUROC of each predictor against y_mouse_immune over the scoring set; also balanced accuracy / MCC for the binary gate vs y_mouse_immune. Bootstrap 95% CI (2000 resamples).",
+  "sensitivity_metric": "repeat against y_mouse_any and on the 35-gene sensitivity subset (excl. 9 pure-metabolic NOGO distractors).",
+  "decision_rule": {
+   "concordant": "gate AUROC point estimate > best function-blind baseline AND gate-vs-best advantage bootstrap CI excludes 0",
+   "partial": "gate AUROC > best baseline but CI includes 0 (advantage present, not powered)",
+   "discordant": "gate AUROC <= best baseline (gate no better / worse than function-blind baseline)",
+   "underpowered": "n genes with a mouse record < 8 OR n positives(y_mouse_immune) < 4 OR bootstrap CI so wide no ranking is distinguishable"
+  }
+ },
+ "honesty_note": "Labels frozen by hash BEFORE any AUROC computed. A NEGATIVE / NULL / UNDERPOWERED result WILL be reported plainly. No gene hand-picking; rule applied deterministically to all 44.",
+ "date_utc": "2026-07-11",
+ "prereg_sha256": "cac9a66c6f0c908df9a9780941a59adca439bc1f94692bd8cfef73f70285d175"
+}

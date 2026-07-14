@@ -1,0 +1,381 @@
+{
+  "SIRPG": {
+    "immune_go_terms": [
+      "positive regulation of T cell activation"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000089012",
+    "ot_t1d": 0.532,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "CD28": {
+    "immune_go_terms": [
+      "T cell activation",
+      "T cell costimulation",
+      "T cell receptor signaling pathway",
+      "humoral immune response",
+      "immune response",
+      "immune system process",
+      "positive regulation of T cell activation",
+      "positive regulation of T cell proliferation",
+      "positive regulation of T cell receptor signaling pathway",
+      "positive regulation of cytokine production",
+      "positive regulation of interleukin-10 production",
+      "positive regulation of interleukin-2 production",
+      "positive regulation of interleukin-4 production",
+      "regulation of T cell proliferation",
+      "regulatory T cell differentiation"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000178562",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "ICOS": {
+    "immune_go_terms": [
+      "T cell costimulation",
+      "T cell tolerance induction",
+      "immune response"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000163600",
+    "ot_t1d": 0.204,
+    "ot_t2d": 0.19,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "IL2RB": {
+    "immune_go_terms": [
+      "cytokine receptor activity",
+      "cytokine-mediated signaling pathway",
+      "immunoglobulin mediated immune response",
+      "interleukin-15 receptor activity",
+      "interleukin-15-mediated signaling pathway",
+      "interleukin-2 binding",
+      "interleukin-2 receptor activity",
+      "interleukin-2-mediated signaling pathway",
+      "positive regulation of leukocyte differentiation",
+      "positive regulation of leukocyte proliferation"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000100385",
+    "ot_t1d": 0.378,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "CCR7": {
+    "immune_go_terms": [
+      "cellular response to cytokine stimulus",
+      "establishment of T cell polarity",
+      "immune response",
+      "inflammatory response",
+      "lymphocyte migration into lymph node",
+      "negative regulation of interleukin-12 production",
+      "negative thymic T cell selection",
+      "positive regulation of T cell costimulation",
+      "positive regulation of T cell receptor signaling pathway",
+      "positive regulation of dendritic cell antigen processing and presentation",
+      "positive regulation of humoral immune response",
+      "positive regulation of interleukin-12 production",
+      "regulation of interleukin-1 beta production"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000126353",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "ITK": {
+    "immune_go_terms": [
+      "NK T cell differentiation",
+      "T cell activation",
+      "T cell receptor signaling pathway",
+      "adaptive immune response",
+      "gamma-delta T cell activation",
+      "positive regulation of cytokine production"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000113263",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "CD5": {
+    "immune_go_terms": [
+      "T cell costimulation"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000110448",
+    "ot_t1d": 0.09,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "LCK": {
+    "immune_go_terms": [
+      "NK T cell activation",
+      "T cell activation",
+      "T cell costimulation",
+      "T cell differentiation",
+      "T cell receptor binding",
+      "T cell receptor signaling pathway",
+      "immune response-activating cell surface receptor signaling pathway",
+      "leukocyte migration",
+      "positive regulation of T cell activation",
+      "positive regulation of T cell receptor signaling pathway",
+      "positive regulation of leukocyte cell-cell adhesion",
+      "regulation of lymphocyte activation"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000182866",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "ZAP70": {
+    "immune_go_terms": [
+      "T cell activation",
+      "T cell aggregation",
+      "T cell differentiation",
+      "T cell migration",
+      "T cell receptor signaling pathway",
+      "adaptive immune response",
+      "immune response",
+      "leukocyte cell-cell adhesion",
+      "leukocyte migration",
+      "positive regulation of T cell differentiation",
+      "positive thymic T cell selection"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000115085",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "STAT4": {
+    "immune_go_terms": [
+      "cytokine-mediated signaling pathway",
+      "immune response",
+      "interleukin-12-mediated signaling pathway",
+      "response to interleukin-6"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000138378",
+    "ot_t1d": 0.28,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "IKZF3": {
+    "immune_go_terms": [
+      "T cell differentiation",
+      "regulation of lymphocyte differentiation"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000161405",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "CD6": {
+    "immune_go_terms": [
+      "acute inflammatory response to antigenic stimulus",
+      "positive regulation of T cell proliferation",
+      "positive regulation of cytokine production involved in inflammatory response"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000013725",
+    "ot_t1d": 0.355,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "IL10": {
+    "immune_go_terms": [
+      "cytokine activity",
+      "cytokine-mediated signaling pathway",
+      "immune response",
+      "interleukin-10 receptor binding",
+      "interleukin-10-mediated signaling pathway",
+      "leukocyte chemotaxis",
+      "negative regulation of T cell proliferation",
+      "negative regulation of cytokine activity",
+      "negative regulation of cytokine production",
+      "negative regulation of cytokine production involved in immune response",
+      "negative regulation of inflammatory response",
+      "negative regulation of interleukin-1 production",
+      "negative regulation of interleukin-12 production",
+      "negative regulation of interleukin-18 production",
+      "negative regulation of interleukin-6 production",
+      "negative regulation of interleukin-8 production",
+      "positive regulation of cytokine production",
+      "type 2 immune response"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000136634",
+    "ot_t1d": 0.533,
+    "ot_t2d": 0.368,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "GATA3": {
+    "immune_go_terms": [
+      "T cell differentiation",
+      "T cell receptor signaling pathway",
+      "cellular response to interleukin-4",
+      "immune system development",
+      "inflammatory response",
+      "interleukin-2 receptor binding",
+      "lymphocyte migration",
+      "negative regulation of inflammatory response",
+      "positive regulation of T cell differentiation",
+      "positive regulation of interleukin-13 production",
+      "positive regulation of interleukin-4 production",
+      "positive regulation of interleukin-5 production",
+      "regulation of cytokine production"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000107485",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "RUNX1": {
+    "immune_go_terms": [
+      "myeloid leukocyte differentiation",
+      "negative regulation of CD4-positive, alpha-beta T cell differentiation",
+      "positive regulation of CD8-positive, alpha-beta T cell differentiation",
+      "positive regulation of interleukin-2 production"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000159216",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "PTPN2": {
+    "immune_go_terms": [
+      "T cell differentiation",
+      "negative regulation of T cell receptor signaling pathway",
+      "negative regulation of inflammatory response",
+      "negative regulation of interleukin-2-mediated signaling pathway",
+      "negative regulation of interleukin-4-mediated signaling pathway",
+      "negative regulation of interleukin-6-mediated signaling pathway",
+      "negative regulation of positive thymic T cell selection"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000175354",
+    "ot_t1d": 0.479,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": true,
+    "gwas_traits": [
+      "type 1 diabetes mellitus",
+      "type 2 diabetes mellitus"
+    ]
+  },
+  "TNFAIP3": {
+    "immune_go_terms": [
+      "immune system process",
+      "negative regulation of chronic inflammatory response",
+      "negative regulation of inflammatory response",
+      "negative regulation of innate immune response",
+      "negative regulation of interleukin-1 beta production",
+      "negative regulation of interleukin-2 production",
+      "negative regulation of interleukin-6 production"
+    ],
+    "has_immune": true,
+    "ensembl": "ENSG00000118503",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.394,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "SUOX": {
+    "immune_go_terms": [],
+    "has_immune": false,
+    "ensembl": "ENSG00000139531",
+    "ot_t1d": 0.516,
+    "ot_t2d": 0.228,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "TCF7L2": {
+    "immune_go_terms": [],
+    "has_immune": false,
+    "ensembl": "ENSG00000148737",
+    "ot_t1d": 0.527,
+    "ot_t2d": 0.665,
+    "gwas_t2d_tag": true,
+    "gwas_traits": [
+      "type 2 diabetes mellitus"
+    ]
+  },
+  "APOBR": {
+    "immune_go_terms": [],
+    "has_immune": false,
+    "ensembl": "ENSG00000184730",
+    "ot_t1d": 0.472,
+    "ot_t2d": 0.343,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "HNF1A": {
+    "immune_go_terms": [],
+    "has_immune": false,
+    "ensembl": "ENSG00000135100",
+    "ot_t1d": 0.693,
+    "ot_t2d": 0.776,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "FTO": {
+    "immune_go_terms": [],
+    "has_immune": false,
+    "ensembl": "ENSG00000140718",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.62,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "CDKAL1": {
+    "immune_go_terms": [],
+    "has_immune": false,
+    "ensembl": "ENSG00000145996",
+    "ot_t1d": 0.415,
+    "ot_t2d": 0.621,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "KCNQ1": {
+    "immune_go_terms": [],
+    "has_immune": false,
+    "ensembl": "ENSG00000282076",
+    "ot_t1d": 0.0,
+    "ot_t2d": 0.0,
+    "gwas_t2d_tag": false,
+    "gwas_traits": []
+  },
+  "PGM1": {
+    "immune_go_terms": [],
+    "has_immune": false,
+    "ensembl": "ENSG00000079739",
+    "ot_t1d": 0.41,
+    "ot_t2d": 0.497,
+    "gwas_t2d_tag": false,
+    "gwas_traits": [
+      "type 1 diabetes mellitus"
+    ]
+  }
+}

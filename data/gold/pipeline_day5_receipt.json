@@ -22,11 +22,11 @@
       "provenance": "pooled-proxy (absent/sparse in donor-pair data)"
     },
     "RASGRP1": {
-      "trust": 0.817,
-      "raw_spread": 0.01705,
+      "trust": 0.7612,
+      "raw_spread": 0.01629,
       "normalizer": [
-        0.00186,
-        0.08487
+        0.00197,
+        0.06194
       ],
       "provenance": "donor-blocked (present in all 6 donor pairs)"
     }
@@ -37,9 +37,9 @@
     "PRKCQ": 0.162
   },
   "eqtl_ruling_cited": {
-    "CD226": "rs763361 (Ser307) GoF; cell-type-consistent; KD mimics protection",
-    "RASGRP1": "rs72727394 p=4e-10; GTEx LCL-proxy only; NO CD4/Treg eQTL",
-    "PRKCQ": "sub-GWS; thyroid/allergy locus; direction unanchorable"
+    "CD226": "rs763361 (Ser307/Gly307Ser) coding missense GWS T1D lead; KD mimics protection",
+    "RASGRP1": "rs72727394 p=4e-10; NO significant cis-eQTL in 120 T-cell datasets (live)",
+    "PRKCQ": "sub-GWS (GA=0.162); vetoed on genetic floor; eQTL non-binding"
   },
   "believe_veto_split": [
     {
@@ -50,19 +50,19 @@
       "trust": 0.8527,
       "trust_provenance": "pooled-proxy (absent/sparse in donor-pair data)",
       "binding_constraints": [],
-      "hash": "a692d5d955322638"
+      "hash": "7b0862669cf2a8c2"
     },
     {
       "gene": "RASGRP1",
       "role": "BET",
       "decision": "WITHHELD",
       "genetic_association": 0.506,
-      "trust": 0.817,
+      "trust": 0.7612,
       "trust_provenance": "donor-blocked (present in all 6 donor pairs)",
       "binding_constraints": [
         "BLOCK: no cell-type-matched (CD4/Treg) eQTL for the risk allele (proxy-tissue only)"
       ],
-      "hash": "301f00e7ffcdea08"
+      "hash": "5272b4a651023c6e"
     },
     {
       "gene": "PRKCQ",
@@ -72,15 +72,14 @@
       "trust": 0.8834,
       "trust_provenance": "pooled-proxy (absent/sparse in donor-pair data)",
       "binding_constraints": [
-        "BLOCK: genetic_association=0.162 below floor 0.2",
-        "BLOCK: no cell-type-matched (CD4/Treg) eQTL for the risk allele (proxy-tissue only)"
+        "BLOCK: genetic_association=0.162 below floor 0.2"
       ],
-      "hash": "5db70474d8d2419f"
+      "hash": "9d62daa9b5978991"
     }
   ],
   "counterfactuals": {
     "RASGRP1_add_celltype_eqtl": "GO",
-    "PRKCQ_raise_GA_to_0.50": "WITHHELD"
+    "PRKCQ_raise_GA_to_0.50": "GO"
   },
   "lineage": {
     "genetics_source": "data/gold/genetics_gate_receipt.json (Open Targets+GWAS live)",

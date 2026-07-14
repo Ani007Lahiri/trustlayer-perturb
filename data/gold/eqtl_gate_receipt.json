@@ -1,0 +1,34 @@
+{
+  "source": "eQTL Catalogue (github.com/eQTL-Catalogue) via human-genetics MCP connector",
+  "query_date": "2026-07-08",
+  "method": "For each trio gene, tested cis-eQTL associations (p<=1e-5) across CD4/Treg/T-cell gene-expression datasets. celltype_matched_eqtl := (>=1 dataset with a significant cis-eQTL).",
+  "significance_threshold": "nlog10p_min=5.0 (p<=1e-5)",
+  "trio": {
+    "CD226": {
+      "ensembl": "ENSG00000150637",
+      "risk_rsid": "rs763361",
+      "celltype_matched_eqtl": true,
+      "n_datasets_sig": 4,
+      "evidence": "sig cis-eQTL in 4/11 curated CD4/Treg datasets incl OneK1K CD4_TCM (-log10p=30), BLUEPRINT T-cell (-log10p=12.2)",
+      "note": "rs763361 itself is a coding missense (Gly307Ser), not the eQTL lead; the gene is eQTL-active in CD4 T-cells."
+    },
+    "RASGRP1": {
+      "ensembl": "ENSG00000172575",
+      "risk_rsid": "rs72727394",
+      "celltype_matched_eqtl": false,
+      "n_datasets_tested_full": 120,
+      "n_datasets_sig": 0,
+      "evidence": "ZERO significant cis-eQTLs across ALL 120 T-cell datasets; risk variant rs72727394 not tested/present in CD4 T-cells",
+      "note": "LOAD-BEARING veto for the money-shot: RASGRP1=WITHHELD is now confirmed against live data, not hand-typed."
+    },
+    "PRKCQ": {
+      "ensembl": "ENSG00000065675",
+      "risk_rsid": null,
+      "celltype_matched_eqtl": true,
+      "n_datasets_sig": 3,
+      "evidence": "sig cis-eQTL in 3/11 CD4/Treg datasets \u2014 prior hand-typed value (False) was WRONG",
+      "note": "NON-BINDING: PRKCQ is vetoed on the GENETIC FLOOR (sub-GWS, GA=0.162), independent of its eQTL status. Correcting this boolean does NOT change PRKCQ's WITHHELD decision \u2014 which is exactly the point of a fail-closed gate."
+    }
+  },
+  "money_shot_integrity": "The believe/veto split (CD226 GO vs RASGRP1 WITHHELD) is decided by celltype_matched_eqtl, and BOTH values are now confirmed by live eQTL Catalogue queries: CD226 True (4/11), RASGRP1 False (0/120). The one boolean that was wrong (PRKCQ) is non-binding because genetics already vetoes PRKCQ."
+}

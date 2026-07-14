@@ -1,0 +1,285 @@
+BUILT WITH CLAUDE: LIFE SCIENCES · RESEARCH TRACK REVISED PLAN OF ATTACK — v2.1
+The T-cell model that knows when it’s wrong
+“A calibrated trust layer for CD4⁺ T-cell perturbation predictions — validated on Type 1 diabetes
+genetics held out of both training and its own scoring axis, and cashed out as one CRISPRi
+experiment a Gladstone lab could run Monday.”
+WHAT THIS VERSION IS (V2.1) This supersedes the v1 plan. It folds in three review passes: (1) the 50-
+angle adversarial validation + 5-seat Claude council (architecture & strategy); (2) the 8-agent primary-
+literature audit (MODIFICATIONS.md ); and (3) a v2.1 reconciliation that re-verified the audit itself against
+NCBI — and reversed one of its findings. The audit claimed the “2023 Cell Reports CD226
+contradiction” paper did not exist; it does (Ma et al., Cell Reports 2023;42(10):113306, PMID 37864795,
+confirmed via NCBI). CD226’s knockdown-on-suppression direction is therefore contested, not secure
+— and the plan now turns that into the demo’s honesty proof. The data-path escape (Gate 2) was
+independently re-verified live against the authors’ public analysis repo.
+THE ONE-LINE VERDICT ON THE AUDIT Implement all of it. Not one of the audit’s changes adds an
+unsupported claim — every item corrects a fact, downgrades an overclaim to a hedge, upgrades rigor in a
+way that removes an attack surface, or de-risks the timeline. That makes this the safest possible class of
+change: near-zero downside to adopting, real exposure to a Gladstone/Pritchard judge if ignored. The
+strategic core (calibrated decision-under-uncertainty as the product) was confirmed strong by both
+passes and is unchanged.
+What changed from v1 → v2.1 (and why)
+Area v1 said v2.1 says (change + reason)
+Novel bet RASGRP1 = novel bet; risk allele hypermorphic PRKCQ is now the primary novel bet (Treg
+so KD mimics protection direction verified correct). RASGRP1 kept only if
+a Day-1 eQTL gate confirms direction in CD4/
+Treg; else cut. Its hypermorphic direction is
+unsupported in every T-cell eQTL resource and
+countervailing evidence points the other way.
+CD226 (the anchor) “Direction-secure” anchor; “resolve the 2023 Reframed as the hedged / moderate-trust
+v2.1 REVERSAL Cell Reports contradiction” calibration flagship. The Ma 2023 Cell Reports
+paper is real (PMID 37864795): Treg-conditional
+CD226 deletion impairs suppression — the
+opposite of Brusko Diabetes 2023 (NOD
+protection), same Foxp3-Cre design. So the KD-
+on-suppression direction is contested. Do NOT
+call CD226 “direction-secure”; instead have the
+pipeline surface it at hedged trust and cite the
+split on camera — making contested biology the
+proof the trust layer is honest. (This reverses one
+finding of the 8-agent audit, which wrongly
+called the paper nonexistent.)
+Landmine list RBPJ = “Marson’s own hit” Corrected: RBPJ-NCOR is Sakaguchi’s (Nature
+2025); RNF20 is Marson’s (Nature 2020). RBPJ
+still a landmine, just not for the stated reason.
+Recovery metric Recover FOXP3/CTLA4/STAT1; one number on Score the non-canonical subset (MEOX1/
+screen LGALS3BP/CD1E/CD247); report AUPRC +
+median rank vs a Treg-matched permutation
+null; gold set fixed at n=9. Recovering FOXP3 is
+trivial and n=9 is underpowered for precision@k.
+Claude-use headline Vetoing critic + reproduce-hash + Elo Lead with what the critic uniquely does
+tournament (independent effect-size re-derivation + blinded-
+gold leakage audit + hard output-changing
+veto). Cut the Elo tournament.A critic and a
+reproduce button are Claude Science defaults —
+the judges get them free.
+Calibration claim Conformal “guarantee”; weighted-CP for unseen “Calibrated trust score,” not “guarantee”; one
+genes scalar nonconformity score per perturbation;
+report effective sample size where coverage
+breaks. CP guarantees a scalar, not a gene-
+vector; weighted-CP needs a defined likelihood
+ratio that support-shift doesn’t provide.
+OOD signal kNN-distance in learned embedding kNN-distance in frozen ESM-2 space (non-
+circular). Add mean-distance × ensemble-
+disagreement 2-D signal.
+Data path “22M cells / GSE314342” Day-0: pull the ~17 GB precomputed
+DE_stats (deltas already computed); never
+touch the ~1.7 TB cell-level data.Verified live:
+the authors publish analysis-ready DE h5ads.
+1 · The idea, in one page (unchanged core, sharpened claims)
+The gap we exploit
+The field can now predict a gene knockdown’s effect in a T cell — but deep models barely beat a linear
+baseline on accuracy, so competing there is a dead game, and “recovering” a lab’s own known hits is what
+every other team does. The empty, winnable lane is decision under uncertainty: a model that reports its own
+confidence, abstains when it should, and tells a lab where to spend a real experiment. Think AlphaFold’s
+pLDDT — the confidence layer is what made the predictions usable. Nobody has built that for perturbation
+biology.
+THE ONE LINE TO LEAD WITH “Every team here can predict which gene to fix. None can tell you when
+that prediction is wrong — so no lab bets a real experiment on it. We built the CD4⁺ T-cell model that
+reports its own confidence, proves it with Type 1 diabetes genetics held out of both training and its own
+scoring axis, kills its own weak pick through an enforced veto, and hands a Gladstone lab Monday’s
+CRISPRi experiment — every number reproducible from pinned public data.”
+The four-beat arc
+1. Predict — a cheap, borrowed base predictor of knockdown effect (we do not compete here).
+2. Trust — a calibrated confidence score (not a “guarantee”) that beats a mean-collapse null and abstains on
+predictions it can’t stand behind.
+3. Recommend — turn trusted predictions into one genetics-anchored, direction-checked CRISPRi
+experiment.
+4. Self-critique — a critic that independently re-derives the numbers, audits the blinded gold set for leakage,
+and has a real veto that physically blocks a bad nomination.
+TWO NARRATIVE PRE-EMPTS — PUT THESE IN THE FIRST SLIDE/PARAGRAPH (A) Disambiguate
+“calibration.” 2025 made metric calibration the hot topic (Arc VCC; Shift Bioscience). Say it explicitly:
+“Not metric calibration — per-prediction coverage / trust. Different object.” Turn the collision into a wedge.
+(B) Own the accuracy debate. Our premise (“DL doesn’t beat baselines,” Ahlmann-Eltze Nat Methods
+2025) is contested by Miller et al. (Shift/Xaira, bioRxiv 2025). Cite both sides in the first paragraph —
+acknowledging the debate is the sophistication move, and our trust layer is valuable whoever wins the
+accuracy argument.
+2 · The two Day-1 go/no-go gates (decide before committing anything)
+RASGRP1 eQTL direction — or swap to PRKCQ
+GATE 1
+The novel bet only works if knocking the gene down mimics the protective genetic state. For RASGRP1 that
+requires the T1D risk allele to raise RASGRP1 in CD4/Treg. The audit could not confirm this in any T-cell
+eQTL resource (DICE, OneK1K, GTEx, eQTL Catalogue) — the T1D lead SNP is not a significant RASGRP1
+eQTL, and separate evidence (reduced RASGRP1 → lupus; a β-cell causal role where KO increases apoptosis)
+points the wrong way.
+WHAT IT MEANS. If you present RASGRP1 as a confident novel bet and Pritchard asks “what’s the eQTL
+direction in Treg?”, the honest answer today is “unsupported.” That one exchange discredits the
+nomination.
+WHAT TO DO. Day 1, query the T1D lead SNP (not the SLE SNP) for RASGRP1 direction in CD4/Treg. If
+not cleanly hypermorphic → PRKCQ becomes the primary novel bet (PKC-θ blockade enhances Treg
+suppression — direction verified correct, druggable, tolerated). If RASGRP1 is kept at all, label it
+“speculative, direction-unconfirmed” and state the β-cell/lupus counter-evidence on the slide.
+Data source — precomputed deltas, never the raw 1.7 TB
+GATE 2
+Verified live during this revision: the authors’ public analysis repo (github.com/emdann/
+GWT_perturbseq_analysis_2025 ) documents an analysis-ready GWCD4i.DE_stats.h5ad whose log_fc /
+zscore layers are the per-perturbation delta vectors, already computed. The cell-level h5ads (~1.7 TB) are
+unnecessary.
+WHAT TO DO (Day 0). Pull the precomputed DE_stats (deltas) and the donor-resolved variant; freeze
+perturbation- and donor-level splits the same afternoon. Do not anchor on “22M cells / GSE314342”
+and pull raw or cell-level data — that is a 3–6 day trap that starves every downstream ticket. (Reconfirm
+the exact bucket URL, the by_donors filename, and file sizes from the repo’s data-sharing readme at build time — the file
+structure is confirmed; the exact download path should be pulled fresh.)
+3 · Biology corrections (documentation pass — do before the writeup)
+These are pure factual fixes. Each is a place where the current docs would be caught instantly by a Marson-
+lab judge. All downside, no upside to leaving them. (The source docs — README / SCOPE / nomination memo — cross-
+reference this section as §3a = the CD226 reversal below, and §3b = the PRKCQ / RASGRP1 swap in §2, Gate 1.)
+§3a — CD226 direction is contested (the v2.1 reversal)
+Item The situation The correction
+CD226 The 8-agent audit claimed a “2023 Cell Reports” Use the paper, don’t delete it. Do NOT say
+contradiction is CD226 Treg-deletion contradiction paper did not “human + mouse + genetics all agree” or call
+REAL v2.1 exist. It does: Ma et al., Cell Reports CD226 “direction-secure.” The risk-allele sign is
+2023;42(10):113306, PMID 37864795 (title secure; the KD-on-function sign is split. Reframe
+contains “mTOR/Myc”; confirmed via NCBI). Treg- CD226 as the hedged/moderate-trust calibration
+conditional CD226 deletion impairs suppression & flagship: surface it, assign hedged trust, and cite
+worsens GvHD — opposite to Brusko/ the Ma-vs-Thirawatananond split on camera. Keep
+Thirawatananond Diabetes 2023 (PMID 37625150), the human-Treg KD experiment as resolving a real,
+same Foxp3-Cre design. cited split (stabilization vs blunted activation at
+matched activation; TIGIT-dependence).
+Misattribution RBPJ listed as “Marson’s own FOXP3-screen hit.” RBPJ-NCOR is Sakaguchi’s (Nature 2025); RNF20
+HIGH is Marson’s (Nature 2020). RBPJ stays on the do-
+not-nominate list, just not as “his own paper.”
+Overclaim CD226 rs763361 called a “proven GOF” variant. Soften to “credentialed candidate causal coding
+MED variant” (fine-mapping nominates it). Describe the
+competitor as the anti-DNAM-1 TNAX asset, not
+the unconfirmed “RVW101” code string.
+Verified OK SIRPG (wrong KD direction), BACH2/IKZF4 No change — the audit confirmed these against
+KEEP (positive Treg regulators) landmines; CD226 anchor primary sources. Sharpen Ota/Pritchard framing to
+biology; Iakovliev set independence; Ota/Pritchard prospective/selective vs retrospective/interpretive.
+differentiation.
+4 · Method rigor (survive the ML red-team)
+Recovery metric — make it non-trivial and properly powered
+R1
+The problem. Recovering FOXP3/CTLA4/STAT1 is trivial (any Treg-aware ranker surfaces them by
+construction), and n=9 positives in ~4,100 genes makes precision@k move in ~11-point steps with no
+resolution — the single most demo-critical number is both easy to dismiss and statistically fragile.
+The fix. (1) Score recovery on the non-canonical subset — MEOX1, LGALS3BP, CD1E, CD247
+(secondarily CD5, IL10RA) — the genes a naive Treg ranker would not surface; recovering these is the
+impressive result. (2) Report a threshold-free statistic over all 9 at once: AUPRC + median rank, tested
+against a ≥10,000-iteration permutation null drawn from an immune/Treg-matched background (not
+uniform genome-wide, which inflates significance). (3) Bake the obvious Treg genes into the null so
+“surfacing FOXP3” counts toward the null, not toward success. Fix gold-set size to 9 everywhere. Present
+as suggestive, not confirmatory.
+Say “calibrated trust,” not “guarantee”
+R2
+Conformal prediction guarantees coverage on a scalar nonconformity score, not on a high-dimensional
+gene-delta vector; and weighted-CP for “unseen genes” is support shift, not covariate shift, so the
+likelihood ratio is undefined and the finite-sample guarantee does not hold where it’s most needed. ⇒
+Commit to one scalar trust score per perturbation and state coverage on that object; estimate shift
+weights in frozen ESM-2 space and report effective sample size as an honest “the guarantee broke
+here” signal.
+Beat a real null on the selective-risk curve
+R3
+Random abstention is a straw man — a mean-collapsed model still beats it. Put the mean/constant
+baseline as a competing curve on the same plot (plus an “abstain-on-large-predicted-effect” heuristic).
+No dominance over the mean baseline = no result. Score selective DEG-recall, not just selective MAE
+(MAE is easy to win by predicting near-zero). ~½ day.
+Make the OOD signal non-circular
+R4
+Compute kNN-OOD distance in frozen ESM-2 space, not the model’s own learned embedding (which is
+optimized on the same data — circular). Add a 2-D trust signal (mean-distance × ensemble-
+disagreement) to catch correlated mean-collapse that ensemble variance alone misses, since ensemble
+members share the mean-collapse inductive bias.
+5 · Claude use & demo — differentiate from the platform defaults
+The problem. Claude Science ships a built-in actor-critic reviewer and per-figure reproducibility (code +
+environment + message history) by default. To the judges — who built the workbench — “we have a
+critic” and “we have a reproduce button” score ~0 on originality because they get both free. Multi-agent
+also costs ~15× tokens and is non-deterministic run-to-run, which threatens a live reproduce-hash.
+The fix — lead with what THIS critic uniquely does:
+1. A hard, output-changing veto via tool-scoping (no-Write) — and show the leaderboard actually
+change when it fires. A veto that alters the result is the differentiator; a veto that just comments is the
+default.
+2. Independent quantitative re-derivation + blinded-gold leakage audit — the critic recomputes effect
+sizes itself and checks “did we ‘discover’ a gene because it was in a prompt?” This is the capability
+the platform does not give free.
+3. Cut the Elo tournament unless you can defend it with one worked ranking-flip; replace with a
+transparent cross-modality convergence score over deterministic evidence — same result, fewer
+moving parts.
+4. Honest hallucination-delta: pre-register a countable checklist (citation-fidelity / effect-direction /
+leakage) over a fixed N≈20–30 items on your own API key; in the demo show 3 verbatim caught
+errors, not a slick aggregate %.
+5. Remove the unverifiable “last three winners built adversarial self-verification” claim.
+6. Reproduce-hash: rehearse on the demo machine with pinned BLAS threads and zero model calls;
+hash the rounded scientific result (leaderboard ordering + recovery number), not raw floats.
+6 · Revised day-by-day (ordering rule: gates & rigor before model;
+honesty before polish)
+Day What you do What it means / why this order
+Day 0 Pull precomputed DE_stats deltas (~17 Gate 2. One decision that de-risks the whole timeline — deltas
+GB) from the authors’ public bucket. Do not already exist, so you start modeling in an afternoon, not on Day 4.
+touch cell-level data.
+Day 1 Freeze splits. Write the axis↔validation Build the exam and anti-cheat before the student. Resolve the
+disjointness gate + the recovery eval first. novel-bet direction before any effort is sunk into it. Critic exists
+Run Gate 1 (RASGRP1 eQTL → PRKCQ if from hour one so “self-critique” is real, not retrofitted.
+needed). Stand up the critic with no-Write
+scoping + effect-size re-derivation + leakage
+audit.
+Day 2 Base predictor The predictor is borrowed — spend no novelty here. Axis built
+(pseudobulk+delta+ESM-2+priors). Program without naming any Iakovliev core gene, so recovery stays non-
+axis from non-core-gene signals (TSDR/ circular by construction.
+TMZ-derived). Hard pre-gate: beat mean-of-
+training on OOD or pivot to “calibration is the
+value.”
+Day 3 Deep ensemble → conformal (scalar score) → The actual invention. Beating a power-matched / mean-collapse
+selective-risk curve with the mean baseline null (not random) is the claim that survives the ML red-team.
+as a competing curve. kNN-OOD in frozen
+ESM-2 space. Per-slice calibration table.
+Day 4 Blinded recovery on the non-canonical The payoff: the trust score recovers real biology it was never
+subset (AUPRC + median rank vs Treg- scored on, and it’s the non-obvious genes that land — not FOXP3.
+matched null). Surface CD226 (anchor) +
+PRKCQ or gated-RASGRP1 (bet) with trust
++ mechanism. Critic veto pass.
+Day 5 Active-learning curve as a sanity check (not Active learning shows the score is decision-grade; the veto delta
+headline). Wire the veto as the real fail-closed makes “self-critiquing” technical, not theatrical.
+gate; compute with/without-veto error delta
+over the pre-registered checklist.
+Day 6 Honesty pass: every on-screen claim gets a “Lead with Integrity” is a Gladstone value and a scoring edge. A
+one-line caveat + reproducible source. Freeze caveat volunteered before it’s asked reads as mastery.
+hero figures. Confirm native lineage
+reproduces every number. Publish the skill
+stack.
+Day 7 Record the 3-min video. Lead with the Heaviest-weighted artifact, on real data, full day. End on
+credibility-gap hook; disambiguate calibration application, not on cleverness.
++ cite both sides of the accuracy debate on
+slide 1; show the live output-changing veto on
+a hashed, uninspected slice; end on
+Monday’s CRISPRi experiment.
+7 · One-page action checklist
+Day 0
+☐ Pull DE_stats.h5ad + donor-resolved deltas from the public bucket (reconfirm URL/sizes from the repo readme);
+freeze perturbation- + donor-level splits the same afternoon. Never touch the ~1.7 TB cell-level data.
+Day 1 — go/no-go
+☐ RASGRP1 eQTL-direction gate on the T1D lead SNP in CD4/Treg → if not hypermorphic, PRKCQ becomes
+primary bet.
+☐ Write the axis↔validation disjointness gate + recovery eval before any model.
+☐ Stand up critic: no-Write scoping + independent effect-size re-derivation + blinded-gold leakage audit.
+Biology corrections (docs)
+☐ CD226: do NOT call it “direction-secure” — the Ma 2023 Cell Reports (PMID 37864795) vs Brusko 2023 Diabetes
+split is real; reframe as the hedged calibration flagship that cites the split on camera.
+☐ Fix attribution: RNF20 = Marson (2020); RBPJ-NCOR = Sakaguchi (2025).
+☐ Soften CD226 to “credentialed candidate causal coding variant”; describe the TNAX asset, not “RVW101.”
+Method rigor
+☐ Recovery: score the non-canonical subset (MEOX1/LGALS3BP/CD1E/CD247); AUPRC + median rank vs a Treg-
+matched permutation null; gold set = 9.
+☐ “Calibrated trust,” not “guarantee”; one scalar score per perturbation; report effective sample size for unseen genes.
+☐ Add the mean/constant baseline as a competing curve; score selective DEG-recall.
+☐ Move kNN-OOD to frozen ESM-2 space; add mean-distance × disagreement 2-D signal.
+Claude use / demo
+☐ Cut the Elo tournament (unless defensible with one worked flip) → transparent convergence score.
+☐ Pre-register a countable hallucination checklist (N≈20–30, own key); show 3 verbatim caught errors.
+☐ Remove the “last three winners” claim.
+☐ Rehearse reproduce-hash: pinned BLAS threads, zero model calls, hash the rounded result.
+Writeup pre-empts (slide 1 / first paragraph)
+☐ Disambiguate “per-prediction trust” from “metric calibration.”
+☐ Cite both sides of the Ahlmann-Eltze vs Miller/Shift accuracy debate.
+THE BAR TO CLEAR Every claim that ships must survive a Marson/Pritchard-caliber immunologist and an
+Anthropic agent-platform engineer each asking one pointed question, live. This v2 is built so the honest
+answer to each of those questions is already on the slide. The honesty is the science — and here, it is
+also the winning strategy.
+v2.1 integrates the 50-angle adversarial validation + 5-seat Claude council (architecture/strategy), the 8-agent primary-literature audit
+(MODIFICATIONS.md ), and a v2.1 reconciliation pass. That pass re-verified the audit against NCBI and reversed one of its findings: the
+“2023 Cell Reports CD226 contradiction” paper is real (Ma et al., PMID 37864795, confirmed via NCBI), so CD226 is now the hedged
+calibration flagship rather than a direction-secure anchor. Also verified live: Brusko/Thirawatananond Diabetes 2023 (PMID 37625150), RBPJ-
+NCOR = Sakaguchi Nature 2025 (PMID 40140585), and the analysis-ready DE_stats delta layers at github.com/emdann/
+GWT_perturbseq_analysis_2025 . Remaining biology PMIDs originate from the audit and should be spot-checked at build time; the
+plan gates and hedges these claims rather than asserting them, so it is robust to any single imperfect citation. Source docs (README /
+SCOPE / nomination memo) are reconciled to v2.1 and cross-reference §3a (CD226 reversal) / §3b (PRKCQ swap). Companion artifacts:
+winning-patterns brief, 50-angle register, council memo, and the v1 plan-of-attack.

@@ -1,0 +1,221 @@
+{
+  "baselines": {
+    "eqtl_only": {
+      "n_correct": 5,
+      "note": "predict GO iff eqtl_n_sig>0.",
+      "predictions": {
+        "APOBR": true,
+        "CDKAL1": true,
+        "FTO": false,
+        "HNF1A": false,
+        "KCNQ1": false,
+        "PGM1": false,
+        "SIRPG": true,
+        "SUOX": true,
+        "TCF7L2": true
+      }
+    },
+    "majority_class": {
+      "n_correct": 8,
+      "note": "predict 'False' for all; the do-nothing bar.",
+      "predictions": {
+        "APOBR": false,
+        "CDKAL1": false,
+        "FTO": false,
+        "HNF1A": false,
+        "KCNQ1": false,
+        "PGM1": false,
+        "SIRPG": false,
+        "SUOX": false,
+        "TCF7L2": false
+      }
+    },
+    "query_all": {
+      "n_correct": 5,
+      "note": "GA>=0.20 AND eqtl_n_sig>0 (commit_gate-style structured rule).",
+      "predictions": {
+        "APOBR": true,
+        "CDKAL1": true,
+        "FTO": false,
+        "HNF1A": false,
+        "KCNQ1": false,
+        "PGM1": false,
+        "SIRPG": true,
+        "SUOX": true,
+        "TCF7L2": true
+      }
+    },
+    "strongest_baseline_n_correct": 8
+  },
+  "class_balance_note": "1 GO / 8 NO-GO \u2014 severe imbalance; raw accuracy is misleading, so balanced-accuracy/F1/MCC are the primary metrics in the execution receipt.",
+  "date_utc": "2026-07-11T04:00:55Z",
+  "genes": {
+    "APOBR": {
+      "ground_truth_credible_t1d_tcell_go": false,
+      "gwas_diabetes_traits": [],
+      "gwas_t1d_tag": false,
+      "gwas_t2d_tag": false,
+      "has_immune_go_specificity": false,
+      "immune_go_terms": [],
+      "literature_citation_note": "Macrophage ApoB48 receptor; lipid handling; sparse curated diabetes GWAS.",
+      "measured_direction_protective": true,
+      "measured_treg_score_rest": 0.465519,
+      "n_go_terms": 7,
+      "ot_t1d_assoc": 0.472,
+      "ot_t1d_dominant": true,
+      "ot_t2d_assoc": 0.343,
+      "symbol": "APOBR"
+    },
+    "CDKAL1": {
+      "ground_truth_credible_t1d_tcell_go": false,
+      "gwas_diabetes_traits": [],
+      "gwas_t1d_tag": false,
+      "gwas_t2d_tag": false,
+      "has_immune_go_specificity": false,
+      "immune_go_terms": [],
+      "literature_citation_note": "tRNA methylthiotransferase; 2007-era T2D locus; beta-cell proinsulin fidelity.",
+      "measured_direction_protective": true,
+      "measured_treg_score_rest": 0.097237,
+      "n_go_terms": 13,
+      "ot_t1d_assoc": 0.415,
+      "ot_t1d_dominant": false,
+      "ot_t2d_assoc": 0.621,
+      "symbol": "CDKAL1"
+    },
+    "FTO": {
+      "ground_truth_credible_t1d_tcell_go": false,
+      "gwas_diabetes_traits": [],
+      "gwas_t1d_tag": false,
+      "gwas_t2d_tag": false,
+      "has_immune_go_specificity": false,
+      "immune_go_terms": [],
+      "literature_citation_note": "m6A demethylase; obesity/T2D via adiposity.",
+      "measured_direction_protective": true,
+      "measured_treg_score_rest": 0.181034,
+      "n_go_terms": 30,
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_dominant": false,
+      "ot_t2d_assoc": 0.62,
+      "symbol": "FTO"
+    },
+    "HNF1A": {
+      "ground_truth_credible_t1d_tcell_go": false,
+      "gwas_diabetes_traits": [],
+      "gwas_t1d_tag": false,
+      "gwas_t2d_tag": false,
+      "has_immune_go_specificity": false,
+      "immune_go_terms": [],
+      "literature_citation_note": "Liver/islet TF; MODY3 OMIM 600496; OMIM 'T1D 20' 612520 is legacy nomenclature.",
+      "measured_direction_protective": true,
+      "measured_treg_score_rest": 0.364992,
+      "n_go_terms": 56,
+      "ot_t1d_assoc": 0.693,
+      "ot_t1d_dominant": false,
+      "ot_t2d_assoc": 0.776,
+      "symbol": "HNF1A"
+    },
+    "KCNQ1": {
+      "ground_truth_credible_t1d_tcell_go": false,
+      "gwas_diabetes_traits": [],
+      "gwas_t1d_tag": false,
+      "gwas_t2d_tag": false,
+      "has_immune_go_specificity": false,
+      "immune_go_terms": [],
+      "literature_citation_note": "Cardiac K+ channel (LQT1); separately an imprinted T2D islet-secretion locus.",
+      "measured_direction_protective": false,
+      "measured_treg_score_rest": -0.265611,
+      "n_go_terms": 101,
+      "ot_t1d_assoc": 0.0,
+      "ot_t1d_dominant": false,
+      "ot_t2d_assoc": 0.601,
+      "symbol": "KCNQ1"
+    },
+    "PGM1": {
+      "ground_truth_credible_t1d_tcell_go": false,
+      "gwas_diabetes_traits": [
+        "type 1 diabetes mellitus",
+        "type 2 diabetes mellitus"
+      ],
+      "gwas_t1d_tag": true,
+      "gwas_t2d_tag": true,
+      "has_immune_go_specificity": false,
+      "immune_go_terms": [],
+      "literature_citation_note": "Glycolysis/glycosylation enzyme; PGM1-CDG OMIM 614921; T1D-tagged locus, biology-vs-genetics discordance, likely passenger.",
+      "measured_direction_protective": false,
+      "measured_treg_score_rest": -0.410633,
+      "n_go_terms": 17,
+      "ot_t1d_assoc": 0.41,
+      "ot_t1d_dominant": false,
+      "ot_t2d_assoc": 0.497,
+      "symbol": "PGM1"
+    },
+    "SIRPG": {
+      "ground_truth_credible_t1d_tcell_go": true,
+      "gwas_diabetes_traits": [],
+      "gwas_t1d_tag": false,
+      "gwas_t2d_tag": false,
+      "has_immune_go_specificity": true,
+      "immune_go_terms": [
+        "positive regulation of T cell activation"
+      ],
+      "literature_citation_note": "CD4/CD8 T-cell costimulatory receptor; T1D GWAS Barrett 2009 PMID 19430480; T-cell functional dissection Smith 2022 PMID 34799406.",
+      "measured_direction_protective": true,
+      "measured_treg_score_rest": 0.317465,
+      "n_go_terms": 9,
+      "ot_t1d_assoc": 0.532,
+      "ot_t1d_dominant": true,
+      "ot_t2d_assoc": 0.0,
+      "symbol": "SIRPG"
+    },
+    "SUOX": {
+      "ground_truth_credible_t1d_tcell_go": false,
+      "gwas_diabetes_traits": [
+        "type 1 diabetes mellitus"
+      ],
+      "gwas_t1d_tag": true,
+      "gwas_t2d_tag": false,
+      "has_immune_go_specificity": false,
+      "immune_go_terms": [],
+      "literature_citation_note": "Mitochondrial sulfite oxidase; monogenic neonatal neuro disease OMIM 272300; 12q13 T1D locus disputed/gene-dense, likely LD passenger (Hakonarson 2008 PMID 18198356).",
+      "measured_direction_protective": true,
+      "measured_treg_score_rest": 0.421885,
+      "n_go_terms": 13,
+      "ot_t1d_assoc": 0.516,
+      "ot_t1d_dominant": true,
+      "ot_t2d_assoc": 0.228,
+      "symbol": "SUOX"
+    },
+    "TCF7L2": {
+      "ground_truth_credible_t1d_tcell_go": false,
+      "gwas_diabetes_traits": [
+        "type 2 diabetes mellitus"
+      ],
+      "gwas_t1d_tag": false,
+      "gwas_t2d_tag": true,
+      "has_immune_go_specificity": false,
+      "immune_go_terms": [],
+      "literature_citation_note": "Most replicated T2D locus; Wnt/beta-catenin islet TF.",
+      "measured_direction_protective": true,
+      "measured_treg_score_rest": 0.052343,
+      "n_go_terms": 56,
+      "ot_t1d_assoc": 0.527,
+      "ot_t1d_dominant": false,
+      "ot_t2d_assoc": 0.665,
+      "symbol": "TCF7L2"
+    }
+  },
+  "ground_truth_rule": "GO iff (has T-cell/immune GO annotation) AND (OT_T1D_assoc > OT_T2D_assoc) AND (not GWAS-T2D-tagged) AND (measured Treg-axis Rest score > 0). The immune-GO gate encodes the T-CELL construct; reads only structured API fields + assay data; no LLM verdict enters the rule.",
+  "ground_truth_sha256": "8f865a272fb2fdeb772f91a63cb953d12b24806628d40334bea2d35eb6a67100",
+  "n_genes": 9,
+  "n_ground_truth_go": 1,
+  "pre_registered_win_condition": "Claude must (1) beat the STRONGEST baseline (max of majority-class, eqtl-only, query-all = 8/9) by >= 2 correct, AND (2) achieve a higher MATTHEWS CORRELATION COEFFICIENT (MCC) than every baseline. Requiring MCC (not raw accuracy) prevents a trivial always-NO classifier from 'winning' under class imbalance. Both conditions must hold for a WIN. Otherwise TIE_NO_WIN (honest negative) or LOSS. n=9 is a PILOT \u2014 any result is reported as a pilot signal with a Wilson CI, not a validated capability claim.",
+  "provenance": {
+    "gwas_catalog": "live www.ebi.ac.uk/gwas/rest findByGene -> associationBySnp efoTraits (first 8 SNPs per gene).",
+    "immune_specificity": "live mygene.info/v3 GO BP/MF terms, precise-pattern immune/T-cell match (curated GO annotation; the 'curated-immune source' the frozen orthogonal_truth_spec pre-registered).",
+    "llm_role": "citation-gathering ONLY (literature_citation_note); does not set verdict.",
+    "measured_direction": "src/trustlayer/axes.py treg_score, Rest, real GWCD4i.DE_stats.h5ad zscore, per-row on-target exclusion, gold-disjoint.",
+    "open_targets": "live api.platform.opentargets.org v4 GraphQL, associatedDiseases datatype-resolved score, T1D vs T2D (0.0 if disease absent)."
+  },
+  "purpose": "Day-0 Check A ORTHOGONAL GROUND TRUTH v3 \u2014 deterministic rule over LIVE non-LLM structured sources, now WITH the curated-immune-specificity gate the frozen spec promised (restored after v2 construct-validity BLOCK).",
+  "v2_to_v3_change": "v2 lacked an immune-specificity gate and thus mislabeled SUOX (mitochondrial enzyme) and APOBR (macrophage receptor) as GO=True on T1D-locus genetics alone. v3 adds the MyGene.info GO immune/T-cell gate; these non-T-cell genes now correctly resolve to GO=False."
+}

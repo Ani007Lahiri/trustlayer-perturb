@@ -1,0 +1,31 @@
+{
+ "name": "SCC powered re-analysis: LOPO per-pair coverage x synergy interaction",
+ "date": "2026-07-12",
+ "status": "PRE-REGISTERED SECONDARY RE-ANALYSIS \u2014 explicitly NOT the original frozen primary (which ran and failed on power at n=131 with ~5 pairs/tercile; that cannot be un-seen). This freezes a properly-powered estimand BEFORE touching any held-out coverage indicators.",
+ "motivation": "The tercile design threw away power. Using all 131 doubles as the unit of analysis (not 3 terciles) with continuous synergy yields ~0.84 power at n=131 (agent power sim).",
+ "hypothesis": "Vanilla split conformal under-covers high-synergy double perturbations; a leakage-safe synergy prior (SCC) reduces that synergy-dependence of miscoverage.",
+ "estimand": "In a logistic regression of the per-pair coverage indicator (1=true y in interval) on CONTINUOUS leakage-safe synergy s_hat, with terms [method, s_hat, method x s_hat], the INTERACTION coefficient (SCC vs vanilla) is > 0 (one-sided): SCC's coverage-vs-synergy slope is less negative than vanilla's.",
+ "coverage_generation": "Leave-one-pair-out (LOPO): 131 folds, each double held out exactly once; conformal calibration on the other 130 (60/40 predictor/calib split within them); interval = additive_pred +/- width; width constant (vanilla) or sigma(s_hat)*Q (SCC).",
+ "synergy_prior": "s_hat = sum of the two single-perturbation effect magnitudes (SINGLES ONLY; never the double's measured outcome). Standardized.",
+ "inference": {
+  "primary": "synergy-label PERMUTATION of the interaction statistic (B=2000), exact finite-sample one-sided p",
+  "secondary": "pair-level CLUSTER BOOTSTRAP 95% CI on the interaction coefficient (B=2000)",
+  "alpha": 0.05,
+  "one_sided": true
+ },
+ "clearing_criterion_WITHIN_TIER": "CLEARS within-tier iff: interaction coeff > 0 at one-sided perm p<0.05 AND vanilla high-synergy (top-50%) coverage CI excludes nominal 0.90 from below AND SCC high-synergy coverage CI contains 0.90.",
+ "does_not_clear": "interaction CI spans 0, OR SCC also under-covers high synergy, OR effect only appears after data-dependent choices not in this prereg.",
+ "explicit_ceiling": "Passing this does NOT reach merit 80. 80='validated' implies generalization; this is ONE dataset (K562, one assay). Clearing this upgrades SCC from 'underpowered secondary' to 'well-powered on one dataset' \u2014 a within-tier credibility gain only. A 2nd combinatorial dataset (Replogle, GPU) remains REQUIRED for 80.",
+ "leakage_guards": [
+  "s_hat from singles only",
+  "LOPO removes test pair from its own calibration",
+  "permutation shuffles only the synergy covariate",
+  "prior never fit to coverage outcome"
+ ],
+ "falsifiers": [
+  "interaction CI spans 0 -> synergy conditioning does not reduce miscoverage slope",
+  "SCC under-covers high synergy too -> prior fails to fix",
+  "permuted synergy reproduces the interaction -> artifact"
+ ],
+ "prereg_sha256": "77bcaea9bd798b2b98655d58c7cfcaeb24562b6fbdc2db91f8f9da6a75302761"
+}

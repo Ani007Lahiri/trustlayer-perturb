@@ -1,0 +1,42 @@
+=== DAY-0 CHECK B — non-obvious GO gene ===
+pre-registered rule hash: 633d6c6369792d96775724b4630a984deb98311293ec5c8d2fb7df18adf8f14a
+pulling Open Targets full T1D ranking (paginated)...
+  5765 associated targets (OT count=5887)
+  perturbed genes in DE table: 11526
+  candidates after perturbed+exclusion filter: 73
+  survivors (GA>=0.2): 23
+    SIRPG        GA=0.842  OT_rank=18
+    SUOX         GA=0.842  OT_rank=22
+    IL10         GA=0.835  OT_rank=17
+    TCF7L2       GA=0.827  OT_rank=19
+    APOBR        GA=0.773  OT_rank=28
+    HNF1A        GA=0.754  OT_rank=1
+    FTO          GA=0.745  OT_rank=31
+    ZFP36L1      GA=0.692  OT_rank=35
+    CDKAL1       GA=0.676  OT_rank=37
+    KCNQ1        GA=0.669  OT_rank=36
+    AFF3         GA=0.664  OT_rank=41
+    PGM1         GA=0.663  OT_rank=39
+    CARMIL1      GA=0.657  OT_rank=47
+    RPS26        GA=0.626  OT_rank=43
+    CD69         GA=0.625  OT_rank=103
+    TRPS1        GA=0.619  OT_rank=110
+    C1QTNF6      GA=0.611  OT_rank=102
+    HHEX         GA=0.601  OT_rank=111
+    SKAP2        GA=0.590  OT_rank=112
+    ITPR3        GA=0.583  OT_rank=33
+    eQTL SIRPG        GA=0.842  n_sig=2  ['QTD000612', 'QTD000613']
+    eQTL SUOX         GA=0.842  n_sig=6  ['QTD000031', 'QTD000036', 'QTD000464', 'QTD000469', 'QTD000479', 'QTD000484']
+    eQTL IL10         GA=0.835  n_sig=0  []
+    eQTL TCF7L2       GA=0.827  n_sig=2  ['QTD000612', 'QTD000613']
+    eQTL APOBR        GA=0.773  n_sig=3  ['QTD000031', 'QTD000464', 'QTD000613']
+    eQTL HNF1A        GA=0.754  n_sig=0  []
+    eQTL FTO          GA=0.745  n_sig=0  []
+    eQTL ZFP36L1      GA=0.692  n_sig=2  ['QTD000612', 'QTD000613']
+    eQTL CDKAL1       GA=0.676  n_sig=1  ['QTD000612']
+    eQTL KCNQ1        GA=0.669  n_sig=0  []
+    eQTL AFF3         GA=0.664  n_sig=4  ['QTD000031', 'QTD000036', 'QTD000612', 'QTD000613']
+    eQTL PGM1         GA=0.663  n_sig=0  []
+
+PICK: SIRPG
+receipt -> data/gold/day0_checkB_novel_go_receipt.json

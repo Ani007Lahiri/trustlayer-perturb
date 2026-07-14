@@ -1,0 +1,242 @@
+{
+  "purpose": "Day-0 Check B \u2014 non-obvious non-IND GO gene (pre-registered rule)",
+  "pre_registered_rule": "rank=OT genetic_association desc; must be perturbed in DE table; genetic_association>=0.20; exclude obvious/anchor/trio/IND; require live CD4-Treg cis-eQTL; pick top-ranked survivor with eQTL; report all survivors; NONE if no survivor has eQTL.",
+  "pre_registered_rule_sha256": "633d6c6369792d96775724b4630a984deb98311293ec5c8d2fb7df18adf8f14a",
+  "genetic_floor": 0.2,
+  "excluded": [
+    "BACH2",
+    "CD226",
+    "CENPW",
+    "COBL",
+    "CTLA4",
+    "CTSH",
+    "ERBB3",
+    "GLIS3",
+    "HLA-A",
+    "HLA-B",
+    "HLA-DQA1",
+    "HLA-DQB1",
+    "HLA-DRB1",
+    "IFIH1",
+    "IKZF1",
+    "IKZF3",
+    "IKZF4",
+    "IL2",
+    "IL2RA",
+    "IL7R",
+    "INS",
+    "INS-IGF2",
+    "PRKCQ",
+    "PTPN2",
+    "PTPN22",
+    "RASGRP1",
+    "SH2B3",
+    "TYK2",
+    "UBASH3A"
+  ],
+  "n_ot_t1d_targets": 5887,
+  "n_survivors_ga_floor": 23,
+  "survivor_table": [
+    {
+      "symbol": "SIRPG",
+      "genetic_association": 0.842,
+      "ot_rank": 18,
+      "ensembl": "ENSG00000089012",
+      "eqtl_n_sig": 2,
+      "eqtl_hits": [
+        {
+          "dataset_id": "QTD000612",
+          "nlog10p": 23.4
+        },
+        {
+          "dataset_id": "QTD000613",
+          "nlog10p": 16.8
+        }
+      ]
+    },
+    {
+      "symbol": "SUOX",
+      "genetic_association": 0.842,
+      "ot_rank": 22,
+      "ensembl": "ENSG00000139531",
+      "eqtl_n_sig": 6,
+      "eqtl_hits": [
+        {
+          "dataset_id": "QTD000031",
+          "nlog10p": 13.4
+        },
+        {
+          "dataset_id": "QTD000036",
+          "nlog10p": 25.1
+        },
+        {
+          "dataset_id": "QTD000464",
+          "nlog10p": 14.1
+        },
+        {
+          "dataset_id": "QTD000469",
+          "nlog10p": 11.6
+        },
+        {
+          "dataset_id": "QTD000479",
+          "nlog10p": 8.5
+        },
+        {
+          "dataset_id": "QTD000484",
+          "nlog10p": 7.1
+        }
+      ]
+    },
+    {
+      "symbol": "IL10",
+      "genetic_association": 0.835,
+      "ot_rank": 17,
+      "ensembl": "ENSG00000136634",
+      "eqtl_n_sig": 0,
+      "eqtl_hits": []
+    },
+    {
+      "symbol": "TCF7L2",
+      "genetic_association": 0.827,
+      "ot_rank": 19,
+      "ensembl": "ENSG00000148737",
+      "eqtl_n_sig": 2,
+      "eqtl_hits": [
+        {
+          "dataset_id": "QTD000612",
+          "nlog10p": 7.5
+        },
+        {
+          "dataset_id": "QTD000613",
+          "nlog10p": 7.1
+        }
+      ]
+    },
+    {
+      "symbol": "APOBR",
+      "genetic_association": 0.773,
+      "ot_rank": 28,
+      "ensembl": "ENSG00000184730",
+      "eqtl_n_sig": 3,
+      "eqtl_hits": [
+        {
+          "dataset_id": "QTD000031",
+          "nlog10p": 8.5
+        },
+        {
+          "dataset_id": "QTD000464",
+          "nlog10p": 12.0
+        },
+        {
+          "dataset_id": "QTD000613",
+          "nlog10p": 6.7
+        }
+      ]
+    },
+    {
+      "symbol": "HNF1A",
+      "genetic_association": 0.754,
+      "ot_rank": 1,
+      "ensembl": "ENSG00000135100",
+      "eqtl_n_sig": 0,
+      "eqtl_hits": []
+    },
+    {
+      "symbol": "FTO",
+      "genetic_association": 0.745,
+      "ot_rank": 31,
+      "ensembl": "ENSG00000140718",
+      "eqtl_n_sig": 0,
+      "eqtl_hits": []
+    },
+    {
+      "symbol": "ZFP36L1",
+      "genetic_association": 0.692,
+      "ot_rank": 35,
+      "ensembl": "ENSG00000185650",
+      "eqtl_n_sig": 2,
+      "eqtl_hits": [
+        {
+          "dataset_id": "QTD000612",
+          "nlog10p": 9.0
+        },
+        {
+          "dataset_id": "QTD000613",
+          "nlog10p": 10.4
+        }
+      ]
+    },
+    {
+      "symbol": "CDKAL1",
+      "genetic_association": 0.676,
+      "ot_rank": 37,
+      "ensembl": "ENSG00000145996",
+      "eqtl_n_sig": 1,
+      "eqtl_hits": [
+        {
+          "dataset_id": "QTD000612",
+          "nlog10p": 5.6
+        }
+      ]
+    },
+    {
+      "symbol": "KCNQ1",
+      "genetic_association": 0.669,
+      "ot_rank": 36,
+      "ensembl": "ENSG00000053918",
+      "eqtl_n_sig": 0,
+      "eqtl_hits": []
+    },
+    {
+      "symbol": "AFF3",
+      "genetic_association": 0.664,
+      "ot_rank": 41,
+      "ensembl": "ENSG00000144218",
+      "eqtl_n_sig": 4,
+      "eqtl_hits": [
+        {
+          "dataset_id": "QTD000031",
+          "nlog10p": 11.3
+        },
+        {
+          "dataset_id": "QTD000036",
+          "nlog10p": 5.9
+        },
+        {
+          "dataset_id": "QTD000612",
+          "nlog10p": 17.3
+        },
+        {
+          "dataset_id": "QTD000613",
+          "nlog10p": 11.0
+        }
+      ]
+    },
+    {
+      "symbol": "PGM1",
+      "genetic_association": 0.663,
+      "ot_rank": 39,
+      "ensembl": "ENSG00000079739",
+      "eqtl_n_sig": 0,
+      "eqtl_hits": []
+    }
+  ],
+  "pick": {
+    "symbol": "SIRPG",
+    "genetic_association": 0.842,
+    "ot_rank": 18,
+    "ensembl": "ENSG00000089012",
+    "eqtl_n_sig": 2,
+    "eqtl_hits": [
+      {
+        "dataset_id": "QTD000612",
+        "nlog10p": 23.4
+      },
+      {
+        "dataset_id": "QTD000613",
+        "nlog10p": 16.8
+      }
+    ]
+  },
+  "verdict": "GO_CANDIDATE_FOUND"
+}

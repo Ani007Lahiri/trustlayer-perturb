@@ -1,0 +1,127 @@
+{
+  "purpose": "Item 2 reliability ceiling (proxy) with critique fixes B4/O1/O2/O3",
+  "seed": 20260708,
+  "n_bootstrap": 2000,
+  "fixed_min_support_threshold_ncells": 379.0,
+  "threshold_provenance": "median n_cells_target of the crossdonor-non-null subset (frozen; O3 forking-path guard)",
+  "model": {
+    "test_spearman": 0.35635278934734604,
+    "test_r2": 0.09642989951052505
+  },
+  "PRIMARY_matched_quantity_comparison": {
+    "matched_quantity": "log1p(trans-only ||zscore||) \u2014 identical to model target",
+    "ceiling_statistic": "leave-one-pair-out Spearman across 6 donor pairs",
+    "ceiling_r_mean": 0.4283849267408503,
+    "ceiling_r_ci95": [
+      0.32608887432637235,
+      0.5109038041126899
+    ],
+    "model_test_spearman": 0.35635278934734604,
+    "model_pct_of_rank_ceiling_mean": 83.2,
+    "model_pct_of_rank_ceiling_range_over_ci": [
+      69.7,
+      109.3
+    ],
+    "note": "PRIMARY apples-to-apples ratio. The pooled cross_donor/cross_guide entries in 'ceilings' are a DIFFERENT quantity (raw ||zscore|| incl. on-target, the paper's precomputed cross-donor r) and are kept ONLY as context, NOT as the headline."
+  },
+  "context_pooled_ceilings_DIFFERENT_QUANTITY": {
+    "cross_donor": {
+      "column": "crossdonor_correlation_mean",
+      "n_included": 2388,
+      "n_excluded_below_threshold_or_null": 31595,
+      "reliability_r_mean": 0.39917725544380456,
+      "reliability_r_ci95_perturbation_boot_NONPRIMARY": [
+        0.387487006130361,
+        0.4113617832613604
+      ],
+      "rank_axis": {
+        "model_spearman": 0.35635278934734604,
+        "ceiling_r": 0.39917725544380456,
+        "model_pct_of_rank_ceiling": 89.3,
+        "assumption": "reproducibility r approximates the monotone-signal (rank) ceiling; Pearson r used as a proxy for a Spearman ceiling."
+      },
+      "variance_axis": {
+        "model_r2": 0.09642989951052505,
+        "reliability_squared_ceiling": 0.1593424812636484,
+        "model_pct_of_explainable_variance": 60.5,
+        "assumption": "reliability^2 bounds R^2 under the classical additive-noise attenuation model."
+      }
+    },
+    "cross_guide": {
+      "column": "crossguide_correlation",
+      "n_included": 1860,
+      "n_excluded_below_threshold_or_null": 32123,
+      "reliability_r_mean": 0.4540743353176168,
+      "reliability_r_ci95_perturbation_boot_NONPRIMARY": [
+        0.43566344992161987,
+        0.4719589636555736
+      ],
+      "rank_axis": {
+        "model_spearman": 0.35635278934734604,
+        "ceiling_r": 0.4540743353176168,
+        "model_pct_of_rank_ceiling": 78.5,
+        "assumption": "reproducibility r approximates the monotone-signal (rank) ceiling; Pearson r used as a proxy for a Spearman ceiling."
+      },
+      "variance_axis": {
+        "model_r2": 0.09642989951052505,
+        "reliability_squared_ceiling": 0.20618350199413552,
+        "model_pct_of_explainable_variance": 46.8,
+        "assumption": "reliability^2 bounds R^2 under the classical additive-noise attenuation model."
+      }
+    }
+  },
+  "cross_donor_primary_ci": {
+    "n_pairs": 6,
+    "pair_names": [
+      "CE0006864_CE0008162",
+      "CE0006864_CE0008678",
+      "CE0006864_CE0010866",
+      "CE0008162_CE0008678",
+      "CE0008162_CE0010866",
+      "CE0008678_CE0010866"
+    ],
+    "per_pair_reproducibility_spearman": {
+      "CE0006864_CE0008162": 0.457,
+      "CE0006864_CE0008678": 0.451,
+      "CE0006864_CE0010866": 0.577,
+      "CE0008162_CE0008678": 0.203,
+      "CE0008162_CE0010866": 0.437,
+      "CE0008678_CE0010866": 0.446
+    },
+    "reliability_r_mean": 0.4283849267408503,
+    "reliability_r_ci95_donor_block_PRIMARY": [
+      0.32608887432637235,
+      0.5109038041126899
+    ],
+    "statistic": "leave-one-pair-out Spearman of per-perturbation effect magnitude (||zscore||) between each donor-pair and the mean of the others, over the 2591-gene reproducible core.",
+    "note": "PRIMARY CI. Donor-limited: 6 pairs / 4 donors -> wide, untightenable by perturbation count (B4). This is a GENUINE per-pair statistic, not a fabricated block assignment."
+  },
+  "threshold_sensitivity": [
+    {
+      "n_cells_threshold": 0,
+      "n_included": 4775,
+      "cross_donor_r_mean": 0.37064882919740133
+    },
+    {
+      "n_cells_threshold": 200,
+      "n_included": 3572,
+      "cross_donor_r_mean": 0.3947456636716016
+    },
+    {
+      "n_cells_threshold": 379,
+      "n_included": 2388,
+      "cross_donor_r_mean": 0.39917725544380456
+    },
+    {
+      "n_cells_threshold": 500,
+      "n_included": 1774,
+      "cross_donor_r_mean": 0.3976589066761987
+    },
+    {
+      "n_cells_threshold": 800,
+      "n_included": 842,
+      "cross_donor_r_mean": 0.3869355646756886
+    }
+  ],
+  "framing_caveat": "HEADLINE = PRIMARY_matched_quantity_comparison ONLY (donor-block Spearman on log1p trans-only ||zscore||, identical to the model target): model is 83% of the ceiling (range 70-109% over the donor-limited CI). O1: this donor-block ceiling includes biological donor variation, so it is a CONSERVATIVE ceiling; it is NOT a cell-level within-perturbation split-half (no cell data on disk). The context_* pooled numbers are a DIFFERENT quantity and are not part of the headline. Interpretation: the model's rank performance is a substantial fraction of the assay's own reproducibility ceiling -> modest R^2 reflects a NOISY ASSAY, not a weak model."
+}

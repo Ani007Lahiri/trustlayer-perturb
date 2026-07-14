@@ -1,0 +1,34 @@
+{
+  "PREREGISTERED_decision_rules": {
+    "honesty": "These are NEGATIVE/LIMIT results reported as honest nulls/characterizations. Weighting-insufficiency is the expected behavior of covariate-shift conformal under concept shift and is NOT tuned away. Verdict scores the COMMITTED pipeline (frozen split-conformal + published Tibshirani weighting), not a surrogate. No thresholds are moved after scoring.",
+    "recalibration_necessary": "TRUE iff shift_type in {concept, mixed} AND the cached recalibration curve restores nominal coverage. Report the minimum n_cal from the budget curve.",
+    "shift_type": "'covariate' iff weighting_repairs=='yes'; 'concept' iff weighting_repairs=='no' AND matched-X KS rejects equality (p<0.001) AND recalibration on Norman's own split restores coverage; 'mixed' iff weighting_repairs=='partial' (both mechanisms contribute).",
+    "weighting_repairs": "'yes' iff Tibshirani weighted-conformal coverage lands within +/-0.05 of nominal at ALL three levels; 'partial' iff within +/-0.05 at some-but-not-all levels OR all within +/-0.10; 'no' iff it misses +/-0.10 at >=2 levels (i.e. weighting leaves coverage still collapsed)."
+  },
+  "PROCEDURE_confirmatory": {
+    "step_a_reproduce": "Reproduce frozen-fail (0.048/0.076/0.171) and recalib-restore (500-split mean ~0.755/0.864/0.927). Already verified before prereg; restated for receipt.",
+    "step_b_covariate_diagnostic": "Fit a domain classifier (HistGradientBoostingClassifier, 3-fold out-of-fold) separating Marson calibration X (label 0) from Norman X (label 1). Report OOF AUC (covariate-shift magnitude). Estimate density ratio w(x)=p(test|x)/(1-p(test|x))*prior and compute effective sample size ESS=(sum w)^2/sum(w^2) over Marson calibration points.",
+    "step_b_oracle_bound": "Compute the best-case (oracle) covariate-weighting ceiling = max Marson |residual| among calibration points inside Norman's covariate support; report fraction of Norman residuals exceeding it (points NO covariate reweighting can ever cover).",
+    "step_b_weighted_conformal": "Apply Tibshirani et al. 2019 weighted split-conformal: per Norman test point, weighted quantile of Marson |residual| using w(x). Report coverage at 0.80/0.90/0.95. This is the CONFIRMATORY covariate-shift repair test.",
+    "step_c_concept_test": "At MATCHED covariate support (Marson-Rest points with log_baseMean <= Norman max), compare Marson vs Norman |residual| distributions via two-sample KS. Concept shift <=> distributions differ at matched X (KS reject) AND weighting fails to repair.",
+    "step_d_budget": "From cached 6-fraction x 500-split curve, report the minimum local calibration count n_cal whose 500-split coverage brackets nominal at all three levels."
+  },
+  "_prereg_sha256": "616d67c30052c97f1ddc99b96341619b71b2629ee98536e1512bf48c4cbedd68",
+  "cached_inputs_frozen": {
+    "budget_curve": "data/aux/recalibration_curve_receipt.json (6 fractions x 500 splits, cached)",
+    "features_X": "[log_baseMean_ontarget, cond_Rest, cond_Stim8hr, cond_Stim48hr]; Norman all cond=Rest",
+    "frozen_marson_model": "data/interim/frozen_marson_calibration.joblib (HGBR, frozen_q={0.8:0.17139,0.9:0.22993,0.95:0.30273})",
+    "marson_calib_residuals": "reconstructed from data/interim/lodo_surface_cache.pkl (n=29279, |resid| mean 0.1173 sd 0.1126) -- reproduces frozen_q to 5 decimals (VERIFIED before this prereg)",
+    "norman_residuals": "handoff/norman_resid_frozen.npy (n=105, |resid| mean 0.6044 sd 0.2951); frozen coverage 0.0476/0.0762/0.1714 (VERIFIED reproduces receipt before this prereg)"
+  },
+  "check": "WIN-2 cross-assay conformal transfer FAILURE DECOMPOSITION (covariate vs concept shift)",
+  "framing": "CHARACTERIZATION of PUBLISHED methods (split-conformal; Tibshirani/Barber/Candes/Ramdas 2019 covariate-shift weighted conformal). NOT a new method. Reports an honest negative/limit result on cross-assay transfer.",
+  "levels": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "predicted_outcome_stated_before_scoring": "Exploratory (pre-confirmatory) diagnostics already indicate concept-shift dominance (Norman |resid| median 6.3x Marson at matched X; oracle covariate ceiling exceeded by ~22% of Norman points). Confirmatory weighted-conformal is expected to return weighting_repairs='no', shift_type='concept'. Pre-registering this prediction so a contrary result would be reported honestly.",
+  "question": "When frozen Marson T1D CD4+ conformal quantiles fail on Norman K562 (coverage 0.048/0.076/0.171 vs nominal 0.80/0.90/0.95), is the failure COVARIATE shift (only P(X) changes; repairable by Tibshirani-style density-ratio reweighting of the calibration residuals) or CONCEPT shift (the residual distribution P(|Y-f(X)| | X) itself changes across assays; NOT repairable by covariate reweighting)?",
+  "written_utc": "2026-07-11T19:45:22.746047+00:00"
+}

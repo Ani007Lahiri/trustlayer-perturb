@@ -1,0 +1,177 @@
+{
+  "artifact": "receipt",
+  "attainability_gap": {
+    "ci95": [
+      0.1073,
+      0.1356
+    ],
+    "ci_excludes_zero": true,
+    "definition": "oracle_ceiling - best_deployable(CQR)",
+    "point": 0.121
+  },
+  "conclusion": "The large-effect conditional-coverage gap is an ATTAINABILITY (information) limit, not a method deficiency. Under donor-blocked LODO on the committed pipeline, the best deployable method (CQR) reaches 0.744 top-stratum coverage while the true-magnitude oracle reaches 0.865 (nominal 0.90); the 0.121 [95% CI 0.107-0.136] residual gap cannot be closed by any label-free difficulty estimator because admissible features explain ~1.3% of |residual| variance versus ~97.5% explained by the true effect magnitude. This exhausts the localized/normalized/Mondrian conformal family (Papadopoulos 2008; Lei 2018; Guan 2023; Vovk 2003/2012) and is bounded by Barber-Candes-Ramdas-Tibshirani (2019/2021).",
+  "decision_rule_evaluation": {
+    "cond1_break_confirmed": true,
+    "cond2_gap_positive_ci_excludes0": true,
+    "cond3_features_uninformative_truth_informative": true,
+    "cond4a_oracle_capture_ci_lower_gt_0.40": true,
+    "cond4b_all_deployable_ci_overlap_0.20": false,
+    "cond4c_no_deployable_capture_ge_0.30": true,
+    "honest_nuance": "5 of 6 deployable scores sit statistically above the 0.20 chance floor by ~0.01-0.03 (tight bootstrap CIs), i.e. a DETECTABLE but PRACTICALLY NEGLIGIBLE signal: max deployable capture 0.233 vs oracle 0.594; feature R2=0.013. This does NOT close the attainability gap and is reported faithfully rather than rounded to exactly-chance.",
+    "verdict": "yes"
+  },
+  "difficulty_score_hard_stratum_capture": {
+    "ORACLE_true_resid": {
+      "ci95": [
+        0.5808,
+        0.6103
+      ],
+      "point": 0.5938,
+      "spearman_vs_absresid": 1.0
+    },
+    "deep_meta": {
+      "ci95": [
+        0.2203,
+        0.245
+      ],
+      "point": 0.2329,
+      "spearman_vs_absresid": 0.095
+    },
+    "ensemble_disagree": {
+      "ci95": [
+        0.202,
+        0.2237
+      ],
+      "point": 0.2131,
+      "spearman_vs_absresid": 0.035
+    },
+    "feature_leverage": {
+      "ci95": [
+        0.1814,
+        0.2174
+      ],
+      "point": 0.1983,
+      "spearman_vs_absresid": 0.015
+    },
+    "feature_meta": {
+      "ci95": [
+        0.2177,
+        0.2439
+      ],
+      "point": 0.2312,
+      "spearman_vs_absresid": 0.089
+    },
+    "knn_density": {
+      "ci95": [
+        0.2007,
+        0.2209
+      ],
+      "point": 0.2106,
+      "spearman_vs_absresid": 0.057
+    },
+    "pred_magnitude": {
+      "ci95": [
+        0.2054,
+        0.2315
+      ],
+      "point": 0.2173,
+      "spearman_vs_absresid": 0.026
+    }
+  },
+  "generated_utc": "2026-07-11T19:48:17.255096+00:00",
+  "honesty_contract": "NEGATIVE/LIMIT result reported as an honest null; committed pipeline scored (not surrogate); no post-hoc metric tuning; timestamp excluded from receipt hash per commit_gate convention.",
+  "information_limit_diagnostics": {
+    "R2_features_to_absresid_OOF_CV": {
+      "ci95": [
+        0.0061,
+        0.0189
+      ],
+      "point": 0.0126
+    },
+    "R2_trueeffectmag_to_absresid": {
+      "ci95": [
+        0.9715,
+        0.9787
+      ],
+      "point": 0.9753
+    },
+    "corr_absresid_effectmagnitude": {
+      "ci95": [
+        0.947,
+        0.9662
+      ],
+      "point": 0.9575
+    },
+    "feature_information_fraction": 0.0129,
+    "interpretation": "Admissible features carry ~1.3% of the residual-magnitude information the true effect carries. The difficulty axis IS the label."
+  },
+  "marginal_coverage_all_methods_valid": {
+    "baseline": 0.8955,
+    "cqr": 0.8951,
+    "mondrian_oracle": 0.8923,
+    "mondrian_pred": 0.8962,
+    "normalized": 0.8948
+  },
+  "pipeline": {
+    "base_predictor": "HistGradientBoostingRegressor(max_iter=300,lr=0.05,max_depth=4,l2=1.0,seed=20260708)",
+    "conformal_module": "src/trustlayer/conformal_conditional.py",
+    "corr_pred_y_LODO_per_fold": [
+      0.098,
+      0.118,
+      0.074,
+      0.083
+    ],
+    "n_test_top_stratum": 11712,
+    "nominal_level": 0.9,
+    "seed_conformal": 20260711,
+    "split": "donor-blocked LODO (4 folds); folds from data/interim/lodo_surface_cache.pkl"
+  },
+  "prereg_sha256": "53849c37870c107fab06385f93bf0a8fdf41497eb1ce12e601d76d88e8ebd653",
+  "prior_art_exhausted": [
+    "Papadopoulos, Gammerman, Vovk (2008) normalized nonconformity measures",
+    "Lei, G'Sell, Rinaldo, Tibshirani, Wasserman (2018, JASA) locally-weighted/normalized CP",
+    "Guan (2023, Biometrika) localized conformal prediction",
+    "Vovk et al. (2003), Vovk (2012) Mondrian / conditional-validity CP",
+    "Romano, Patterson, Candes (2019) CQR",
+    "Barber, Candes, Ramdas, Tibshirani (2019/2021) limits of distribution-free conditional coverage"
+  ],
+  "receipt_sha256": "ff2804c804665e06d9605a752ba642d45781bae919e88c00e6dcef9df9b241e2",
+  "title": "Conditional-coverage ATTAINABILITY certificate (Frontier 1 negative result)",
+  "top_stratum_coverage": {
+    "baseline_global_split_CP": {
+      "ci95": [
+        0.5744,
+        0.6223
+      ],
+      "point": 0.5984
+    },
+    "cqr_best_deployable": {
+      "ci95": [
+        0.719,
+        0.7678
+      ],
+      "point": 0.7438
+    },
+    "mondrian_oracle_ceiling": {
+      "ci95": [
+        0.8452,
+        0.8842
+      ],
+      "point": 0.8648
+    },
+    "mondrian_pred_deployable": {
+      "ci95": [
+        0.5765,
+        0.6248
+      ],
+      "point": 0.6011
+    },
+    "normalized_CP": {
+      "ci95": [
+        0.5688,
+        0.6175
+      ],
+      "point": 0.5935
+    }
+  }
+}

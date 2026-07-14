@@ -1,0 +1,40 @@
+{
+ "analysis": "Day-6+ ORTHOGONAL causal-genetics validation of the calibrated gate",
+ "date_utc": "2026-07-11T07:29:25Z",
+ "written_before": "ANY colocalization label fetch or concordance computation. Threshold is the community-standard PP4/H4 cutoff, NOT tuned to these data.",
+ "orthogonal_axis": "QTL-GWAS colocalization (coloc PP4 / H4) linking gene->Type-1-Diabetes, from Open Targets 'gwas_credible_sets' colocalisation sub-evidence (COLOC/eCAVIAR joint test that a T1D GWAS credible set and a molecular cis-QTL credible set share one causal variant). SECONDARY confirmatory axis: published Mendelian-randomization / colocalization studies via PubMed for the trio + top-ranked genes.",
+ "why_orthogonal": "The gate consumed exactly two genetic inputs: (1) the SCALAR Open Targets aggregate genetic_association score (genetics_gate_receipt.json), and (2) a BINARY cell-type eQTL PRESENCE flag at p<=1e-5 (eqtl_gate_receipt.json). Neither is a colocalization verdict. A cis-eQTL can be PRESENT yet NOT colocalize with the T1D signal (LD-confounded / distinct causal variants); colocalization is a strictly more specific causal test the gate never evaluated. PubMed MR is literature the gate never read.",
+ "disclosed_dependency": "Coloc/L2G is an UPSTREAM feature of the OT aggregate genetic_association scalar for the gwas_credible_sets datasource, so the coloc axis is NOT fully statistically independent of gate input (1). We DISCLOSE this and (a) report the empirical correlation between the coloc axis and the gate's ot_t1d scalar, and (b) keep the axis as a DISTINCT structured binary verdict (H4>=0.8), never the scalar itself. The gate's binary GO/WITHHOLD decision is driven by immune-GO reasoning + eQTL presence + genetic floor, NOT by coloc H4.",
+ "scored_set": "The 44 genes with a gate GO/WITHHOLD call in day0_checkA_enriched_execution_receipt.json (sha256 25081a891594cbe29d11e2e63dec6dc9c8758074df3241a3b6ce9e49ee730bd1), incl. trio CD226/RASGRP1/PRKCQ. Ensembl ids frozen in handoff/ensembl_map.json.",
+ "label_rule": {
+  "positive_definition": "A gene is POSITIVE on the orthogonal axis iff max_H4 >= 0.8, where max_H4 is the maximum colocalization posterior H4 over ALL QTL (eqtl/pqtl/sqtl/tuqtl) colocalisations attached to that gene's T1D 'gwas_credible_sets' evidence in Open Targets (locus->gene assignment inherited from OT L2G).",
+  "threshold": 0.8,
+  "threshold_justification": "0.8 is the conventional coloc PP4/H4 threshold for declaring a shared causal variant (Giambartolomei 2014; widely used community cutoff). Pre-specified independent of the observed distribution.",
+  "sensitivity_thresholds": [
+   0.9,
+   0.5
+  ],
+  "missing": "Genes with zero gwas_credible_sets evidence or zero QTL colocalisations => max_H4=0 => NEGATIVE."
+ },
+ "predictors_compared": {
+  "gate_binary": "gate GO=1 / WITHHOLD=0 (from the enriched execution receipt / frozen scoring table gate_go).",
+  "gate_continuous_optional": "if a continuous gate/trust score is available it is reported; else the binary GO is the gate predictor.",
+  "ot_alone": "OT aggregate T1D association scalar (ot_t1d) - a GATE INPUT, function-blind baseline.",
+  "eqtl_alone": "eQTL significant-count (eqtl) - a GATE INPUT, function-blind baseline.",
+  "random": "uniform random, analytic AUROC=0.5."
+ },
+ "primary_metric": "AUROC of each predictor for ranking coloc-POSITIVE genes above coloc-NEGATIVE genes across the 44-gene set. Also Mann-Whitney rank test of gate-GO vs coloc label. Bootstrap 95% CI (2000 resamples) on gate AUROC and on gate-minus-best-baseline. Permutation p (2000) that gate beats the best baseline.",
+ "decision_rule": {
+  "concordant": "gate AUROC > best baseline AND gate-minus-best-baseline bootstrap 95% CI excludes 0 AND n_positives >= 4",
+  "partial": "gate AUROC > best baseline but the advantage CI includes 0 (direction real, underpowered margin)",
+  "discordant": "gate AUROC <= best baseline",
+  "underpowered": "n_positives < 4 OR bootstrap CI so wide no ranking is distinguishable"
+ },
+ "honesty": "Labels frozen with a hash BEFORE any AUROC. A NEGATIVE/NULL/UNDERPOWERED result is reported as such. No threshold tuning to cross a decision boundary. Every label traces to an OT colocalisation row (studyLocusId + H4 + method) saved in the receipt.",
+ "trio_prereg": {
+  "note": "Pre-registered EXPECTATION per honesty contract, written before fetching labels.",
+  "CD226": "Expect POSITIVE: rs763361 is a GWS T1D coding-missense lead; strong T-cell QTL context plausible.",
+  "RASGRP1": "UNCERTAIN: gate WITHHELD it for lack of cell-type-matched eQTL; coloc may or may not be present -> a genuine test of whether the WITHHOLD is causal-genetics-justified.",
+  "PRKCQ": "UNCERTAIN/NEGATIVE-leaning: sub-GWS genetic floor (GA=0.162); if coloc is absent, the gate's WITHHOLD is corroborated by orthogonal genetics."
+ }
+}

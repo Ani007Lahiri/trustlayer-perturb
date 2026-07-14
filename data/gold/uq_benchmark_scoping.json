@@ -1,0 +1,74 @@
+{
+  "title": "Scoping: head-to-head UQ-baseline benchmark of the calibrated trust layer",
+  "generated": "2026-07-11",
+  "premise": "External prior-art comparison (NOT self-concordance): hold the base HGBR point predictor fixed where possible, swap the uncertainty method, measure CALIBRATION quality on donor-blocked (LODO) held-out prediction. Powered by ~2591 reproducible perturbations / 58,558 rows.",
+  "runnable_baselines": {
+    "tier_A_wrapper_swap_zero_install": {
+      "note": "Purest apples-to-apples: identical HGBR point predictions, only the uncertainty band differs. Cleanest test of calibration quality.",
+      "methods": [
+        "split/naive conformal (HAVE \u2014 committed incumbent, |residual| nonconformity)",
+        "Mondrian conformal (HAVE \u2014 group-conditional, committed)",
+        "weighted/localized conformal (HAVE \u2014 committed)",
+        "parametric Gaussian residual intervals (pred +/- z*sigma_calib) \u2014 classic naive prior art",
+        "quantile regression (HGBR loss='quantile', confirmed available)",
+        "conformalized quantile regression / CQR (Romano 2019) \u2014 strongest competitor, keeps guarantee + adaptive width"
+      ]
+    },
+    "tier_B_model_native_light_install": {
+      "note": "Same GBT family but native uncertainty; NGBoost is pip-light, jackknife+/CV+ and RF variance are zero-install.",
+      "methods": [
+        "jackknife+ / CV+ (Barber 2021) \u2014 K=10 HGBR refits, coverage guarantee, zero install",
+        "random-forest / GBT-ensemble variance (per-member spread) \u2014 zero install",
+        "NGBoost probabilistic GBT (Duan 2020) \u2014 mean+variance, light pip install"
+      ]
+    },
+    "tier_C_different_base_model_heavy_install": {
+      "note": "Different base predictor (NN/GP) \u2014 semi-apples; include as the Bayesian-approx family for completeness, caveat the model confound.",
+      "methods": [
+        "MC-dropout MLP (Gal 2016) \u2014 needs torch (~min install)",
+        "deep ensemble MLP (Lakshminarayanan 2017) \u2014 needs torch",
+        "Gaussian-process variance (sklearn GP on ~1-2k subsample, zero install; sparse/GPyTorch for full n)"
+      ]
+    }
+  },
+  "recommended_runnable_set": [
+    "split conformal (have)",
+    "Mondrian conformal (have)",
+    "weighted conformal (have)",
+    "parametric Gaussian residual intervals",
+    "quantile regression (HGBR)",
+    "conformalized quantile regression (CQR)",
+    "jackknife+/CV+",
+    "GBT/RF-ensemble variance",
+    "NGBoost",
+    "MC-dropout MLP + deep ensemble (optional, torch \u2014 caveat different base model)"
+  ],
+  "powered_comparison_design": {
+    "surface": "Donor-blocked LODO (4 donors, 6 pairs, ~2591 reproducible-core perturbations, 58,558 test rows). Runs on cached residuals/feature table \u2014 no 16GB re-stream needed.",
+    "predictor_control": "Tier-A/B keep the SAME HGBR point predictions; only the interval/score differs -> isolates calibration quality, not point accuracy.",
+    "primary_metrics": [
+      "Interval/Winkler score + CRPS (single scalar rewarding calibration AND sharpness jointly) \u2014 primary",
+      "Marginal coverage error |emp - nominal| at 80/90/95% (conformal ~guaranteed; quantifies how badly non-conformal methods miscover under donor shift)",
+      "Interval efficiency: mean width at MATCHED coverage (the genuinely contested axis; adaptive methods can be sharper)",
+      "Conditional coverage: worst-slice gap over baseMean/n_cells deciles (Mondrian's claimed 15x-tightening advantage)",
+      "Selective-prediction risk-coverage AURC (model-agnostic uncertainty-ordering quality)"
+    ],
+    "n_and_cis": "Cluster (block) bootstrap over the ~2591 genes for CIs on every paired metric delta (paired: same test points, method A vs B). Report the 4-fold spread as the conservative honest uncertainty (rows are non-independent; row-level CIs are overconfident per the existing receipt). Paired deltas over thousands of points give tight CIs -> this is the ONE axis where n is genuinely powered.",
+    "win_definition": "Trust layer on the efficient frontier: guaranteed nominal coverage AND competitive-or-best interval/CRPS score AND best worst-slice conditional coverage, while (a) non-conformal methods matching its width MISCOVER under donor shift and (b) methods matching its coverage are WIDER. Delta CIs exclude the tie.",
+    "null_or_loss_definition": "Report honestly if it lands: CQR (also conformal) Pareto-dominates split-conformal on width at equal coverage (within-paradigm loss, still informative); or a non-conformal method matches coverage AND width (guarantee adds no empirical value here); or CRPS deltas' bootstrap CIs straddle zero (no powered separation).",
+    "tautology_guard": "Do NOT headline 'conformal hits coverage' (true by construction). Headline the CONTESTED axes: efficiency-at-matched-coverage, worst-slice conditional coverage, AURC, and the magnitude of non-conformal miscoverage under donor shift."
+  },
+  "feasibility": {
+    "compute": "8GB laptop CPU sufficient for Tier A+B (seconds-to-minutes; 5 features, ~16k train rows). GP needs subsample; torch NN family needs ~min install. No 16GB re-stream (cached preds).",
+    "engineering": "~1-2 days: most scaffolding exists (proper_scoring_panel.py already computes CRPS/PIT/reliability/sharpness; conformal + Mondrian committed).",
+    "data_leakage_risk": "Low \u2014 reuse frozen LODO splits; each method calibrated only on calibration pairs, scored only on held-out-donor test pairs."
+  },
+  "honest_merit_assessment": {
+    "what_it_is": "A rigorous, powered, EXTERNAL (prior-art) methods benchmark on a new domain (donor-generalization UQ in CD4+ T-cell Perturb-seq). Confirms known conformal theory (Vovk/Lei/Barber/Romano/Angelopoulos-Bates) on new data.",
+    "novelty_ceiling": "The RESULT direction (distribution-free conformal is best-calibrated under shift vs parametric/Bayesian-approx UQ) is theoretically EXPECTED and well-established -> low novelty on the method itself. Novelty is in the DOMAIN application and the decision-layer framing, not new UQ science.",
+    "merit_tier_if_clean_powered_win": "Lifts the METHODS spine into the low end of 'solid incremental methods, well-powered' (65-79 band) FOR THE CALIBRATION CLAIM specifically. But as a stand-alone lever it sits at the FLOOR of incremental (confirms expected behavior), not the middle.",
+    "why_it_cannot_alone_deliver_+20": "72 requires the SCIENCE (biological validation) to be well-powered and at least incrementally novel. This benchmark validates the calibration machinery, NOT the biology. It removes a reviewer objection ('did simpler UQ do as well?') and raises the credibility FLOOR, but adds no novel field-changing science and no biological validation (the axes that are underpowered: n=7/8/24). It is a ceiling-raiser for RIGOR, not for NOVELTY.",
+    "realistic_point_gain_this_lever": "+3 to +6 (converts a soft 'we used conformal, trust us' into a hard 'conformal is measurably best-calibrated vs 5-6 prior-art UQ methods, with CIs, on held-out donors'). Compounds with other legitimate levers but does not carry +20 alone.",
+    "placement_vs_merit": "HIGH placement value (a clean UQ benchmark table with CIs is a strong, defensible demo slide and directly on-thesis) but MODEST merit value (confirms known theory). These are different axes."
+  }
+}

@@ -1,0 +1,392 @@
+{
+  "all_trials_stable": false,
+  "baseline_scores": {
+    "eqtl_only": {
+      "accuracy": 0.5417,
+      "balanced_accuracy": 0.425,
+      "confusion_tp_tn_fp_fn": [
+        1,
+        12,
+        8,
+        3
+      ],
+      "mcc": -0.1155,
+      "n_correct": 13
+    },
+    "majority_class": {
+      "accuracy": 0.8333,
+      "balanced_accuracy": 0.5,
+      "confusion_tp_tn_fp_fn": [
+        0,
+        20,
+        0,
+        4
+      ],
+      "mcc": 0.0,
+      "n_correct": 20
+    },
+    "query_all": {
+      "accuracy": 0.6667,
+      "balanced_accuracy": 0.5,
+      "confusion_tp_tn_fp_fn": [
+        1,
+        15,
+        5,
+        3
+      ],
+      "mcc": 0.0,
+      "n_correct": 16
+    }
+  },
+  "best_baseline_mcc": 0.0,
+  "blinding_contract": "open-ended prompt from ONLY symbol + OT_T1D_assoc + eqtl_n_sig; no GO labels or ground-truth rule fields in the prompt.",
+  "class_balance": "4:20",
+  "claude_mcc_gap_vs_best_baseline": 0.3464,
+  "claude_sample_responses": {
+    "APOBR": "APOBR (Apolipoprotein B Receptor) is primarily known for its role in lipid metabolism and is predominantly expressed in tissues involved in cholesterol and lipoprotein processing, particularly the liver and vascular endothelium. The gene has established associations with cardiovascular disease and lipid disorders rather than autoimmune conditions. While there are some cis-eQTLs detected in CD4+ T-cells, the genetic association with diabetes is more plausibly explained by metabolic mechanisms relevant to Type 2 diabetes (lipid metabolism, insulin resistance) rather than CD4+ T-cell mediated autoimmunity characteristic of Type 1 diabetes. The moderate genetic association score likely reflects metabolic rather than autoimmune pathways.\n\nGO: NO",
+    "CCR7": "CCR7 (C-C chemokine receptor type 7) is a chemokine receptor critically involved in lymphocyte trafficking and homing to secondary lymphoid organs, particularly expressed on naive and central memory T cells including CD4+ T cells. It plays a fundamental role in T-cell migration and immune surveillance. While CCR7 is biologically relevant to CD4+ T-cell function and autoimmunity in principle, the complete absence of genetic association with T1D (score of 0.0) and no detected cis-eQTLs in CD4+/Treg cells suggests there is no genetic evidence linking CCR7 variation to T1D risk through a CD4+ T-cell mechanism. Without genetic support, this cannot be considered a credible genetically-validated drug target for T1D despite its biological plausibility in T-cell biology.\n\nGO: NO",
+    "CD28": "CD28 is a critical costimulatory receptor expressed on T cells, including CD4+ T cells, that provides essential signals for T-cell activation, proliferation, and survival. It is well-established in autoimmune biology and is already a therapeutic target in autoimmune diseases (e.g., abatacept/CTLA4-Ig blocks CD28 costimulation and is used in rheumatoid arthritis). The gene's primary function is directly in T-cell immune regulation, making it mechanistically relevant to T1D pathogenesis, which is driven by autoreactive T cells attacking pancreatic beta cells. Despite the low genetic association score in Open Targets, CD28's fundamental role in CD4+ T-cell activation and the detection of cis-eQTLs in CD4/Treg cells support its biological plausibility as a T1D target through autoimmune mechanisms.\n\nGO: YES",
+    "CD5": "CD5 is a transmembrane glycoprotein expressed on T cells and a subset of B cells (B1a cells), where it functions as a negative regulator of T-cell receptor and B-cell receptor signaling. It plays a well-established role in modulating T-cell activation thresholds and is involved in autoimmune disease pathogenesis. Given its direct expression and regulatory function in CD4+ T cells, the genetic association with T1D is plausibly driven by autoimmune T-cell mechanisms rather than beta-cell or metabolic pathways. However, the relatively weak genetic association score (0.09) and absence of detected CD4/Treg cis-eQTLs suggest limited evidence for a causal role specifically through CD4+ T-cell gene expression changes in T1D.\n\nGO: NO",
+    "CD6": "CD6 is a transmembrane glycoprotein expressed primarily on T cells and B cells, playing a well-established role in T-cell activation, differentiation, and immune synapse formation. It is a known therapeutic target in autoimmune diseases, with an anti-CD6 monoclonal antibody (itolizumab) approved for psoriasis and being studied in other autoimmune conditions. The genetic association with T1D, combined with the detection of CD4/Treg cis-eQTLs and CD6's direct mechanistic role in T-cell biology, strongly supports an autoimmune CD4+ T-cell mechanism rather than beta-cell or metabolic pathways. This gene's biology aligns precisely with the autoimmune pathogenesis of T1D.\n\nGO: YES",
+    "CDKAL1": "CDKAL1 (CDK5 regulatory subunit associated protein 1-like 1) is primarily known for its role in pancreatic beta-cell function and insulin secretion. It is one of the most robustly replicated genetic associations with Type 2 Diabetes, where it affects beta-cell biology and insulin processing through tRNA modification. While it shows a modest genetic association with T1D (0.415) and has one cis-eQTL in CD4+ T cells, the overwhelming evidence points to its primary mechanism being through pancreatic beta-cell dysfunction rather than autoimmune CD4+ T-cell biology. The T1D signal is most plausibly driven by shared beta-cell stress/dysfunction pathways between T1D and T2D rather than autoimmune mechanisms.\n\nGO: NO",
+    "FTO": "FTO (fat mass and obesity-associated protein) is primarily known for its role in energy homeostasis and metabolism, with strong genetic associations to obesity and body mass index. The gene acts broadly across tissues including the hypothalamus and adipose tissue, regulating appetite and metabolic processes. FTO variants have been extensively linked to Type 2 diabetes risk through metabolic mechanisms rather than autoimmune pathways. Given the absence of T1D genetic association (score 0.0), no CD4/Treg cis-eQTLs, and FTO's established role in metabolic rather than autoimmune biology, there is no credible evidence this gene acts through CD4+ T-cell autoimmune mechanisms relevant to Type 1 diabetes.\n\nGO: NO",
+    "GATA3": "GATA3 is a master transcription factor that is critical for Th2 cell differentiation and function in CD4+ T cells. It plays a well-established role in immune cell development and T-cell subset specification, particularly in directing naive CD4+ T cells toward the Th2 lineage while suppressing Th1 differentiation. However, the complete absence of genetic association with T1D (score 0.0) and lack of cis-eQTLs in CD4/Treg cells suggests no genetic evidence linking GATA3 variation to T1D risk through CD4+ T-cell mechanisms. While GATA3 is biologically relevant to CD4+ T-cell biology, the lack of any genetic signal for T1D makes it not credible as a genetically-supported drug target for this disease.\n\nGO: NO",
+    "HNF1A": "HNF1A (Hepatocyte Nuclear Factor 1 Alpha) is a transcription factor primarily expressed in the liver, pancreatic beta cells, and kidney, where it regulates glucose metabolism and insulin secretion. Mutations in HNF1A cause MODY3 (Maturity-Onset Diabetes of the Young type 3), a monogenic form of diabetes characterized by beta-cell dysfunction, not autoimmunity. The genetic association with diabetes for HNF1A is almost certainly driven by its direct role in pancreatic beta-cell function and metabolic regulation rather than CD4+ T-cell autoimmune mechanisms. The absence of CD4/Treg cis-eQTLs further supports that this gene does not act through T-cell mediated autoimmunity.\n\nGO: NO",
+    "ICOS": "ICOS (Inducible T-cell COStimulator) is a well-established T-cell costimulatory molecule primarily expressed on activated T cells, including CD4+ T cells and regulatory T cells (Tregs). It plays a critical role in T-cell activation, differentiation, and immune regulation, making it highly relevant to autoimmune biology. ICOS is known to be involved in various autoimmune diseases and has been implicated in T1D pathogenesis through its role in modulating T-cell responses. The genetic association with T1D, combined with ICOS's established function in CD4+ T-cell biology and autoimmunity, strongly suggests the signal is driven by autoimmune mechanisms rather than metabolic or beta-cell pathways.\n\nGO: YES",
+    "IKZF3": "IKZF3 (Aiolos) is a zinc finger transcription factor primarily expressed in lymphocytes, particularly important for B-cell and T-cell development and function. It is well-established in immune biology and is actually a target of immunomodulatory drugs (IMiDs like lenalidomide). However, the Open Targets genetic association score of 0.0 for T1D indicates no genetic evidence linking IKZF3 variants to Type 1 diabetes risk, and there are no detected cis-eQTLs in CD4+ T cells or Tregs. Despite its clear role in immune cell biology, the complete absence of genetic evidence connecting it to T1D makes it not credible as a genetically-supported T1D target through CD4+ T-cell mechanisms.\n\nGO: NO",
+    "IL10": "IL10 encodes interleukin-10, an immunosuppressive cytokine that is critically important in immune regulation, particularly in CD4+ T-cells and regulatory T-cells (Tregs). IL-10 is well-established as a key anti-inflammatory mediator that suppresses autoimmune responses, and deficiency in IL-10 signaling is associated with inflammatory bowel disease and other autoimmune conditions. The genetic association with T1D is highly plausible through an autoimmune mechanism, as IL-10 produced by Tregs helps maintain immune tolerance and prevent autoimmune destruction of pancreatic beta cells. Despite the absence of detected cis-eQTLs in this dataset, IL-10's central role in CD4+ T-cell mediated autoimmunity makes it a biologically credible target for T1D.\n\nGO: YES",
+    "ITK": "ITK (IL2-inducible T-cell kinase) is a non-receptor tyrosine kinase that plays a critical role in T-cell receptor signaling and T-cell development, particularly in CD4+ T cells. It is primarily expressed in T cells and is essential for proper T-cell activation, differentiation, and cytokine production. ITK deficiency in humans causes a primary immunodeficiency syndrome, and the gene has been extensively studied in the context of T-cell mediated immunity. Given its fundamental role in CD4+ T-cell biology and the detection of a cis-eQTL in CD4/Treg cells, despite the lack of a strong genetic association signal for T1D, ITK represents a biologically plausible target for T1D through CD4+ T-cell autoimmune mechanisms.\n\nGO: YES",
+    "KCNQ1": "KCNQ1 encodes a voltage-gated potassium channel primarily expressed in cardiac tissue, pancreatic beta cells, and the inner ear. It is well-established as a cause of Long QT syndrome (cardiac arrhythmia) and has strong genetic associations with Type 2 diabetes through effects on insulin secretion from pancreatic beta cells. The gene has no genetic association with T1D (score 0.0), no CD4+ T-cell eQTLs, and its known biology relates to ion channel function in excitable tissues rather than immune regulation. Any diabetes association would be driven by beta-cell metabolic mechanisms relevant to T2D, not CD4+ T-cell autoimmunity relevant to T1D.\n\nGO: NO",
+    "LCK": "LCK (lymphocyte-specific protein tyrosine kinase) is a critical signaling molecule in T-cell receptor (TCR) signaling and is primarily expressed in T cells, including CD4+ T cells. It plays an essential role in T-cell activation, development, and function. Despite its central role in T-cell biology, the Open Targets genetic association score of 0.0 for T1D suggests no genetic evidence linking LCK variants to T1D risk, and the absence of significant CD4/Treg cis-eQTLs further indicates no genetic signal for differential LCK expression in relevant cell types. While LCK is biologically relevant to CD4+ T-cell function, the complete absence of genetic evidence connecting it to T1D makes it not credible as a genetically-supported T1D target through CD4+ T-cell autoimmunity.\n\nGO: NO",
+    "PGM1": "PGM1 (Phosphoglucomutase 1) is a metabolic enzyme that catalyzes the interconversion of glucose-1-phosphate and glucose-6-phosphate, playing a fundamental role in glycogen metabolism and glycolysis across all cell types. Mutations in PGM1 cause a congenital disorder of glycosylation (PGM1-CDG) characterized by cleft palate, hepatopathy, and hypoglycemia - not autoimmune disease. The moderate genetic association with diabetes (0.41) combined with zero CD4/Treg cis-eQTLs and the gene's core metabolic function suggests this signal is more likely related to general glucose/glycogen metabolism (relevant to T2D or metabolic pathways) rather than CD4+ T-cell autoimmune mechanisms central to T1D pathogenesis.\n\nGO: NO",
+    "PTPN2": "PTPN2 (protein tyrosine phosphatase non-receptor type 2) is a ubiquitously expressed phosphatase that regulates cytokine signaling and has well-established roles in immune cell function, particularly in T-cells where it modulates TCR signaling and cytokine responses. The gene has strong genetic associations with multiple autoimmune diseases including T1D, inflammatory bowel disease, and rheumatoid arthritis. While there are no significant cis-eQTLs detected in CD4/Treg cells in this dataset, PTPN2's known biology strongly supports an autoimmune mechanism - it negatively regulates inflammatory signaling in T-cells and its loss-of-function increases T-cell autoreactivity. The genetic association with T1D is most plausibly driven by its role in CD4+ T-cell autoimmune biology rather than beta-cell function.\n\nGO: YES",
+    "RUNX1": "RUNX1 is a transcription factor primarily known for its critical role in hematopoiesis, particularly in the development of hematopoietic stem cells and various blood lineages. While it does play roles in immune cell development including T-cells, the complete absence of genetic association with T1D (score of 0.0) and no detected CD4/Treg cis-eQTLs strongly suggests this gene has no credible genetic link to T1D through CD4+ T-cell autoimmune mechanisms. RUNX1 is most notably associated with familial platelet disorder and acute myeloid leukemia when mutated, not autoimmune conditions. Without genetic evidence connecting it to T1D, there is no basis to consider it a credible T1D target through CD4+ T-cell biology.\n\nGO: NO",
+    "SIRPG": "SIRPG (Signal Regulatory Protein Gamma) is primarily expressed in immune cells, particularly T cells and NK cells, where it functions as an immune checkpoint molecule regulating cell-cell interactions. The protein is involved in immune cell activation and has been studied in the context of immune responses and cancer immunotherapy. Given its established role in T-cell biology, the presence of significant CD4/Treg cis-eQTLs, and a moderate genetic association score with T1D (0.532), the genetic signal is plausibly driven by autoimmune T-cell mechanisms rather than beta-cell or metabolic pathways. SIRPG's function as an immune regulatory molecule in T cells makes it a biologically coherent candidate for T1D pathogenesis through CD4+ T-cell autoimmunity.\n\nGO: YES",
+    "STAT4": "STAT4 is a transcription factor critically involved in IL-12 and type I interferon signaling pathways in immune cells, particularly T cells and NK cells. It plays a well-established role in Th1 cell differentiation and has strong genetic associations with multiple autoimmune diseases including rheumatoid arthritis, systemic lupus erythematosus, and Sj\u00f6gren's syndrome. The genetic association with T1D (score 0.28) is moderate and highly consistent with an autoimmune mechanism, as STAT4-mediated signaling is central to the pathogenic CD4+ T-cell responses that drive beta-cell destruction in T1D. Despite the absence of detected cis-eQTLs in this dataset, STAT4's well-documented role in autoimmune T-cell biology makes it a biologically plausible target.\n\nGO: YES",
+    "SUOX": "SUOX (Sulfite Oxidase) is a mitochondrial enzyme primarily expressed in the liver and kidney that catalyzes the final step in the metabolism of sulfur-containing amino acids. Mutations in SUOX cause isolated sulfite oxidase deficiency, a severe neurometabolic disorder characterized by neurological deterioration, not autoimmune disease. While the gene shows some cis-eQTLs in CD4+ T cells, SUOX has no established biological role in immune function or autoimmunity, and its primary function in sulfur metabolism is unrelated to T-cell biology. The genetic association with T1D is most likely due to linkage disequilibrium at this locus rather than a causal role in CD4+ T-cell mediated autoimmunity.\n\nGO: NO",
+    "TCF7L2": "TCF7L2 is one of the most strongly and consistently associated genes with Type 2 diabetes (T2D), where it functions primarily in pancreatic beta cells and hepatocytes to regulate insulin secretion and glucose metabolism. While TCF7L2 does play a role in T-cell development and Wnt signaling in immune cells, its genetic association with diabetes is overwhelmingly driven by metabolic mechanisms rather than autoimmune pathways. The moderate T1D association score (0.527) likely reflects shared genetic architecture between T1D and T2D at this locus, or potential misclassification of T2D cases, rather than a true CD4+ T-cell autoimmune mechanism. The established biology and disease associations point strongly toward metabolic rather than autoimmune mechanisms.\n\nGO: NO",
+    "TNFAIP3": "TNFAIP3 (A20) is a well-established negative regulator of NF-\u03baB signaling that acts as a critical brake on inflammatory responses across multiple immune cell types, including CD4+ T cells. It is strongly associated with multiple autoimmune diseases including rheumatoid arthritis, systemic lupus erythematosus, and inflammatory bowel disease through GWAS studies. While TNFAIP3 has clear immunological functions and shows cis-eQTLs in CD4+ T cells, the Open Targets genetic association score of 0.0 for T1D indicates no credible genetic evidence linking this gene to Type 1 Diabetes specifically, despite its general role in autoimmunity. Without genetic evidence connecting TNFAIP3 variants to T1D risk, it cannot be considered a credible T1D drug target based on genetic validation principles.\n\nGO: NO",
+    "ZAP70": "ZAP70 (Zeta-chain-associated protein kinase 70) is a critical tyrosine kinase essential for T-cell receptor signaling and T-cell development, primarily acting in T lymphocytes including CD4+ T cells. Loss-of-function mutations in ZAP70 cause severe combined immunodeficiency (SCID) with absent CD8+ T cells and non-functional CD4+ T cells. Despite its fundamental role in T-cell biology, the absence of any genetic association with T1D (score 0.0) and no detected cis-eQTLs in CD4+/Treg cells suggests there is no genetic evidence linking ZAP70 variation to T1D risk through CD4+ T-cell autoimmunity. While ZAP70 is biologically relevant to T-cell function, without genetic support for a role in T1D pathogenesis, it does not meet the criteria as a credible genetically-supported drug target for T1D.\n\nGO: NO"
+  },
+  "claude_score": {
+    "accuracy": 0.7083,
+    "accuracy_wilson95": [
+      0.5083,
+      0.8509
+    ],
+    "balanced_accuracy": 0.725,
+    "confusion_tp_tn_fp_fn": [
+      3,
+      14,
+      6,
+      1
+    ],
+    "mcc": 0.3464,
+    "n_correct": 17
+  },
+  "date_utc": "2026-07-11T04:37:59Z",
+  "eqtl_n_sig_used": {
+    "APOBR": 3,
+    "CCR7": 0,
+    "CD28": 1,
+    "CD5": 0,
+    "CD6": 1,
+    "CDKAL1": 1,
+    "FTO": 0,
+    "GATA3": 0,
+    "HNF1A": 0,
+    "ICOS": 0,
+    "IKZF3": 0,
+    "IL10": 0,
+    "IL2RB": 0,
+    "ITK": 1,
+    "KCNQ1": 0,
+    "LCK": 0,
+    "PGM1": 0,
+    "PTPN2": 0,
+    "RUNX1": 0,
+    "SIRPG": 2,
+    "STAT4": 0,
+    "SUOX": 6,
+    "TCF7L2": 2,
+    "TNFAIP3": 3,
+    "ZAP70": 0
+  },
+  "execution_receipt_v2_sha256": "fab97308374057f7ae43a7a02ce02cfaaaee22da50923e902d6db72119dff9b4",
+  "frozen_set_v2_sha256_referenced": "77f541be74a28f591baf112bad2bf2f695ae0a2876b1d5ddb8e706e500c3be92",
+  "honest_framing": "n=24 pilot with 4 positives \u2014 small but no longer collapsed to a single point. MCC is primary (raw acc uninformative under imbalance). temperature=0 means the 3 trials mainly detect API nondeterminism, not sampling variance; 'stable' is reported as such, not as strong robustness evidence. The ground truth is a deterministic non-LLM rule (immune-GO gate + OT T1D-vs-T2D + GWAS tags + measured direction); it can still be imperfect (e.g. the direction condition is a weak prior and the immune-GO gate is immune-broad, not strictly CD4+-T-cell). A WIN here is a pilot signal that free-text reasoning separates T-cell targets from confounders better than the function-blind structured baselines \u2014 NOT a general capability claim.",
+  "model": "claude-sonnet-4-5-20250929",
+  "n_genes": 24,
+  "n_ground_truth_go": 4,
+  "n_trials_per_gene": 3,
+  "outcome": "TIE_NO_WIN",
+  "per_gene": {
+    "APOBR": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "CCR7": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "CD28": {
+      "claude_go": true,
+      "correct": false,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        true,
+        true,
+        true
+      ]
+    },
+    "CD5": {
+      "claude_go": false,
+      "correct": false,
+      "ground_truth_go": true,
+      "stable": false,
+      "votes": [
+        false,
+        false,
+        true
+      ]
+    },
+    "CD6": {
+      "claude_go": true,
+      "correct": false,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        true,
+        true,
+        true
+      ]
+    },
+    "CDKAL1": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "FTO": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "GATA3": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "HNF1A": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "ICOS": {
+      "claude_go": true,
+      "correct": false,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        true,
+        true,
+        true
+      ]
+    },
+    "IKZF3": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "IL10": {
+      "claude_go": true,
+      "correct": true,
+      "ground_truth_go": true,
+      "stable": true,
+      "votes": [
+        true,
+        true,
+        true
+      ]
+    },
+    "ITK": {
+      "claude_go": true,
+      "correct": false,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        true,
+        true,
+        true
+      ]
+    },
+    "KCNQ1": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "LCK": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "PGM1": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "PTPN2": {
+      "claude_go": true,
+      "correct": false,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        true,
+        true,
+        true
+      ]
+    },
+    "RUNX1": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "SIRPG": {
+      "claude_go": true,
+      "correct": true,
+      "ground_truth_go": true,
+      "stable": true,
+      "votes": [
+        true,
+        true,
+        true
+      ]
+    },
+    "STAT4": {
+      "claude_go": true,
+      "correct": true,
+      "ground_truth_go": true,
+      "stable": true,
+      "votes": [
+        true,
+        true,
+        true
+      ]
+    },
+    "SUOX": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "TCF7L2": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    },
+    "TNFAIP3": {
+      "claude_go": true,
+      "correct": false,
+      "ground_truth_go": false,
+      "stable": false,
+      "votes": [
+        false,
+        true,
+        true
+      ]
+    },
+    "ZAP70": {
+      "claude_go": false,
+      "correct": true,
+      "ground_truth_go": false,
+      "stable": true,
+      "votes": [
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "pre_registered_win_condition": "PRIMARY METRIC = Matthews Correlation Coefficient (MCC), because raw accuracy is uninformative under class imbalance. WIN iff (Claude MCC - best_baseline_MCC) >= 0.15 AND Claude MCC >= 0.5. LOSS iff Claude MCC < best_baseline MCC. Otherwise TIE_NO_WIN (honest negative). Baselines = majority-class, eqtl-only, query-all; strongest by MCC is the bar. Reported with Wilson 95% CI on accuracy. This is a single-model pilot on n=24 (4 positives); a WIN is a pilot signal, not a validated general-capability claim.",
+  "primary_metric": "MCC",
+  "purpose": "Day-0 Check A EXECUTION v4 \u2014 Claude open-ended adjudication vs baselines on the ENRICHED frozen set (pattern separation), MCC-primary, single stamped win rule."
+}

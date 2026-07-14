@@ -1,0 +1,119 @@
+\begin{thebibliography}{10}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Ahlmann-Eltze et~al.(2025)Ahlmann-Eltze, Huber, and
+  Anders]{ahlmanneltze2025deep}
+Constantin Ahlmann-Eltze, Wolfgang Huber, and Simon Anders.
+\newblock Deep-learning-based gene perturbation effect prediction does not yet
+  outperform simple linear baselines.
+\newblock \emph{Nature Methods}, 22\penalty0 (8):\penalty0 1657--1661, August
+  2025.
+\newblock ISSN 1548-7105.
+\newblock \doi{10.1038/s41592-025-02772-6}.
+\newblock URL \url{http://dx.doi.org/10.1038/s41592-025-02772-6}.
+\newblock [VERIFIED] Fetched via DOI content negotiation. Referred to in the
+  skeleton as "Ahlmann-Eltze et al. 2024"; the published Nature Methods version
+  carries a 2025 date. Primary field-alarm anchor.
+
+\bibitem[Angelopoulos et~al.(2021)Angelopoulos, Bates, Cand\`{e}s, Jordan, and
+  Lei]{angelopoulos2021learn}
+Anastasios~N. Angelopoulos, Stephen Bates, Emmanuel~J. Cand\`{e}s, Michael~I.
+  Jordan, and Lihua Lei.
+\newblock Learn then test: Calibrating predictive algorithms to achieve risk
+  control, 2021.
+\newblock URL \url{https://arxiv.org/abs/2110.01052}.
+\newblock [VERIFIED] Fetched via arXiv DOI service.
+
+\bibitem[Barber et~al.(2021)Barber, Cand\`{e}s, Ramdas, and
+  Tibshirani]{barber2021jackknife}
+Rina~Foygel Barber, Emmanuel~J. Cand\`{e}s, Aaditya Ramdas, and Ryan~J.
+  Tibshirani.
+\newblock Predictive inference with the jackknife+.
+\newblock \emph{The Annals of Statistics}, 49\penalty0 (1), February 2021.
+\newblock ISSN 0090-5364.
+\newblock \doi{10.1214/20-AOS1965}.
+\newblock URL \url{http://dx.doi.org/10.1214/20-AOS1965}.
+\newblock [VERIFIED] Fetched via DOI content negotiation.
+
+\bibitem[Bates et~al.(2021)Bates, Angelopoulos, Lei, Malik, and
+  Jordan]{bates2021rcps}
+Stephen Bates, Anastasios Angelopoulos, Lihua Lei, Jitendra Malik, and Michael
+  Jordan.
+\newblock Distribution-free, risk-controlling prediction sets.
+\newblock \emph{Journal of the ACM}, 68\penalty0 (6):\penalty0 1--34, September
+  2021.
+\newblock ISSN 1557-735X.
+\newblock \doi{10.1145/3478535}.
+\newblock URL \url{http://dx.doi.org/10.1145/3478535}.
+\newblock [VERIFIED] Fetched via DOI content negotiation.
+
+\bibitem[Norman et~al.(2019)Norman, Horlbeck, Replogle, Ge, Xu, Jost, Gilbert,
+  and Weissman]{norman2019exploring}
+Thomas~M. Norman, Max~A. Horlbeck, Joseph~M. Replogle, Alex~Y. Ge, Albert Xu,
+  Marco Jost, Luke~A. Gilbert, and Jonathan~S. Weissman.
+\newblock Exploring genetic interaction manifolds constructed from rich
+  single-cell phenotypes.
+\newblock \emph{Science}, 365\penalty0 (6455):\penalty0 786--793, August 2019.
+\newblock ISSN 1095-9203.
+\newblock \doi{10.1126/science.aax4438}.
+\newblock URL \url{http://dx.doi.org/10.1126/science.aax4438}.
+\newblock [VERIFIED] Fetched via DOI content negotiation. K562 genome-scale
+  genetic-interaction Perturb-seq; GEO GSE133344. Used as the independent
+  cross-assay transfer dataset.
+
+\bibitem[Romano et~al.(2019)Romano, Patterson, and
+  Cand\`{e}s]{romano2019conformalized}
+Yaniv Romano, Evan Patterson, and Emmanuel~J. Cand\`{e}s.
+\newblock Conformalized quantile regression, 2019.
+\newblock URL \url{https://arxiv.org/abs/1905.03222}.
+\newblock [VERIFIED] Fetched via arXiv DOI service. Published at NeurIPS 2019.
+
+\bibitem[Schmidt et~al.(2022)Schmidt, Steinhart, Layeghi, Freimer, Bueno,
+  Nguyen, Blaeschke, Ye, and Marson]{schmidt2022crispr}
+Ralf Schmidt, Zachary Steinhart, Madeline Layeghi, Jacob~W. Freimer, Raymund
+  Bueno, Vinh~Q. Nguyen, Franziska Blaeschke, Chun~Jimmie Ye, and Alexander
+  Marson.
+\newblock Crispr activation and interference screens decode stimulation
+  responses in primary human t cells.
+\newblock \emph{Science}, 375\penalty0 (6580), February 2022.
+\newblock ISSN 1095-9203.
+\newblock \doi{10.1126/science.abj4008}.
+\newblock URL \url{http://dx.doi.org/10.1126/science.abj4008}.
+\newblock [VERIFIED] Fetched via DOI content negotiation. Primary CD4+ T-cell
+  Perturb-seq assay (Marson lab). Referenced in-text as the T1D-relevant
+  primary CD4+ dataset.
+
+\bibitem[Tibshirani et~al.(2019)Tibshirani, Barber, Cand\`{e}s, and
+  Ramdas]{tibshirani2019conformal}
+Ryan~J. Tibshirani, Rina~Foygel Barber, Emmanuel~J. Cand\`{e}s, and Aaditya
+  Ramdas.
+\newblock Conformal prediction under covariate shift, 2019.
+\newblock URL \url{https://arxiv.org/abs/1904.06019}.
+\newblock [VERIFIED] Fetched via arXiv DOI service. Introduces weighted
+  conformal prediction. Published at NeurIPS 2019.
+
+\bibitem[Vovk et~al.(2005)Vovk, Gammerman, and Shafer]{vovk2005algorithmic}
+Vladimir Vovk, Alexander Gammerman, and Glenn Shafer.
+\newblock \emph{Algorithmic Learning in a Random World}.
+\newblock Springer-Verlag, New York, 2005.
+\newblock ISBN 0387001522.
+\newblock \doi{10.1007/b106715}.
+\newblock [VERIFIED] DOI resolved via dx.doi.org; author list and title are the
+  canonical published metadata for this monograph (introduces transductive and
+  Mondrian conformal prediction).
+
+\bibitem[Wu et~al.(2024)Wu, Wershof, Schmon, Nassar, Osi\'{n}ski, Eksi, Yan,
+  Stark, Zhang, and Graepel]{wu2024perturbench}
+Yan Wu, Esther Wershof, Sebastian~M. Schmon, Marcel Nassar, B\l{}a\.{z}ej
+  Osi\'{n}ski, Ridvan Eksi, Zichao Yan, Rory Stark, Kun Zhang, and Thore
+  Graepel.
+\newblock Perturbench: Benchmarking machine learning models for cellular
+  perturbation analysis, 2024.
+\newblock URL \url{https://arxiv.org/abs/2408.10609}.
+\newblock [VERIFIED] Fetched via arXiv DOI service.
+
+\end{thebibliography}

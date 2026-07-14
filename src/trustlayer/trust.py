@@ -15,6 +15,7 @@ Both normalizers + the raw spread are recorded so the provenance is auditable.
 
 from __future__ import annotations
 
+import hashlib
 from pathlib import Path
 
 import numpy as np
@@ -24,6 +25,11 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 PREDS = Path("data/interim/base_predictor_preds.parquet")
 FEATURE_TABLE = Path("data/interim/day2_feature_table.parquet")
 SEED = 20260708
+
+
+def _stable_hash(s: str) -> int:
+    """RP01 FIX: deterministic per-key seed (Python hash() is salted per process)."""
+    return int(hashlib.md5(s.encode()).hexdigest(), 16) % 100000
 
 
 def _pooled_ensemble_spread_by_gene(genes: list[str], n_models: int = 8):
@@ -79,7 +85,7 @@ def _donor_blocked_spread_for_gene(gene: str):
         for d in DONORS:
             calib = _stack(f, pairs_excluding(d))
             test = _stack(f, pairs_containing(d))
-            fold_seed = SEED + hash(d) % 100000
+            fold_seed = SEED + _stable_hash(d)
             spreads = _ensemble_spread(calib, test, n_models=8, base_seed=fold_seed)
             all_spreads.append(spreads)
             mask = test["gene"] == gene

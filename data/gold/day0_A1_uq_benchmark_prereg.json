@@ -1,0 +1,52 @@
+{
+  "prereg": {
+    "track": "A1 \u2014 powered prior-art UQ calibration benchmark",
+    "one_line": "Head-to-head calibration of the committed conformal trust layer vs prior-art UQ baselines on the IDENTICAL committed donor-blocked LODO surface + base HGBR predictor.",
+    "frozen_before_scoring": true,
+    "surface": {
+      "definition": "Donor-blocked leave-one-donor-out (LODO). 4 donors, 6 donor-pair modalities, ~2591 reproducible-core unique perturbations, 58,558 held-out-donor test rows pooled over 4 folds.",
+      "construction": "For held-out donor d: calibration = 3 pairs with BOTH members != d; test = 3 pairs containing d. Exchangeability-broken-by-design (donor covariate shift) \u2014 the object of study.",
+      "base_predictor": "HistGradientBoostingRegressor(max_iter=300, lr=0.05, max_depth=4, l2=1.0, random_state=20260708), fit on calibration rows only per fold. IDENTICAL to committed conformal.py. Point predictions held FIXED across all Tier-A methods.",
+      "target": "y = log1p(||zscore over trans genes, on-target excluded||), recomputed per-fold from each pair's zscore layer (matches committed pipeline).",
+      "features": "X = [log_baseMean(on-target), cond==Rest, cond==Stim8hr, cond==Stim48hr] (leakage-safe, committed).",
+      "materialization": "h5mu streamed ONCE via committed conformal.py data-access code to cache the exact per-fold (calib X,y ; test X,y ; base_pred ; residual) surface; ALL methods then run on that cache. This is the committed pipeline's own surface, NOT a surrogate."
+    },
+    "methods_compared": [
+      "split_conformal (COMMITTED incumbent; |residual| nonconformity, single calib quantile)",
+      "mondrian_conformal (COMMITTED; per-culture-condition quantile)",
+      "weighted_conformal (COMMITTED; Tibshirani 2019 covariate-shift density-ratio weighted quantile)",
+      "parametric_gaussian (prior art; pred +/- z*sigma, sigma=std of calib residuals)",
+      "quantile_regression (prior art; HGBR quantile loss, lower/upper quantile models)",
+      "cqr (Romano 2019; conformalized quantile regression = QR + conformal correction)",
+      "jackknife_plus (Barber 2021; CV+ with K=10 folds on calibration, refit HGBR)",
+      "ensemble_variance_gaussian (Lakshminarayanan-style; 8-member bootstrap HGBR spread -> pred +/- z*spread; this is also the committed TRUST ordering signal)",
+      "naive_global_quantile (single global |residual| quantile ignoring fold/donor structure)"
+    ],
+    "methods_omitted": {
+      "mc_dropout_mlp": "Requires a DIFFERENT base predictor (torch MLP) -> breaks the same-point-prediction control (Tier-C model confound). Omitted; would not be apples-to-apples.",
+      "deep_ensemble_mlp": "Same reason (different base model family).",
+      "ngboost": "Different base model (probabilistic GBT). Omitted to preserve the fixed-HGBR-point-prediction control; jackknife+ and ensemble-variance already cover the ensemble/refit family on the SAME base model."
+    },
+    "metrics": {
+      "primary_calibration": "Marginal coverage error = |empirical_coverage - nominal| at nominal in {0.80,0.90,0.95}, pooled over 58,558 test rows. Report per-level AND mean-absolute across the 3 levels (the single primary scalar).",
+      "efficiency": "Mean prediction-interval width per level (log2FC units). The genuinely contested axis: at matched coverage, sharper is better.",
+      "selective_prediction": "AURC (area under risk-coverage curve; lower=better) using each method's NATIVE per-point uncertainty as the retention ordering; risk = |point-prediction error|. Constant-width methods (split_conformal, parametric_gaussian, naive_global) cannot rank -> AURC = mean-risk (no selectivity); reported plainly as such.",
+      "conditional_coverage": "Worst-slice coverage gap over log_baseMean and log_n_cells deciles (secondary; Mondrian's claimed advantage)."
+    },
+    "uncertainty_quantification": {
+      "cis": "Cluster (block) bootstrap over the ~2591 UNIQUE perturbations (resample genes with replacement, 2000 reps), recompute PAIRED metric deltas (same test points, method A vs incumbent) each rep -> 95% percentile CI on deltas. Also report the 4-donor-fold spread as the conservative honest interval (rows are non-independent).",
+      "n": "58,558 test rows / ~2591 unique perturbations / 4 donor folds."
+    },
+    "comparison_and_outcome_rules": {
+      "best_calibrated_method": "argmin over methods of mean-absolute marginal coverage error across the 3 levels (pooled).",
+      "conformal_wins_YES": "A committed conformal method (split/Mondrian/weighted) has the strictly lowest mean coverage error AND its advantage over the BEST non-conformal baseline has a paired-bootstrap 95% CI on the coverage-error delta that excludes 0 in conformal's favor.",
+      "conformal_wins_TIE": "Coverage-error delta CI between best conformal and best non-conformal baseline straddles 0.",
+      "conformal_wins_NO": "A non-conformal baseline has strictly lower coverage error with a paired-bootstrap CI excluding 0 against conformal.",
+      "tautology_guard": "Coverage error ~0 for split conformal is partly BY CONSTRUCTION. Verdict text MUST NOT headline 'conformal hits coverage'. It MUST report the CONTESTED axes: (i) magnitude of non-conformal MISCOVERAGE under donor shift, (ii) interval width at matched coverage (can conformal be Pareto-dominated by CQR?), (iii) AURC ranking quality. Report the OUTCOME EITHER WAY.",
+      "no_pre_declared_win": "This prereg declares NO expected winner. Report loss/tie plainly if it lands (e.g. CQR sharper at equal coverage = within-paradigm loss; parametric matching coverage AND width = guarantee adds no empirical value)."
+    },
+    "seed": 20260708,
+    "generated_utc": "2026-07-11T17:54:17.028686+00:00"
+  },
+  "content_sha256": "b39caaf64f193232347aeeecef8684e2b24687baed90512a5275b08a818424a5"
+}

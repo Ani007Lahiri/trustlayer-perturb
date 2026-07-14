@@ -1,0 +1,139 @@
+{
+  "spec": {
+    "gate": "default-DENY; GO iff ALL of {leakage_clean, genetic_association>=0.20, trust>=0.50, celltype_eqtl_present, eqtl_direction not inconsistent}",
+    "MIN_GENETIC_ASSOCIATION": 0.2,
+    "MIN_TRUST_SCORE": 0.5,
+    "method": "leave-one-condition-out on anchor trio + 20 synthetic donors (23 total)"
+  },
+  "anchor_ground_truth": {
+    "CD226": "GO",
+    "RASGRP1": "ABSTAIN",
+    "PRKCQ": "WITHHOLD"
+  },
+  "baseline_distribution": {
+    "GO": 7,
+    "ABSTAIN": 7,
+    "WITHHOLD": 9
+  },
+  "n_donors": 23,
+  "rows": [
+    {
+      "condition_removed": "(none) \u2014 full gate",
+      "anchor_CD226": "GO",
+      "anchor_RASGRP1": "ABSTAIN",
+      "anchor_PRKCQ": "WITHHOLD",
+      "n_anchor_flips": 0,
+      "n_donor_flips": 0,
+      "donor_dist": {
+        "GO": 7,
+        "ABSTAIN": 7,
+        "WITHHOLD": 9
+      },
+      "flips_to_GO": 0,
+      "load_bearing": null,
+      "cost": "Reference: default-DENY, GO iff all 5 pass."
+    },
+    {
+      "condition_removed": "Leakage-clean",
+      "condition_key": "leakage_clean",
+      "anchor_CD226": "GO",
+      "anchor_RASGRP1": "ABSTAIN",
+      "anchor_PRKCQ": "WITHHOLD",
+      "n_anchor_flips": 0,
+      "anchor_flips": [],
+      "n_donor_flips": 3,
+      "donor_dist": {
+        "GO": 10,
+        "ABSTAIN": 7,
+        "WITHHOLD": 6
+      },
+      "flips_to_GO": 3,
+      "load_bearing": true,
+      "cost": "Integrity veto removed: leakage-contaminated targets pass to GO \u2014 invalid conformal coverage guarantees are silently accepted."
+    },
+    {
+      "condition_removed": "Genetic assoc. \u2265 0.20",
+      "condition_key": "genetic_association",
+      "anchor_CD226": "GO",
+      "anchor_RASGRP1": "ABSTAIN",
+      "anchor_PRKCQ": "GO",
+      "n_anchor_flips": 1,
+      "anchor_flips": [
+        "PRKCQ"
+      ],
+      "n_donor_flips": 4,
+      "donor_dist": {
+        "GO": 11,
+        "ABSTAIN": 7,
+        "WITHHOLD": 5
+      },
+      "flips_to_GO": 4,
+      "load_bearing": true,
+      "cost": "Genetic floor removed: targets with no human-genetic support are promoted to GO \u2014 false-discovery / off-target risk rises."
+    },
+    {
+      "condition_removed": "Trust \u2265 0.50",
+      "condition_key": "trust_score",
+      "anchor_CD226": "GO",
+      "anchor_RASGRP1": "GO",
+      "anchor_PRKCQ": "WITHHOLD",
+      "n_anchor_flips": 1,
+      "anchor_flips": [
+        "RASGRP1"
+      ],
+      "n_donor_flips": 4,
+      "donor_dist": {
+        "GO": 11,
+        "WITHHOLD": 9,
+        "ABSTAIN": 3
+      },
+      "flips_to_GO": 4,
+      "load_bearing": true,
+      "cost": "Trust floor removed: undercovered (low-reliability) predictions promoted to GO \u2014 commits made where conformal coverage has collapsed under shift."
+    },
+    {
+      "condition_removed": "Cell-type eQTL present",
+      "condition_key": "celltype_eqtl_present",
+      "anchor_CD226": "GO",
+      "anchor_RASGRP1": "ABSTAIN",
+      "anchor_PRKCQ": "WITHHOLD",
+      "n_anchor_flips": 0,
+      "anchor_flips": [],
+      "n_donor_flips": 3,
+      "donor_dist": {
+        "GO": 10,
+        "ABSTAIN": 4,
+        "WITHHOLD": 9
+      },
+      "flips_to_GO": 3,
+      "load_bearing": true,
+      "cost": "Mechanistic anchor removed: targets lacking a cell-type-matched eQTL promoted \u2014 commits without tissue-relevant regulatory evidence."
+    },
+    {
+      "condition_removed": "eQTL direction consistent",
+      "condition_key": "eqtl_direction",
+      "anchor_CD226": "GO",
+      "anchor_RASGRP1": "ABSTAIN",
+      "anchor_PRKCQ": "WITHHOLD",
+      "n_anchor_flips": 0,
+      "anchor_flips": [],
+      "n_donor_flips": 2,
+      "donor_dist": {
+        "GO": 9,
+        "ABSTAIN": 7,
+        "WITHHOLD": 7
+      },
+      "flips_to_GO": 2,
+      "load_bearing": true,
+      "cost": "Direction check removed: targets whose eQTL effect direction contradicts the model are promoted \u2014 mechanistically inconsistent commits accepted."
+    }
+  ],
+  "load_bearing_conditions": [
+    "leakage_clean",
+    "genetic_association",
+    "trust_score",
+    "celltype_eqtl_present",
+    "eqtl_direction"
+  ],
+  "all_five_load_bearing": true
+}

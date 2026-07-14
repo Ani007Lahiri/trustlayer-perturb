@@ -415,3 +415,112 @@ of genetics), we do NOT claim "trust is secondary." Instead:
 - The counterfactual test (flip RASGRP1 eQTL -> GO) proves the gate keys on the eQTL FACT,
   not the gene string. It does NOT prove the boolean was assigned correctly -- that rests on
   the cited human ruling.
+
+---
+
+# NEXT-RUN METHODOLOGY (2026-07-09) — Decision-System Validation (Items 1–3)
+
+*Appended for the "From Calibrated Model to Decision System" run. Governing memo:
+`Impact_and_GPU_Strategy.md`. All three items run LOCALLY on CPU ($0); no cluster/GPU.
+Every output → `data/gold/` receipt + `_script_manifest.jsonl` sha256, matching the
+Day 0–5 provenance discipline. Frozen seed 20260708. Frozen split hash 45ca2893cbe7e282.*
+
+*REVISED after pre-COMPUTE critique (VERDICT: BLOCKING, 5 issues B1–B5 + 3 obs O1–O3).
+The revisions below implement every fix. Re-critique required before COMPUTE.*
+
+## Research question & hypothesis (REVISED — B1)
+- **Q (item 1, reframed):** Does the model+trust layer add validated precision *BEYOND
+  genetics alone*? (The original "gate beats naive" framing was circular: the truth channel
+  shares its generative process with the gate's genetic-association floor — B1.)
+- **H1 (lift-beyond-genetics):** *within the genetics-eligible stratum* (genes already
+  passing the genetic-association floor), ranking by model+trust adds validated precision
+  over ranking by genetics/effect-size alone, beyond a paired permutation null.
+- **H0:** conditional on genetics, model+trust adds no precision (paired lift CI contains 0).
+- **H2 (ceiling):** model rank performance is a large fraction of the between-donor
+  reproducibility ceiling → "honest model vs noisy assay" (descriptive, donor-limited CI).
+- **Success criteria (pre-registered):** H1 accepted ONLY if the PAIRED lift (model+trust −
+  genetics-alone), at matched coverage, has a permutation-null CI excluding 0 at ≥1 coverage
+  level, AND the effect is reported *stratified* by genetic-floor pass/fail (B1). A positive
+  that lives only in the floor-pass stratum is reported as such, not as a general claim.
+
+## Data-sizing pre-check (MANDATORY, run & receipt BEFORE analysis — B2)
+Before any lift computation, compute and write to a receipt:
+- count of TEST-fold genes with a truth label (split: gold-forced vs random-landed);
+- count in the genetics-eligible stratum.
+**Gate:** if TEST-fold truth positives < 15, item 1 is REPORTED AS A CASE STUDY with
+explicit n honesty (it is NOT an "all-genes lift"); the memo's "all-genes" wording is
+reconciled to "test-fold decision replay" (B2). No silent n=8 re-run.
+
+## Data sources (on disk, no download)
+- `data/raw/DE_stats.suppl_table.csv` — 33,983 rows; per-row `crossdonor_correlation_mean`,
+  `ontarget_effect_size`, `n_downstream`, `target_baseMean`, `n_cells_target`.
+- `data/raw/GWCD4i.DE_stats.by_donors.h5mu` — 6 donor-pairs × 2591 reproducible-core genes.
+- `data/gold/frozen_splits.json` (hash 45ca2893cbe7e282) — leakage-safe folds.
+
+## Item 1 — Lift BEYOND genetics (REVISED B1/B2/B3)
+- **Scope:** TEST-fold genes only (leakage control). Report the data-sizing pre-check first.
+- **Comparison (paired, B3):** two rankings over the SAME gene set — (A) model+trust
+  (predicted effect × conformal trust), (B) genetics/effect-size alone. Truth = held-out
+  causal-gene labels.
+- **Truth channel + caveat (B1):** ClinVar pathogenic + GWAS hits, WITH the residual-leakage
+  caveat stated explicitly (shared generative process with OT genetic_association). Primary
+  reporting **partials out the genetics floor** (restrict to floor-pass stratum) so any lift
+  is attributable to model+trust, not genetics. Also report a genetics-INDEPENDENT sensitivity
+  using ClinVar entries NOT genome-wide-significant, if any exist at usable N.
+- **Statistic (B3):** the PAIRED lift = precision_A@K − precision_B@K at matched coverage K.
+  Null = permute SCORES and RE-SELECT top-K inside each of ≥2000 permutations
+  (selection-aware); report the paired difference with its own permutation CI. Two separate
+  CIs are NOT used to claim a difference.
+- **Curve:** paired lift vs coverage K/N, with the permutation null band.
+
+## Item 2 — Reliability ceiling (BETWEEN-DONOR PROXY; REVISED B4/O1/O2/O3)
+- **Data correction:** no cell-level counts → no true split-half. Use
+  `crossdonor_correlation_mean` + by_donors 2591-core as a between-donor proxy.
+- **Framing (O1 — pick ONE):** report it as a **lower bound on the technical-reliability
+  ceiling** IF the target is a single donor's delta; OR the *appropriate* ceiling if the
+  prediction target is the donor-AVERAGED delta. State that between-donor r includes
+  biological donor variation, so it is NOT interchangeable with within-perturbation
+  technical split-half.
+- **Axes (O2):** state the attenuation assumption (reliability² bounds R² only under
+  additive-noise attenuation) and define the rank-ceiling derivation explicitly; do not
+  equate Pearson cross-donor r with a Spearman ceiling without stating the mapping.
+- **Min-support (O3):** PRE-REGISTER a FIXED threshold (n_cells_target ≥ median of the
+  non-null-crossdonor subset, value frozen in the receipt) — not "chosen from the data" —
+  and report a sensitivity curve across thresholds.
+- **CI (B4):** donor-pair BLOCK bootstrap (resample the 6 pairs), NOT a perturbation
+  bootstrap. State the CI is donor-limited (4 donors) and untightenable by perturbation
+  count. The perturbation-bootstrap CI is never reported as primary.
+
+## Item 3 — Rule ablation (REVISED B5)
+- Ablate each `commit_gate` rule (leakage, genetic-assoc floor, trust floor, eQTL), singly
+  AND pairwise.
+- **Report FLIP COUNT FIRST.** A rule that flips zero test-set verdicts is labeled
+  **"inactive — undetermined"**, NOT "not pivotal" (B5). (Expected: trust floor is
+  non-binding for the trio → likely inactive on the small decision set.)
+- **Pivotal** = a rule whose Δ(item-1 paired lift) has a CI (from the B3 paired null)
+  **excluding 0**. Pre-register that the genetic floor will appear pivotal *trivially*
+  because item-1 truth is genetics-confounded (B1) — so its "pivotalness" is discounted.
+
+## Controls & validation
+- **Positive control:** model+trust concentrates truth at low coverage within the stratum.
+- **Negative control:** permute gene↔score → paired lift collapses into null band.
+- **Leakage control:** scoring on TEST-fold genes only; caveat on truth/genetics overlap.
+
+## Statistical plan
+- Primary: PAIRED permutation null (≥2000, score-permute + re-select) on the lift; 95% CI.
+- Curve over coverage; if a headline K is chosen, Bonferroni across reported K.
+- Effect measure: paired precision lift (model+trust − genetics-alone) at matched coverage.
+
+## Compute
+- Platform: LOCAL CPU. Runtime: minutes. Cost: $0. (No cluster/GPU for items 1–3; scVI/G1
+  is downstream, self-submitted by the user on their own account.)
+
+## Limitations & assumptions (REVISED)
+- **Item-1 truth is genetics-confounded** (B1): the DEFENSIBLE claim is "model+trust adds
+  lift *conditional on* genetics," not "gate beats genetics." A fully genetics-independent
+  truth (functional CRISPR screen) is future work / a separate data pull.
+- **Item-1 power (B2):** driven by TEST-fold truth-positive count; if small, it is a case
+  study, reported with n honesty — NOT a general lift claim.
+- **Item-2 ceiling** is a between-donor proxy conflating biological + technical variance,
+  with a donor-limited CI (4 donors); true split-half needs the 1.7 TB raw cells (deferred).
+- n=4 donors → all donor-resolved CIs wide; directional only.

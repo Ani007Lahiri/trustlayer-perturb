@@ -1,0 +1,115 @@
+{
+ "prereg": {
+  "purpose": "Day-8 THIRD external axis: clinical-trial OUTCOME DIRECTION (did drugs against the gene SUCCEED or FAIL in autoimmune indications?) vs the committed binary GO/WITHHELD gate. Distinct from day6/day7 (drug EXISTENCE) \u2014 existence is weak; direction asks whether the gate separates targets whose drugs WORKED from those whose drugs FAILED.",
+  "gate_definition": "THE committed gate = commit_gate.CommitGate.evaluate (default-deny): GO iff leakage-clean AND genetic_association>=0.20 AND trust>=0.50 AND celltype_matched_eqtl present AND eqtl_direction not inconsistent. Applied to the 98-gene eligible universe: reproduced faithfully as GO iff ot_t1d>=0.20 AND eqtl_nsig>0 (all 98 clear the GA floor; trust asserted non-binding; leakage-clean by construction). Reproduction => 49 GO / 49 WITHHELD, matching the prior committed run exactly. NOT a surrogate.",
+  "real_gate_universe_split": "49 GO / 49 WITHHELD over 98 genes (reproduced, eqtl_nsig via EBI eQTL Catalogue v2, 11 T-cell datasets, nlog10p>=5.0).",
+  "outcome_label_rule": {
+   "SUCCESS": "gene is mechanistic target of >=1 drug APPROVED or Phase-III-advanced in an autoimmune indication (OT maximumClinicalStage in {APPROVAL, PHASE_3}).",
+   "FAILURE_strict": "gene is mechanistic target of a drug that FAILED for efficacy in an autoimmune indication in a controlled trial, with NO approved drug for that target in autoimmune. A terminated INDIVIDUAL trial (funding/recruitment/business) does NOT count; efficacy failure at the program/target level does.",
+   "FAILURE_borderline": "program stalled / did not advance but with mixed or positive early-phase signals => sensitivity tier only, NOT clean.",
+   "NOT_SCORED": "no autoimmune drug program => belongs to the EXISTENCE axis (day6), excluded from the DIRECTION axis."
+  },
+  "primary_tier": "SUCCESS (7) vs FAILURE_strict (1: IL10). n=8.",
+  "sensitivity_tier": "SUCCESS (7) vs FAILURE_strict+borderline (3: IL10,IL7R,GATA3). n=10.",
+  "predictors_compared": [
+   "real_gate GO/WITHHELD (binary)",
+   "has_any_autoimmune_drug (the RETRACTED existence baseline)",
+   "ot_t1d_assoc (continuous)",
+   "eqtl_nsig (continuous)"
+  ],
+  "primary_metric": "gate confusion table + Matthews correlation + Fisher exact one-sided p (gate GO enriched among SUCCESS). AUROC reported but flagged meaningless at this n.",
+  "power_note_PREREGISTERED": "This axis is EXPECTED to be underpowered: among 98 gate-scored genes only 7 have genuine autoimmune drug SUCCESS and clean documented FAILURES are near-absent (recombinant-agonist / DNAzyme failures are rare). If the FAILURE class is n<=1 clean, we will report UNDERPOWERED and refuse to claim a win, per the honesty contract.",
+  "honesty_contract": "Labels + evidence hash-frozen BEFORE scoring. No tuning. Direction reported plainly incl. the gate's own false negatives (successes it WITHHELD). Real committed gate only, never a proxy.",
+  "labels_sha256": "4910d8170419afe86927263f101ae5cdcb289dfefc3953794c6afcd928d5c39e",
+  "n_success": 7,
+  "n_failure_strict": 1,
+  "n_failure_borderline": 2,
+  "date_utc": "2026-07-11T17:09:58.655349+00:00",
+  "prereg_sha256": "78448a4692a7fb88003b8708384880a2361d45cab64ff3667dc6f8b1bc1b7834"
+ },
+ "labels": {
+  "CD3E": {
+   "outcome": "SUCCESS",
+   "evidence": "Teplizumab (anti-CD3E) FDA-approved 2022 to delay T1D onset; multiple approved anti-CD3 (muromonab, blinatumomab). maxStage=APPROVAL.",
+   "autoimmune_indication": "type_1_diabetes",
+   "gate_GO": 1,
+   "eqtl_nsig": 1,
+   "ot_t1d": 0.5641
+  },
+  "CD52": {
+   "outcome": "SUCCESS",
+   "evidence": "Alemtuzumab (anti-CD52) approved for relapsing multiple sclerosis. maxStage=APPROVAL.",
+   "autoimmune_indication": "multiple_sclerosis",
+   "gate_GO": 1,
+   "eqtl_nsig": 7,
+   "ot_t1d": 0.344
+  },
+  "CD6": {
+   "outcome": "SUCCESS",
+   "evidence": "Itolizumab (anti-CD6) approved (India, plaque psoriasis) / Phase III SLE & aGVHD. maxStage=PHASE_3.",
+   "autoimmune_indication": "systemic_lupus_erythematosus",
+   "gate_GO": 1,
+   "eqtl_nsig": 1,
+   "ot_t1d": 0.3547
+  },
+  "FKBP1A": {
+   "outcome": "SUCCESS",
+   "evidence": "Tacrolimus/sirolimus/pimecrolimus (FKBP1A binders) approved immunosuppressants (transplant, atopic dermatitis, psoriasis). maxStage=APPROVAL.",
+   "autoimmune_indication": "atopic_dermatitis",
+   "gate_GO": 1,
+   "eqtl_nsig": 1,
+   "ot_t1d": 0.3998
+  },
+  "IL2RB": {
+   "outcome": "SUCCESS",
+   "evidence": "Basiliximab/daclizumab (anti-IL2R) approved (transplant rejection; daclizumab was approved for MS). maxStage=APPROVAL.",
+   "autoimmune_indication": "multiple_sclerosis",
+   "gate_GO": 0,
+   "eqtl_nsig": 0,
+   "ot_t1d": 0.3778
+  },
+  "PPIA": {
+   "outcome": "SUCCESS",
+   "evidence": "Cyclosporine (cyclophilin/PPIA binder) approved for RA, psoriasis, atopic dermatitis. maxStage=APPROVAL.",
+   "autoimmune_indication": "rheumatoid_arthritis",
+   "gate_GO": 1,
+   "eqtl_nsig": 3,
+   "ot_t1d": 0.3436
+  },
+  "TNF": {
+   "outcome": "SUCCESS",
+   "evidence": "Adalimumab/etanercept/infliximab (anti-TNF) approved across RA, IBD, psoriasis \u2014 cornerstone autoimmune therapy. maxStage=APPROVAL.",
+   "autoimmune_indication": "rheumatoid_arthritis",
+   "gate_GO": 0,
+   "eqtl_nsig": 0,
+   "ot_t1d": 0.3302
+  },
+  "IL10": {
+   "outcome": "FAILURE",
+   "tier": "strict",
+   "evidence": "Recombinant human IL-10 (ilodecakin/tenovil) failed in large placebo-controlled RCTs in Crohn's disease and RA (no efficacy; dose-dependent anemia, PMID 12165551 n=329); no approved autoimmune drug for the target.",
+   "autoimmune_indication": "crohns_disease",
+   "gate_GO": 0,
+   "eqtl_nsig": 0,
+   "ot_t1d": 0.5328
+  },
+  "IL7R": {
+   "outcome": "FAILURE",
+   "tier": "borderline",
+   "evidence": "Anti-IL7R programs: RN168/PF T1D stopped at Phase 1 (NCT02038764); OSE-127/lusvertikimab UC Phase 2 completed (later mixed/positive). No approved autoimmune drug for the target; net program non-advancement, but NOT an unambiguous efficacy failure.",
+   "autoimmune_indication": "type_1_diabetes",
+   "gate_GO": 0,
+   "eqtl_nsig": 0,
+   "ot_t1d": 0.4577
+  },
+  "GATA3": {
+   "outcome": "FAILURE",
+   "tier": "borderline",
+   "evidence": "SB010 (GATA3 DNAzyme) showed a POSITIVE Phase 2a asthma signal (Krug NEJM 2015, PMID 25981191); SB012 UC did not advance. No approved drug; borderline \u2014 early positive signal means this is NOT a clean failure.",
+   "autoimmune_indication": "ulcerative_colitis",
+   "gate_GO": 0,
+   "eqtl_nsig": 0,
+   "ot_t1d": 0.3248
+  }
+ }
+}

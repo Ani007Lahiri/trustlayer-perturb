@@ -1,0 +1,70 @@
+{
+  "name": "SCC second-dataset replication: CaRPool-seq (GSE213957) doubles",
+  "date": "2026-07-12",
+  "status": "PRE-REGISTERED BEFORE downloading/reconstructing CaRPool-seq coverage. Freezes the estimand + clearing criterion + falsifiers identical to the Norman powered re-analysis (prereg 77bcaea9) so the replication bar cannot be moved after seeing the data.",
+  "motivation": "merit path-to-80 requires a SECOND independent combinatorial dataset (the Norman result is one dataset). Replogle 2022 has NO doubles (all single-gene CRISPRi). CaRPool-seq is the only public laptop-scale scRNA-seq combinatorial screen with matched constituent singles: 28 singles + 158 doubles, THP1 AML, Cas13d RNA knockdown.",
+  "dataset": {
+    "accession": "GSE213957",
+    "citation": "Wessels H-H, Satija R, et al. 'Efficient combinatorial targeting of RNA transcripts in single cells with Cas13 RNA Perturb-seq.' Nature Methods 2023. PMID 36550277.",
+    "system": "THP1 (human AML)",
+    "perturbation": "Cas13d RNA knockdown (KNOCKDOWN direction)",
+    "expected_composition": "~28 single-gene + ~158 double-gene perturbations, matched singles by design; ~31k cells; multimodal (3' scRNA-seq + CITE-seq)."
+  },
+  "cross_context_caveats_declared_upfront": [
+    "MODALITY: CaRPool-seq is Cas13d RNA knockdown vs Norman CRISPRa overexpression -> opposite perturbation direction.",
+    "CELL TYPE: THP1 AML (differentiating myeloid) vs Norman K562 (erythroleukemia).",
+    "This is a CROSS-MODALITY, CROSS-DIRECTION replication, NOT a like-for-like reproduction. A positive result is therefore a STRONGER generalization claim; a negative is consistent with SCC being assay-specific and must be reported as such.",
+    "No public K562/CRISPRa second dataset exists (Norman is effectively unique in that niche) -> this is the best available, not a perfect match."
+  ],
+  "reconstruction": {
+    "readout": "TRANSCRIPTOME (RNA counts), not the ADT/surface-protein channel — to keep the target commensurate with Norman's y=||transcriptional effect||.",
+    "normalization": "CP10K -> log1p per cell, identical to the Norman pipeline (src/run_norman_stream.py).",
+    "pseudobulk": "mean log1p-CP10K over cells within each perturbation group (each single gene, each double pair, and NT control).",
+    "effect": "e_g = pseudobulk(g) - pseudobulk(NT control), per gene-perturbation.",
+    "eligible_doubles": "a double A+B is TESTABLE iff BOTH constituent singles A and B are present as single-gene groups; drop doubles missing a single.",
+    "min_cells_per_group": 25
+  },
+  "target_and_predictor": {
+    "true_mag": "||e_AB|| = L2 norm of the double's transcriptional effect vector (top-2000 highly-variable genes, selected on CONTROL cells only to avoid leakage).",
+    "additive_mag": "||e_A + e_B|| = L2 norm of the summed single effects (the biologically principled additive null).",
+    "residual": "|true_mag - additive_mag|",
+    "s_hat": "sum of the two single-effect magnitudes ||e_A|| + ||e_B|| (SINGLES ONLY, never the double), then standardized (z-score). IDENTICAL definition to Norman."
+  },
+  "estimand_FROZEN": "In a logistic regression of the per-pair coverage indicator (1 = true_mag in the conformal interval) on CONTINUOUS standardized s_hat, with terms [method, s_hat, method x s_hat] stacked over vanilla and SCC rows, the INTERACTION coefficient (SCC vs vanilla coverage-vs-synergy slope) is > 0 (one-sided).",
+  "coverage_generation": "Leave-one-pair-out (LOPO): each double held out once; conformal calibration on the others (60/40 predictor/calib split); interval = additive_pred +/- width; width constant (vanilla) or isotonic sigma(s_hat)*Q (SCC). alpha=0.10, nominal=0.90. IDENTICAL to Norman powered re-analysis.",
+  "inference": {
+    "primary": "synergy-covariate PERMUTATION of the interaction statistic (B=2000), one-sided p",
+    "secondary": "pair-level CLUSTER BOOTSTRAP 95% CI on the interaction coefficient (B=2000)",
+    "alpha": 0.05,
+    "one_sided": true
+  },
+  "composite_clearing_criterion_FROZEN": "CLEARS within-tier iff: (c1) interaction coeff > 0 at one-sided perm p<0.05 AND (c2) vanilla high-synergy (top-50%, median split) coverage CI excludes nominal 0.90 from below AND (c3) SCC high-synergy coverage CI contains 0.90. Median (top-50%) split is frozen — NOT a tercile — matching the Norman powered prereg 77bcaea9.",
+  "REPLICATION_SUCCESS_DEFINITION": "PRIMARY replication endpoint = c1 alone (interaction > 0 at perm p<0.05) reproduced on CaRPool-seq. This is the estimand that was well-powered and PASSED on Norman (p=0.0005). The full composite (c1&c2&c3) is reported but was NOT cleared on Norman either, so it is NOT the replication bar; it is reported for completeness.",
+  "tier_rule": {
+    "clears_80": "PRIMARY endpoint (c1) reproduces on CaRPool-seq with perm p<0.05 AND same sign -> SCC's synergy-conditioning effect is validated on TWO independent combinatorial datasets across modality/direction -> tier change to 80-83.",
+    "stays_high_70s": "c1 does not reproduce (interaction CI spans 0, or negative sign, or perm p>=0.05) -> honest negative: SCC is Norman-specific / does not transfer across modality -> stays 77-79, reported as a clean negative.",
+    "honest_prior": "~45/55. The cross-modality flip (knockdown vs overexpression) is a real risk to transfer; but the additive-decomposition dynamic the effect rides on is a generic property of double perturbations, so transfer is plausible."
+  },
+  "falsifiers": [
+    "F1: interaction coeff CI spans 0 on CaRPool-seq -> does not replicate -> negative.",
+    "F2: interaction coeff is NEGATIVE (SCC worsens synergy-dependence) -> anti-replication -> strong negative.",
+    "F3: fewer than ~40 testable doubles survive reconstruction -> UNDERPOWERED, report as inconclusive (not a pass or a clean fail); pre-registered power floor.",
+    "F4: s_hat does not correlate with measured synergy on CaRPool-seq (rho ~0) -> no synergy signal to condition on -> negative by construction."
+  ],
+  "leakage_guards": [
+    "s_hat from singles only (||e_A||+||e_B||), never the double's outcome",
+    "additive predictor uses only singles",
+    "highly-variable genes selected on CONTROL cells only",
+    "LOPO removes the test double from its own calibration",
+    "permutation shuffles only the synergy covariate",
+    "no hyperparameter or split re-choice after seeing coverage"
+  ],
+  "no_tuning_attestation": "This prereg is hashed and committed BEFORE the CaRPool-seq matrix is downloaded. The engine (src/trustlayer/scc.py) is frozen and already validated on Norman. Only the input synergy table changes. Any deviation from this spec will be reported explicitly as a deviation.",
+  "explicit_ceiling": "Even a clean c1 replication may be judged by reviewers to fall short of 80 if the cross-modality mismatch is deemed too large to count as 'the same phenomenon.' That judgement is reported honestly, not pre-empted.",
+  "citations": [
+    "Wessels & Satija, Nat Methods 2023 (GSE213957) [PMID 36550277]",
+    "Norman 2019 Science 365:786 (GSE133344)",
+    "arXiv:2603.02204 (Asiaee et al., 2 Mar 2026) [VERIFIED]",
+    "Angelopoulos-Bates 2021; Romano-Patterson-Candes 2019 (CQR)"
+  ]
+}

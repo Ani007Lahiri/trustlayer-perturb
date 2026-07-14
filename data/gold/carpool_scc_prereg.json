@@ -1,0 +1,32 @@
+{
+ "name": "SCC external replication on CaRPool-seq (GSE213957) \u2014 2nd combinatorial dataset",
+ "date": "2026-07-12",
+ "status": "PRE-REGISTERED BEFORE DOWNLOAD. Freezes the protocol so a NULL is a clean honest negative (like PGW), not a retrofit.",
+ "dataset": "CaRPool-seq, Wessels et al. Nat Methods 2023 (DOI 10.1038/s41592-022-01705-x), GEO GSE213957, THP-1 AML screen, Cas13 RNA-targeting, 26 regulators + 2 controls, ~158 paired perturbations.",
+ "why": "Norman SCC result is single-dataset (K562, CRISPRa). CaRPool-seq is a DIFFERENT modality (Cas13 knockdown) and cell type (THP-1). Replication here tests generalization; a null is an honest modality boundary.",
+ "protocol_ported_verbatim_from": "Norman SCC pipeline (data/gold/scc_powered_prereg.json sha 77bcaea9). Same synergy estimator, same leakage-safe prior (sum of single-effect magnitudes, singles-only), same LOPO.",
+ "synergy_definition": "synergy_mag = ||observed_double_pseudobulk - (eff(A)+eff(B))|| where eff = mean-log1p-CP10K deviation from control; IDENTICAL estimator to Norman.",
+ "leakage_safe_prior": "s_hat = sum of the two single-perturbation effect magnitudes; computed only from singles; never touches the double's measured outcome.",
+ "primary_endpoint": "reduction in the miscoverage-vs-synergy SLOPE, vanilla split-conformal vs SCC, via LOPO per-pair logistic interaction (cov ~ method + synergy + method:synergy); interaction coeff > 0 one-sided.",
+ "inference": {
+  "permutation": "shuffle synergy labels, recompute interaction, B>=2000, one-sided p",
+  "bootstrap": "pair-level cluster bootstrap 95% CI on interaction coeff",
+  "alpha": 0.05
+ },
+ "frozen_composite_bar_IDENTICAL_to_Norman": "CLEARS iff interaction coeff>0 at perm p<0.05 AND CI excludes 0 AND vanilla high-synergy(top-50%) coverage CI excludes 0.90 from below AND SCC high-synergy CI contains 0.90.",
+ "outcomes": {
+  "replicates": "headline = 'SCC reduces high-synergy miscoverage across 2 datasets / 2 modalities / 2 cell types (CRISPRa-K562 + Cas13-THP1), pre-registered, perm p per dataset'",
+  "null": "honest modality-boundary finding: 'SCC's synergy prior transfers within CRISPRa but attenuates under Cas13 knockdown' \u2014 still a real contribution, consistent with honesty-is-load-bearing"
+ },
+ "leakage_guards": [
+  "s_hat singles-only",
+  "LOPO removes test pair from its own calibration",
+  "permutation shuffles only synergy covariate"
+ ],
+ "citations": [
+  "Wessels et al. Nat Methods 2023 DOI 10.1038/s41592-022-01705-x",
+  "Norman 2019 Science DOI 10.1126/science.aax4438",
+  "GEO GSE213957"
+ ],
+ "prereg_sha256": "6112f2c8fbddef2bbf67ce9315a623ad6effefcab704481c53b0b078bbaccb07"
+}

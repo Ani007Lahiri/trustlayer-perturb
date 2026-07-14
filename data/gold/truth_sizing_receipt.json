@@ -1,0 +1,32 @@
+{
+  "purpose": "B2 data-sizing pre-check for item-1 lift (methodology 2026-07-09)",
+  "frozen_split_hash": "45ca2893cbe7e282",
+  "case_study_threshold": 15,
+  "truth_channel": {
+    "source": "NCBI ClinVar via E-utilities (live)",
+    "term": "\"type 1 diabetes mellitus\"[dis] AND (\"pathogenic\"[Clinical significance] OR \"likely pathogenic\"[Clinical significance])",
+    "n_records_reported": 91,
+    "n_records_fetched": 91,
+    "n_unique_genes": 9,
+    "caveat": "RESIDUAL-LEAKAGE (B1): ClinVar P/LP for T1D shares its generative process with the OT genetic_association score the gate's floor thresholds on. This truth is genetics-flavored; item-1 lift is scoped to 'BEYOND genetics conditional on the floor-pass stratum', not 'gate beats genetics'."
+  },
+  "counts": {
+    "n_test_fold_genes": 2311,
+    "n_truth_genes_total": 9,
+    "n_test_fold_truth_positives": 2,
+    "n_test_truth_gold_forced": 2,
+    "n_test_truth_random_landed": 0
+  },
+  "test_fold_truth_positives": [
+    "CTLA4",
+    "IL2RA"
+  ],
+  "test_truth_gold_forced": [
+    "CTLA4",
+    "IL2RA"
+  ],
+  "test_truth_random_landed": [],
+  "ga_available_in_receipts": {},
+  "B2_GATE_DECISION": "CASE_STUDY (n<15): item 1 is reported as a test-fold decision replay with explicit n honesty, NOT an all-genes lift.",
+  "is_case_study": true
+}

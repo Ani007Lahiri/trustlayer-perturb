@@ -1,0 +1,188 @@
+{
+  "all_trials_stable": true,
+  "baseline_scores": {
+    "eqtl_only": {
+      "accuracy": 0.5556,
+      "balanced_accuracy": 0.75,
+      "confusion_tp_tn_fp_fn": [
+        1,
+        4,
+        4,
+        0
+      ],
+      "mcc": 0.3162,
+      "n_correct": 5
+    },
+    "majority_class": {
+      "accuracy": 0.8889,
+      "balanced_accuracy": 0.5,
+      "confusion_tp_tn_fp_fn": [
+        0,
+        8,
+        0,
+        1
+      ],
+      "mcc": 0.0,
+      "n_correct": 8
+    },
+    "query_all": {
+      "accuracy": 0.5556,
+      "balanced_accuracy": 0.75,
+      "confusion_tp_tn_fp_fn": [
+        1,
+        4,
+        4,
+        0
+      ],
+      "mcc": 0.3162,
+      "n_correct": 5
+    }
+  },
+  "best_baseline_mcc": 0.3162,
+  "blinding_contract": "open-ended prompt from ONLY symbol + genetic_association + eqtl_n_sig; no ground-truth taxonomy given; never read frozen reasons/label or the ground-truth file before generating verdicts.",
+  "claude_beats_mcc_margin": true,
+  "claude_clears_mcc_floor": true,
+  "claude_mcc_gap_vs_best_baseline": 0.6838,
+  "claude_sample_responses": {
+    "APOBR": "APOBR (Apolipoprotein B Receptor) is primarily known for its role in lipid metabolism and is expressed in various tissues including liver and adipose tissue. The gene is mainly associated with metabolic processes related to cholesterol and lipoprotein metabolism rather than immune function. While it has a strong genetic association score with T1D and shows some CD4/Treg eQTLs, the primary biological function of APOBR relates to metabolic pathways rather than autoimmune mechanisms, making it more likely that any diabetes association reflects metabolic/Type 2 diabetes biology or a secondary association rather than a primary CD4+ T-cell autoimmune mechanism relevant to T1D pathogenesis.\n\nGO: NO",
+    "CDKAL1": "CDKAL1 (CDK5 regulatory subunit associated protein 1-like 1) is primarily known for its role in pancreatic beta-cell function and insulin secretion. It is one of the most robustly replicated genetic associations with Type 2 Diabetes (T2D), where it affects beta-cell biology and insulin processing through tRNA modification. While it shows a genetic association with T1D (score 0.676), this is most plausibly driven by shared beta-cell dysfunction mechanisms rather than CD4+ T-cell autoimmune biology - the single cis-eQTL in CD4/Treg cells is minimal evidence compared to its well-established metabolic/beta-cell role.\n\nGO: NO",
+    "FTO": "FTO (fat mass and obesity-associated protein) is primarily known for its role in metabolism and energy homeostasis, with strong associations to obesity and Type 2 diabetes through effects on appetite regulation and adipose tissue. The gene acts predominantly in the hypothalamus and metabolic tissues, not in immune cells. While FTO has a genetic association score of 0.745 for T1D, the complete absence of CD4/Treg cis-eQTLs and FTO's well-established metabolic (rather than autoimmune) biology strongly suggest this association is driven by metabolic mechanisms relevant to Type 2 diabetes or represents a non-causal association, rather than CD4+ T-cell autoimmune pathways relevant to Type 1 diabetes.\n\nGO: NO",
+    "HNF1A": "HNF1A (Hepatocyte Nuclear Factor 1 Alpha) is a transcription factor primarily expressed in the liver, pancreatic beta cells, and kidney, where it regulates glucose metabolism and insulin secretion. Mutations in HNF1A cause MODY3 (Maturity Onset Diabetes of the Young type 3), a monogenic form of diabetes characterized by beta-cell dysfunction, not autoimmunity. The genetic association with diabetes for HNF1A is almost certainly driven by its direct role in pancreatic beta-cell function and metabolic regulation rather than CD4+ T-cell autoimmune mechanisms. The absence of CD4/Treg cis-eQTLs further supports that this gene does not act through T-cell mediated autoimmunity.\n\nGO: NO",
+    "KCNQ1": "KCNQ1 encodes a voltage-gated potassium channel primarily expressed in cardiac tissue, pancreatic beta cells, and other tissues involved in insulin secretion and glucose homeostasis. It is well-established as a Type 2 diabetes susceptibility gene, where variants affect insulin secretion from beta cells, and is also associated with Long QT syndrome affecting cardiac repolarization. The genetic association with diabetes for KCNQ1 is almost certainly driven by pancreatic beta-cell function and metabolic mechanisms rather than CD4+ T-cell autoimmunity, which is further supported by the absence of significant CD4/Treg cis-eQTLs. This gene's biology does not align with autoimmune T1D pathogenesis.\n\nGO: NO",
+    "PGM1": "PGM1 (Phosphoglucomutase 1) is a metabolic enzyme that catalyzes the interconversion of glucose-1-phosphate and glucose-6-phosphate, playing a critical role in glycogen metabolism and glycolysis across multiple tissues. Mutations in PGM1 cause a congenital disorder of glycosylation (PGM1-CDG) characterized by cleft palate, bifid uvula, hepatopathy, and hypoglycemia - not autoimmune disease. The absence of CD4/Treg cis-eQTLs and the gene's fundamental role in glucose/glycogen metabolism suggests its T1D genetic association is more likely driven by metabolic effects on beta-cell function or general glucose homeostasis rather than CD4+ T-cell autoimmune mechanisms. This appears to be a metabolic gene whose diabetes signal is not plausibly related to T1D autoimmunity.\n\nGO: NO",
+    "SIRPG": "SIRPG (Signal Regulatory Protein Gamma) is an immunoglobulin superfamily member primarily expressed on T cells and NK cells, where it functions in immune cell activation and regulation. The protein is known to interact with CD47 and plays a role in T-cell receptor signaling and immune responses. Given its established role in T-cell biology, the strong genetic association with T1D (0.842), and the presence of significant CD4/Treg cis-eQTLs, the genetic signal is most plausibly driven by autoimmune T-cell mechanisms rather than beta-cell or metabolic pathways. This aligns well with T1D's autoimmune pathogenesis involving CD4+ T cells.\n\nGO: YES",
+    "SUOX": "SUOX (Sulfite Oxidase) is a mitochondrial enzyme primarily expressed in the liver and kidney that catalyzes the final step in the metabolism of sulfur-containing amino acids. Mutations in SUOX cause isolated sulfite oxidase deficiency, a severe neurometabolic disorder characterized by neurological deterioration, not autoimmune disease. While the gene shows a strong genetic association with T1D and has cis-eQTLs in CD4+ T cells, SUOX's established biology is entirely metabolic/enzymatic rather than immunological, making it implausible as a primary driver of CD4+ T-cell autoimmunity. The genetic signal is more likely due to linkage disequilibrium with nearby immune genes or reflects a secondary metabolic consequence rather than a causal autoimmune mechanism.\n\nGO: NO",
+    "TCF7L2": "TCF7L2 is one of the most strongly and consistently associated genetic loci for Type 2 diabetes (T2D), where it is known to act primarily through pancreatic beta-cell function and insulin secretion. While it does have a role in Wnt signaling that could theoretically affect T-cell biology, and the cis-eQTLs in CD4/Treg cells suggest some expression regulation in these cells, the overwhelming evidence points to TCF7L2's diabetes association being driven by metabolic/beta-cell mechanisms rather than autoimmune mechanisms. The high genetic association score for T1D is likely capturing shared metabolic dysfunction or beta-cell stress pathways common to both diabetes types, rather than T1D-specific autoimmune etiology. Given TCF7L2's established role in T2D through non-immune mechanisms, it is not a credible target for T1D acting specifically through CD4+ T-cell autoimmune biology.\n\nGO: NO"
+  },
+  "claude_score": {
+    "accuracy": 1.0,
+    "accuracy_wilson95": [
+      0.7008,
+      1.0
+    ],
+    "balanced_accuracy": 1.0,
+    "confusion_tp_tn_fp_fn": [
+      1,
+      8,
+      0,
+      0
+    ],
+    "mcc": 1.0,
+    "n_correct": 9
+  },
+  "date_utc": "2026-07-11T04:05:29Z",
+  "execution_receipt_sha256": "ca2d364eddb951133ad10b56899e5212578e7caf4f5d0dd0d8bf4bcb1deb15d2",
+  "frozen_reasoning_set_sha256_referenced": "af7310ba1f9b368be821c40c15499d5271ed54a08e19f00f0f412919ed8d31fd",
+  "ground_truth_sha256_referenced": "8f865a272fb2fdeb772f91a63cb953d12b24806628d40334bea2d35eb6a67100",
+  "honest_framing": "n=9 PILOT with n_GO=1 (extreme class imbalance). Single-model, single-session pilot signal reported with a Wilson 95% CI and MCC as the primary metric, NOT a validated claim about Claude's general reasoning ability. A TIE/LOSS is a pre-registered honest negative. FRAGILITY WARNING (per independent critique): because only 1 of 9 genes is a true positive, a single misclassified positive collapses MCC toward 0 \u2014 so ANY outcome here (including a WIN) is statistically fragile and must be reported as a pilot, not a headline. The ground truth uses a curated-immune-GO gate (MyGene.info) so non-T-cell LD-passenger genes (SUOX/APOBR) are correctly excluded; this fixed the v2 construct-validity error but the small-n fragility remains inherent and is not claimed away.",
+  "model": "claude-sonnet-4-5-20250929",
+  "n_genes": 9,
+  "n_ground_truth_go": 1,
+  "n_trials_per_gene": 3,
+  "outcome": "WIN",
+  "per_gene": {
+    "APOBR": {
+      "claude_correct": true,
+      "claude_go": false,
+      "claude_stable": true,
+      "claude_trial_votes": [
+        false,
+        false,
+        false
+      ],
+      "ground_truth_go": false
+    },
+    "CDKAL1": {
+      "claude_correct": true,
+      "claude_go": false,
+      "claude_stable": true,
+      "claude_trial_votes": [
+        false,
+        false,
+        false
+      ],
+      "ground_truth_go": false
+    },
+    "FTO": {
+      "claude_correct": true,
+      "claude_go": false,
+      "claude_stable": true,
+      "claude_trial_votes": [
+        false,
+        false,
+        false
+      ],
+      "ground_truth_go": false
+    },
+    "HNF1A": {
+      "claude_correct": true,
+      "claude_go": false,
+      "claude_stable": true,
+      "claude_trial_votes": [
+        false,
+        false,
+        false
+      ],
+      "ground_truth_go": false
+    },
+    "KCNQ1": {
+      "claude_correct": true,
+      "claude_go": false,
+      "claude_stable": true,
+      "claude_trial_votes": [
+        false,
+        false,
+        false
+      ],
+      "ground_truth_go": false
+    },
+    "PGM1": {
+      "claude_correct": true,
+      "claude_go": false,
+      "claude_stable": true,
+      "claude_trial_votes": [
+        false,
+        false,
+        false
+      ],
+      "ground_truth_go": false
+    },
+    "SIRPG": {
+      "claude_correct": true,
+      "claude_go": true,
+      "claude_stable": true,
+      "claude_trial_votes": [
+        true,
+        true,
+        true
+      ],
+      "ground_truth_go": true
+    },
+    "SUOX": {
+      "claude_correct": true,
+      "claude_go": false,
+      "claude_stable": true,
+      "claude_trial_votes": [
+        false,
+        false,
+        false
+      ],
+      "ground_truth_go": false
+    },
+    "TCF7L2": {
+      "claude_correct": true,
+      "claude_go": false,
+      "claude_stable": true,
+      "claude_trial_votes": [
+        false,
+        false,
+        false
+      ],
+      "ground_truth_go": false
+    }
+  },
+  "primary_metric": "MCC (Matthews correlation coefficient)",
+  "purpose": "Day-0 Check A EXECUTION v3 \u2014 Claude open-ended adjudication vs baselines, MCC-PRIMARY win condition, repeated trials, scored against non-LLM structured ground truth (with immune-specificity gate).",
+  "strongest_baseline_n_correct": 8,
+  "win_condition": "Claude MCC - best_baseline_MCC >= 0.15 AND Claude MCC >= 0.5"
+}

@@ -1,0 +1,575 @@
+{
+  "purpose": "Day-7 RE-CONFIRMATION of the mouse-KO external validation using the REAL committed gate (commit_gate.evaluate), NOT the Check-A adjudication surrogate. Tests whether the mouse-KO win survives when the ACTUAL default-deny binary gate output is scored.",
+  "honesty_contract": "Pre-registered rule = commit_gate.evaluate default-deny (GA>=0.20 AND celltype_matched_eqtl AND trust>=0.50 AND direction-not-inconsistent AND leakage-clean). Frozen labels hash-verified BEFORE scoring. Negative result reported plainly; no tuning.",
+  "frozen_inputs": {
+    "mouse_labels_artifact": "d607ded6-020b-48d5-89e9-9386cad9b310 / day7_mouse_phenotype_labels_frozen.json",
+    "labels_sha256_verified": "78513821c864080c48e55917ff9939bebc57fe1efe6f2e171788706f516f748d",
+    "labels_sha256_recomputed": "78513821c864080c48e55917ff9939bebc57fe1efe6f2e171788706f516f748d",
+    "labels_hash_match": true,
+    "prereg_rule_sha256": "cac9a66c6f0c908df9a9780941a59adca439bc1f94692bd8cfef73f70285d175",
+    "scoring_table": "day6_external_frozen_scoring_table.json (ot_t1d=genetic_association, eqtl=eqtl_nsig)",
+    "note_eqtl_scores": "handoff/eqtl_scores.json not present on disk; celltype_matched_eqtl derived from the frozen day6 table's eqtl_nsig column (eqtl_nsig>0), cross-consistent with eqtl_gate_receipt (CD226=4)."
+  },
+  "key_finding": {
+    "headline": "The mouse-KO 'win' DOES NOT SURVIVE scoring with the real committed gate.",
+    "root_cause": "The prior mouse-KO receipt scored the column 'gate_go', which is IDENTICAL to 'claude_go' (Check-A free-text adjudication, from day0_checkA_enriched_execution_receipt.json). It is NOT commit_gate.evaluate output: the two disagree on 17/44 genes. Scoring the adjudication surrogate reproduces the prior AUROC (0.6867 ~= reported 0.687); scoring the ACTUAL gate gives MCC=-0.15.",
+    "surrogate_vs_real_disagreement_n": 17,
+    "real_gate_go_count": "11/44"
+  },
+  "results": {
+    "primary": {
+      "n": 39,
+      "n_pos": 28,
+      "real_gate_mcc": -0.1523,
+      "real_gate_ba": 0.4351,
+      "real_gate_auroc": 0.4351,
+      "confusion_TP_FP_FN_TN": [
+        4,
+        3,
+        24,
+        8
+      ],
+      "baseline_ot_thresh_mcc": -0.2198,
+      "baseline_eqtl_thresh_mcc": -0.0403,
+      "baseline_random_mcc": 0.0,
+      "best_baseline_mcc": 0.0,
+      "best_baseline": "random(0)",
+      "advantage": -0.1523,
+      "advantage_ci95": [
+        -0.4874,
+        0.0528
+      ],
+      "permutation_p_advantage": 0.6838,
+      "permutation_p_realmcc": 0.918
+    },
+    "sensitivity_no_metabolic": {
+      "n": 31,
+      "n_pos": 24,
+      "real_gate_mcc": -0.3213,
+      "ot": -0.3685,
+      "eqtl": -0.1225
+    },
+    "prior_surrogate_adjudication": {
+      "mcc": 0.3503,
+      "auroc": 0.6867,
+      "note": "stored gate_go == claude_go adjudication == what prior mouse-KO receipt scored (AUROC 0.687)"
+    }
+  },
+  "disagreements_real_vs_adjudication": [
+    {
+      "symbol": "APOBR",
+      "real": "GO",
+      "adjudication": "WITHHELD",
+      "ga": 0.472,
+      "eqtl_nsig": 3.0
+    },
+    {
+      "symbol": "CD28",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.0,
+      "eqtl_nsig": 1.0
+    },
+    {
+      "symbol": "CDKAL1",
+      "real": "GO",
+      "adjudication": "WITHHELD",
+      "ga": 0.415,
+      "eqtl_nsig": 1.0
+    },
+    {
+      "symbol": "GSDMB",
+      "real": "GO",
+      "adjudication": "WITHHELD",
+      "ga": 0.335,
+      "eqtl_nsig": 8.0
+    },
+    {
+      "symbol": "ICOS",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.204,
+      "eqtl_nsig": 0.0
+    },
+    {
+      "symbol": "IL10",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.533,
+      "eqtl_nsig": 0.0
+    },
+    {
+      "symbol": "IL2",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.261,
+      "eqtl_nsig": 0.0
+    },
+    {
+      "symbol": "IRS1",
+      "real": "GO",
+      "adjudication": "WITHHELD",
+      "ga": 0.25,
+      "eqtl_nsig": 8.0
+    },
+    {
+      "symbol": "ITK",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.0,
+      "eqtl_nsig": 1.0
+    },
+    {
+      "symbol": "LCK",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.0,
+      "eqtl_nsig": 0.0
+    },
+    {
+      "symbol": "PRKCQ",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.0,
+      "eqtl_nsig": 3.0
+    },
+    {
+      "symbol": "PTPN2",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.479,
+      "eqtl_nsig": 0.0
+    },
+    {
+      "symbol": "STAT4",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.28,
+      "eqtl_nsig": 0.0
+    },
+    {
+      "symbol": "SUOX",
+      "real": "GO",
+      "adjudication": "WITHHELD",
+      "ga": 0.516,
+      "eqtl_nsig": 6.0
+    },
+    {
+      "symbol": "TAGAP",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.282,
+      "eqtl_nsig": 0.0
+    },
+    {
+      "symbol": "TCF7L2",
+      "real": "GO",
+      "adjudication": "WITHHELD",
+      "ga": 0.527,
+      "eqtl_nsig": 2.0
+    },
+    {
+      "symbol": "TNFAIP3",
+      "real": "WITHHELD",
+      "adjudication": "GO",
+      "ga": 0.0,
+      "eqtl_nsig": 3.0
+    }
+  ],
+  "per_gene": [
+    {
+      "symbol": "ABCC8",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "CCR7",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "CD28",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 1.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "CD5",
+      "ga_ot_t1d": 0.09,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "CD69",
+      "ga_ot_t1d": 0.388,
+      "eqtl_nsig": 1.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "GO",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "CDKAL1",
+      "ga_ot_t1d": 0.415,
+      "eqtl_nsig": 1.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "GO",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "CLEC16A",
+      "ga_ot_t1d": 0.36,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "FTO",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "GATA3",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "GIPR",
+      "ga_ot_t1d": 0.38,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "HNF1A",
+      "ga_ot_t1d": 0.693,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "HNF4A",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "ICOS",
+      "ga_ot_t1d": 0.204,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "IKZF1",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "IKZF3",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "IL10",
+      "ga_ot_t1d": 0.533,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "IL2",
+      "ga_ot_t1d": 0.261,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "IRS1",
+      "ga_ot_t1d": 0.25,
+      "eqtl_nsig": 8.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "GO",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "ITK",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 1.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "JAZF1",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 8.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "KCNQ1",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "LCK",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "NOTCH2",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 5.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "PDX1",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "PGM1",
+      "ga_ot_t1d": 0.41,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "PPARG",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "PRKCQ",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 3.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "PTPN2",
+      "ga_ot_t1d": 0.479,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "RASGRP1",
+      "ga_ot_t1d": 0.32,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "RUNX1",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "SIRPG",
+      "ga_ot_t1d": 0.532,
+      "eqtl_nsig": 2.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "GO",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "SOCS1",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "STAT4",
+      "ga_ot_t1d": 0.28,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "SUOX",
+      "ga_ot_t1d": 0.516,
+      "eqtl_nsig": 6.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "GO",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "TAGAP",
+      "ga_ot_t1d": 0.282,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "TCF7L2",
+      "ga_ot_t1d": 0.527,
+      "eqtl_nsig": 2.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "GO",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "TNFAIP3",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 3.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "UBASH3A",
+      "ga_ot_t1d": 0.484,
+      "eqtl_nsig": 6.0,
+      "celltype_matched_eqtl": true,
+      "real_commit_gate": "GO",
+      "adjudication_gate_go": 1,
+      "y_mouse_immune": 0,
+      "has_mouse_record": 1
+    },
+    {
+      "symbol": "ZAP70",
+      "ga_ot_t1d": 0.0,
+      "eqtl_nsig": 0.0,
+      "celltype_matched_eqtl": false,
+      "real_commit_gate": "WITHHELD",
+      "adjudication_gate_go": 0,
+      "y_mouse_immune": 1,
+      "has_mouse_record": 1
+    }
+  ],
+  "decision": "DOES-NOT-SURVIVE",
+  "honest_verdict": "DOES NOT SURVIVE. The single surviving external win (mouse-KO, AUROC 0.687) was scored on the Check-A free-text adjudication surrogate (claude_go), not the committed commit_gate.evaluate output. When the REAL default-deny binary gate (GA>=0.20 AND celltype_matched_eqtl>0, trust non-binding) is scored against the hash-frozen mouse-immune axis (n=39, 28 pos, record-only), it gives MCC=-0.15 / balanced-acc 0.44 / AUROC 0.435 -- WORSE than the best function-blind baseline (random MCC~0; eQTL-threshold -0.04; OT-threshold -0.22). Advantage -0.15, permutation p=0.68, bootstrap 95% CI [-0.49, +0.05] (spans/below 0). At universe scale the literal gate GO's metabolic T1D/T2D genes that clear GA>=0.20 with eQTLs but have no mouse immune phenotype (SUOX, TCF7L2, CDKAL1, IRS1, GSDMB) and WITHHOLDS canonical immune genes (IL2, ICOS, PRKCQ, PTPN2, TNFAIP3) lacking a GA/eQTL floor hit. This is the SAME surrogate-vs-real-gate substitution that retracted the drug-target win. Reported plainly per the honesty contract: the mouse-KO win is an artifact of scoring the adjudicator, not the committed gate.",
+  "date_utc": "2026-07-11T16:50:33.465578+00:00",
+  "receipt_sha256": "1bfc5400dba6468e3de01006496fabe8ae4416c28cceb30b063d4519a3fd7d2d"
+}

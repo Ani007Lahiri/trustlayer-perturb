@@ -1,0 +1,220 @@
+{
+  "R1_LODO_donor_level_ASSUMPTION_FAITHFUL": {
+    "bound": "Hoeffding + Hoeffding-Bentkus (fractional [0,1] per-fold loss)",
+    "by_level": {
+      "0.8": {
+        "empirical_mean_miscoverage": 0.2068,
+        "fold_miscoverage": [
+          0.202,
+          0.1946,
+          0.2084,
+          0.2222
+        ],
+        "hoeffding": {
+          "alpha": 0.2,
+          "bound": "hoeffding",
+          "certifies_risk_le_alpha": false,
+          "delta": 0.1,
+          "empirical_risk": 0.2068,
+          "n_units": 4,
+          "ucb": 0.7433,
+          "vacuous": true
+        },
+        "hoeffding_bentkus": {
+          "alpha": 0.2,
+          "bound": "hb",
+          "certifies_risk_le_alpha": false,
+          "delta": 0.1,
+          "empirical_risk": 0.2068,
+          "n_units": 4,
+          "ucb": 0.723,
+          "vacuous": true
+        },
+        "target_miscoverage_alpha": 0.2
+      },
+      "0.9": {
+        "empirical_mean_miscoverage": 0.1045,
+        "fold_miscoverage": [
+          0.1088,
+          0.0963,
+          0.1027,
+          0.1102
+        ],
+        "hoeffding": {
+          "alpha": 0.1,
+          "bound": "hoeffding",
+          "certifies_risk_le_alpha": false,
+          "delta": 0.1,
+          "empirical_risk": 0.1045,
+          "n_units": 4,
+          "ucb": 0.641,
+          "vacuous": true
+        },
+        "hoeffding_bentkus": {
+          "alpha": 0.1,
+          "bound": "hb",
+          "certifies_risk_le_alpha": false,
+          "delta": 0.1,
+          "empirical_risk": 0.1045,
+          "n_units": 4,
+          "ucb": 0.6173,
+          "vacuous": true
+        },
+        "target_miscoverage_alpha": 0.1
+      },
+      "0.95": {
+        "empirical_mean_miscoverage": 0.0514,
+        "fold_miscoverage": [
+          0.058,
+          0.0484,
+          0.0449,
+          0.0542
+        ],
+        "hoeffding": {
+          "alpha": 0.05,
+          "bound": "hoeffding",
+          "certifies_risk_le_alpha": false,
+          "delta": 0.1,
+          "empirical_risk": 0.0514,
+          "n_units": 4,
+          "ucb": 0.5879,
+          "vacuous": true
+        },
+        "hoeffding_bentkus": {
+          "alpha": 0.05,
+          "bound": "hb",
+          "certifies_risk_le_alpha": false,
+          "delta": 0.1,
+          "empirical_risk": 0.0514,
+          "n_units": 4,
+          "ucb": 0.545,
+          "vacuous": true
+        },
+        "target_miscoverage_alpha": 0.05
+      }
+    },
+    "exchangeable_unit": "held-out donor (n=4)",
+    "result": "VACUOUS. At n=4 donors the distribution-free UCB on miscoverage is 0.74/0.64/0.59 (Hoeffding) vs targets 0.20/0.10/0.05 \u2014 no certificate. This is the HONEST core: the assumption-faithful granularity for the flagged donor shift has too few exchangeable units to certify."
+  },
+  "R2_LODO_pooled_row_level_ASSUMPTION_VIOLATED": {
+    "bound": "Clopper-Pearson (binary miss)",
+    "by_level": {
+      "0.8": {
+        "WARNING": "rests on row exchangeability across the donor boundary = the exchangeability the project flags as VIOLATED; false-precision contrast, NOT a claimed guarantee.",
+        "certifies": false,
+        "cp_ucb_miscoverage": 0.209,
+        "empirical_miscoverage": 0.2068,
+        "n_rows": 58558,
+        "target_miscoverage_alpha": 0.2
+      },
+      "0.9": {
+        "WARNING": "rests on row exchangeability across the donor boundary = the exchangeability the project flags as VIOLATED; false-precision contrast, NOT a claimed guarantee.",
+        "certifies": false,
+        "cp_ucb_miscoverage": 0.1061,
+        "empirical_miscoverage": 0.1045,
+        "n_rows": 58558,
+        "target_miscoverage_alpha": 0.1
+      },
+      "0.95": {
+        "WARNING": "rests on row exchangeability across the donor boundary = the exchangeability the project flags as VIOLATED; false-precision contrast, NOT a claimed guarantee.",
+        "certifies": false,
+        "cp_ucb_miscoverage": 0.0526,
+        "empirical_miscoverage": 0.0514,
+        "n_rows": 58558,
+        "target_miscoverage_alpha": 0.05
+      }
+    },
+    "exchangeable_unit": "test row (n=58,558) \u2014 OPTIMISTIC",
+    "result": "Even at n=58,558 the CP UCB on miscoverage (90% level) is 0.106 > 0.10 \u2014 does NOT certify, and REST ON ROW EXCHANGEABILITY ACROSS THE DONOR BOUNDARY, the very assumption the project flags as violated. Reported as false-precision contrast, NOT a claimed guarantee."
+  },
+  "R3_Norman_per_item_recalibrated_EXCHANGEABLE_BY_CONSTRUCTION": {
+    "all_levels": {
+      "80": {
+        "alpha": 0.2,
+        "certified": true,
+        "lambda_hat": 0.4297,
+        "realized_test_coverage": 0.8868,
+        "ucb": 0.1937
+      },
+      "90": {
+        "alpha": 0.1,
+        "certified": true,
+        "lambda_hat": 0.5272,
+        "realized_test_coverage": 0.9434,
+        "ucb": 0.0991
+      },
+      "95": {
+        "alpha": 0.05,
+        "certified": true,
+        "lambda_hat": 0.6372,
+        "realized_test_coverage": 0.9434,
+        "ucb": 0.0433
+      }
+    },
+    "bound": "Clopper-Pearson (binary miss)",
+    "exchangeable_unit": "Norman K562 single-gene perturbation (n=105; 50/50 split seed 20260711)",
+    "primary_alpha_0.10": {
+      "alpha": 0.1,
+      "certified": true,
+      "delta": 0.1,
+      "empirical_miscov_calib_at_lambda_hat": 0.0385,
+      "interpretation": "exchangeable by random split -> RCPS certificate VALID & non-vacuous.",
+      "lambda_hat_certified_halfwidth": 0.5272,
+      "n_calib": 52,
+      "n_test": 53,
+      "naive_recalib_90pct_coverage_for_ref": 0.8868,
+      "realized_coverage_heldout_test": 0.9434,
+      "realized_miscoverage_heldout_test": 0.0566,
+      "ucb_at_lambda_hat": 0.0991
+    },
+    "result": "VALID & NON-VACUOUS. RCPS certifies half-width lambda_hat=0.527 at 90% (UCB 0.099<=0.10); realized held-out-test coverage 0.943. Certificates at 80/90/95 all hold with realized test coverage 0.887/0.943/0.943."
+  },
+  "_receipt_sha256": "49d38e197bde9221c6076728bfe9b3152c722feef4b942bf7f4ab5d88a4d72a9",
+  "alpha": 0.1,
+  "check": "TRACK A2 \u2014 Distribution-free RISK CONTROL (RCPS) on the committed conformal machinery + conformal-transfer restatement",
+  "comparison_naive_vs_riskcontrol": {
+    "finding": "In the COMMITTED LODO donor regime (R1, the assumption-faithful granularity), RCPS is VACUOUS at n=4 \u2014 it does NOT beat the naive fold-spread summary there. RCPS's genuine contribution is (a) making the exchangeability price EXPLICIT and QUANTIFIED (vacuous at n=4 donors; certifiable only at n=105 exchangeable items), and (b) a deployable certificate in the per-assay recalibrated regime (R3). It is a real but SCOPED methodological improvement, not a strict upgrade of the LODO headline.",
+    "naive_LODO_empirical_statement": "committed conformal reports fold_mean +/- fold_std (90% -> 0.8955 +/- 0.0055) and 'fold_interval contains nominal' \u2014 an empirical observation with a donor-spread uncertainty band.",
+    "riskcontrol_statement": "RCPS attempts a finite-sample, distribution-free HIGH-PROBABILITY certificate on the miscoverage risk."
+  },
+  "conformal_transfer_result_restated": {
+    "claim": "Frozen T1D conformal quantiles fail cross-assay on Norman K562; RECALIBRATING the identical split-conformal method on Norman's own calibration split restores coverage.",
+    "frozen_transfer_committed_receipt": {
+      "0.80": 0.0476,
+      "0.90": 0.0762,
+      "0.95": 0.1714
+    },
+    "frozen_transfer_coverage_reproduced_from_cache": {
+      "0.80": 0.0476,
+      "0.90": 0.0762,
+      "0.95": 0.1714
+    },
+    "message_for_writeup": "The conformal GUARANTEE generalizes across assays under exchangeability \u2014 you must recalibrate per assay, and when you do (RCPS on the recalibrated split) you get a deployable finite-sample certificate. The specific frozen quantiles are assay-bound (expected under distribution shift); the method is not.",
+    "recalibrated_coverage_500split_mean": {
+      "0.80": 0.755,
+      "0.90": 0.864,
+      "0.95": 0.927
+    },
+    "recalibrated_coverage_primary_split": {
+      "0.80": 0.8491,
+      "0.90": 0.8868,
+      "0.95": 0.9434
+    },
+    "reproduction_check": "frozen Norman residual mean/sd 0.6044/0.2951 and frozen coverage 0.0476/0.0762/0.1714 reproduced EXACTLY from cache \u2014 the same numbers RCPS R3 is built on.",
+    "source_receipts": [
+      "day0_external_calibration_transfer_receipt.json",
+      "day0_recalibration_transfer_receipt.json (prereg sha 565d7cf5...)"
+    ]
+  },
+  "delta": 0.1,
+  "figure": "figures/rcps_risk_control.png",
+  "generated_utc": "2026-07-11T18:09:16.428109+00:00",
+  "guarantee_statement": "RCPS certificate: with probability >= 1-delta over the calibration draw, the deployed interval pred +/- lambda_hat has true miscoverage R(lambda_hat) <= alpha ON A POPULATION EXCHANGEABLE WITH THE CALIBRATION UNITS. We set alpha=delta=0.10 (certify >=90% coverage at 90% confidence). The guarantee is EXACTLY AS STRONG AS its exchangeability precondition: it controls calibration-SAMPLING error, not distribution shift. Under donor-blocked LODO the exchangeable unit is the DONOR (n=4); at that assumption-faithful granularity the distribution-free UCB is VACUOUS. Under per-assay recalibration (Norman K562, random calib/test split of the same 105 perturbations) exchangeability holds BY CONSTRUCTION and the certificate is valid and non-vacuous.",
+  "honest_verdict": "MARGINAL / SCOPED-POSITIVE. RCPS is a genuine distribution-free risk-control layer and delivers a VALID, non-vacuous finite-sample certificate in the per-assay recalibrated regime (Norman K562, n=105 exchangeable items: lambda_hat=0.527 certifies <=10% miscoverage at 90% confidence, realized held-out coverage 0.943). BUT in the committed donor-blocked LODO setting, applied at the assumption-FAITHFUL granularity (held-out donor, n=4), the distribution-free UCB is VACUOUS (0.74/0.64/0.59 vs targets 0.20/0.10/0.05) \u2014 RCPS cannot certify what the naive fold-spread statement already summarizes, because there are only 4 exchangeable donor units. The row-level version that looks tight (n=58,558) rests on the exact exchangeability the project flags as VIOLATED, so it is false precision, not a guarantee. Verdict: the naive empirical fold-spread statement was ADEQUATE for the LODO headline; RCPS's real value is elsewhere \u2014 it quantifies the exchangeability price honestly and gives a deployable per-assay certificate. A real methods extension, honestly scoped, NOT a strict improvement of the committed LODO coverage claim.",
+  "honesty_contract": "Design + method choice + success criterion pre-registered and hash-frozen (prereg 16aca796...) BEFORE scoring. Scores the COMMITTED pipeline (frozen conformal quantiles + frozen Marson base predictor); no surrogate. R1/R2 from committed conformal_lodo_receipt.json; R3 from cached norman_group_stats.npz + frozen_marson_calibration.joblib. No 16GB h5mu re-stream.",
+  "is_genuine_improvement": "marginal",
+  "prereg_sha256": "16aca796223a7821b6f7929c65d05159df8c205f93baaa4a2b136ea2dec615c7",
+  "reproducibility": "python -c reproduces R1/R2 from data/gold/conformal_lodo_receipt.json and R3 from data/interim/norman_group_stats.npz + frozen_marson_calibration.joblib. Module: src/trustlayer/risk_control.py.",
+  "risk_control_method": "RCPS (Risk-Controlling Prediction Sets; Bates, Angelopoulos, Lei, Malik, Jordan, JACM 2021)",
+  "why_RCPS_over_LTT": "Miscoverage R(lambda)=P(|y-pred|>lambda) is a single monotone-decreasing risk over NESTED prediction sets. RCPS is the assumption-matched instrument (scan lambda, stop at smallest lambda whose finite-sample UCB on the risk <= alpha). LTT would certify the same guarantee here via FWER multiple-testing over a lambda family \u2014 strictly not tighter for one monotone parameter."
+}

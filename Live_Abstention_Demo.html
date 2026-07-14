@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Watch the gate decide</title><style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--go:#1a7f4b;--wh:#b5761f;--ab:#4a4a4a;--acc:#2563eb;--ink:#15243b;--mut:#5b6b82;--bg:#f4f6fb;--card:#fff;--line:#e2e8f2;--red:#c0392b}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;background:var(--bg);color:var(--ink);padding:20px}
+.wrap{max-width:900px;margin:0 auto}
+h1{font-size:23px;letter-spacing:-.02em;margin-bottom:3px}
+.sub{color:var(--mut);font-size:15px;margin-bottom:16px}
+.sub b{color:var(--ink)}
+.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.pbtn{flex:1;min-width:150px;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:13px 15px;cursor:pointer;text-align:left;transition:.15s}
+.pbtn:hover{border-color:var(--acc);transform:translateY(-1px)}
+.pbtn.on{border-color:var(--acc);box-shadow:0 3px 14px rgba(37,99,235,.18)}
+.pbtn .k{font-size:11px;font-weight:800;color:var(--mut);letter-spacing:.08em}
+.pbtn .g{font-size:17px;font-weight:800;margin-top:2px}
+.pbtn .h{font-size:12px;color:var(--mut);margin-top:1px}
+.stage{display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:26px;min-height:230px}
+@media(max-width:640px){.stage{grid-template-columns:1fr}}
+.tile{width:180px;height:180px;border-radius:18px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;transition:all .45s cubic-bezier(.2,.8,.2,1);position:relative;overflow:hidden}
+.tile .verdict{font-size:26px;font-weight:800;letter-spacing:-.01em}
+.tile .sc{font-size:14px;opacity:.92;margin-top:4px}
+.tile.COMMIT{background:var(--go)}.tile.VERIFY{background:var(--wh)}
+.tile.ABSTAIN{background:var(--ab);background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.09) 0 10px,transparent 10px 20px)}
+.readout .gene{font-size:24px;font-weight:800}
+.readout .reason{font-size:15.5px;line-height:1.5;color:var(--ink);margin-top:8px;background:#f7f9fc;border-radius:9px;padding:12px 14px;border-left:3px solid var(--acc)}
+.money{margin-top:14px;background:var(--card);border:1px dashed var(--red);border-radius:12px;padding:14px 16px;display:none}
+.money.show{display:block;animation:fade .4s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.money .lab{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--red);margin-bottom:8px}
+.toggle{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;width:fit-content}
+.toggle button{border:0;background:#fff;padding:9px 16px;font-size:13.5px;font-weight:700;cursor:pointer;color:var(--mut)}
+.toggle button.on{background:var(--acc);color:#fff}
+.mrow{display:flex;gap:16px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.mstate{font-size:15px}.mstate b{font-size:17px}
+.hint{font-size:12.5px;color:var(--mut);margin-top:12px;text-align:center}
+kbd{background:#eef2f7;border:1px solid #d3dced;border-radius:5px;padding:1px 6px;font-size:12px;font-weight:700}
+</style></head><body><div class="wrap">
+<h1>Watch the gate decide</h1>
+<div class="sub">Three real genes. The gate <b>commits</b>, asks you to <b>verify</b>, or <b>refuses</b> — and on the last one, flip the calibration toggle to see it catch a confident mistake. Keys <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd>.</div>
+<div class="bar" id="bar"></div>
+<div class="stage">
+  <div><div class="tile COMMIT" id="tile"><div class="verdict" id="tv">COMMIT</div><div class="sc" id="ts"></div></div></div>
+  <div class="readout"><div class="gene" id="rg"></div><div class="reason" id="rr"></div>
+    <div class="money" id="money"><div class="lab">THE MONEY SHOT — SAME INPUT, SAME MODEL WEIGHTS, ONLY CALIBRATION CHANGES</div>
+      <div class="toggle"><button id="tf" class="on">Frozen calibration</button><button id="tr">Recalibrated</button></div>
+      <div class="mrow"><div class="mstate" id="ms"></div></div>
+    </div>
+  </div>
+</div>
+<div class="hint" id="hint">The gate abstains as often as it commits. That restraint is the product.</div>
+</div>
+<script>
+var D={"cases":[{"id":"CD226","verdict":"COMMIT","score":0.533,"frozen_verdict":"COMMIT","recal_verdict":"COMMIT","reason":"in coverage \u00b7 T1D genetic association 0.53 \u2265 0.20 floor \u00b7 cell-type eQTL in 4/11 datasets","de_max":2},{"id":"PRKCQ","verdict":"VERIFY","score":0.16,"frozen_verdict":"VERIFY","recal_verdict":"VERIFY","reason":"borderline \u00b7 cell-type eQTL present (3/11) BUT genetic association 0.16 < 0.20 floor \u2014 one axis supports, one fails: get a second look","de_max":null,"anchor_note":"outside atlas-overlap; committed genetic-floor call"},{"id":"RASGRP1","verdict":"ABSTAIN","score":0.32,"frozen_verdict":"COMMIT","recal_verdict":"ABSTAIN","reason":"outside coverage \u00b7 0 cis-eQTL across 120 T-cell datasets \u2014 the gate refuses despite a LARGE predicted effect (993 downstream genes)","de_max":993}],"frozen_auroc":0.4652,"recal_auroc":0.709};var cur=0,mode='frozen';
+var bar=document.getElementById('bar');
+D.cases.forEach(function(c,i){var b=document.createElement('button');b.className='pbtn'+(i===0?' on':'');
+ b.innerHTML='<div class="k">['+(i+1)+'] '+({COMMIT:'IN COVERAGE',VERIFY:'BORDERLINE',ABSTAIN:'EXTERNAL NULL / OOD'}[c.verdict])+'</div><div class="g">'+c.id+'</div><div class="h">'+({COMMIT:'strong support',VERIFY:'mixed support',ABSTAIN:'big effect, no genetic support'}[c.verdict])+'</div>';
+ b.onclick=function(){pick(i)};bar.appendChild(b);});
+function verdictFor(c){ if(c.id==='RASGRP1'){return mode==='frozen'?c.frozen_verdict:c.recal_verdict;} return c.verdict; }
+function pick(i){cur=i;mode='frozen';
+ [].forEach.call(bar.children,function(b,j){b.classList.toggle('on',j===i)});
+ var c=D.cases[i];var v=verdictFor(c);
+ var tile=document.getElementById('tile');tile.className='tile '+v;
+ document.getElementById('tv').textContent=v;
+ document.getElementById('ts').textContent=(c.verdict==='ABSTAIN'?'refuses to guess':(c.score!=null?'trust '+c.score:''));
+ document.getElementById('rg').textContent=c.id+(c.anchor_note?'  (anchor)':'');
+ document.getElementById('rr').textContent=c.reason;
+ var money=document.getElementById('money');
+ if(c.id==='RASGRP1'){money.classList.add('show');document.getElementById('tf').classList.add('on');document.getElementById('tr').classList.remove('on');renderMoney();}
+ else money.classList.remove('show');
+ document.getElementById('hint').textContent=c.verdict==='ABSTAIN'?'This is the whole point: a big predicted effect the gate REFUSES, because the evidence isn\u2019t there.':'The gate abstains as often as it commits. That restraint is the product.';
+}
+function renderMoney(){var c=D.cases[2];var v=verdictFor(c);
+ var tile=document.getElementById('tile');tile.className='tile '+v;document.getElementById('tv').textContent=v;
+ document.getElementById('ts').textContent=(v==='ABSTAIN'?'refuses to guess':'trust');
+ var txt=mode==='frozen'
+  ? '<b style="color:var(--red)">Frozen: looks confident \u2014 COMMIT.</b> The uncalibrated model trusts the large effect. External AUROC '+D.frozen_auroc.toFixed(3)+' (\u2248 coin flip).'
+  : '<b style="color:var(--go)">Recalibrated: correctly ABSTAINS.</b> Same weights, calibration re-fit on the deployment cell type. External AUROC '+D.recal_auroc.toFixed(3)+'. That\u2019s the 0.47\u21920.71 recovery, live.';
+ document.getElementById('ms').innerHTML=txt;}
+document.getElementById('tf').onclick=function(){mode='frozen';this.classList.add('on');document.getElementById('tr').classList.remove('on');renderMoney();};
+document.getElementById('tr').onclick=function(){mode='recal';this.classList.add('on');document.getElementById('tf').classList.remove('on');renderMoney();};
+document.addEventListener('keydown',function(e){if(e.key==='1')pick(0);if(e.key==='2')pick(1);if(e.key==='3')pick(2);
+ if(e.key.toLowerCase()==='t'&&D.cases[cur].id==='RASGRP1'){(mode==='frozen'?document.getElementById('tr'):document.getElementById('tf')).click();}});
+pick(0);
+</script></body></html>

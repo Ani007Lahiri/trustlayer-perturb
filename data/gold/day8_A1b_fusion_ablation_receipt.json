@@ -1,0 +1,95 @@
+{
+  "track": "A1b \u2014 novelty-leg DECISION ablation: genetic/eQTL FUSION vs calibration-alone (trust-only PRESCRIBE-analog)",
+  "date_utc": "2026-07-11T17:58:04.774854+00:00",
+  "prereg_sha256": "d7896ab2b38633e4923eadc0009f20a85b2ebe5d15b3f2704883e807f99d45e9",
+  "honesty_contract": "Referee+rules hash-frozen BEFORE scoring (prereg d7896ab2). Real committed gate reproduced (49/98 universe GO \u2014 EXACT match to day8 committed run). Trust from committed pooled-proxy trust.py path. This is a HONEST NULL, reported plainly.",
+  "referee": {
+    "label": "y_mouse_immune (mouse-KO IMMUNE/hematopoietic phenotype, IMPC/MGI via Open Targets)",
+    "held_out": "Gate rule NEVER used mouse phenotype data; mouse germline KO is an orthogonal model system -> validation CAN fail.",
+    "labels_sha256": "78513821c864080c48e55917ff9939bebc57fe1efe6f2e171788706f516f748d",
+    "n_overlap": 22,
+    "n_immune_pos": 9,
+    "base_rate": 0.409
+  },
+  "trust_floor_finding": "All 98 universe genes have trust in [0.71,0.99] -> committed MIN_TRUST_SCORE=0.50 is NON-BINDING at scale. Literal trust-only rule = GO-all (base-rate predictor). Fair head-to-head uses matched-budget top-k trust.",
+  "decision_divergence_n": 10,
+  "divergence_detail": {
+    "committed_GO_not_trustonly": [
+      "APOBR",
+      "CD226",
+      "CD6",
+      "CD69",
+      "CDKAL1"
+    ],
+    "trustonly_GO_not_committed": [
+      "CLEC16A",
+      "FTO",
+      "GIPR",
+      "KCNQ1",
+      "PPARG"
+    ],
+    "committed_picks_immune_support": "1/5",
+    "trustonly_picks_immune_support": "2/5"
+  },
+  "scoring": {
+    "committed_fusion": {
+      "name": "committed_fusion",
+      "n_go": 11,
+      "precision": 0.273,
+      "recall": 0.333,
+      "TP": 3,
+      "FP": 8,
+      "FN": 6,
+      "TN": 5,
+      "MCC": -0.277,
+      "balacc": 0.359,
+      "fisher_p": 0.387
+    },
+    "trust_only_matched_top11": {
+      "name": "trust_only_matched_top11",
+      "n_go": 11,
+      "precision": 0.364,
+      "recall": 0.444,
+      "TP": 4,
+      "FP": 7,
+      "FN": 5,
+      "TN": 6,
+      "MCC": -0.092,
+      "balacc": 0.453,
+      "fisher_p": 1.0
+    },
+    "trust_only_literal_GOall": {
+      "name": "trust_only_literal(non-binding=GO all)",
+      "n_go": 22,
+      "precision": 0.409,
+      "recall": 1.0,
+      "TP": 9,
+      "FP": 13,
+      "FN": 0,
+      "TN": 0,
+      "MCC": 0.0,
+      "balacc": 0.5,
+      "fisher_p": null
+    },
+    "precision_committed": 0.273,
+    "precision_matched_trustonly": 0.364,
+    "precision_delta_committed_minus_matched": -0.091,
+    "permutation_p_two_sided_precision_delta": 0.464,
+    "sensitivity_vs_y_mouse_any": {
+      "committed": 0.364,
+      "matched_trustonly": 0.455,
+      "literal": 0.545
+    }
+  },
+  "why_fusion_doesnt_help_here": "The eQTL>0 leg (meant to add rigor) rejects bona-fide immune genes lacking a significant T-cell cis-eQTL in the queried datasets (IL10, PTPN2, RASGRP1, GATA3 \u2014 all mouse-immune-positive, eqtl_nsig=0), while the mouse-immune referee also flags metabolic genes with incidental hematopoietic phenotypes (FTO, PPARG) as positive. Net: fusion's swaps are not better supported by THIS referee.",
+  "fusion_adds_value": "no",
+  "honest_verdict": "NULL \u2014 against the held-out mouse-KO immune referee (n=22, 9 positives, base rate 0.41), the committed genetic/eQTL FUSION gate does NOT make better-supported GO calls than a matched-budget trust-only PRESCRIBE-analog: precision 0.273 vs 0.364 (fusion lower), and the two rules disagree on 10/22 genes but that disagreement is statistically indistinguishable from chance (permutation p=0.46). Neither rule beats the base rate; MCC negative for both. So on this orthogonal axis, fusing genetic evidence adds no value over calibration alone. CAVEAT (does NOT flip verdict, per honesty contract): this is ONE noisy referee at pilot n; the gate's genetic anchoring is separately validated against HUMAN genetics/eQTL-direction and clinical-trial outcome direction (day8 gate MCC=0.488). The honest, publishable claim is: the value of the committed gate's fusion is demonstrated on HUMAN orthogonal axes, NOT on mouse-KO immune phenotype, where it is null.",
+  "small_n_caveat": "n=22 overlap, 9 positives; single referee. Report as pilot. Wide CIs; no general-capability claim.",
+  "inputs": {
+    "universe": "handoff/axis3_universe.json (98 genes)",
+    "eqtl": "handoff/axis3_eqtl_nsig.json",
+    "mouse_labels": "data/gold/day7_mouse_phenotype_labels_frozen.json",
+    "trust": "committed src/trustlayer/trust.py pooled-proxy path on data/interim/day2_feature_table.parquet"
+  },
+  "receipt_sha256": "0101e6ae814831a417babacf2e76f31a130148559b1c2cd62dcefde910e72ec5"
+}

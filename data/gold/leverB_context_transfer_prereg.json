@@ -1,0 +1,62 @@
+{
+  "title": "Lever B \u2014 Cross-context calibration transfer + prospective concept-shift detector (LOCO on CD4+ Perturb-seq atlas)",
+  "purpose": "Lever A proved WITHIN-ASSAY recalibration. This tests whether conformal calibration TRANSFERS across biological CONTEXT (T-cell activation state) WITHIN the same atlas, and whether a LABEL-LIGHT detector can prospectively decide 'recalibrate before you trust' on a new context WITHOUT full held-out labels.",
+  "honesty_contract": "prereg frozen (sha256) BEFORE any scoring; created_utc EXCLUDED from hash; success criteria stated a priori; an effect counts only if it SURVIVES the pre-specified confound controls AND the detector fires correctly on a HELD-OUT context it was not tuned on; no fabrication; NULL / limit results reported plainly as such; this tests within-ATLAS cross-CONTEXT transfer, not cross-assay transfer.",
+  "data": {
+    "feature_table": "data/interim/day2_feature_table.parquet (COMMITTED leakage-safe table; y + features precomputed)",
+    "h5ad_source": "data/raw/GWCD4i.DE_stats.h5ad (33983 contrasts = 11526 genes x 3 culture_condition; var 10282 genes)",
+    "universe": "11086 genes measured in ALL 3 contexts {Rest, Stim8hr, Stim48hr} -> 33258 aligned rows",
+    "gene_alignment": "gene sets kept ALIGNED across contexts so the tested axis is CONTEXT transfer, not gene novelty"
+  },
+  "base_predictor": {
+    "model": "HistGradientBoostingRegressor(max_iter=300, learning_rate=0.05, max_depth=4, l2_regularization=1.0, random_state=20260708)",
+    "target": "y = log1p(trans_effect_magnitude) [L2 of zscore vector EXCLUDING perturbed gene; leakage-safe, same as Lever A]",
+    "features": [
+      "log_baseMean",
+      "log_n_cells"
+    ],
+    "features_note": "context one-hot DELIBERATELY EXCLUDED from features: the held-out context is unseen at train time, so a context indicator would be constant/absent for it. Predictor sees only admissible covariates; context enters only via the LOCO split.",
+    "fit_on": "TRAIN gene-fold rows from the 2 SOURCE contexts only"
+  },
+  "design": {
+    "scheme": "leave-one-context-out (LOCO) over {Rest, Stim8hr, Stim48hr}",
+    "per_fold": "for held-out target context T: SOURCE = the other 2 contexts. Split the 11086 genes into train_genes / calib_genes (gene-disjoint, seed 20260708, 60/40). Fit predictor on SOURCE train_genes rows. Fit split-conformal quantile q(L) on SOURCE calib_genes residuals |y-pred|, method='higher'. TEST = ALL genes' rows in context T (aligned genes; frozen q applied).",
+    "seed": 20260708,
+    "train_calib_gene_frac": [
+      0.6,
+      0.4
+    ]
+  },
+  "metric_A_transfer": {
+    "definition": "does FROZEN source-context calibration hold on the held-out target context? Report empirical coverage @ nominal {0.80,0.90,0.95} on target-context TEST rows, per context and mean-over-folds.",
+    "transfer_verdict_rule": "HOLDS iff all-fold mean coverage within +/-0.03 of nominal at all 3 levels; BREAKS iff any fold/level deviates > 0.03. If BREAKS, run per-CONTEXT recalibration.",
+    "recalibration": "per-context recalibration: within target context T, split genes into recal_calib (40%) / recal_eval (60%), gene-disjoint; recompute q(L) on recal_calib residuals; measure coverage on recal_eval. RECOVERS iff within +/-0.03 of nominal."
+  },
+  "metric_B_detector": {
+    "goal": "LABEL-LIGHT prospective detector: predict, BEFORE seeing full target labels, whether frozen calibration will FAIL (coverage break > 3pp) on a deployment sub-population of the target context.",
+    "deployment_unit": "stratum = (held-out context T) x (decile of log_baseMean within T); ~10 strata per context x 3 contexts x 3 levels = decision instances",
+    "detector_inputs": {
+      "label_free": "domain-classifier mean p(target|x) over the stratum (HistGBC source=0/target=1 on features X only; out-of-fold; NO labels)",
+      "minimal_probe": "probe = random <=50 LABELED genes sampled from the stratum; compute |residual| under frozen predictor"
+    },
+    "detector_score": "PRIMARY = probe-estimated under-coverage = (nominal L - probe_coverage_frozen(T,s,L)), where probe_coverage_frozen = fraction of the <=50-gene probe with |resid| <= q_source(L). Probe bootstrapped B=200 draws; report mean. SECONDARY (ablation) = label-free domain-shift score alone.",
+    "probe_size": 50,
+    "probe_bootstrap": 200,
+    "decision_threshold": "predict BREAK if probe under-coverage > 0.03 (matched to the 3pp break definition)",
+    "ground_truth": "stratum BREAKS iff FULL-stratum coverage (all genes) deviates from nominal by > 0.03 (labels revealed only for evaluation)",
+    "evaluation": "detector AUROC ranking break vs no-break strata using the continuous probe under-coverage score; HELD-OUT protocol: tune any threshold on 2 contexts, evaluate AUROC + accuracy on the 3rd, ROTATE all 3, report mean held-out-context AUROC/accuracy.",
+    "ablation_baseline": "always-trust-frozen = never recalibrate (predict all strata HOLD); accuracy = fraction of strata that truly hold"
+  },
+  "confounds": {
+    "report": "per-context n, y effect-size distributions, domain-classifier covariate-shift AUC per fold (label-free shift magnitude)",
+    "win_requires": "detector fires correctly on a HELD-OUT context it was not tuned on (mean held-out AUROC reported with CI); detector must BEAT the always-trust baseline; recalibration triggered by the detector must recover coverage to within +/-0.03."
+  },
+  "success_criteria_a_priori": {
+    "context_transfer": "classified holds / breaks-recalib-fixes / breaks-unfixed by the Metric-A rule",
+    "detector_positive": "detector_works = 'yes' iff (mean held-out-context AUROC > 0.5 with 95% bootstrap CI lower bound > 0.5) AND detector beats always-trust baseline accuracy AND detector-triggered recalibration recovers coverage to +/-0.03; 'partial' iff AUROC>0.5 point estimate but CI touches 0.5 OR too few break events to power it; 'no' otherwise.",
+    "degenerate_clause": "if cross-context transfer HOLDS globally so that break events are near-zero, the detector's SENSITIVITY is untestable; report detector_works='partial' with the honest statement that the correct action is 'trust frozen' and the detector correctly abstains (specificity), and DO NOT claim a sensitivity win that the data cannot support."
+  },
+  "novelty_claim_to_adjudicate": "label-light PROSPECTIVE concept-shift detection for perturbation UQ -- deciding 'recalibrate before you trust' on a new biological context from unlabeled features + a <=50-gene probe. Adjudicate yes-defensible / borderline / no against 2024-25 prior art.",
+  "created_utc": "2026-07-11T23:10:38.992508+00:00",
+  "prereg_sha256": "67b2ab90ce2199a5881a1b1cda12909e6a028365aa5cdd96d27d39278001b723"
+}

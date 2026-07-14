@@ -1,0 +1,40 @@
+{
+ "experiment": "PGW-Conformal falsification test (perturbation-graph-weighted conformal)",
+ "prereg_sha256": "eab893d136f16a54fcdb573c8df8a2b70f118d648bb75163fcf9cb1606afb046",
+ "date": "2026-07-12",
+ "verdict": "FALSIFIED \u2014 does NOT clear the 80 wall. Stays at current tier.",
+ "graph": {
+  "source": "STRING v12.0 human, combined_score>=700",
+  "nodes": 9567,
+  "edges": 102153,
+  "genes_mapped": "11347/11526",
+  "louvain_communities": 83
+ },
+ "primary_result_full_support": {
+  "vanilla_cond_gap": 0.0736,
+  "LWCP_cond_gap": 0.0693,
+  "PGW_cond_gap": 0.0736,
+  "note": "PGW == vanilla EXACTLY: with ~9000 training genes the STRING support covers the whole graph, so every held-out gene sits at distance 0 -> normalizer has zero dynamic range -> reduces to vanilla."
+ },
+ "fair_result_sparse_support": {
+  "setup": "distance normalizer defined vs a 15% gene subsample so test genes sit 3-4 hops out (genuine range)",
+  "vanilla_cond_gap": 0.0711,
+  "PGW_sparse_cond_gap": 0.0709,
+  "featureCP_cond_gap": 0.0589,
+  "PGW_vs_featureCP": "featureCP BEATS PGW: paired mean +0.0120 in featCP favor, Wilcoxon p=0.009",
+  "note": "Even WITH graph-distance range, a plain isotonic sigma on log_baseMean (feature difficulty) calibrates better than the biology-graph distance normalizer."
+ },
+ "prereg_falsifiers_fired": [
+  "F1 (PGW does not beat LWCP): FIRED \u2014 PGW==vanilla, LWCP marginally better",
+  "F2 (graph sigma does not beat feature-space sigma): FIRED DECISIVELY \u2014 featureCP significantly better, p=0.009"
+ ],
+ "honest_conclusion": "The external biology graph (STRING) carries NO information about conformal prediction difficulty beyond what a single expression feature (log_baseMean) already provides, in this well-powered dataset. Two reasons: (1) at ~9000 perturbed genes the training support saturates the graph, killing distance range; (2) even with induced range, graph distance is a worse difficulty proxy than baseline expression. This is a genuine NEGATIVE RESULT, pre-registered and reported. It does NOT support a novel-primitive claim; the project correctly stays at its current calibration-benchmark tier (~77).",
+ "what_this_rules_out": "A perturbation-graph-distance nonconformity normalizer is not the route past 80 on these datasets. Reported honestly rather than buried or tuned to pass.",
+ "citations_grounding_design": [
+  "Fadnavis LWCP arXiv:2602.12693",
+  "Tibshirani et al. 2019 arXiv:1904.06019",
+  "arXiv:2603.02204 (prior art on perturbation-structured conformal)",
+  "Roohani et al. 2024 Nat Biotech 42:927 (GEARS graph-connectivity failure mode)"
+ ],
+ "receipt_sha256": "b2b4641c96dc693be8a42ed4e3a66233096980b11ad997f52c96998d84602a99"
+}

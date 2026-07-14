@@ -1,0 +1,670 @@
+{
+ "labels_sha256": "78513821c864080c48e55917ff9939bebc57fe1efe6f2e171788706f516f748d",
+ "rule_source_prereg_sha256": "cac9a66c6f0c908df9a9780941a59adca439bc1f94692bd8cfef73f70285d175",
+ "n_genes": 44,
+ "labels": {
+  "ABCC8": {
+   "ensembl": "ENSG00000006071",
+   "has_mouse_record": 1,
+   "n_rows": 9,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": [
+    "hypoglycemia",
+    "decreased insulin secretion",
+    "increased circulating glucose level",
+    "increased insulin secretion",
+    "abnormal insulin secretion"
+   ]
+  },
+  "APOBR": {
+   "ensembl": "ENSG00000184730",
+   "has_mouse_record": 0,
+   "n_rows": 0,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "CCR7": {
+   "ensembl": "ENSG00000126353",
+   "has_mouse_record": 1,
+   "n_rows": 40,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal T cell physiology",
+    "increased IgE level",
+    "decreased susceptibility to type IV hypersensitivity reaction",
+    "abnormal spleen marginal sinus morphology",
+    "increased CD4-positive, alpha-beta T cell number"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "CD226": {
+   "ensembl": "ENSG00000150637",
+   "has_mouse_record": 0,
+   "n_rows": 0,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "CD28": {
+   "ensembl": "ENSG00000178562",
+   "has_mouse_record": 1,
+   "n_rows": 42,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal CD4-positive, alpha-beta T cell physiology",
+    "increased susceptibility to autoimmune diabetes",
+    "decreased IgM level",
+    "abnormal cytotoxic T cell physiology",
+    "decreased circulating interferon-gamma level"
+   ],
+   "dm_example_phenotypes": [
+    "increased susceptibility to autoimmune diabetes"
+   ]
+  },
+  "CD5": {
+   "ensembl": "ENSG00000110448",
+   "has_mouse_record": 1,
+   "n_rows": 5,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "increased spleen weight",
+    "abnormal spleen morphology",
+    "enlarged spleen"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "CD6": {
+   "ensembl": "ENSG00000013725",
+   "has_mouse_record": 0,
+   "n_rows": 0,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "CD69": {
+   "ensembl": "ENSG00000110848",
+   "has_mouse_record": 1,
+   "n_rows": 3,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "impaired neutrophil chemotaxis",
+    "decreased susceptibility to induced arthritis",
+    "impaired neutrophil recruitment"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "CDKAL1": {
+   "ensembl": "ENSG00000145996",
+   "has_mouse_record": 1,
+   "n_rows": 15,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": [
+    "abnormal glucose homeostasis",
+    "decreased insulin secretion",
+    "decreased circulating insulin level",
+    "decreased circulating glucose level"
+   ]
+  },
+  "CLEC16A": {
+   "ensembl": "ENSG00000038532",
+   "has_mouse_record": 1,
+   "n_rows": 11,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "FTO": {
+   "ensembl": "ENSG00000140718",
+   "has_mouse_record": 1,
+   "n_rows": 48,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "dermatitis"
+   ],
+   "dm_example_phenotypes": [
+    "improved glucose tolerance",
+    "decreased circulating insulin level",
+    "increased circulating glucose level",
+    "decreased circulating insulin-like growth factor I level"
+   ]
+  },
+  "GATA3": {
+   "ensembl": "ENSG00000107485",
+   "has_mouse_record": 1,
+   "n_rows": 112,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal definitive hematopoiesis",
+    "abnormal T cell number",
+    "decreased double-negative T cell number",
+    "abnormal erythrocyte morphology",
+    "abnormal double-positive T cell morphology"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "GIPR": {
+   "ensembl": "ENSG00000010310",
+   "has_mouse_record": 1,
+   "n_rows": 6,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": [
+    "decreased circulating insulin level",
+    "abnormal glucose homeostasis",
+    "hyperglycemia",
+    "impaired glucose tolerance",
+    "increased circulating glucose level"
+   ]
+  },
+  "GSDMB": {
+   "ensembl": "ENSG00000073605",
+   "has_mouse_record": 0,
+   "n_rows": 0,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "HNF1A": {
+   "ensembl": "ENSG00000135100",
+   "has_mouse_record": 1,
+   "n_rows": 60,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": [
+    "decreased circulating insulin-like growth factor I level",
+    "small pancreatic islets",
+    "abnormal renal glucose reabsorption",
+    "increased urine glucose level",
+    "abnormal pancreatic islet morphology"
+   ]
+  },
+  "HNF4A": {
+   "ensembl": "ENSG00000101076",
+   "has_mouse_record": 1,
+   "n_rows": 42,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": [
+    "impaired glucose tolerance"
+   ]
+  },
+  "ICOS": {
+   "ensembl": "ENSG00000163600",
+   "has_mouse_record": 1,
+   "n_rows": 53,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "small lymph nodes",
+    "abnormal spleen germinal center morphology",
+    "abnormal immunoglobulin level",
+    "abnormal B cell selection",
+    "decreased spleen germinal center number"
+   ],
+   "dm_example_phenotypes": [
+    "decreased anti-insulin autoantibody level",
+    "decreased susceptibility to autoimmune diabetes",
+    "decreased pancreatic islet number"
+   ]
+  },
+  "IKZF1": {
+   "ensembl": "ENSG00000185811",
+   "has_mouse_record": 1,
+   "n_rows": 126,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal T cell differentiation",
+    "increased T cell number",
+    "abnormal granulocyte differentiation",
+    "absent inguinal lymph nodes",
+    "decreased hematocrit"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "IKZF3": {
+   "ensembl": "ENSG00000161405",
+   "has_mouse_record": 1,
+   "n_rows": 37,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal type III hypersensitivity reaction",
+    "increased autoantibody level",
+    "decreased IgG3 level",
+    "increased anti-nuclear antigen antibody level",
+    "increased anti-histone antibody level"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "IL10": {
+   "ensembl": "ENSG00000136634",
+   "has_mouse_record": 1,
+   "n_rows": 137,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal hypersensitivity reaction",
+    "abnormal regulatory T cell physiology",
+    "increased B cell number",
+    "decreased T cell proliferation",
+    "decreased length of allograft survival"
+   ],
+   "dm_example_phenotypes": [
+    "decreased circulating insulin level",
+    "abnormal glucose homeostasis",
+    "increased insulin sensitivity"
+   ]
+  },
+  "IL2": {
+   "ensembl": "ENSG00000109471",
+   "has_mouse_record": 1,
+   "n_rows": 87,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "enlarged lymph nodes",
+    "anemia",
+    "lung inflammation",
+    "low mean erythrocyte cell number",
+    "abnormal lymphocyte physiology"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "IRS1": {
+   "ensembl": "ENSG00000169047",
+   "has_mouse_record": 1,
+   "n_rows": 62,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal osteoclast differentiation",
+    "abnormal osteoclast physiology",
+    "increased osteoclast cell number"
+   ],
+   "dm_example_phenotypes": [
+    "decreased circulating glucose level",
+    "abnormal glucose homeostasis",
+    "increased circulating insulin level",
+    "impaired glucose tolerance",
+    "decreased insulin secretion"
+   ]
+  },
+  "ITK": {
+   "ensembl": "ENSG00000113263",
+   "has_mouse_record": 1,
+   "n_rows": 40,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "decreased CD8-positive, naive alpha-beta T cell number",
+    "decreased T cell proliferation",
+    "abnormal NK T cell morphology",
+    "decreased interleukin-2 secretion",
+    "increased double-negative T cell number"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "JAZF1": {
+   "ensembl": "ENSG00000153814",
+   "has_mouse_record": 1,
+   "n_rows": 4,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "KCNQ1": {
+   "ensembl": "ENSG00000053918",
+   "has_mouse_record": 1,
+   "n_rows": 72,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "LCK": {
+   "ensembl": "ENSG00000182866",
+   "has_mouse_record": 1,
+   "n_rows": 35,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "decreased T cell proliferation",
+    "abnormal double-negative T cell morphology",
+    "abnormal T cell subpopulation ratio",
+    "decreased T cell number",
+    "abnormal alpha-beta intraepithelial T cell morphology"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "NOTCH2": {
+   "ensembl": "ENSG00000134250",
+   "has_mouse_record": 1,
+   "n_rows": 76,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal osteoclast differentiation",
+    "decreased B-1 B cell number",
+    "decreased marginal zone B cell number",
+    "increased osteoclast cell number",
+    "increased circulating interleukin-6 level"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "PDX1": {
+   "ensembl": "ENSG00000139515",
+   "has_mouse_record": 1,
+   "n_rows": 61,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "pancreas inflammation"
+   ],
+   "dm_example_phenotypes": [
+    "pancreatic islet hypoplasia",
+    "increased circulating glucose level",
+    "abnormal pancreatic islet morphology",
+    "decreased insulin secretion",
+    "decreased circulating insulin level"
+   ]
+  },
+  "PGM1": {
+   "ensembl": "ENSG00000079739",
+   "has_mouse_record": 1,
+   "n_rows": 12,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "PPARG": {
+   "ensembl": "ENSG00000132170",
+   "has_mouse_record": 1,
+   "n_rows": 139,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "increased susceptibility to induced arthritis",
+    "increased IgM level",
+    "increased interleukin-2 secretion",
+    "increased interferon-gamma secretion",
+    "increased IgG level"
+   ],
+   "dm_example_phenotypes": [
+    "hyperglycemia",
+    "decreased circulating insulin level",
+    "abnormal pancreatic islet morphology",
+    "increased insulin sensitivity",
+    "improved glucose tolerance"
+   ]
+  },
+  "PRKCQ": {
+   "ensembl": "ENSG00000065675",
+   "has_mouse_record": 1,
+   "n_rows": 34,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal platelet physiology",
+    "abnormal platelet activation",
+    "decreased susceptibility to experimental autoimmune encephalomyelitis",
+    "decreased splenocyte proliferation",
+    "decreased interferon-gamma secretion"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "PTPN2": {
+   "ensembl": "ENSG00000175354",
+   "has_mouse_record": 1,
+   "n_rows": 69,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "decreased B-1 B cell number",
+    "decreased follicular B cell number",
+    "decreased erythrocyte cell number",
+    "increased spleen red pulp amount",
+    "abnormal positive T cell selection"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "RASGRP1": {
+   "ensembl": "ENSG00000172575",
+   "has_mouse_record": 1,
+   "n_rows": 54,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "increased immunoglobulin level",
+    "increased IgM level",
+    "enlarged lymph nodes",
+    "increased B-1b cell number",
+    "abnormal double-positive T cell morphology"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "RUNX1": {
+   "ensembl": "ENSG00000159216",
+   "has_mouse_record": 1,
+   "n_rows": 93,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "enlarged spleen",
+    "thymus hypoplasia",
+    "abnormal embryonic hematopoiesis",
+    "decreased thymocyte number",
+    "abnormal T cell differentiation"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "SIRPG": {
+   "ensembl": "ENSG00000089012",
+   "has_mouse_record": 1,
+   "n_rows": 17,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "enlarged spleen",
+    "increased spleen weight",
+    "increased megakaryocyte cell number",
+    "decreased T cell number",
+    "abnormal macrophage physiology"
+   ],
+   "dm_example_phenotypes": [
+    "impaired glucose tolerance"
+   ]
+  },
+  "SOCS1": {
+   "ensembl": "ENSG00000185338",
+   "has_mouse_record": 1,
+   "n_rows": 65,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "extramedullary hematopoiesis",
+    "salivary gland inflammation",
+    "absent spleen germinal center",
+    "abnormal cytokine level",
+    "decreased susceptibility to Togaviridae infection induced morbidity/mortality"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "STAT4": {
+   "ensembl": "ENSG00000138378",
+   "has_mouse_record": 1,
+   "n_rows": 26,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal inflammatory response",
+    "abnormal T cell proliferation",
+    "decreased interferon-gamma secretion",
+    "decreased circulating interferon-gamma level",
+    "increased circulating interleukin-12 level"
+   ],
+   "dm_example_phenotypes": [
+    "abnormal circulating glucose level",
+    "decreased susceptibility to autoimmune diabetes",
+    "abnormal insulin secretion"
+   ]
+  },
+  "SUOX": {
+   "ensembl": "ENSG00000139531",
+   "has_mouse_record": 1,
+   "n_rows": 1,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "TAGAP": {
+   "ensembl": "ENSG00000164691",
+   "has_mouse_record": 1,
+   "n_rows": 8,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "enlarged spleen",
+    "enlarged lymph nodes"
+   ],
+   "dm_example_phenotypes": []
+  },
+  "TCF7L2": {
+   "ensembl": "ENSG00000148737",
+   "has_mouse_record": 1,
+   "n_rows": 43,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "increased mean platelet volume",
+    "increased susceptibility to induced colitis",
+    "increased red blood cell distribution width"
+   ],
+   "dm_example_phenotypes": [
+    "hypoglycemia",
+    "impaired glucose tolerance",
+    "abnormal glucose homeostasis",
+    "improved glucose tolerance",
+    "decreased circulating insulin level"
+   ]
+  },
+  "THADA": {
+   "ensembl": "ENSG00000115970",
+   "has_mouse_record": 0,
+   "n_rows": 0,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "TNFAIP3": {
+   "ensembl": "ENSG00000118503",
+   "has_mouse_record": 1,
+   "n_rows": 49,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 1,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal chemokine secretion",
+    "increased microglial cell activation",
+    "increased inflammatory response",
+    "joint inflammation",
+    "myeloid hyperplasia"
+   ],
+   "dm_example_phenotypes": [
+    "increased circulating insulin level",
+    "decreased fasting circulating glucose level",
+    "insulin resistance"
+   ]
+  },
+  "UBASH3A": {
+   "ensembl": "ENSG00000160185",
+   "has_mouse_record": 1,
+   "n_rows": 5,
+   "y_mouse_immune": 0,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 0,
+   "immune_example_phenotypes": [],
+   "dm_example_phenotypes": []
+  },
+  "ZAP70": {
+   "ensembl": "ENSG00000115085",
+   "has_mouse_record": 1,
+   "n_rows": 61,
+   "y_mouse_immune": 1,
+   "y_mouse_dm": 0,
+   "y_mouse_any": 1,
+   "immune_example_phenotypes": [
+    "abnormal positive T cell selection",
+    "decreased CD8-positive, naive alpha-beta T cell number",
+    "arrested T cell differentiation",
+    "abnormal T cell differentiation",
+    "abnormal T cell selection"
+   ],
+   "dm_example_phenotypes": []
+  }
+ }
+}

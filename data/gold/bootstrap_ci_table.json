@@ -1,0 +1,252 @@
+{
+  "meta": {
+    "analysis": "donor_clustered_bootstrap_confidence_intervals",
+    "n_bootstrap": 20000,
+    "seed": 20240713,
+    "clustering_principle": "Resample whole clusters (donor-pairs / datasets / LODO folds), never individual perturbations, so CIs reflect the true replication unit and are not fake-narrow.",
+    "bca_note": "BCa used where the bootstrap distribution is smooth/unimodal (undercoverage gaps, ceiling ratio attempted); percentile used where bimodal or heavy-tie (Spearman on small n, bimodal ceiling).",
+    "sources": {
+      "xdataset_transport_spearman": "xdataset_transport_raw.json T3 true/pred gap by 9 datasets",
+      "gap_transport_spearman": "gap_transport_raw.json T3 true/pred gap by 6 donor-pairs",
+      "reproducibility_ceiling": "reliability_ceiling_raw.json 15 modality-vs-modality median rho (6 donor-pair modalities, 4 donors)",
+      "undercoverage_gap": "trustlayer_core_raw.json item1 empirical_coverage_per_fold (6 LODO folds)",
+      "calibration_cov90": "calibration_law_raw.json (harness NBOOT=500 perturbation bootstrap; cross_dataset has no stored CI)"
+    },
+    "committed_model_spearman": 0.356
+  },
+  "ci_table": {
+    "xdataset_transport_spearman": {
+      "estimate": 0.3167,
+      "ci_low": -0.7368,
+      "ci_high": 0.9138,
+      "method": "percentile cluster bootstrap (resample whole datasets)",
+      "n_clusters": 9,
+      "note": "published +0.32 (p=0.406, n.s.); dataset-clustered bootstrap; 20000 valid reps"
+    },
+    "gap_transport_spearman_identity": {
+      "estimate": -0.2571,
+      "ci_low": -1.0,
+      "ci_high": 1.0,
+      "method": "percentile cluster bootstrap (resample whole donor-pairs)",
+      "n_clusters": 6,
+      "note": "cross-donor source-only transport (identity); 19997 valid reps"
+    },
+    "gap_transport_spearman_ridge": {
+      "estimate": -0.3714,
+      "ci_low": -1.0,
+      "ci_high": 0.8065,
+      "method": "percentile cluster bootstrap (resample whole donor-pairs)",
+      "n_clusters": 6,
+      "note": "cross-donor source-only transport (ridge); 19997 valid reps"
+    },
+    "reproducibility_ceiling_median_rho": {
+      "estimate": 0.5263,
+      "ci_low": 0.1254,
+      "ci_high": 0.5557,
+      "method": "percentile cluster bootstrap (resample 6 donor-pair modalities; bimodal shared/disjoint regimes \u2192 BCa invalid)",
+      "n_clusters": 6,
+      "note": "single-contrast reproducibility ceiling (median rho over 15 modality-vs-modality comparisons); only 4 underlying donors"
+    },
+    "model_pct_of_ceiling": {
+      "estimate": 67.6,
+      "ci_low": 64.1,
+      "ci_high": 284.0,
+      "method": "percentile cluster bootstrap (committed rho=0.356 fixed; CI propagates ceiling denominator only)",
+      "n_clusters": 6,
+      "note": "model %-of-single-contrast-ceiling = 0.356/median_ceiling*100; committed model Spearman is a fixed external constant with no per-perturbation array to resample"
+    },
+    "undercoverage_gap_0.80": {
+      "estimate": 0.2851,
+      "ci_low": 0.2346,
+      "ci_high": 0.3429,
+      "method": "BCa cluster bootstrap (resample 6 leave-one-donor-pair-out folds)",
+      "n_clusters": 6,
+      "note": "trustlayer_core cross-condition undercoverage gap = nominal 0.80 - empirical; mean empirical cov 0.515"
+    },
+    "undercoverage_gap_0.90": {
+      "estimate": 0.2099,
+      "ci_low": 0.1604,
+      "ci_high": 0.272,
+      "method": "BCa cluster bootstrap (resample 6 leave-one-donor-pair-out folds)",
+      "n_clusters": 6,
+      "note": "trustlayer_core cross-condition undercoverage gap = nominal 0.90 - empirical; mean empirical cov 0.690"
+    },
+    "undercoverage_gap_0.95": {
+      "estimate": 0.1486,
+      "ci_low": 0.11,
+      "ci_high": 0.2097,
+      "method": "BCa cluster bootstrap (resample 6 leave-one-donor-pair-out folds)",
+      "n_clusters": 6,
+      "note": "trustlayer_core cross-condition undercoverage gap = nominal 0.95 - empirical; mean empirical cov 0.801"
+    },
+    "calibration_cov90_in_distribution_identity": {
+      "estimate": 1.0,
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "method": "perturbation bootstrap (harness NBOOT=500); correct unit at this level (single donor-pair modality, no donor clustering)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_in_distribution_mean_baseline": {
+      "estimate": 0.9172,
+      "ci_low": 0.9025,
+      "ci_high": 0.9332,
+      "method": "perturbation bootstrap (harness NBOOT=500); correct unit at this level (single donor-pair modality, no donor clustering)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_in_distribution_ridge_linear": {
+      "estimate": 0.8918,
+      "ci_low": 0.8746,
+      "ci_high": 0.9103,
+      "method": "perturbation bootstrap (harness NBOOT=500); correct unit at this level (single donor-pair modality, no donor clustering)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_in_distribution_hist_gbr": {
+      "estimate": 0.8746,
+      "ci_low": 0.8549,
+      "ci_high": 0.8934,
+      "method": "perturbation bootstrap (harness NBOOT=500); correct unit at this level (single donor-pair modality, no donor clustering)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_in_distribution_deep_mlp_ensemble": {
+      "estimate": 0.8975,
+      "ci_low": 0.882,
+      "ci_high": 0.9148,
+      "method": "perturbation bootstrap (harness NBOOT=500); correct unit at this level (single donor-pair modality, no donor clustering)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_held_out_perturbation_identity": {
+      "estimate": 1.0,
+      "ci_low": 1.0,
+      "ci_high": 1.0,
+      "method": "perturbation bootstrap (harness NBOOT=500); correct unit at this level (single donor-pair modality, no donor clustering)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_held_out_perturbation_mean_baseline": {
+      "estimate": 0.8754,
+      "ci_low": 0.8578,
+      "ci_high": 0.8955,
+      "method": "perturbation bootstrap (harness NBOOT=500); correct unit at this level (single donor-pair modality, no donor clustering)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_held_out_perturbation_ridge_linear": {
+      "estimate": 0.8943,
+      "ci_low": 0.8779,
+      "ci_high": 0.9123,
+      "method": "perturbation bootstrap (harness NBOOT=500); correct unit at this level (single donor-pair modality, no donor clustering)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_held_out_perturbation_hist_gbr": {
+      "estimate": 0.9115,
+      "ci_low": 0.8951,
+      "ci_high": 0.927,
+      "method": "perturbation bootstrap (harness NBOOT=500); correct unit at this level (single donor-pair modality, no donor clustering)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_held_out_perturbation_deep_mlp_ensemble": {
+      "estimate": 0.9164,
+      "ci_low": 0.8992,
+      "ci_high": 0.9303,
+      "method": "perturbation bootstrap (harness NBOOT=500); correct unit at this level (single donor-pair modality, no donor clustering)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_cross_donor_identity": {
+      "estimate": 0.8844,
+      "ci_low": 0.8709,
+      "ci_high": 0.8963,
+      "method": "perturbation bootstrap (harness NBOOT=500) within single held-out donor-pair fold; donor-clustered companion = undercoverage_gap_* (trustlayer_core, n=6 folds)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_cross_donor_mean_baseline": {
+      "estimate": 0.9057,
+      "ci_low": 0.8957,
+      "ci_high": 0.9176,
+      "method": "perturbation bootstrap (harness NBOOT=500) within single held-out donor-pair fold; donor-clustered companion = undercoverage_gap_* (trustlayer_core, n=6 folds)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_cross_donor_ridge_linear": {
+      "estimate": 0.8852,
+      "ci_low": 0.8738,
+      "ci_high": 0.8973,
+      "method": "perturbation bootstrap (harness NBOOT=500) within single held-out donor-pair fold; donor-clustered companion = undercoverage_gap_* (trustlayer_core, n=6 folds)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_cross_donor_hist_gbr": {
+      "estimate": 0.8873,
+      "ci_low": 0.873,
+      "ci_high": 0.899,
+      "method": "perturbation bootstrap (harness NBOOT=500) within single held-out donor-pair fold; donor-clustered companion = undercoverage_gap_* (trustlayer_core, n=6 folds)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_cross_donor_deep_mlp_ensemble": {
+      "estimate": 0.9143,
+      "ci_low": 0.9037,
+      "ci_high": 0.9248,
+      "method": "perturbation bootstrap (harness NBOOT=500) within single held-out donor-pair fold; donor-clustered companion = undercoverage_gap_* (trustlayer_core, n=6 folds)",
+      "n_clusters": 4879
+    },
+    "calibration_cov90_cross_dataset_identity": {
+      "estimate": 1.0,
+      "ci_low": null,
+      "ci_high": null,
+      "method": "NOT COMPUTABLE: cross-dataset averages 3 leave-one-dataset-out folds; harness stored only mean coverage (no per-dataset array, no bootstrap CI). Dataset-clustered CI would need per-dataset coverage \u2014 not in raw.",
+      "n_clusters": 3
+    },
+    "calibration_cov90_cross_dataset_mean_baseline": {
+      "estimate": 0.8132,
+      "ci_low": null,
+      "ci_high": null,
+      "method": "NOT COMPUTABLE: cross-dataset averages 3 leave-one-dataset-out folds; harness stored only mean coverage (no per-dataset array, no bootstrap CI). Dataset-clustered CI would need per-dataset coverage \u2014 not in raw.",
+      "n_clusters": 3
+    },
+    "calibration_cov90_cross_dataset_ridge_linear": {
+      "estimate": 0.9986,
+      "ci_low": null,
+      "ci_high": null,
+      "method": "NOT COMPUTABLE: cross-dataset averages 3 leave-one-dataset-out folds; harness stored only mean coverage (no per-dataset array, no bootstrap CI). Dataset-clustered CI would need per-dataset coverage \u2014 not in raw.",
+      "n_clusters": 3
+    },
+    "calibration_cov90_cross_dataset_hist_gbr": {
+      "estimate": 0.8462,
+      "ci_low": null,
+      "ci_high": null,
+      "method": "NOT COMPUTABLE: cross-dataset averages 3 leave-one-dataset-out folds; harness stored only mean coverage (no per-dataset array, no bootstrap CI). Dataset-clustered CI would need per-dataset coverage \u2014 not in raw.",
+      "n_clusters": 3
+    },
+    "calibration_cov90_cross_dataset_deep_mlp_ensemble": {
+      "estimate": 0.563,
+      "ci_low": null,
+      "ci_high": null,
+      "method": "NOT COMPUTABLE: cross-dataset averages 3 leave-one-dataset-out folds; harness stored only mean coverage (no per-dataset array, no bootstrap CI). Dataset-clustered CI would need per-dataset coverage \u2014 not in raw.",
+      "n_clusters": 3
+    },
+    "across_model_spread_cov90_in_distribution": {
+      "estimate": 0.1254,
+      "ci_low": null,
+      "ci_high": null,
+      "method": "NOT COMPUTABLE from stored data: across-model coverage spread = max-min over 5 models on shared test rows; a valid CI needs the joint per-perturbation x per-model coverage-indicator matrix, which the harness did not save (only per-model marginal coverage + per-model perturbation-bootstrap CIs). Reporting point estimate; per-model coverage CIs (shown on figure) bound each model.",
+      "n_clusters": 5
+    },
+    "across_model_spread_cov90_held_out_perturbation": {
+      "estimate": 0.1246,
+      "ci_low": null,
+      "ci_high": null,
+      "method": "NOT COMPUTABLE from stored data: across-model coverage spread = max-min over 5 models on shared test rows; a valid CI needs the joint per-perturbation x per-model coverage-indicator matrix, which the harness did not save (only per-model marginal coverage + per-model perturbation-bootstrap CIs). Reporting point estimate; per-model coverage CIs (shown on figure) bound each model.",
+      "n_clusters": 5
+    },
+    "across_model_spread_cov90_cross_donor": {
+      "estimate": 0.0299,
+      "ci_low": null,
+      "ci_high": null,
+      "method": "NOT COMPUTABLE from stored data: across-model coverage spread = max-min over 5 models on shared test rows; a valid CI needs the joint per-perturbation x per-model coverage-indicator matrix, which the harness did not save (only per-model marginal coverage + per-model perturbation-bootstrap CIs). Reporting point estimate; per-model coverage CIs (shown on figure) bound each model.",
+      "n_clusters": 5
+    },
+    "across_model_spread_cov90_cross_dataset": {
+      "estimate": 0.437,
+      "ci_low": null,
+      "ci_high": null,
+      "method": "NOT COMPUTABLE from stored data: across-model coverage spread = max-min over 5 models on shared test rows; a valid CI needs the joint per-perturbation x per-model coverage-indicator matrix, which the harness did not save (only per-model marginal coverage + per-model perturbation-bootstrap CIs). Reporting point estimate; per-model coverage CIs (shown on figure) bound each model.",
+      "n_clusters": 5
+    }
+  },
+  "content_sha256": "4f702d80f854573595f2151c46d2d4b037f8c7b36df47bb8a81be0c111c04b8c"
+}

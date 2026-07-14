@@ -1,0 +1,73 @@
+{
+ "experiment": "SCC external replication on CaRPool-seq (GSE213957) \u2014 pre-registered 2nd combinatorial dataset",
+ "prereg_sha256": "6112f2c8fbddef2bbf67ce9315a623ad6effefcab704481c53b0b078bbaccb07",
+ "dataset": {
+  "name": "CaRPool-seq (Wessels et al., Nat Methods 2023, DOI 10.1038/s41592-022-01705-x)",
+  "geo": "GSE213957",
+  "system": "THP-1 AML, Cas13d RNA-targeting (knockdown)",
+  "cells_matched": 30707,
+  "n_control": 424,
+  "n_single_genes": 28,
+  "n_double_pairs": 158,
+  "n_synergy_testable": 158
+ },
+ "modality_contrast": "Norman = K562 + CRISPRa (activation); CaRPool = THP-1 + Cas13 (knockdown). Different cell type AND different perturbation direction \u2014 a strong generalization test.",
+ "leakage_safe_prior_check": {
+  "sum_mag_vs_true_synergy_spearman": 0.792,
+  "p": "2.7e-35",
+  "note": "even stronger than Norman (0.667)"
+ },
+ "PRIMARY_ENDPOINT_interaction": {
+  "pipeline": "all-genes pseudobulk, min_cells=15, 158 pairs, scalar-magnitude nonconformity",
+  "interaction": 0.542,
+  "perm_p": 0.018,
+  "ci": [
+   0.204,
+   1.005
+  ],
+  "van_hi": 0.785,
+  "van_hi_ci": [
+   0.684,
+   0.873
+  ],
+  "scc_hi": 0.848,
+  "scc_hi_ci": [
+   0.759,
+   0.924
+  ],
+  "c1": true,
+  "c2": true,
+  "c3": true,
+  "clears": true
+ },
+ "cross_check_pipeline": {
+  "pipeline": "HVG-2000, min_cells=25, 142 pairs, per-gene nonconformity",
+  "interaction": 2.202,
+  "perm_p": 0.0005,
+  "ci": [
+   1.362,
+   4.028
+  ],
+  "van_hi": 0.859,
+  "van_hi_ci": [
+   0.76,
+   0.922
+  ],
+  "scc_hi": 0.944,
+  "c1": true,
+  "c2": false,
+  "c3": true,
+  "clears": false
+ },
+ "ROBUST_FINDING": "directional method x synergy interaction replicates positively on CaRPool (2nd dataset, Cas13 knockdown, THP-1) in BOTH pipelines, permutation p<0.05",
+ "FRAGILE_FINDING": "strict frozen composite clearing is preprocessing-sensitive (clears under all-gene pseudobulk, not under HVG-2000); therefore NOT claimed as a clean composite clear",
+ "HONEST_VERDICT": "CROSS-MODALITY DIRECTIONAL REPLICATION (within-tier strengthening). NOT a tier jump: composite fragile + still single-modality-family + no wet-lab.",
+ "two_dataset_summary": "SCC's method x synergy interaction is POSITIVE and permutation-significant on BOTH Norman (coeff +1.675, p=0.0005) and CaRPool (coeff +0.542, p=0.018). Vanilla conformal under-covers high-synergy doubles on both (0.72 / 0.785); SCC moves both toward nominal (0.815 / 0.848). This is a genuine cross-modality directional replication.",
+ "what_it_does_NOT_claim": "NOT a clean composite clear on both (Norman composite failed on power at the extreme-tercile split; CaRPool composite is preprocessing-sensitive). NOT a tier jump to 80+ (still needs a 3rd modality family and/or wet-lab). The internal merit tracker remains a self-assessment, not the hackathon score.",
+ "citations": [
+  "Wessels et al. Nat Methods 2023 DOI 10.1038/s41592-022-01705-x",
+  "Norman 2019 Science DOI 10.1126/science.aax4438",
+  "GEO GSE213957"
+ ],
+ "receipt_sha256": "ef9e1bffe49c7d7939ddaf6a460577833be94172f38bfcd85145beb21ae5c665"
+}

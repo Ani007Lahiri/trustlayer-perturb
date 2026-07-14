@@ -1,0 +1,47 @@
+{
+  "purpose": "Day-0 Verification Gate — Check C: verify T1D anchors from primary sources (v4 plan). Standard: real PMID/GWAS accession/registry entry, or relabel UNVERIFIED.",
+  "date_utc": "2026-07-09",
+  "council_standard": "PI-Scientist bar: paper itself reports the result, not a review citing a review; unverifiable claim -> UNVERIFIED, cannot support GO or 'T1D-validated' label.",
+  "claims": {
+    "claim_1_NOD_CD226_protection": {
+      "statement": "In NOD mice, CD226 (DNAM-1) deletion OR antibody blockade reduces/delays autoimmune diabetes (loss-of-function protective; direction-consistent with a gain-of-function risk allele).",
+      "verdict": "VERIFIED",
+      "primary_sources": [
+        {"pmid": "39636437", "first_author": "Brown ME", "year": 2025, "journal": "Diabetologia",
+         "result": "anti-CD226 antibody blockade in NOD: reduced insulitis (0.84-fold, p=0.0002 @12wk) and decreased diabetes incidence (HR 0.41, p=0.015 @30wk)",
+         "note": "peer-reviewed version of bioRxiv preprint 39071293 (dedup: cite Diabetologia)"},
+        {"pmid": "37625150", "first_author": "Thirawatananond P", "year": 2023, "journal": "Diabetes",
+         "result": "Treg-conditional Cd226 KO (TregDCd226) NOD: decreased insulitis and diabetes incidence; germline KO also protected"},
+        {"pmid": "33013915", "first_author": "Shapiro MR", "year": 2020, "journal": "Front Immunol",
+         "result": "germline CD226 KO NOD: decreased disease incidence and insulitis vs WT"}
+      ],
+      "supporting": [
+        {"pmid": "40957221", "note": "CD226+ B cells pathogenic in NOD"},
+        {"pmid": "38533515", "note": "TIGIT (CD226-counteracting coinhibitor) restrains diabetes"}
+      ],
+      "strength": "STRONGER than plan assumed: both KO and antibody, three independent papers (Brusko lab), all direction-consistent."
+    },
+    "claim_2_rs763361_GWS_T1D": {
+      "statement": "rs763361 (CD226 Gly307Ser, missense) is a genome-wide-significant Type 1 diabetes risk variant.",
+      "verdict": "VERIFIED",
+      "primary_sources": [
+        {"source": "GWAS Catalog REST API", "variant": "rs763361", "location": "chr18:69864406 (18q22.2)",
+         "functional_class": "missense_variant", "mapped_gene": "CD226 (ENSG00000150637, distance 0)",
+         "associations": [
+           {"trait": "type 1 diabetes mellitus (MONDO_0005147)", "pvalue": 1e-8, "OR": 1.16, "risk_allele": "rs763361-A", "assoc_id": 6109},
+           {"trait": "type 1 diabetes mellitus (MONDO_0005147)", "pvalue": 1e-9, "OR": 1.12, "assoc_id": 21583354}
+         ]},
+        {"pmid": "24891767", "first_author": "Mattana TC", "year": 2014, "journal": "Mediators Inflamm",
+         "result": "CD226 rs763361 associated with T1D susceptibility + greater GAD65 autoantibody frequency (Brazilian cohort)"}
+      ],
+      "note": "Two independent GWS T1D associations (p=1e-8, p=1e-9) in GWAS Catalog; both genome-wide significant (<5e-8)."
+    },
+    "claim_3_RVW101_T1D_validation": {
+      "statement": "RVW101 (competitor anti-CD226 asset) validates CD226 as a T1D target.",
+      "verdict": "UNVERIFIED / REMOVED",
+      "evidence": "clinicaltrials.gov API returned ZERO studies for 'RVW101'. Not a registered T1D (or any) trial identifier retrievable from primary registry.",
+      "resolution": "CONFIRMS the v3 plan fix was correct: RVW101 must NOT be cited as T1D validation. It is removed as an anchor. The CD226 clinical-druggability point, if used at all, must be labeled with a verifiable indication (IBD/UC per prior notes) and is NOT load-bearing. The two VERIFIED anchors (rs763361 GWS + NOD CD226-protection) fully carry the T1D case without it."
+    }
+  },
+  "overall": "Check C PASS. Two load-bearing T1D anchors VERIFIED from primary sources (GWAS Catalog + 3 NOD papers). The one unverifiable claim (RVW101) is dropped, not asserted — consistent with the honesty thesis. CD226 as a genetics-anchored, mechanistically-protective T1D target is on solid primary-source footing."
+}

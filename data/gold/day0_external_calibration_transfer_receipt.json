@@ -1,0 +1,75 @@
+{
+  "check": "External calibration transfer (strongest tier-mover)",
+  "generated_utc": "2026-07-11T07:06:20.222949Z",
+  "claim_tested": "Conformal quantiles calibrated on Marson T1D CD4+ Perturb-seq, applied UNCHANGED to an independent Perturb-seq dataset, still deliver near-nominal 80/90/95% coverage.",
+  "external_dataset": {
+    "name": "Norman et al. 2019 genome-scale genetic-interaction Perturb-seq",
+    "cell_type": "K562 (human chronic myelogenous leukemia)",
+    "geo_accession": "GSE133344",
+    "source_url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE133nnn/GSE133344/suppl/",
+    "why_independent": "Different lab, different cell type (K562 leukemia vs primary CD4+ T-cells), different perturbation panel, different sequencing run. The T1D pipeline never saw it. TRUE cross-dataset external validation.",
+    "raw_matrix": "33694 genes x 111668 cells, 362,199,631 nonzeros (streamed, not loaded)",
+    "single_gene_perturbations_scored": 105,
+    "min_cells_per_perturbation": 25,
+    "control_cells": 11855,
+    "file_sha256": {
+      "matrix": "7af10888c29be7e5be0466af100dfd6c5f1bc87f6d7cbfcb48270248d3639120",
+      "genes": "0dcba3cf4f3095b3fc1fa31b402c562bca7eea8d7d9ffd753e7b446dc37b9e3d",
+      "cell_identities": "daf30337e7f6f07096d57e0d81db784bef00c87bd1fc927f018792c2f7af81e4"
+    }
+  },
+  "true_cross_dataset": true,
+  "frozen_quantiles_applied_UNCHANGED": {
+    "0.8": 0.1714,
+    "0.9": 0.2299,
+    "0.95": 0.3027
+  },
+  "frozen_calibration_provenance": "q reconstructed from a global HGBR fit on all Marson pairs; widths 2q = 0.343/0.460/0.606 match committed conformal_lodo_receipt.json (0.342/0.458/0.603).",
+  "method_faithfulness": {
+    "target": "y = log1p( L2norm( DE zscore over shared readout panel, on-target gene excluded ) ) \u2014 IDENTICAL definition to Marson conformal.py; DE zscore = Welch two-sample stat (perturbation vs 11855 NegCtrl_NegCtrl cells) on log1p-CP10K expression.",
+    "shared_readout_panel_genes": 9780,
+    "panel_overlap_fraction_of_marson": 0.951,
+    "features": "[log_baseMean(on-target from control), condition one-hot]",
+    "condition_mapping": "K562 has no TCR-stimulation timepoints; pre-registered primary = 'Rest' (unstimulated, closest biological analog).",
+    "base_predictor_note": "Frozen base predictor is near-constant (pred sd=0.017 on Marson), so coverage depends on the residual DISTRIBUTION, not on feature-reconstruction details."
+  },
+  "RESULT_coverage_cross_dataset": {
+    "0.80": 0.0476,
+    "0.90": 0.0762,
+    "0.95": 0.1714,
+    "nominal_targets": {
+      "0.80": 0.8,
+      "0.90": 0.9,
+      "0.95": 0.95
+    }
+  },
+  "sensitivity_condition_allzero": {
+    "80": 0.0476,
+    "90": 0.0762,
+    "95": 0.181
+  },
+  "within_dataset_reference": {
+    "description": "FALLBACK reference (weaker): global frozen Marson q applied to held-out donor (same assay). Isolates cross-donor from cross-dataset shift.",
+    "coverage": {
+      "0.80": 0.7943,
+      "0.90": 0.8967,
+      "0.95": 0.9491
+    },
+    "verdict": "within-assay transfer HOLDS near nominal."
+  },
+  "diagnostic_offset_vs_scale": {
+    "norman_residual_mean": 0.604,
+    "norman_residual_sd": 0.295,
+    "marson_calib_residual_mean": 0.1173,
+    "marson_calib_residual_sd": 0.1126,
+    "oracle_recentered_coverage": {
+      "80": 0.4095,
+      "90": 0.4857,
+      "95": 0.6762
+    },
+    "interpretation": "Even after oracle mean-recentering, coverage stays well below nominal (0.41/0.49/0.68) because the Norman residual spread is 2.6x wider than the Marson calibration spread. Failure is BOTH location and scale \u2014 not a simple recalibratable offset."
+  },
+  "transfer_holds": "degrades",
+  "honest_verdict": "HONEST NEGATIVE. Frozen Marson T1D conformal quantiles do NOT transfer to an independent K562 Perturb-seq dataset: nominal 80/90/95% coverage collapses to 4.8/7.6/17.1%. The conformal guarantee is exchangeability-bound to the calibration distribution \u2014 it holds within-assay across held-out donors (79/90/95, matching the committed receipt) but NOT across a biologically distinct dataset. This is the expected behavior of split-conformal under distribution shift and is reported as a negative, not tuned away. The trust layer's coverage claim is valid ONLY for CD4+ T-cell Perturb-seq like its calibration data; it must be recalibrated per assay before use elsewhere.",
+  "figure": "figures/external_calibration_transfer.png"
+}

@@ -1,0 +1,64 @@
+{
+  "artifact": "prereg",
+  "claim": "The deployable difficulty-estimator family (any label-free sigma(x) or conditional-quantile method) CANNOT close the large-effect conditional-coverage gap on the committed donor-blocked LODO pipeline. The oracle (true-magnitude) Mondrian conformal predictor bounds the attainable bin-conditional-coverage ceiling; the residual gap between the best DEPLOYABLE method and this oracle is an INFORMATION LIMIT (no admissible covariate tracks the conditioning variable), not a method deficiency.",
+  "committed_pipeline_frozen": {
+    "base_predictor": "HistGradientBoostingRegressor(max_iter=300, learning_rate=0.05, max_depth=4, l2_regularization=1.0, random_state=20260708)",
+    "conformal_methods_module": "src/trustlayer/conformal_conditional.py (committed)",
+    "folds_source": "data/interim/lodo_surface_cache.pkl (frozen cached folds; X,y,gene,cond per fold)",
+    "nominal_level": 0.9,
+    "seed_conformal": 20260711,
+    "split": "donor-blocked leave-one-donor-out (4 folds); calib=pairs excluding donor d, test=pairs containing d",
+    "target": "y = log1p(||trans-effect zscore||, on-target excluded); admissible features X = [log_baseMean, condition one-hot]"
+  },
+  "decision_rule_information_limit_established": {
+    "no_if": "the deployable family closes the gap (best_deployable within bootstrap CI of oracle_ceiling) OR features predict |resid| (r2_features CI lower > 0.05)",
+    "partial_if": "most but not all of the above hold",
+    "yes_if_ALL": [
+      "break_confirmed < 0.75 AND its bootstrap 95% CI upper < nominal 0.90",
+      "attainability_gap > 0 with bootstrap 95% CI excluding 0",
+      "r2_features_to_resid bootstrap 95% CI upper < 0.05 AND r2_trueeffect_to_resid > 0.8",
+      "every deployable difficulty_top20_capture 95% CI overlaps 0.20 (none meaningfully separates the hard stratum), while oracle capture 95% CI lower > 0.40"
+    ]
+  },
+  "generated_utc": "2026-07-11T19:41:51.212808+00:00",
+  "hypotheses_directional": {
+    "H1_break": "break_confirmed < 0.90 (baseline under-covers the large-effect stratum); prior-reported ~0.598",
+    "H2_deployable_ceiling": "best_deployable = cqr_deployable and < oracle_ceiling; prior-reported CQR ~0.73",
+    "H3_oracle": "oracle_ceiling substantially > best_deployable; prior-reported ~0.877",
+    "H4_information_limit": "r2_features_to_resid ~= 0 (bootstrap CI upper < 0.05) while r2_trueeffect_to_resid > 0.8 and corr_resid_effect ~ 0.99",
+    "H5_all_scores_random": "every deployable difficulty_top20_capture is within the random-chance band (~0.20), while oracle capture >> 0.20"
+  },
+  "inference": {
+    "bootstrap": "gene-cluster bootstrap (resample unique perturbed genes with replacement, take all their rows) B=1000, seed=20260711, to respect the non-independence of recurring perturbations across donor-pairs; 95% percentile CIs on every metric",
+    "honesty_contract": "This is a NEGATIVE / LIMIT result reported AS an honest null. No metric will be tuned after unblinding. The committed pipeline is scored, not a surrogate."
+  },
+  "metrics_defined_before_scoring": {
+    "attainability_gap": "oracle_ceiling - best_deployable (the certified un-closable residual gap)",
+    "best_deployable": "max top-stratum coverage over {baseline, mondrian_pred, normalized, cqr}",
+    "break_confirmed": "top-stratum coverage of BASELINE global split-conformal at nominal 0.90 (marginal-valid method; expected to UNDER-cover)",
+    "corr_resid_effect": "Pearson corr(|residual|, |y - median(y)|) pooled across test rows",
+    "cqr_deployable": "top-stratum coverage of CQR (best deployable) at nominal 0.90",
+    "difficulty_top20_capture": "for each of 6 deployable difficulty scores {feature meta-model, deep meta-model, kNN residual density, ensemble disagreement, predicted magnitude, feature leverage}: fraction of top-stratum rows that fall in the top-20% of the score. Random-chance floor = 0.20. Oracle |resid| ~ 0.60.",
+    "oracle_ceiling": "top-stratum coverage of mondrian_oracle (bins by TRUE y; NON-deployable ceiling) at nominal 0.90",
+    "r2_features_to_resid": "honest 5-fold out-of-fold CV R2 of HGBR(admissible X -> |residual|), pooled across LODO test rows",
+    "r2_trueeffect_to_resid": "R2 of |residual| explained by TRUE effect magnitude y (in-sample OLS on pooled test rows)"
+  },
+  "prior_art_exhausted": [
+    "Papadopoulos, Gammerman, Vovk (2008) normalized nonconformity measures",
+    "Lei, G'Sell, Rinaldo, Tibshirani, Wasserman (2018, JASA) locally-weighted/normalized CP",
+    "Guan (2023, Biometrika) localized conformal prediction",
+    "Vovk et al. (2003), Vovk (2012) Mondrian / conditional-validity CP",
+    "Romano, Patterson, Candes (2019) CQR",
+    "Barber, Candes, Ramdas, Tibshirani (2019/2021) limits of distribution-free conditional coverage"
+  ],
+  "project": "calibrated-trust layer for CD4+ T-cell Perturb-seq (T1D)",
+  "receipt_sha256": "53849c37870c107fab06385f93bf0a8fdf41497eb1ce12e601d76d88e8ebd653",
+  "status": "PRE-REGISTERED BEFORE SCORING (honesty contract: negative/limit result)",
+  "stratum_definition": {
+    "binning": "per-fold quintile bins (k=5) of test-set true y; 'top stratum' = highest quintile",
+    "conditioning_variable": "TRUE effect magnitude y (the label)",
+    "coverage_measured": "pooled over the 4 LODO folds within the top true-effect stratum",
+    "note": "This is the exact stratum on which marginal-valid CP is disclosed to break."
+  },
+  "title": "Conditional-coverage ATTAINABILITY certificate for the large-effect coverage break"
+}

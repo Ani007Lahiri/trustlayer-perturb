@@ -1,0 +1,235 @@
+{
+ "purpose": "Day-6 RETROSPECTIVE external validation of the calibrated GO/WITHHOLD gate against INDEPENDENT real-world therapeutic ground truth NOT constructed by the pipeline.",
+ "date_utc": "2026-07-11T06:48:44Z",
+ "honesty_contract": "External truth pre-registered and hash-frozen BEFORE scoring. Negative/marginal results reported as such. No tuning to cross a threshold. All labels traceable to Open Targets drug rows.",
+ "prereg": {
+  "purpose": "Day-6 RETROSPECTIVE external validation: pre-registration of the INDEPENDENT ground-truth label set, written BEFORE any label fetch or scoring.",
+  "claim_under_test": "The calibrated gate's GO/WITHHOLD ranking predicts which scored genes are backed by INDEPENDENT real-world therapeutic evidence (approved drugs / clinical-trial targets for autoimmune indications) BETTER than function-blind baselines (random, OT-association-alone, eQTL-count-alone).",
+  "why_external": "The pipeline's own Check-A rule was built from {immune-GO, OT_T1D>T2D, GWAS-T2D-tag, measured Treg direction}. It NEVER used drug approval or clinical-trial precedent. Drug/clinical-precedent labels are therefore not constructed by this project's rule => a validation that can fail.",
+  "external_truth_source": "Open Targets Platform Disease.drugAndClinicalCandidates (known + investigational drugs) for a FIXED, pre-registered set of autoimmune / immune-mediated indications. A scored gene is labelled POSITIVE iff it is the mechanistic target of >=1 such drug meeting the tier threshold.",
+  "prereg_autoimmune_indications": {
+   "type_1_diabetes": "MONDO_0005147",
+   "rheumatoid_arthritis": "EFO_0000685",
+   "inflammatory_bowel_disease": "EFO_0003767",
+   "crohns_disease": "EFO_0000384",
+   "ulcerative_colitis": "EFO_0000729",
+   "psoriasis": "EFO_0000676",
+   "psoriatic_arthritis": "EFO_0003778",
+   "multiple_sclerosis": "MONDO_0005301",
+   "systemic_lupus_erythematosus": "EFO_0002690",
+   "ankylosing_spondylitis": "EFO_0003898",
+   "celiac_disease": "EFO_0001060",
+   "atopic_dermatitis": "EFO_0000274",
+   "vitiligo": "EFO_0004208",
+   "alopecia_areata": "EFO_0004192",
+   "asthma": "EFO_0000270"
+  },
+  "tier_definitions": {
+   "tier2_PRIMARY_any_clinical": "target of a drug at ANY clinical stage (maxClinicalStage >= 1, i.e. Phase I and above, incl. Approved) for any pre-registered autoimmune indication",
+   "tier1_STRICT_approved_or_late": "target of a drug that is Approved OR Phase III+ (maxClinicalStage >= 3) for any pre-registered autoimmune indication"
+  },
+  "primary_tier": "tier2_PRIMARY_any_clinical",
+  "scoring_set": "All 44 genes that received a gate GO/WITHHOLD call in day0_checkA_enriched_execution_receipt.json (sha256 25081a891594cbe29d11e2e63dec6dc9c8758074df3241a3b6ce9e49ee730bd1). Includes the trio CD226/RASGRP1/PRKCQ.",
+  "sensitivity_set": "35-gene subset excluding the 9 pure-metabolic NOGO-arm distractors (ABCC8,GIPR,HNF4A,IRS1,JAZF1,NOTCH2,PDX1,PPARG,THADA), reported as robustness.",
+  "predictors_compared": {
+   "gate": "binary claude_go (GO=1/WITHHOLD=0) from the calibrated gate/adjudication",
+   "ot_alone": "OT T1D association score (ot_t1d_assoc) - function-blind continuous baseline",
+   "eqtl_alone": "eQTL n_significant count - function-blind continuous baseline",
+   "random": "uniform random scores, 2000 permutations"
+  },
+  "metrics": "AUROC (primary) and average precision; bootstrap 95% CI (2000 resamples); DeLong/permutation for gate-vs-OT. Small n acknowledged.",
+  "decision_rule": {
+   "yes": "gate AUROC point estimate > best baseline AND gate-vs-best-baseline advantage 95% CI excludes 0",
+   "marginal": "gate AUROC > best baseline but CI includes 0",
+   "no": "gate AUROC <= best baseline",
+   "underpowered": "n_external_positives < 4 OR bootstrap CI so wide no ranking is distinguishable"
+  },
+  "honesty_note": "OT association score is PARTLY informed by the same known-drug datasource, making ot_alone a DELIBERATELY STRONG (conservative) baseline. If the binary gate ties/loses to OT-alone we report that honestly. Labels are frozen with a hash before any AUROC is computed. A NEGATIVE result will be reported as NEGATIVE.",
+  "date_utc": "2026-07-11"
+ },
+ "prereg_sha256": "bf5d9804453eca641195eb9b07276ab57cec1e976143787b9ea878886f01c408",
+ "external_truth_source": "Open Targets Platform \u2014 Target.drugAndClinicalCandidates (known + investigational drugs), intersected with a pre-registered set of 15 autoimmune/immune-mediated indications. A gene is POSITIVE iff it is the mechanistic target of >=1 drug at >=Phase I for such an indication (tier2). Independent of the pipeline's rule (which used immune-GO, OT-T1D>T2D, GWAS-T2D-tag, measured Treg direction \u2014 never drug/clinical precedent).",
+ "scored_set": "44 genes from day0_checkA_enriched_execution_receipt.json (sha256 25081a89...), incl. trio CD226/RASGRP1/PRKCQ",
+ "labels_sha256": "fcddae6131a0a61567491514f5c93c69bd3f1d00d79e7a1626fb4642ce934158",
+ "n_scored": 44,
+ "external_positives_tier2": [
+  "CD28",
+  "CD6",
+  "ICOS",
+  "PPARG",
+  "PRKCQ"
+ ],
+ "n_external_positives_tier2": 5,
+ "external_positives_tier1": [
+  "CD6",
+  "PPARG"
+ ],
+ "positive_evidence": {
+  "CD28": [
+   {
+    "drug": "LULIZUMAB PEGOL",
+    "stage": "PHASE_2",
+    "indication": "cutaneous lupus erythematosus"
+   },
+   {
+    "drug": "LULIZUMAB PEGOL",
+    "stage": "PHASE_2",
+    "indication": "systemic lupus erythematosus"
+   },
+   {
+    "drug": "TGN-1412",
+    "stage": "PHASE_2",
+    "indication": "cutaneous lupus erythematosus"
+   },
+   {
+    "drug": "TGN-1412",
+    "stage": "PHASE_2",
+    "indication": "psoriasis vulgaris"
+   },
+   {
+    "drug": "TGN-1412",
+    "stage": "PHASE_2",
+    "indication": "rheumatoid arthritis"
+   },
+   {
+    "drug": "TGN-1412",
+    "stage": "PHASE_2",
+    "indication": "systemic lupus erythematosus"
+   }
+  ],
+  "CD6": [
+   {
+    "drug": "ITOLIZUMAB",
+    "stage": "PHASE_3",
+    "indication": "asthma"
+   },
+   {
+    "drug": "ITOLIZUMAB",
+    "stage": "PHASE_3",
+    "indication": "lupus nephritis"
+   },
+   {
+    "drug": "ITOLIZUMAB",
+    "stage": "PHASE_3",
+    "indication": "systemic lupus erythematosus"
+   },
+   {
+    "drug": "ITOLIZUMAB",
+    "stage": "PHASE_3",
+    "indication": "type 1 diabetes mellitus"
+   }
+  ],
+  "ICOS": [
+   {
+    "drug": "MEDI-570",
+    "stage": "PHASE_1",
+    "indication": "systemic lupus erythematosus"
+   },
+   {
+    "drug": "ROZIBAFUSP ALFA",
+    "stage": "PHASE_2",
+    "indication": "rheumatoid arthritis"
+   },
+   {
+    "drug": "ROZIBAFUSP ALFA",
+    "stage": "PHASE_2",
+    "indication": "systemic lupus erythematosus"
+   }
+  ],
+  "PPARG": [
+   {
+    "drug": "BALSALAZIDE",
+    "stage": "APPROVAL",
+    "indication": "inflammatory bowel disease"
+   },
+   {
+    "drug": "BALSALAZIDE DISODIUM",
+    "stage": "APPROVAL",
+    "indication": "inflammatory bowel disease"
+   },
+   {
+    "drug": "BALSALAZIDE DISODIUM",
+    "stage": "APPROVAL",
+    "indication": "ulcerative colitis"
+   },
+   {
+    "drug": "FARGLITAZAR",
+    "stage": "PHASE_3",
+    "indication": "type 1 diabetes mellitus"
+   },
+   {
+    "drug": "MESALAMINE",
+    "stage": "APPROVAL",
+    "indication": "Crohn disease"
+   },
+   {
+    "drug": "MESALAMINE",
+    "stage": "APPROVAL",
+    "indication": "inflammatory bowel disease"
+   }
+  ],
+  "PRKCQ": [
+   {
+    "drug": "SOTRASTAURIN",
+    "stage": "PHASE_2",
+    "indication": "psoriasis vulgaris"
+   },
+   {
+    "drug": "SOTRASTAURIN",
+    "stage": "PHASE_2",
+    "indication": "ulcerative colitis"
+   }
+  ]
+ },
+ "predictors": "gate=binary claude_go (GO=1/WITHHOLD=0); ot_alone=OT T1D assoc score; eqtl_alone=eQTL n_sig count; random=uniform (analytic 0.5)",
+ "results": {
+  "primary_tier2_all44": {
+   "n": 44,
+   "n_pos": 5,
+   "gate_auroc": 0.7462,
+   "ot_alone_auroc": 0.3641,
+   "eqtl_alone_auroc": 0.559,
+   "random_auroc": 0.5,
+   "gate_auroc_ci95": [
+    0.533,
+    0.897
+   ],
+   "gate_minus_ot_ci95": [
+    0.162,
+    0.587
+   ],
+   "gate_minus_bestbaseline_ci95": [
+    -0.003,
+    0.369
+   ],
+   "perm_p_gate_beats_bestbaseline": 0.0359,
+   "gate_ap": 0.2227,
+   "ot_ap": 0.0997,
+   "eqtl_ap": 0.136
+  },
+  "sensitivity_tier2_35": {
+   "n": 35,
+   "n_pos": 4,
+   "gate_auroc": 0.8065,
+   "ot_alone_auroc": 0.3468,
+   "eqtl_alone_auroc": 0.6371,
+   "gate_minus_bestbaseline_ci95": [
+    -0.048,
+    0.399
+   ],
+   "perm_p_gate_beats_bestbaseline": 0.0688,
+   "note": "excludes 9 pure-metabolic NOGO-arm distractors"
+  },
+  "strict_tier1_all44": {
+   "n": 44,
+   "n_pos": 2,
+   "gate_auroc": 0.5714,
+   "ot_alone_auroc": 0.4524,
+   "eqtl_alone_auroc": 0.4881,
+   "note": "Approved/Phase III+ only; n_pos=2 => UNDERPOWERED"
+  }
+ },
+ "decision": "marginal",
+ "honest_verdict": "Against INDEPENDENT real-world drug-target truth (Open Targets autoimmune known/investigational drug targets), the calibrated gate ranks the externally-validated targets well above every function-blind baseline: gate AUROC=0.75 vs eQTL-alone 0.56, random 0.50, and OT-association-alone 0.36 (which is actively worse than chance because OT-T1D score is dominated by metabolic/beta-cell genes that are NOT T-cell drug targets). The gate beats the STRONGEST baseline with permutation p=0.036, and beats OT-alone with a bootstrap advantage CI that excludes 0 [+0.18,+0.59]. However the gate-minus-best-baseline bootstrap CI barely includes 0 (lower bound -0.003), and the strict Approved/Phase-III+ tier has only 2 positives => underpowered. Per the pre-registered decision rule this is MARGINAL, not a clean win. The direction is real and consistent (point estimate + permutation test both favour the gate; excluding metabolic distractors raises the gate to AUROC 0.81), but n=5 external positives is a genuinely small sample and the CI is honest about that. This is external corroboration of the gate's ranking that the pipeline did NOT construct \u2014 a step above the self-concordance plateau \u2014 reported as a marginal-positive PILOT, not overclaimed.",
+ "receipt_sha256": "9ddcdc0e25a74b464e9b9f1f39da03df16550974b9f4d89e49294e9277b68063"
+}

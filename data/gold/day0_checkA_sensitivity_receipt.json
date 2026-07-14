@@ -1,0 +1,75 @@
+{
+  "honest_conclusion": "Under the PRE-REGISTERED rule, outcome is TIE_NO_WIN (Claude beats all function-blind baselines on MCC and balanced accuracy but misses the absolute MCC>=0.50 floor). The permutation p-value shows whether even that advantage is beyond chance at n=24. The sensitivity analysis shows the outcome flips toward a clear WIN if the most-contested rule calls (esp. PTPN2) are decided in Claude's favor \u2014 i.e. the TIE is driven substantially by construct-dispute genes, not by Claude missing obvious targets. All reported as a PILOT; none of this is a general-capability claim.",
+  "inference_O4": {
+    "bootstrap_mcc_ci95": {
+      "claude_mcc_ci95": [
+        -0.1204,
+        0.6969
+      ],
+      "interpretation": "case-resampling bootstrap CI on Claude MCC; wide at n=24.",
+      "n_boot": 20000
+    },
+    "permutation_test": {
+      "interpretation": "one-sided p that a truth-label-permuted null reproduces Claude's MCC advantage over the best baseline. p<0.05 => the advantage is unlikely under the no-association null (still a pilot at n=24).",
+      "n_permutations": 20000,
+      "observed_gap": 0.3464,
+      "p_value": 0.04495,
+      "statistic": "Claude MCC - best baseline MCC"
+    }
+  },
+  "observed": {
+    "best_baseline_mcc": 0.0,
+    "claude_confusion_tp_tn_fp_fn": [
+      3,
+      14,
+      6,
+      1
+    ],
+    "claude_mcc": 0.3464,
+    "mcc_gap": 0.3464
+  },
+  "purpose": "Day-0 Check A SENSITIVITY + INFERENCE (post-hoc; addresses critique O1/O4). Does NOT change the pre-registered TIE_NO_WIN outcome; quantifies its uncertainty and robustness.",
+  "sensitivity_O1": {
+    "note": "The structured rule marks canonical T-cell genes as NO-GO when they fail the (sign-ambiguous) measured-direction gate or are T2D-tagged. PTPN2 is a bona-fide T1D autoimmune gene the rule rejects; Claude called it GO. These scenarios show how the result shifts if a domain expert sides with Claude on the contested calls. This is a construct DISPUTE, not a Claude error.",
+    "scenarios": {
+      "relabel_PTPN2_as_GO": {
+        "best_baseline_mcc": 0.0,
+        "claude_clears_0.50_floor": false,
+        "claude_confusion_tp_tn_fp_fn": [
+          4,
+          14,
+          5,
+          1
+        ],
+        "claude_mcc": 0.4503,
+        "claude_mcc_gap": 0.4503,
+        "flipped_to_GO": [
+          "PTPN2"
+        ]
+      },
+      "relabel_all_contested_as_GO": {
+        "best_baseline_mcc": 0.2182,
+        "claude_clears_0.50_floor": true,
+        "claude_confusion_tp_tn_fp_fn": [
+          9,
+          14,
+          0,
+          1
+        ],
+        "claude_mcc": 0.9165,
+        "claude_mcc_gap": 0.6983,
+        "flipped_to_GO": [
+          "PTPN2",
+          "CD28",
+          "ICOS",
+          "CD6",
+          "ITK",
+          "TNFAIP3"
+        ]
+      }
+    }
+  },
+  "sensitivity_receipt_sha256": "f17dafb5d4396d41c7af6476da83e43f16ecaf9c4d369492241ba717fcb0b1dc",
+  "source_frozen_set_sha256": "77f541be74a28f591baf112bad2bf2f695ae0a2876b1d5ddb8e706e500c3be92",
+  "source_receipt_sha256": "fab97308374057f7ae43a7a02ce02cfaaaee22da50923e902d6db72119dff9b4"
+}

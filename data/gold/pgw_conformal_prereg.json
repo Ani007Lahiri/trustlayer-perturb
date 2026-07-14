@@ -1,0 +1,47 @@
+{
+ "name": "PGW-Conformal: perturbation-graph-weighted conformal \u2014 falsification test",
+ "date": "2026-07-12",
+ "one_line": "Does an EXTERNAL biology-graph distance-to-training-support normalizer give better conditional coverage under perturbation-distribution-shift than (a) vanilla split conformal and (b) leverage-weighted conformal (hat-matrix), at matched marginal coverage?",
+ "prior_art_acknowledged": {
+  "umbrella_idea_occupied": "arXiv:2603.02204 (Mar 2026) \u2014 perturbation-structured selective conformal (causal-descendant axis). We do NOT claim 'first perturbation-native conformal'.",
+  "nearest_published_method": "Leverage-Weighted Conformal Prediction (LWCP), Fadnavis arXiv:2602.12693 \u2014 normalizer = hat-matrix leverage in predictor design space. THE decisive baseline.",
+  "other": [
+   "Tibshirani et al. 2019 arXiv:1904.06019 weighted CP",
+   "Romano et al. 2019 CQR arXiv:1905.03222",
+   "Papadopoulos 2008 / Lei 2018 normalized CP",
+   "CF-GNN Huang et al. NeurIPS 2023 arXiv:2305.14535 (transductive, GNN-only)"
+  ]
+ },
+ "method": {
+  "base_residual": "|y - yhat| from committed HistGBR base predictor on leakage-safe features",
+  "PGW_normalizer": "sigma(d(p)) where d(p)=graph distance from perturbation gene p to the TRAINING-support gene set in STRING (softmin over support); sigma = isotonic regression of |residual| on d, floored at sigma_min",
+  "interval": "C(p)=yhat \u00b1 sigma(d(p)) * Q_{1-alpha}(calibration scores)",
+  "graph": "STRING human, combined_score>=700, restricted to perturbed genes"
+ },
+ "protocol": {
+  "shift": "leave-perturbation-CLUSTER-out (LOCO): Louvain communities on STRING; hold out whole communities so test genes are graph-distant from calibration",
+  "folds": ">=10 LOCO folds",
+  "marginal_coverage_target": 0.9,
+  "primary_endpoint": "conditional-coverage gap g = max over distance-strata |empirical_coverage - 0.90|, at MATCHED marginal coverage ~0.90",
+  "comparison": "paired across folds: PGW vs vanilla, and PGW vs LWCP",
+  "null": "permutation: permute gene->node labels on the graph (destroys biology, preserves degree), target perm p<0.01 for PGW-beats-LWCP"
+ },
+ "prereg_falsifiers": [
+  "F1: PGW does NOT beat LWCP on conditional-coverage gap (perm p>=0.01) -> biology graph adds nothing beyond generic leverage -> NOT a novel primitive -> stays ~77",
+  "F2: isotonic sigma on graph-distance does NOT beat isotonic sigma on predictor feature-space difficulty -> reduces to standard normalized CP",
+  "F3: permuting gene identities on graph (preserving degree) does NOT degrade PGW -> graph carries no biological signal, only topology stats"
+ ],
+ "tier_rule": {
+  "clears_80": "PGW beats BOTH vanilla AND LWCP on conditional-coverage gap with perm p<0.01, AND F3 fires (real permutation degrades it) -> genuinely novel validated primitive -> 80-83",
+  "stays_77": "any falsifier F1/F2/F3 fires -> honest conclusion: rigorous application of known locally-adaptive CP, NOT a novel primitive -> 76-79",
+  "honest_prior": "~50/50 before running"
+ },
+ "datasets": {
+  "primary": "Gladstone CD4+ T (11,526 genes, well-powered)",
+  "replication": [
+   "Norman2019 K562 singles n=105",
+   "Datlinger Jurkat n=32"
+  ]
+ },
+ "prereg_sha256": "eab893d136f16a54fcdb573c8df8a2b70f118d648bb75163fcf9cb1606afb046"
+}

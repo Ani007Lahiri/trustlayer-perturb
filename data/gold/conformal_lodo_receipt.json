@@ -76,7 +76,15 @@
       "row_cp_lo": 0.7899,
       "row_cp_hi": 0.7965,
       "row_cp_note": "row-level CP is OVERCONFIDENT (non-independent rows); use fold_std as the honest uncertainty",
-      "n_rows": 58558
+      "n_rows": 58558,
+      "interval_width_log2fc_mean": 0.342,
+      "interval_width_log2fc_by_fold": [
+        0.3369,
+        0.349,
+        0.3438,
+        0.3382
+      ],
+      "interval_width_note": "full conformal interval is pred +/- q; width = 2*q in log2FC units. This is the deliverable confidence signal ('how wide?'), now reported."
     },
     "0.9": {
       "nominal": 0.9,
@@ -95,7 +103,15 @@
       "row_cp_lo": 0.893,
       "row_cp_hi": 0.898,
       "row_cp_note": "row-level CP is OVERCONFIDENT (non-independent rows); use fold_std as the honest uncertainty",
-      "n_rows": 58558
+      "n_rows": 58558,
+      "interval_width_log2fc_mean": 0.4578,
+      "interval_width_log2fc_by_fold": [
+        0.4553,
+        0.4657,
+        0.4586,
+        0.4517
+      ],
+      "interval_width_note": "full conformal interval is pred +/- q; width = 2*q in log2FC units. This is the deliverable confidence signal ('how wide?'), now reported."
     },
     "0.95": {
       "nominal": 0.95,
@@ -114,7 +130,15 @@
       "row_cp_lo": 0.9468,
       "row_cp_hi": 0.9504,
       "row_cp_note": "row-level CP is OVERCONFIDENT (non-independent rows); use fold_std as the honest uncertainty",
-      "n_rows": 58558
+      "n_rows": 58558,
+      "interval_width_log2fc_mean": 0.6032,
+      "interval_width_log2fc_by_fold": [
+        0.5997,
+        0.6038,
+        0.6137,
+        0.5956
+      ],
+      "interval_width_note": "full conformal interval is pred +/- q; width = 2*q in log2FC units. This is the deliverable confidence signal ('how wide?'), now reported."
     }
   },
   "per_donor_coverage": {
@@ -124,6 +148,11 @@
         "0.8": 0.7979508196721311,
         "0.9": 0.891188524590164,
         "0.95": 0.9420081967213115
+      },
+      "interval_width_log2fc": {
+        "0.8": 0.3369,
+        "0.9": 0.4553,
+        "0.95": 0.5997
       }
     },
     "CE0008162": {
@@ -132,6 +161,11 @@
         "0.8": 0.8053828813443541,
         "0.9": 0.9036819454880798,
         "0.95": 0.9515677300362047
+      },
+      "interval_width_log2fc": {
+        "0.8": 0.349,
+        "0.9": 0.4657,
+        "0.95": 0.6038
       }
     },
     "CE0008678": {
@@ -140,6 +174,11 @@
         "0.8": 0.7915841245986748,
         "0.9": 0.8973290525309106,
         "0.95": 0.9550515745611039
+      },
+      "interval_width_log2fc": {
+        "0.8": 0.3438,
+        "0.9": 0.4586,
+        "0.95": 0.6137
       }
     },
     "CE0010866": {
@@ -148,14 +187,19 @@
         "0.8": 0.7778005464480874,
         "0.9": 0.8897540983606558,
         "0.95": 0.9458333333333333
+      },
+      "interval_width_log2fc": {
+        "0.8": 0.3382,
+        "0.9": 0.4517,
+        "0.95": 0.5956
       }
     }
   },
   "selective_risk": {
-    "aurc_model": 0.1151,
+    "aurc_model": 0.11406,
     "permutation_null": {
-      "aurc_observed": 0.1151,
-      "aurc_null_mean": 0.11826,
+      "aurc_observed": 0.11406,
+      "aurc_null_mean": 0.11827,
       "aurc_null_std": 0.00047,
       "p_value_one_sided": 0.0005,
       "n_permutations": 2000,

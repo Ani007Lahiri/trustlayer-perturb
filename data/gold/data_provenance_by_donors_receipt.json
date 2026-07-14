@@ -1,0 +1,15 @@
+{
+  "file": "GWCD4i.DE_stats.by_donors.h5mu",
+  "source_url": "https://genome-scale-tcell-perturb-seq.s3.amazonaws.com/marson2025_data/GWCD4i.DE_stats.by_donors.h5mu",
+  "provenance": "CZI Virtual Cells Platform (public S3, MIT license); Zhu/Dann/Pritchard/Marson 2025",
+  "size_bytes": 16866278447,
+  "endpoint_fingerprint_sha256_1MB_headtail": "391418261ff746ae424cae39",
+  "fingerprint_components": {
+    "head_1MB_sha256_24": "5cd4272ad4304504769ec62f",
+    "tail_1MB_sha256_24": "57e392c2d15a4145f81a789c",
+    "method": "sha256(head_1MB) || sha256(tail_1MB), then sha256, first 24 hex chars"
+  },
+  "fingerprinted_utc": "2026-07-09T06:26:43.978729+00:00",
+  "role": "DONOR-RESOLVED file: 6 donor-pair modalities from 4 donors. This is the file the HEADLINE donor-blocked LODO split-conformal coverage claim (0.793/0.895/0.949) is computed on (conformal.py H5MU). Distinct from the pooled GWCD4i.DE_stats.h5ad used for base-predictor training.",
+  "note": "DI02 fix: v3 shipped a provenance receipt only for the pooled .h5ad (which the headline does NOT depend on); this adds the missing receipt for the donor-resolved file the headline DOES depend on."
+}

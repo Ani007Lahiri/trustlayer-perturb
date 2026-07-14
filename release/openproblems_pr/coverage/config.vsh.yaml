@@ -1,0 +1,32 @@
+# OpenProblems metric component: conformal coverage / undercoverage gap
+# Target task: task_perturbation_prediction
+# NOTE: this metric requires a probabilistic method-output (interval or quantiles).
+# It is proposed ALONGSIDE a design issue to extend the method-output API, since
+# the current 5 metrics all score point predictions and coverage is undefined on a point.
+functionality:
+  name: conformal_coverage
+  info:
+    label: Conformal coverage @ 0.90
+    summary: "Empirical coverage of a 90% conformal prediction interval, and the undercoverage gap (nominal - empirical). Rewards calibrated uncertainty, not point accuracy."
+    metrics:
+      - name: coverage_at_0.90
+        label: Coverage@0.90
+        maximize: false   # closeness to 0.90 is good; we report |gap| separately
+      - name: undercoverage_gap
+        label: Undercoverage gap
+        maximize: false
+  arguments:
+    - name: "--input_prediction"
+      type: file
+      info: "Predicted lower/upper interval per (perturbation, gene), or quantile samples."
+    - name: "--input_solution"
+      type: file
+    - name: "--output"
+      type: file
+      direction: output
+  resources:
+    - type: python_script
+      path: script.py
+platforms:
+  - type: docker
+    image: openproblems/base_python:1.0

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knows When It's Wrong — Built with Claude: Life Sciences</title>
+
+<!-- Fontshare: Clash Display (headings) + Satoshi (body); Space Mono (Google) for terminal/eval bits -->
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ===========================================
+   VIEWPORT FITTING: MANDATORY BASE STYLES
+   =========================================== */
+html, body { height: 100%; overflow-x: hidden; margin: 0; }
+html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+
+.slide {
+    width: 100vw; height: 100vh; height: 100dvh;
+    overflow: hidden; scroll-snap-align: start;
+    display: flex; flex-direction: column; position: relative;
+}
+.slide-content {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+    max-height: 100%; overflow: hidden; padding: var(--slide-padding);
+    position: relative; z-index: 2;
+}
+:root {
+    --title-size: clamp(1.5rem, 5vw, 4rem);
+    --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
+    --h3-size: clamp(1rem, 2.5vw, 1.75rem);
+    --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+    --small-size: clamp(0.65rem, 1vw, 0.875rem);
+    --slide-padding: clamp(1rem, 4vw, 4rem);
+    --content-gap: clamp(0.5rem, 2vw, 2rem);
+    --element-gap: clamp(0.25rem, 1vw, 1rem);
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: clamp(0.5rem, 1.5vw, 1rem);
+}
+@media (max-height: 700px){ :root{ --slide-padding:clamp(0.75rem,3vw,2rem); --title-size:clamp(1.25rem,4.5vw,2.5rem); --h2-size:clamp(1rem,3vw,1.75rem);} }
+@media (max-height: 600px){ :root{ --slide-padding:clamp(0.5rem,2.5vw,1.5rem); --title-size:clamp(1.1rem,4vw,2rem); --body-size:clamp(0.7rem,1.2vw,0.95rem);} .decorative,.hint{display:none;} }
+@media (max-height: 500px){ :root{ --title-size:clamp(1rem,3.5vw,1.5rem); --h2-size:clamp(0.9rem,2.5vw,1.25rem); --body-size:clamp(0.65rem,1vw,0.85rem);} }
+@media (max-width: 600px){ :root{ --title-size:clamp(1.25rem,7vw,2.5rem);} .grid{grid-template-columns:1fr;} }
+@media (prefers-reduced-motion: reduce){ *,*::before,*::after{ animation-duration:.01ms!important; transition-duration:.2s!important;} html{scroll-behavior:auto;} }
+
+/* ===========================================
+   THEME — "Neon Cyber" refined for research
+   =========================================== */
+:root{
+    --bg:#080b16; --bg2:#0d1224; --panel:rgba(255,255,255,.04);
+    --line:rgba(120,150,220,.18);
+    --ink:#eaf0ff; --muted:#93a1c4;
+    --cyan:#3ce0f0; --cyan-d:#12b6cc;
+    --violet:#8b7dff;
+    --critic:#ff4d6d;   /* VETO / critic */
+    --valid:#3ee6a5;    /* validated / recovered */
+    --amber:#ffcf5c;
+}
+*{ box-sizing:border-box; }
+body{
+    background:var(--bg); color:var(--ink);
+    font-family:"Satoshi",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.display{ font-family:"Clash Display","Satoshi",sans-serif; font-weight:700; letter-spacing:-.02em; line-height:1.02; margin:0; }
+p{ margin:0; }
+.mono{ font-family:"Space Mono",monospace; }
+
+/* atmospheric background: grid + radial glows */
+.slide::before{
+    content:""; position:absolute; inset:0; z-index:0;
+    background:
+      radial-gradient(1100px 600px at 82% -10%, rgba(60,224,240,.10), transparent 60%),
+      radial-gradient(900px 600px at 0% 110%, rgba(139,125,255,.12), transparent 60%),
+      linear-gradient(180deg,var(--bg),var(--bg2));
+}
+.slide::after{ /* faint engineering grid */
+    content:""; position:absolute; inset:0; z-index:1; opacity:.35; pointer-events:none;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:clamp(34px,5vw,64px) clamp(34px,5vw,64px);
+    -webkit-mask-image:radial-gradient(120% 90% at 50% 40%,#000 55%,transparent 100%);
+            mask-image:radial-gradient(120% 90% at 50% 40%,#000 55%,transparent 100%);
+}
+
+/* shared bits */
+.kicker{ font-family:"Space Mono",monospace; font-size:var(--small-size); letter-spacing:.28em; text-transform:uppercase; color:var(--cyan); display:flex; align-items:center; gap:.6em; }
+.kicker::before{ content:""; width:clamp(18px,3vw,42px); height:2px; background:linear-gradient(90deg,var(--cyan),transparent); }
+h1{ font-size:var(--title-size); }
+h2{ font-size:var(--h2-size); }
+.lead{ font-size:var(--body-size); color:var(--muted); line-height:1.5; max-width:60ch; }
+.accent{ color:var(--cyan); }
+.valid-t{ color:var(--valid); } .critic-t{ color:var(--critic); } .violet-t{color:var(--violet);}
+.big-num{ font-family:"Clash Display",sans-serif; font-size:clamp(2rem,7vw,5rem); line-height:.9; background:linear-gradient(120deg,var(--cyan),var(--violet)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+.card{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:clamp(.7rem,1.6vw,1.25rem); backdrop-filter:blur(6px);
+    display:flex; flex-direction:column; gap:.35em; min-width:0;
+}
+.card h3{ font-size:var(--h3-size); }
+.card .tag{ font-family:"Space Mono",monospace; font-size:var(--small-size); color:var(--cyan); letter-spacing:.1em; }
+.card p{ font-size:var(--body-size); color:var(--muted); line-height:1.4; }
+
+.pill{ display:inline-flex; align-items:center; gap:.5em; font-family:"Space Mono",monospace; font-size:var(--small-size); padding:.3em .8em; border:1px solid var(--line); border-radius:999px; color:var(--muted); }
+.dot{ width:.5em; height:.5em; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan); }
+
+ul.clean{ list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:clamp(.4rem,1.1vh,.9rem); }
+ul.clean li{ font-size:var(--body-size); color:var(--ink); line-height:1.4; padding-left:1.4em; position:relative; }
+ul.clean li::before{ content:"▸"; position:absolute; left:0; color:var(--cyan); }
+ul.clean li b{ color:#fff; font-weight:700; } ul.clean li span{ color:var(--muted); }
+
+.two{ display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(1rem,3vw,3rem); align-items:center; }
+@media (max-width:820px){ .two{ grid-template-columns:1fr; gap:1rem; } }
+
+/* reveal animation */
+.reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal.in{ opacity:1; transform:none; }
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}.reveal.d5{transition-delay:.4s}
+
+/* progress + dots + counter */
+.progress{ position:fixed; top:0; left:0; height:3px; width:0; background:linear-gradient(90deg,var(--cyan),var(--violet)); z-index:50; transition:width .2s ease; }
+.dots{ position:fixed; right:clamp(10px,1.6vw,22px); top:50%; transform:translateY(-50%); display:flex; flex-direction:column; gap:10px; z-index:50; }
+.dots button{ width:9px; height:9px; border-radius:50%; border:1px solid var(--muted); background:transparent; padding:0; cursor:pointer; transition:.25s; }
+.dots button.active{ background:var(--cyan); border-color:var(--cyan); box-shadow:0 0 10px var(--cyan); transform:scale(1.25); }
+.counter{ position:fixed; left:clamp(12px,2vw,28px); bottom:clamp(12px,2.4vh,26px); font-family:"Space Mono",monospace; font-size:var(--small-size); color:var(--muted); z-index:50; }
+.counter b{ color:var(--ink); }
+.hint{ position:fixed; right:clamp(12px,2vw,28px); bottom:clamp(12px,2.4vh,26px); font-family:"Space Mono",monospace; font-size:var(--small-size); color:var(--muted); z-index:50; }
+@media (max-width:600px){ .dots{display:none;} }
+
+/* eval terminal */
+.eval{ font-family:"Space Mono",monospace; font-size:var(--body-size); background:rgba(3,6,14,.7); border:1px solid var(--line); border-radius:12px; padding:clamp(.7rem,1.6vw,1.2rem); line-height:1.7; }
+.eval .win{ color:var(--valid); } .eval .lose{ color:var(--critic); } .eval .mut{ color:var(--muted); }
+
+/* leaderboard */
+.board{ display:flex; flex-direction:column; gap:.4rem; }
+.row{ display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:.8em; padding:.5em .8em; border:1px solid var(--line); border-radius:10px; background:var(--panel); font-size:var(--body-size); transition:.5s; }
+.row .rank{ font-family:"Space Mono",monospace; color:var(--muted); width:1.5em; }
+.row .gene{ font-family:"Clash Display",sans-serif; font-weight:600; }
+.row .score{ font-family:"Space Mono",monospace; color:var(--muted); }
+.row.vetoed{ border-color:var(--critic); opacity:.5; text-decoration:line-through; }
+.row.vetoed .stamp{ text-decoration:none; color:var(--critic); font-family:"Space Mono",monospace; font-size:var(--small-size); border:1px solid var(--critic); border-radius:6px; padding:.1em .5em; }
+.row.valid{ border-color:var(--valid); box-shadow:0 0 22px rgba(62,230,165,.18); }
+.row.valid .gene{ color:var(--valid); } .row.valid .score{ color:var(--valid); }
+.row.valid .badge{ font-family:"Space Mono",monospace; font-size:var(--small-size); color:var(--valid); }
+
+/* agent flow */
+.flow{ display:grid; grid-template-columns:1.3fr auto .8fr auto .7fr; align-items:center; gap:clamp(.4rem,1.2vw,1rem); }
+@media (max-width:820px){ .flow{ grid-template-columns:1fr; } .flow .arrow{ transform:rotate(90deg); justify-self:center; } }
+.agents{ display:flex; flex-direction:column; gap:.5rem; }
+.agent{ display:flex; align-items:center; gap:.7em; border:1px solid var(--line); border-left:3px solid var(--cyan); border-radius:10px; padding:.5em .8em; background:var(--panel); }
+.agent b{ font-family:"Clash Display",sans-serif; font-size:var(--body-size); }
+.agent span{ font-size:var(--small-size); color:var(--muted); }
+.agent .k{ font-family:"Space Mono",monospace; color:var(--cyan); font-size:var(--small-size); }
+.arrow{ color:var(--muted); font-size:1.4em; }
+.node{ border:1px solid var(--line); border-radius:12px; padding:.7em; text-align:center; background:var(--panel); }
+.node.tourn{ border-color:var(--violet); } .node.critic{ border-color:var(--critic); }
+.node .t{ font-family:"Clash Display",sans-serif; font-size:var(--body-size); }
+.node .s{ font-size:var(--small-size); color:var(--muted); }
+
+/* rubric chips */
+.rubric{ display:grid; grid-template-columns:repeat(4,1fr); gap:.6rem; }
+@media (max-width:820px){ .rubric{ grid-template-columns:repeat(2,1fr);} }
+.rubric .r{ border:1px solid var(--line); border-radius:12px; padding:.8em; background:var(--panel); }
+.rubric .r .w{ font-family:"Clash Display",sans-serif; font-size:clamp(1.2rem,3vw,2rem); color:var(--cyan); }
+.rubric .r .n{ font-size:var(--small-size); color:var(--muted); letter-spacing:.06em; text-transform:uppercase; }
+.rubric .r p{ font-size:var(--small-size); color:var(--ink); margin-top:.3em; line-height:1.35; }
+
+.footer-note{ font-family:"Space Mono",monospace; font-size:var(--small-size); color:var(--muted); }
+.title-tag{ display:flex; gap:.6rem; flex-wrap:wrap; }
+
+/* svg curve */
+.curvewrap{ border:1px solid var(--line); border-radius:14px; background:var(--panel); padding:clamp(.6rem,1.5vw,1rem); }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<nav class="dots" id="dots" aria-label="Slide navigation"></nav>
+<div class="counter"><b id="cur">01</b> / <span id="tot">13</span></div>
+<div class="hint decorative">↓ / → · scroll · swipe</div>
+
+<main>
+
+<!-- 1 — TITLE -->
+<section class="slide" id="s1">
+  <div class="slide-content">
+    <div class="title-tag reveal">
+      <span class="pill"><span class="dot"></span> Built with Claude: Life Sciences</span>
+      <span class="pill">Research Track · Gladstone × Anthropic</span>
+    </div>
+    <h1 class="reveal d1" style="margin-top:.5em; max-width:16ch;">The T-cell model that <span class="accent">knows when it's wrong.</span></h1>
+    <p class="lead reveal d2" style="margin-top:.7em;">An AI co-scientist that nominates the next <b style="color:#fff">Type&nbsp;1 diabetes</b> experiment — through 22 million T cells — and then argues with itself until only the trustworthy hits are left standing.</p>
+    <div class="reveal d3" style="margin-top:1.1em;" >
+      <span class="footer-note">predict → <span class="accent">trust</span> → recommend → <span class="critic-t">self-critique</span></span>
+    </div>
+  </div>
+</section>
+
+<!-- 2 — THE DEAD GAME -->
+<section class="slide" id="s2">
+  <div class="slide-content">
+    <div class="kicker reveal">The field's dirty secret</div>
+    <h2 class="reveal d1" style="margin-top:.4em; max-width:20ch;">Predicting perturbation effects is a <span class="critic-t">dead game.</span></h2>
+    <div class="two" style="margin-top:1em;">
+      <ul class="clean reveal d2">
+        <li><b>Deep models don't beat a linear baseline</b> <span>on unseen genes or combinations — <i>Nature Methods</i> 2025.</span></li>
+        <li><b>The Arc Virtual Cell Challenge confirmed it</b> <span>at scale: most models lost to baseline on MAE.</span></li>
+        <li><b>Retrospective target-recovery is just as dead</b> <span>— it's what the other teams will do.</span></li>
+      </ul>
+      <div class="eval reveal d3">
+        <div class="mut"># held-out perturbations · Pearson-Δ</div>
+        <div>GEARS&nbsp;&nbsp;&nbsp;&nbsp;<span class="mut">0.42</span></div>
+        <div>scGPT&nbsp;&nbsp;&nbsp;&nbsp;<span class="mut">0.41</span></div>
+        <div>linear&nbsp;&nbsp;&nbsp;<span class="win">0.49 ✓ beats them</span></div>
+        <div class="mut" style="margin-top:.4em;">racing accuracy = racing a metric<br>no one can move.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 — THE REFRAME -->
+<section class="slide" id="s3">
+  <div class="slide-content">
+    <div class="kicker reveal">The reframe</div>
+    <h2 class="reveal d1" style="margin-top:.4em; max-width:22ch;">So we stopped predicting — and started <span class="accent">deciding under uncertainty.</span></h2>
+    <p class="lead reveal d2" style="margin-top:.6em;">If accuracy is saturated, the frontier isn't <i>how accurate</i>. It's <b style="color:#fff">which predictions to trust</b> and <b style="color:#fff">what to run next.</b> That lane is empty.</p>
+    <div class="grid reveal d3" style="margin-top:1em;">
+      <div class="card"><span class="tag">01 · PREDICT</span><h3>Effect on the T1D program</h3><p>Knockdown → Treg-stability / effector shift.</p></div>
+      <div class="card"><span class="tag">02 · TRUST</span><h3 class="accent">Believe this / don't</h3><p>Calibrated confidence — our un-copyable asset.</p></div>
+      <div class="card"><span class="tag">03 · RECOMMEND</span><h3>The next experiment</h3><p>One wet-lab-orderable nomination.</p></div>
+      <div class="card"><span class="tag">04 · CRITIQUE</span><h3 class="critic-t">Kill its own darling</h3><p>A fresh-context critic with veto power.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 — WHY T1D -->
+<section class="slide" id="s4">
+  <div class="slide-content">
+    <div class="kicker reveal">Why Type 1 diabetes</div>
+    <h2 class="reveal d1" style="margin-top:.4em; max-width:24ch;">A disease where T-cell targeting <span class="accent">already works</span> — and genetics can grade us.</h2>
+    <div class="grid reveal d2" style="margin-top:1em;">
+      <div class="card"><span class="tag">PROVEN AXIS</span><h3>Teplizumab</h3><p>Anti-CD3 — first disease-modifying T1D therapy, FDA-approved to delay onset. We nominate the next node.</p></div>
+      <div class="card"><span class="tag">NON-CIRCULAR TRUTH</span><h3 class="valid-t">9 core genes</h3><p>Iakovliev 2023 derived T1D "core genes" from <i>genetics</i> — FOXP3 · CTLA4 · STAT1. Blind validation the model never sees.</p></div>
+      <div class="card"><span class="tag">CLEAN CD4 BIOLOGY</span><h3>Treg stability</h3><p>Squarely in the data (rest + stim) — not CD8 exhaustion cosplay.</p></div>
+    </div>
+    <p class="footer-note reveal d3" style="margin-top:.9em;">Avoids IBD and atopic-dermatitis — already taken by rival teams.</p>
+  </div>
+</section>
+
+<!-- 5 — THE DATA / PRIORS -->
+<section class="slide" id="s5">
+  <div class="slide-content">
+    <div class="kicker reveal">Three Gladstone datasets, one engine</div>
+    <h2 class="reveal d1" style="margin-top:.4em;">Priors are the edge — <span class="accent">not the dataset.</span></h2>
+    <p class="lead reveal d2" style="margin-top:.5em;">Everyone grabs the Perturb-seq. The Arc winners proved the moat is <b style="color:#fff">fusing priors</b>, exactly the cross-modal reasoning Claude does best.</p>
+    <div class="grid reveal d3" style="margin-top:1em;">
+      <div class="card"><span class="tag">CORE · MARSON/PRITCHARD</span><h3>22M-cell CD4 Perturb-seq</h3><p>Every gene, CRISPRi <i>knockdown</i>, 4 donors, rest + stim, GWAS-linked.</p></div>
+      <div class="card"><span class="tag">PRIOR · KROGAN</span><h3>PPI network</h3><p>Mechanism + distance-to-seed features. Turns a gene into a gene <i>with a mechanism</i>.</p></div>
+      <div class="card"><span class="tag">PRIOR · POLLARD</span><h3>MPRA regulatory</h3><p>Is the gene under an allele-specific enhancer? Used as a feature — not a model we pretend to train.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 — AGENT ARCHITECTURE -->
+<section class="slide" id="s6">
+  <div class="slide-content">
+    <div class="kicker reveal">Creative Claude use — biology-shaped, not a template</div>
+    <h2 class="reveal d1" style="margin-top:.35em;">A council of agents, <span class="violet-t">one per evidence type</span> — refereed by a critic.</h2>
+    <div class="flow reveal d2" style="margin-top:1em;">
+      <div class="agents">
+        <div class="agent"><b>A</b><div><span class="k">perturb-seq</span><br><span>candidate knockdowns → T1D program</span></div></div>
+        <div class="agent" style="border-left-color:var(--violet)"><b>B</b><div><span class="k">MPRA + GWAS</span><br><span>kills correlation-only hits</span></div></div>
+        <div class="agent" style="border-left-color:var(--amber)"><b>C</b><div><span class="k">Krogan PPI</span><br><span>mechanism annotation</span></div></div>
+        <div class="agent" style="border-left-color:var(--valid)"><b>D</b><div><span class="k">omnigenic</span><br><span>core vs peripheral → trust</span></div></div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="node tourn"><div class="t violet-t">Elo tournament</div><div class="s">pairwise debates on cross-modal convergence</div></div>
+      <div class="arrow">→</div>
+      <div class="node critic"><div class="t critic-t">Critic ⛔</div><div class="s">fresh context · re-derives · vetoes · self-corrects</div></div>
+    </div>
+    <p class="footer-note reveal d3" style="margin-top:.9em;">Lineage: Google AI co-scientist · Stanford Virtual Lab · Claude Science's native reviewer agent.</p>
+  </div>
+</section>
+
+<!-- 7 — THE TRUST SCORE -->
+<section class="slide" id="s7">
+  <div class="slide-content">
+    <div class="kicker reveal">The un-copyable asset</div>
+    <h2 class="reveal d1" style="margin-top:.35em;">Everyone ships false confidence. <span class="accent">We ship calibration.</span></h2>
+    <div class="two" style="margin-top:.8em;">
+      <ul class="clean reveal d2">
+        <li><b>Selective prediction:</b> <span>abstain on the bottom, and error falls as coverage drops.</span></li>
+        <li><b>De-confounded:</b> <span>we regress out expression, power &amp; essentiality so "trust" isn't just "highly expressed."</span></li>
+        <li><b>Grounded in theory:</b> <span>omnigenic core vs peripheral — Pritchard's own model.</span></li>
+      </ul>
+      <div class="curvewrap reveal d3">
+        <svg viewBox="0 0 320 200" width="100%" height="auto" role="img" aria-label="Selective risk curve: error falls as we keep only high-trust predictions">
+          <line x1="40" y1="12" x2="40" y2="168" stroke="var(--line)"/>
+          <line x1="40" y1="168" x2="308" y2="168" stroke="var(--line)"/>
+          <text x="6" y="90" fill="var(--muted)" font-size="10" font-family="Space Mono" transform="rotate(-90 12,90)">error</text>
+          <text x="150" y="190" fill="var(--muted)" font-size="10" font-family="Space Mono">coverage kept</text>
+          <path d="M50,40 C120,44 200,52 300,60" fill="none" stroke="var(--muted)" stroke-dasharray="5 5" stroke-width="2"/>
+          <text x="196" y="44" fill="var(--muted)" font-size="9" font-family="Space Mono">random trust</text>
+          <path d="M50,150 C120,120 210,70 300,44" fill="none" stroke="var(--valid)" stroke-width="3"/>
+          <text x="150" y="120" fill="var(--valid)" font-size="9" font-family="Space Mono">our trust score</text>
+          <circle cx="50" cy="150" r="3.5" fill="var(--valid)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 — RIGOR -->
+<section class="slide" id="s8">
+  <div class="slide-content">
+    <div class="kicker reveal">How we don't get embarrassed</div>
+    <h2 class="reveal d1" style="margin-top:.35em;">We lead with the <span class="accent">baseline gauntlet</span> — before the model.</h2>
+    <div class="two" style="margin-top:.8em;">
+      <ul class="clean reveal d2">
+        <li><b>Split at the perturbation &amp; donor level</b> <span>— never cells. Kills the leakage a reviewer checks first.</span></li>
+        <li><b>Beat five baselines</b> <span>on leave-target-out: additive · PPI-distance · co-expression · expression-magnitude · mean.</span></li>
+        <li><b>Permutation null + bootstrap CIs</b> <span>· negative controls rank low · pre-registered FDR.</span></li>
+      </ul>
+      <div class="eval reveal d3">
+        <div class="mut"># leave-target-out · recover core genes</div>
+        <div>mean&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="mut">rank 0.51</span></div>
+        <div>PPI-dist&nbsp;<span class="mut">rank 0.44</span></div>
+        <div>ours&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="win">rank 0.88 · p&lt;0.01 ✓</span></div>
+        <div class="mut" style="margin-top:.3em;">the critic re-runs every check<br>in a fresh context.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 — MONEY SHOT -->
+<section class="slide" id="s9">
+  <div class="slide-content">
+    <div class="kicker reveal">The demo · the moment the room goes quiet</div>
+    <h2 class="reveal d1" style="margin-top:.35em;">The critic <span class="critic-t">vetoes our own #1</span> — live — and the board lands on genes it was never shown.</h2>
+    <div class="two" style="margin-top:.7em; align-items:start;">
+      <div class="board reveal d2">
+        <div class="row vetoed"><span class="rank">1</span><span class="gene">IL7R <span class="stamp">VETOED · batch-confounded</span></span><span class="score">↓ #6</span></div>
+        <div class="row valid"><span class="rank">1</span><span class="gene">FOXP3</span><span class="badge">✓ genetics</span></div>
+        <div class="row valid"><span class="rank">2</span><span class="gene">CTLA4</span><span class="badge">✓ genetics</span></div>
+        <div class="row valid"><span class="rank">3</span><span class="gene">STAT1</span><span class="badge">✓ genetics</span></div>
+        <div class="row"><span class="rank">4</span><span class="gene" style="color:var(--amber)">IKZF2*</span><span class="score">novel bet</span></div>
+      </div>
+      <ul class="clean reveal d3">
+        <li><b>Two visible context windows</b> <span>+ timestamps + a hash → obviously autonomous, not staged.</span></li>
+        <li><b>Green = recovered from human genetics,</b> <span>blinded and held out of every prompt.</span></li>
+        <li><b>Click any gene</b> <span>→ its cells, its PPI path, its citation. Provenance you can audit.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 10 — THE BET -->
+<section class="slide" id="s10">
+  <div class="slide-content">
+    <div class="kicker reveal">What makes it #1, not a finalist</div>
+    <h2 class="reveal d1" style="margin-top:.35em;">One <span class="amber" style="color:var(--amber)">novel, untested</span> bet — with Monday's protocol attached.</h2>
+    <div class="two" style="margin-top:.8em;">
+      <div class="card reveal d2" style="border-left:3px solid var(--amber);">
+        <span class="tag" style="color:var(--amber)">PROSPECTIVE NOMINATION</span>
+        <h3>Gene X → Treg stability ↑</h3>
+        <p style="color:var(--ink)">Anchored to a T1D GWAS locus · mechanism drawn through the Krogan network · trust score attached · <b>explicitly not yet in any screen.</b></p>
+      </div>
+      <ul class="clean reveal d3">
+        <li><b>One-week validation:</b> <span>CRISPRi the trans-regulator in primary CD4 → restim → read Treg-stability by flow / CITE-seq.</span></li>
+        <li><b>Pre-registered on camera</b> <span>— a falsifiable bet, not a re-ranking.</span></li>
+        <li><b>Gladstone-runnable:</b> <span>we hand a wet lab an experiment, not a figure.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 11 — WHY WE WIN (rubric) -->
+<section class="slide" id="s11">
+  <div class="slide-content">
+    <div class="kicker reveal">Mapped to the scorecard</div>
+    <h2 class="reveal d1" style="margin-top:.35em;">Built to score on <span class="accent">every axis.</span></h2>
+    <div class="rubric reveal d2" style="margin-top:1em;">
+      <div class="r"><div class="w">30</div><div class="n">Demo</div><p>The live self-veto reshuffle + a hash you can reproduce.</p></div>
+      <div class="r"><div class="w">25</div><div class="n">Claude Use</div><p>Evidence-shaped agent council + a vetoing critic.</p></div>
+      <div class="r"><div class="w">25</div><div class="n">Impact</div><p>A T1D experiment on a proven therapeutic axis.</p></div>
+      <div class="r"><div class="w">20</div><div class="n">Depth</div><p>Baseline gauntlet · leakage-proof splits · calibration.</p></div>
+    </div>
+    <p class="footer-note reveal d3" style="margin-top:1em;">Differentiator: we don't recover known biology — we <b style="color:#fff">quantify our own trust and make a bet the critic couldn't kill.</b></p>
+  </div>
+</section>
+
+<!-- 12 — DIFFERENTIATION -->
+<section class="slide" id="s12">
+  <div class="slide-content">
+    <div class="kicker reveal">Against the field</div>
+    <h2 class="reveal d1" style="margin-top:.35em;">Every weakness in the field <span class="accent">becomes our moat.</span></h2>
+    <div class="grid reveal d2" style="margin-top:1em;">
+      <div class="card"><span class="tag critic-t" style="color:var(--critic)">THE PACK</span><h3>Rank known targets</h3><p>Retrospective. Beaten by a one-line effect-size sort.</p></div>
+      <div class="card"><span class="tag critic-t" style="color:var(--critic)">THE MODELERS</span><h3>Another predictor</h3><p>Loses to a linear baseline. Everyone knows it.</p></div>
+      <div class="card"><span class="tag" style="color:var(--valid)">US</span><h3 class="valid-t">Knows when it's wrong</h3><p>Calibrated trust + a falsifiable next experiment. The one thing a fitted model can't give.</p></div>
+    </div>
+    <p class="footer-note reveal d3" style="margin-top:1em;">We plant the "accuracy is dead" flag first — so no rival can take the high ground.</p>
+  </div>
+</section>
+
+<!-- 13 — CLOSE -->
+<section class="slide" id="s13">
+  <div class="slide-content" style="align-items:flex-start;">
+    <div class="kicker reveal">The one sentence</div>
+    <h1 class="reveal d1" style="margin-top:.4em; max-width:20ch;">An AI co-scientist that <span class="critic-t">argues with itself</span> — and hands you <span class="valid-t">Monday's experiment.</span></h1>
+    <p class="lead reveal d2" style="margin-top:.8em;">Everyone else predicts what the data already knows. We built the T-cell model that knows what it <i>doesn't</i> — and names the one Type&nbsp;1 diabetes experiment worth running next.</p>
+    <div class="title-tag reveal d3" style="margin-top:1.2em;">
+      <span class="pill"><span class="dot"></span> predict</span>
+      <span class="pill"><span class="dot" style="background:var(--valid);box-shadow:0 0 10px var(--valid)"></span> trust</span>
+      <span class="pill"><span class="dot" style="background:var(--amber);box-shadow:0 0 10px var(--amber)"></span> recommend</span>
+      <span class="pill"><span class="dot" style="background:var(--critic);box-shadow:0 0 10px var(--critic)"></span> self-critique</span>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* ---------- Presentation controller: keyboard, wheel, touch, dots, progress ---------- */
+(function(){
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const dotsWrap = document.getElementById('dots');
+  const progress = document.getElementById('progress');
+  const cur = document.getElementById('cur');
+  document.getElementById('tot').textContent = String(slides.length).padStart(2,'0');
+  let idx = 0, lock = false;
+
+  // build dots
+  slides.forEach((s,i)=>{
+    const b = document.createElement('button');
+    b.setAttribute('aria-label','Go to slide '+(i+1));
+    b.addEventListener('click',()=>go(i));
+    dotsWrap.appendChild(b);
+  });
+  const dots = Array.from(dotsWrap.children);
+
+  function setActive(i){
+    idx = i;
+    dots.forEach((d,j)=>d.classList.toggle('active', j===i));
+    cur.textContent = String(i+1).padStart(2,'0');
+    progress.style.width = ((i)/(slides.length-1)*100)+'%';
+  }
+  function go(i){
+    i = Math.max(0, Math.min(slides.length-1, i));
+    slides[i].scrollIntoView({behavior:'smooth'});
+  }
+
+  // observe which slide is centered → update dots + trigger reveals
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const i = slides.indexOf(e.target);
+        setActive(i);
+        e.target.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+      }
+    });
+  },{threshold:0.55});
+  slides.forEach(s=>io.observe(s));
+
+  // keyboard
+  window.addEventListener('keydown',(e)=>{
+    if(['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)){ e.preventDefault(); go(idx+1); }
+    else if(['ArrowUp','ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); go(idx-1); }
+    else if(e.key==='Home'){ e.preventDefault(); go(0); }
+    else if(e.key==='End'){ e.preventDefault(); go(slides.length-1); }
+  });
+
+  // wheel (debounced so one notch = one slide)
+  window.addEventListener('wheel',(e)=>{
+    if(lock) return;
+    if(Math.abs(e.deltaY) < 18) return;
+    lock = true; go(idx + (e.deltaY>0?1:-1));
+    setTimeout(()=>lock=false, 620);
+  },{passive:true});
+
+  // touch
+  let ty=null;
+  window.addEventListener('touchstart',e=>{ ty=e.touches[0].clientY; },{passive:true});
+  window.addEventListener('touchend',e=>{
+    if(ty===null) return;
+    const dy = ty - e.changedTouches[0].clientY;
+    if(Math.abs(dy)>50) go(idx + (dy>0?1:-1));
+    ty=null;
+  },{passive:true});
+
+  setActive(0);
+})();
+</script>
+</body>
+</html>

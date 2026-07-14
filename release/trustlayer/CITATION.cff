@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: "TrustLayer: a calibrated-trust layer for perturbation-biology prediction"
+message: "If you use this software, please cite it using these metadata."
+type: software
+authors:
+  - family-names: Lahiri
+    given-names: Anirudh
+version: 0.1.0
+date-released: "2026-07-13"
+license: MIT
+repository-code: "https://github.com/anilahiri/trustlayer-perturb"
+keywords:
+  - conformal prediction
+  - perturbation biology
+  - calibration
+  - single-cell

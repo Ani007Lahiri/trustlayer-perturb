@@ -1,0 +1,563 @@
+{
+  "track": "A1 \u2014 powered prior-art UQ calibration benchmark",
+  "prereg_sha256": "b39caaf64f193232347aeeecef8684e2b24687baed90512a5275b08a818424a5",
+  "prereg_path": "data/gold/day0_A1_uq_benchmark_prereg.json",
+  "surface_sha256": "45d86a58c421a1dc492d23a7916d388be13d2b5a67ddbad537040d1c0e6b7ba0",
+  "surface": {
+    "n_test_rows": 58558,
+    "n_unique_perturbations": 2591,
+    "n_donor_folds": 4,
+    "per_fold_test_n": {
+      "CE0006864": 14640,
+      "CE0008162": 14639,
+      "CE0008678": 14639,
+      "CE0010866": 14640
+    },
+    "note": "Materialized ONCE from committed conformal.py data-access on GWCD4i.DE_stats.by_donors.h5mu. IDENTICAL base HGBR predictor & point predictions held fixed across all Tier-A methods. This is the committed pipeline's own LODO surface, not a surrogate."
+  },
+  "fidelity_checks": {
+    "committed_split_conformal_reproduced": {
+      "receipt_row_empirical": {
+        "0.8": 0.7932,
+        "0.9": 0.8955,
+        "0.95": 0.9486
+      },
+      "benchmark_coverage": {
+        "0.8": 0.7932,
+        "0.9": 0.8955,
+        "0.95": 0.9486
+      },
+      "match": "exact"
+    },
+    "committed_ensemble_trust_AURC_reproduced": {
+      "committed_receipt_aurc_model": 0.11406,
+      "benchmark_ensemble_aurc": 0.11406,
+      "match": "exact"
+    }
+  },
+  "levels": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "methods_compared": [
+    "jackknife_plus",
+    "mondrian_conformal",
+    "weighted_conformal",
+    "naive_global_quantile",
+    "split_conformal",
+    "quantile_regression",
+    "cqr",
+    "parametric_gaussian",
+    "ensemble_variance_gaussian"
+  ],
+  "per_method": {
+    "jackknife_plus": {
+      "marginal_coverage": {
+        "0.8": 0.7975,
+        "0.9": 0.8976,
+        "0.95": 0.9496
+      },
+      "coverage_error": {
+        "0.8": 0.0025,
+        "0.9": 0.0024,
+        "0.95": 0.0004
+      },
+      "mean_abs_coverage_error": 0.0018,
+      "mean_interval_width": {
+        "0.8": 0.345,
+        "0.9": 0.4605,
+        "0.95": 0.6075
+      },
+      "aurc": 0.11704,
+      "aurc_note": "native per-point uncertainty ordering",
+      "per_fold_coverage": {
+        "0.8": [
+          0.802,
+          0.8082,
+          0.7948,
+          0.785
+        ],
+        "0.9": [
+          0.8926,
+          0.9062,
+          0.8982,
+          0.8932
+        ],
+        "0.95": [
+          0.9432,
+          0.952,
+          0.9568,
+          0.9465
+        ]
+      },
+      "conditional_coverage_worst_slice_90": {
+        "worst_slice_cov": 0.875,
+        "worst_slice_gap": 0.025,
+        "best_slice_cov": 0.9167,
+        "n_per_slice": 5855
+      }
+    },
+    "mondrian_conformal": {
+      "marginal_coverage": {
+        "0.8": 0.7951,
+        "0.9": 0.896,
+        "0.95": 0.9478
+      },
+      "coverage_error": {
+        "0.8": 0.0049,
+        "0.9": 0.004,
+        "0.95": 0.0022
+      },
+      "mean_abs_coverage_error": 0.0037,
+      "mean_interval_width": {
+        "0.8": 0.3428,
+        "0.9": 0.4581,
+        "0.95": 0.6049
+      },
+      "aurc": 0.11436,
+      "aurc_note": "native per-point uncertainty ordering",
+      "per_fold_coverage": {
+        "0.8": [
+          0.7995,
+          0.806,
+          0.7922,
+          0.7828
+        ],
+        "0.9": [
+          0.8927,
+          0.9042,
+          0.8971,
+          0.8898
+        ],
+        "0.95": [
+          0.9412,
+          0.9498,
+          0.9538,
+          0.9466
+        ]
+      },
+      "conditional_coverage_worst_slice_90": {
+        "worst_slice_cov": 0.8712,
+        "worst_slice_gap": 0.0288,
+        "best_slice_cov": 0.9168,
+        "n_per_slice": 5855
+      }
+    },
+    "weighted_conformal": {
+      "marginal_coverage": {
+        "0.8": 0.794,
+        "0.9": 0.8961,
+        "0.95": 0.9488
+      },
+      "coverage_error": {
+        "0.8": 0.006,
+        "0.9": 0.0039,
+        "0.95": 0.0012
+      },
+      "mean_abs_coverage_error": 0.0037,
+      "mean_interval_width": {
+        "0.8": 0.3426,
+        "0.9": 0.4589,
+        "0.95": 0.6044
+      },
+      "aurc": 0.1197,
+      "aurc_note": "native per-point uncertainty ordering",
+      "per_fold_coverage": {
+        "0.8": [
+          0.8022,
+          0.8059,
+          0.7906,
+          0.7775
+        ],
+        "0.9": [
+          0.8941,
+          0.9042,
+          0.8966,
+          0.8895
+        ],
+        "0.95": [
+          0.9428,
+          0.9517,
+          0.9551,
+          0.9456
+        ]
+      },
+      "conditional_coverage_worst_slice_90": {
+        "worst_slice_cov": 0.8726,
+        "worst_slice_gap": 0.0274,
+        "best_slice_cov": 0.9168,
+        "n_per_slice": 5855
+      }
+    },
+    "naive_global_quantile": {
+      "marginal_coverage": {
+        "0.8": 0.7933,
+        "0.9": 0.8958,
+        "0.95": 0.9488
+      },
+      "coverage_error": {
+        "0.8": 0.0067,
+        "0.9": 0.0042,
+        "0.95": 0.0012
+      },
+      "mean_abs_coverage_error": 0.004,
+      "mean_interval_width": {
+        "0.8": 0.342,
+        "0.9": 0.4581,
+        "0.95": 0.6041
+      },
+      "aurc": 0.11823,
+      "aurc_note": "constant-width -> no per-point ranking; AURC = random-ordering mean risk",
+      "per_fold_coverage": {
+        "0.8": [
+          0.8045,
+          0.7958,
+          0.7896,
+          0.7832
+        ],
+        "0.9": [
+          0.8934,
+          0.8998,
+          0.897,
+          0.8932
+        ],
+        "0.95": [
+          0.9428,
+          0.9516,
+          0.953,
+          0.948
+        ]
+      },
+      "conditional_coverage_worst_slice_90": null
+    },
+    "split_conformal": {
+      "marginal_coverage": {
+        "0.8": 0.7932,
+        "0.9": 0.8955,
+        "0.95": 0.9486
+      },
+      "coverage_error": {
+        "0.8": 0.0068,
+        "0.9": 0.0045,
+        "0.95": 0.0014
+      },
+      "mean_abs_coverage_error": 0.0042,
+      "mean_interval_width": {
+        "0.8": 0.342,
+        "0.9": 0.4578,
+        "0.95": 0.6032
+      },
+      "aurc": 0.11823,
+      "aurc_note": "constant-width -> no per-point ranking; AURC = random-ordering mean risk",
+      "per_fold_coverage": {
+        "0.8": [
+          0.798,
+          0.8054,
+          0.7916,
+          0.7778
+        ],
+        "0.9": [
+          0.8912,
+          0.9037,
+          0.8973,
+          0.8898
+        ],
+        "0.95": [
+          0.942,
+          0.9516,
+          0.9551,
+          0.9458
+        ]
+      },
+      "conditional_coverage_worst_slice_90": {
+        "worst_slice_cov": 0.8717,
+        "worst_slice_gap": 0.0283,
+        "best_slice_cov": 0.9168,
+        "n_per_slice": 5855
+      }
+    },
+    "quantile_regression": {
+      "marginal_coverage": {
+        "0.8": 0.7933,
+        "0.9": 0.895,
+        "0.95": 0.9468
+      },
+      "coverage_error": {
+        "0.8": 0.0067,
+        "0.9": 0.005,
+        "0.95": 0.0032
+      },
+      "mean_abs_coverage_error": 0.0049,
+      "mean_interval_width": {
+        "0.8": 0.3555,
+        "0.9": 0.4869,
+        "0.95": 0.6245
+      },
+      "aurc": 0.11226,
+      "aurc_note": "native per-point uncertainty ordering",
+      "per_fold_coverage": {
+        "0.8": [
+          0.811,
+          0.7987,
+          0.7863,
+          0.7773
+        ],
+        "0.9": [
+          0.9068,
+          0.8953,
+          0.8893,
+          0.8887
+        ],
+        "0.95": [
+          0.9502,
+          0.9481,
+          0.9447,
+          0.9444
+        ]
+      },
+      "conditional_coverage_worst_slice_90": {
+        "worst_slice_cov": 0.8859,
+        "worst_slice_gap": 0.0141,
+        "best_slice_cov": 0.9025,
+        "n_per_slice": 5855
+      }
+    },
+    "cqr": {
+      "marginal_coverage": {
+        "0.8": 0.7927,
+        "0.9": 0.8946,
+        "0.95": 0.9467
+      },
+      "coverage_error": {
+        "0.8": 0.0073,
+        "0.9": 0.0054,
+        "0.95": 0.0033
+      },
+      "mean_abs_coverage_error": 0.0054,
+      "mean_interval_width": {
+        "0.8": 0.3552,
+        "0.9": 0.4862,
+        "0.95": 0.6245
+      },
+      "aurc": 0.11226,
+      "aurc_note": "native per-point uncertainty ordering",
+      "per_fold_coverage": {
+        "0.8": [
+          0.8109,
+          0.7987,
+          0.7851,
+          0.776
+        ],
+        "0.9": [
+          0.9068,
+          0.8939,
+          0.8892,
+          0.8885
+        ],
+        "0.95": [
+          0.9505,
+          0.9473,
+          0.9449,
+          0.9441
+        ]
+      },
+      "conditional_coverage_worst_slice_90": {
+        "worst_slice_cov": 0.8856,
+        "worst_slice_gap": 0.0144,
+        "best_slice_cov": 0.902,
+        "n_per_slice": 5855
+      }
+    },
+    "parametric_gaussian": {
+      "marginal_coverage": {
+        "0.8": 0.8667,
+        "0.9": 0.9303,
+        "0.95": 0.9546
+      },
+      "coverage_error": {
+        "0.8": 0.0667,
+        "0.9": 0.0303,
+        "0.95": 0.0046
+      },
+      "mean_abs_coverage_error": 0.0339,
+      "mean_interval_width": {
+        "0.8": 0.4151,
+        "0.9": 0.5328,
+        "0.95": 0.6349
+      },
+      "aurc": 0.11823,
+      "aurc_note": "constant-width -> no per-point ranking; AURC = random-ordering mean risk",
+      "per_fold_coverage": {
+        "0.8": [
+          0.8631,
+          0.8675,
+          0.877,
+          0.8591
+        ],
+        "0.9": [
+          0.924,
+          0.9336,
+          0.9372,
+          0.9264
+        ],
+        "0.95": [
+          0.9473,
+          0.9555,
+          0.9622,
+          0.9533
+        ]
+      },
+      "conditional_coverage_worst_slice_90": {
+        "worst_slice_cov": 0.9137,
+        "worst_slice_gap": -0.0137,
+        "best_slice_cov": 0.9448,
+        "n_per_slice": 5855
+      }
+    },
+    "ensemble_variance_gaussian": {
+      "marginal_coverage": {
+        "0.8": 0.0743,
+        "0.9": 0.095,
+        "0.95": 0.1145
+      },
+      "coverage_error": {
+        "0.8": 0.7257,
+        "0.9": 0.805,
+        "0.95": 0.8355
+      },
+      "mean_abs_coverage_error": 0.7887,
+      "mean_interval_width": {
+        "0.8": 0.0282,
+        "0.9": 0.0362,
+        "0.95": 0.0431
+      },
+      "aurc": 0.11406,
+      "aurc_note": "native per-point uncertainty ordering",
+      "per_fold_coverage": {
+        "0.8": [
+          0.0779,
+          0.0719,
+          0.076,
+          0.0717
+        ],
+        "0.9": [
+          0.0983,
+          0.0917,
+          0.0982,
+          0.0917
+        ],
+        "0.95": [
+          0.1179,
+          0.1105,
+          0.1201,
+          0.1096
+        ]
+      },
+      "conditional_coverage_worst_slice_90": null
+    }
+  },
+  "aurc_reference": {
+    "oracle_lower_bound": 0.04804,
+    "random_no_skill": 0.11823
+  },
+  "paired_cluster_bootstrap": {
+    "n_reps": 2000,
+    "unit": "2591 unique perturbations (cluster)",
+    "deltas": {
+      "split_vs_parametric": {
+        "mean": -0.02868,
+        "ci95": [
+          -0.03759,
+          -0.01522
+        ],
+        "excludes_0": true
+      },
+      "mondrian_vs_parametric": {
+        "mean": -0.02917,
+        "ci95": [
+          -0.03729,
+          -0.01594
+        ],
+        "excludes_0": true
+      },
+      "jackknife_vs_split": {
+        "mean": -0.00142,
+        "ci95": [
+          -0.0028,
+          0.00245
+        ],
+        "excludes_0": false
+      },
+      "mondrian_vs_split": {
+        "mean": -0.0005,
+        "ci95": [
+          -0.00142,
+          0.00074
+        ],
+        "excludes_0": false
+      },
+      "split_vs_ensemble": {
+        "mean": -0.7836,
+        "ci95": [
+          -0.78876,
+          -0.77681
+        ],
+        "excludes_0": true
+      },
+      "cqr_vs_split": {
+        "mean": 0.00057,
+        "ci95": [
+          -0.00206,
+          0.00305
+        ],
+        "excludes_0": false
+      },
+      "cqr_minus_split_width90": {
+        "mean": 0.02843,
+        "ci95": [
+          0.02779,
+          0.02911
+        ],
+        "excludes_0": true
+      },
+      "mondrian_vs_QR": {
+        "mean": -0.00074,
+        "ci95": [
+          -0.00341,
+          0.00226
+        ],
+        "excludes_0": false
+      },
+      "weighted_vs_QR": {
+        "mean": -0.00063,
+        "ci95": [
+          -0.00332,
+          0.00225
+        ],
+        "excludes_0": false
+      },
+      "split_vs_QR": {
+        "mean": -0.00025,
+        "ci95": [
+          -0.0028,
+          0.0022
+        ],
+        "excludes_0": false
+      }
+    }
+  },
+  "best_calibrated_method": "jackknife_plus",
+  "best_committed_conformal": "mondrian_conformal",
+  "best_nonconformal_baseline": "quantile_regression",
+  "outcome": {
+    "conformal_wins": "tie",
+    "verdict": "TIE at the top of a tight distribution-free cluster. Six distribution-free methods (jackknife+ 0.0018, Mondrian/weighted conformal 0.0037, naive-global 0.0040, split conformal 0.0042, CQR 0.0054) are statistically indistinguishable in mean coverage error (all paired-bootstrap delta CIs among them straddle 0), and the best committed conformal method (Mondrian) is NOT separable from the strongest non-conformal baseline (quantile regression, 0.0049): mondrian_vs_QR delta CI [-0.0034,+0.0023] includes 0. So conformal does NOT beat every prior-art method \u2014 quantile regression, itself a distribution-free adaptive method, ties it. BUT the committed conformal layer SIGNIFICANTLY beats the two genuinely parametric/Bayesian-approx priors: parametric Gaussian miscovers by 6.7pp at 80% (delta CI [-0.038,-0.015], excludes 0), and a naive Gaussian ensemble-variance interval collapses to ~8% coverage (delta CI [-0.789,-0.777]). Efficiency (contested axis): CQR did NOT Pareto-dominate the incumbent \u2014 at ~equal coverage its 90% interval is significantly WIDER than split conformal (+0.028 log2FC, CI [+0.0278,+0.0291]); the adaptive-width methods buy no sharpness here because the residual distribution is near-homoscedastic in these 4 leakage-safe features. AURC (selective prediction): all methods sit in a narrow 0.112-0.120 band far above the 0.048 oracle and near the 0.118 random line; trust-ordering skill is modest and no method's ordering is meaningfully better than another's. Conditional coverage over baseMean deciles: Mondrian shows no advantage (it conditions on culture_condition, not baseMean); parametric Gaussian's apparently-good worst slice is an artifact of global over-coverage (wider intervals), not real adaptivity.",
+    "honest_headline": "Under real donor shift, distribution-free calibration (conformal AND quantile-regression) is decisively better-calibrated than parametric/Bayesian-approx UQ, which miscovers badly. Within the distribution-free family the committed conformal layer is at parity with the field \u2014 it neither wins nor loses. The theoretically-expected result (conformal is robust under shift) is confirmed; the honest null is that conformal buys no measurable calibration OR sharpness edge over quantile regression on this surface.",
+    "tautology_guard_respected": "Verdict headlines the contested axes (magnitude of parametric miscoverage, CQR width Pareto-loss, AURC), not 'conformal hits coverage'.",
+    "pre_declared_win": false
+  },
+  "figure": "figures/A1_uq_benchmark.png",
+  "generated_utc": "2026-07-11T18:08:13.519103+00:00",
+  "content_sha256": "9ae3a4c7f23f10e3699e48d6b67f7b6153d8489b719a78b6b5ae48db92f225f2"
+}

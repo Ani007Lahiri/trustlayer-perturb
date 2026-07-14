@@ -1,0 +1,67 @@
+{
+ "experiment": "Synergy-Conditioned Conformal (SCC) \u2014 combinatorial-perturbation calibration",
+ "prereg_sha256": "7c97f9d681dc3119c2f50f5be5d3e347166bdb04b0f18dd91949399d7fe6a9b1",
+ "date": "2026-07-12",
+ "verdict": "PROMISING POSITIVE, permutation-validated \u2014 BUT pre-registered primary endpoint underpowered at n=131. Does NOT cleanly clear the pre-registered 80 bar; needs replication on a 2nd combinatorial dataset.",
+ "substrate": {
+  "dataset": "Norman 2019 GSE133344 (reconstructed from raw matrix on disk)",
+  "singles": 105,
+  "doubles": 131,
+  "controls": 11855,
+  "all_doubles_synergy_testable": true
+ },
+ "synergy_is_real": {
+  "synergy_frac_range": [
+   0.369,
+   1.804
+  ],
+  "synergy_frac_median": 0.522,
+  "corr_residual_vs_true_synergy": 0.661,
+  "note": "additive baseline fails precisely where synergy is high"
+ },
+ "leakage_safe_prior": {
+  "s_hat": "sum of single-effect magnitudes (singles only, never the double)",
+  "cos_singles_vs_synergy_frac": -0.379,
+  "note": "orthogonal single directions -> more synergy; leakage guards enforced",
+  "corr_shat_vs_true_synergy_mag": 0.667,
+  "corr_residual_vs_shat": 0.472,
+  "label_correction_note": "AUDIT FIX: field previously held 0.472 (which is corr(residual,shat)); the shat->true-synergy corr is 0.667. Conclusion (prior predicts synergy) unchanged."
+ },
+ "primary_endpoint_PREREGISTERED": {
+  "metric": "per-fold synergy-tercile conditional-coverage gap, perm p<0.01",
+  "vanilla_gap": 0.2312,
+  "scc_gap": 0.229,
+  "improvement": 0.0021,
+  "wilcoxon_p": 0.8248,
+  "result": "FAILED \u2014 noise-dominated. Noise floor at ~5 pairs/tercile is 0.147 even under perfect calibration, so this endpoint cannot resolve the effect at n=131.",
+  "F1_fired_on_primary": true
+ },
+ "directional_analysis_WELL_POWERED": {
+  "design": "pooled high-synergy vs low-synergy marginal coverage across 50 shuffles",
+  "vanilla_high_synergy_coverage": 0.721,
+  "scc_high_synergy_coverage": 0.815,
+  "vanilla_low_synergy_coverage": 1.0,
+  "scc_low_synergy_coverage": 0.939,
+  "conditional_gap_halved": "0.179 -> 0.085",
+  "note": "vanilla under-covers hard cases exactly as constant-width theory predicts; SCC restores toward nominal. NOT the pre-registered confirmatory test (resamples same 131 pairs), reported as directional evidence."
+ },
+ "permutation_null": {
+  "statistic": "closeness of high-synergy coverage to 0.90",
+  "real_prior": 0.812,
+  "shuffled_prior_mean": 0.693,
+  "perm_p": 0.005,
+  "interpretation": "shuffling the synergy prior destroys the calibration restoration -> the effect is genuine synergy signal, not a width artifact. F2 and F3 do NOT fire."
+ },
+ "mechanism_check": {
+  "scc_width_ratio_high_over_low_synergy": 2.14,
+  "note": "SCC widens intervals 2.1x on high-synergy pairs, as designed"
+ },
+ "honest_conclusion": "The open combinatorial wedge (arXiv:2603.02204 leaves synergy-conditioning unaddressed) yields a GENUINE positive: vanilla conformal systematically under-covers high-synergy double perturbations (0.72 vs nominal 0.90), and a leakage-safe synergy prior restores calibration (to 0.81), validated against a permutation null (p=0.005). This is a real novel result. HOWEVER: the pre-registered PRIMARY endpoint (per-fold tercile gap) failed on power at n=131, so per our own frozen tier-rule we CANNOT claim clean 80-clearance. The honest status is a strong, mechanistically-sound, permutation-validated positive on a single dataset that needs replication at the pre-registered bar on a second combinatorial dataset (e.g. Replogle, or a larger double-perturbation screen) to cross 80.",
+ "citations": [
+  "arXiv:2603.02204 (Asiaee, Aryan, Long \u2014 'Partial Causal Structure Learning for Valid Selective Conformal Inference under Interventions', 2 Mar 2026) [VERIFIED via arXiv]",
+  "Norman et al. 2019 Science 365:786",
+  "Angelopoulos & Bates 2021 (conformal)",
+  "Papadopoulos 2008 / Lei 2018 (normalized CP)"
+ ],
+ "receipt_sha256": "80bb61a52a9fe24c99524c14efb943f953cfe334c753018e4bc8cfba7264d535"
+}

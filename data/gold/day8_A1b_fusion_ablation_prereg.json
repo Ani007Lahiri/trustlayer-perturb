@@ -1,0 +1,120 @@
+{
+  "track": "A1b \u2014 novelty-leg DECISION ablation (fusion vs calibration-alone)",
+  "date_utc": "2026-07-11T17:56:24.697129+00:00",
+  "question": "Does the COMMITTED gate (conformal trust FUSED with orthogonal genetic/eQTL evidence) make GO calls better supported by HELD-OUT orthogonal evidence than a SELF-CONCORDANT trust-ONLY rule (PRESCRIBE-analog)?",
+  "honesty_contract": "Referee + rule definitions hash-frozen BEFORE any concordance metric computed. Real committed gate reproduced (commit_gate.evaluate logic), NOT a surrogate. Trust from committed pooled-proxy trust.py path. Null (fusion adds little) is a valid publishable outcome.",
+  "referee_HELD_OUT_orthogonal_evidence": {
+    "chosen": "y_mouse_immune (mouse-KO IMMUNE/hematopoietic phenotype, IMPC/MGI via Open Targets)",
+    "why": "Rule was constructed WITHOUT mouse phenotype data (built from curated immune-GO + OT human assoc + GWAS tag + Treg direction + human eQTL). Mouse germline/conditional KO is an orthogonal model system -> the validation CAN fail. Cleanest available held-out referee.",
+    "source_file": "data/gold/day7_mouse_phenotype_labels_frozen.json",
+    "labels_sha256": "78513821c864080c48e55917ff9939bebc57fe1efe6f2e171788706f516f748d",
+    "rejected_alternatives": [
+      "drug-target tier (entangled with OT assoc used by gate)",
+      "coloc (overlaps eQTL evidence used by gate)"
+    ]
+  },
+  "scoring_universe": {
+    "set": "universe \u2229 mouse-labelled \u2229 computable-trust",
+    "n": 22,
+    "genes": [
+      "APOBR",
+      "CD226",
+      "CD6",
+      "CD69",
+      "CDKAL1",
+      "CLEC16A",
+      "FTO",
+      "GATA3",
+      "GIPR",
+      "GSDMB",
+      "HNF1A",
+      "IL10",
+      "JAZF1",
+      "KCNQ1",
+      "PGM1",
+      "PPARG",
+      "PTPN2",
+      "RASGRP1",
+      "SIRPG",
+      "SUOX",
+      "TCF7L2",
+      "UBASH3A"
+    ],
+    "n_mouse_immune_pos": 9
+  },
+  "rule_i_COMMITTED_fusion": {
+    "def": "GO iff GA(OT T1D)>=0.20 AND eqtl_nsig>0 AND trust>=0.50 (leakage-clean, direction-not-inconsistent by construction) \u2014 commit_gate.evaluate logic",
+    "go_set": [
+      "APOBR",
+      "CD226",
+      "CD6",
+      "CD69",
+      "CDKAL1",
+      "GSDMB",
+      "JAZF1",
+      "SIRPG",
+      "SUOX",
+      "TCF7L2",
+      "UBASH3A"
+    ],
+    "n_go": 11
+  },
+  "rule_ii_SELF_CONCORDANT_trust_only": {
+    "literal_def": "GO iff trust>=0.50 (committed MIN_TRUST_SCORE). NOTE: trust floor is NON-BINDING at scale (all 98 universe genes trust in [0.71,0.99]) -> literal rule = GO all. Documented, not tuned.",
+    "literal_go_set": [
+      "APOBR",
+      "CD226",
+      "CD6",
+      "CD69",
+      "CDKAL1",
+      "CLEC16A",
+      "FTO",
+      "GATA3",
+      "GIPR",
+      "GSDMB",
+      "HNF1A",
+      "IL10",
+      "JAZF1",
+      "KCNQ1",
+      "PGM1",
+      "PPARG",
+      "PTPN2",
+      "RASGRP1",
+      "SIRPG",
+      "SUOX",
+      "TCF7L2",
+      "UBASH3A"
+    ],
+    "matched_budget_def": "GO = top-11 genes by trust (k matched to committed-gate GO count) \u2014 fair equal-budget PRESCRIBE-analog head-to-head",
+    "matched_go_set": [
+      "CLEC16A",
+      "FTO",
+      "GIPR",
+      "GSDMB",
+      "JAZF1",
+      "KCNQ1",
+      "PPARG",
+      "SIRPG",
+      "SUOX",
+      "TCF7L2",
+      "UBASH3A"
+    ],
+    "k": 11
+  },
+  "metrics_FROZEN": {
+    "decision_divergence_n": "|GO_committed symmetric-difference GO_trustonly_matched|",
+    "primary": "precision of GO calls against y_mouse_immune = P(y_immune=1 | GO). Higher = GO calls better supported by held-out evidence.",
+    "secondary": [
+      "MCC of (GO predictor) vs y_mouse_immune",
+      "balanced accuracy",
+      "Fisher exact GO vs y_immune"
+    ],
+    "small_n_caveat": "n=22 overlap, 9 positives -> pilot; report CI/exact test, no general claim."
+  },
+  "decision_rule_FROZEN": {
+    "fusion_adds_value=yes": "committed precision > matched-trust-only precision by >=0.15 AND divergence>0",
+    "fusion_adds_value=marginal": "committed precision > trust-only but <0.15, or ties broken by secondary",
+    "fusion_adds_value=no": "committed precision <= matched-trust-only precision (calibration alone is as good) \u2014 HONEST NULL, publishable"
+  },
+  "prereg_sha256": "d7896ab2b38633e4923eadc0009f20a85b2ebe5d15b3f2704883e807f99d45e9"
+}

@@ -1,0 +1,24 @@
+{
+ "purpose": "Iteration-3 enriched Check A result (positive class 4->8)",
+ "new_candidates_claude": {
+  "UBASH3A": "YES",
+  "IL7R": "YES",
+  "CD3E": "YES",
+  "ITPR3": "YES",
+  "GLIS3": "NO"
+ },
+ "new_correct": "5/5 vs live-genetics labels",
+ "enriched_confusion": {
+  "tp": 7,
+  "tn": 15,
+  "fp": 6,
+  "fn": 1
+ },
+ "enriched_mcc": 0.53,
+ "enriched_balanced_acc": 0.795,
+ "n_total": 29,
+ "n_positives": 8,
+ "prior_mcc_4positives": 0.346,
+ "CAVEAT": "4 new GO labels are live-genetics-complete (OT T1D>T2D, immune-GO, not-T2D-tagged, perturbed, not gold/axis-forbidden) but the rule's Treg-direction>0 gate is PENDING (needs the 16GB donor file, not loadable in this kernel). MCC assumes the 4 pass that gate. The 6 false positives are unchanged = the construct-disputed genes.",
+ "honest_status": "Blinded Claude called all 5 new candidates correctly (no labels in prompt). Enriched MCC 0.53 at n=8 positives clears the 0.50 floor, but is PROVISIONAL on the pending direction gate and must be finalized on the data machine."
+}

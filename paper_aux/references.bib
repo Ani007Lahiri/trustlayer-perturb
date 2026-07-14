@@ -1,0 +1,236 @@
+% =====================================================================
+% references.bib
+% Calibration & selective-prediction benchmark for perturbation-effect UQ
+%
+% VERIFICATION STATUS
+% -------------------
+% All entries below marked [VERIFIED] were fetched programmatically via DOI
+% content-negotiation (dx.doi.org, Accept: application/x-bibtex) or the arXiv
+% DOI service (doi.org/10.48550/arXiv.<id>) during citation checking. Titles,
+% authors, years, venues, and DOIs were taken verbatim from those responses.
+%
+% Entries marked [VERIFY] could NOT be programmatically confirmed to a unique
+% identifier at authoring time. They are retained because the paper skeleton
+% and the research agents flagged them as relevant prior art, but NO DOI has
+% been invented for them. A human must confirm the exact reference (authors,
+% venue, year, DOI/OpenReview ID) before submission. They are deliberately
+% left without a fabricated DOI.
+% =====================================================================
+
+
+% ---------------------------------------------------------------------
+% Conformal / distribution-free UQ methods  [VERIFIED]
+% ---------------------------------------------------------------------
+
+@book{vovk2005algorithmic,
+  title     = {Algorithmic Learning in a Random World},
+  author    = {Vovk, Vladimir and Gammerman, Alexander and Shafer, Glenn},
+  year      = {2005},
+  publisher = {Springer-Verlag},
+  address   = {New York},
+  isbn      = {0387001522},
+  doi       = {10.1007/b106715},
+  note      = {[VERIFIED] DOI resolved via dx.doi.org; author list and title are the canonical published metadata for this monograph (introduces transductive and Mondrian conformal prediction).}
+}
+
+@article{barber2021jackknife,
+  title     = {Predictive inference with the jackknife+},
+  volume    = {49},
+  number    = {1},
+  issn      = {0090-5364},
+  doi       = {10.1214/20-AOS1965},
+  url       = {http://dx.doi.org/10.1214/20-AOS1965},
+  journal   = {The Annals of Statistics},
+  publisher = {Institute of Mathematical Statistics},
+  author    = {Barber, Rina Foygel and Cand\`{e}s, Emmanuel J. and Ramdas, Aaditya and Tibshirani, Ryan J.},
+  year      = {2021},
+  month     = feb,
+  note      = {[VERIFIED] Fetched via DOI content negotiation.}
+}
+
+@misc{romano2019conformalized,
+  title        = {Conformalized Quantile Regression},
+  author       = {Romano, Yaniv and Patterson, Evan and Cand\`{e}s, Emmanuel J.},
+  year         = {2019},
+  eprint       = {1905.03222},
+  archivePrefix = {arXiv},
+  primaryClass = {stat.ME},
+  doi          = {10.48550/arXiv.1905.03222},
+  url          = {https://arxiv.org/abs/1905.03222},
+  note         = {[VERIFIED] Fetched via arXiv DOI service. Published at NeurIPS 2019.}
+}
+
+@misc{tibshirani2019conformal,
+  title        = {Conformal Prediction Under Covariate Shift},
+  author       = {Tibshirani, Ryan J. and Barber, Rina Foygel and Cand\`{e}s, Emmanuel J. and Ramdas, Aaditya},
+  year         = {2019},
+  eprint       = {1904.06019},
+  archivePrefix = {arXiv},
+  primaryClass = {stat.ME},
+  doi          = {10.48550/arXiv.1904.06019},
+  url          = {https://arxiv.org/abs/1904.06019},
+  note         = {[VERIFIED] Fetched via arXiv DOI service. Introduces weighted conformal prediction. Published at NeurIPS 2019.}
+}
+
+@misc{gibbs2023conformal,
+  title        = {Conformal Prediction With Conditional Guarantees},
+  author       = {Gibbs, Isaac and Cherian, John J. and Cand\`{e}s, Emmanuel J.},
+  year         = {2023},
+  eprint       = {2305.12616},
+  archivePrefix = {arXiv},
+  primaryClass = {stat.ME},
+  doi          = {10.48550/arXiv.2305.12616},
+  url          = {https://arxiv.org/abs/2305.12616},
+  note         = {[VERIFIED] Fetched via arXiv DOI service. arXiv:2305.12616.}
+}
+
+
+% ---------------------------------------------------------------------
+% Distribution-free risk control (RCPS / Learn-then-Test)  [VERIFIED]
+% ---------------------------------------------------------------------
+
+@article{bates2021rcps,
+  title     = {Distribution-free, Risk-controlling Prediction Sets},
+  volume    = {68},
+  number    = {6},
+  issn      = {1557-735X},
+  doi       = {10.1145/3478535},
+  url       = {http://dx.doi.org/10.1145/3478535},
+  journal   = {Journal of the ACM},
+  publisher = {Association for Computing Machinery},
+  author    = {Bates, Stephen and Angelopoulos, Anastasios and Lei, Lihua and Malik, Jitendra and Jordan, Michael},
+  year      = {2021},
+  month     = sep,
+  pages     = {1--34},
+  note      = {[VERIFIED] Fetched via DOI content negotiation.}
+}
+
+@misc{angelopoulos2021learn,
+  title        = {Learn then Test: Calibrating Predictive Algorithms to Achieve Risk Control},
+  author       = {Angelopoulos, Anastasios N. and Bates, Stephen and Cand\`{e}s, Emmanuel J. and Jordan, Michael I. and Lei, Lihua},
+  year         = {2021},
+  eprint       = {2110.01052},
+  archivePrefix = {arXiv},
+  primaryClass = {stat.ME},
+  doi          = {10.48550/arXiv.2110.01052},
+  url          = {https://arxiv.org/abs/2110.01052},
+  note         = {[VERIFIED] Fetched via arXiv DOI service.}
+}
+
+@misc{angelopoulos2021gentle,
+  title        = {A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification},
+  author       = {Angelopoulos, Anastasios N. and Bates, Stephen},
+  year         = {2021},
+  eprint       = {2107.07511},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.LG},
+  doi          = {10.48550/arXiv.2107.07511},
+  url          = {https://arxiv.org/abs/2107.07511},
+  note         = {[VERIFIED] Fetched via arXiv DOI service.}
+}
+
+
+% ---------------------------------------------------------------------
+% Field-alarm anchors: perturbation-prediction benchmarking  [VERIFIED]
+% ---------------------------------------------------------------------
+
+@article{ahlmanneltze2025deep,
+  title     = {Deep-learning-based gene perturbation effect prediction does not yet outperform simple linear baselines},
+  volume    = {22},
+  number    = {8},
+  issn      = {1548-7105},
+  doi       = {10.1038/s41592-025-02772-6},
+  url       = {http://dx.doi.org/10.1038/s41592-025-02772-6},
+  journal   = {Nature Methods},
+  publisher = {Springer Nature},
+  author    = {Ahlmann-Eltze, Constantin and Huber, Wolfgang and Anders, Simon},
+  year      = {2025},
+  month     = aug,
+  pages     = {1657--1661},
+  note      = {[VERIFIED] Fetched via DOI content negotiation. Referred to in the skeleton as "Ahlmann-Eltze et al. 2024"; the published Nature Methods version carries a 2025 date. Primary field-alarm anchor.}
+}
+
+@misc{wu2024perturbench,
+  title        = {PerturBench: Benchmarking Machine Learning Models for Cellular Perturbation Analysis},
+  author       = {Wu, Yan and Wershof, Esther and Schmon, Sebastian M. and Nassar, Marcel and Osi\'{n}ski, B\l{}a\.{z}ej and Eksi, Ridvan and Yan, Zichao and Stark, Rory and Zhang, Kun and Graepel, Thore},
+  year         = {2024},
+  eprint       = {2408.10609},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.LG},
+  doi          = {10.48550/arXiv.2408.10609},
+  url          = {https://arxiv.org/abs/2408.10609},
+  note         = {[VERIFIED] Fetched via arXiv DOI service.}
+}
+
+
+% ---------------------------------------------------------------------
+% Datasets  [VERIFIED]
+% ---------------------------------------------------------------------
+
+@article{schmidt2022crispr,
+  title     = {CRISPR activation and interference screens decode stimulation responses in primary human T cells},
+  volume    = {375},
+  number    = {6580},
+  issn      = {1095-9203},
+  doi       = {10.1126/science.abj4008},
+  url       = {http://dx.doi.org/10.1126/science.abj4008},
+  journal   = {Science},
+  publisher = {American Association for the Advancement of Science},
+  author    = {Schmidt, Ralf and Steinhart, Zachary and Layeghi, Madeline and Freimer, Jacob W. and Bueno, Raymund and Nguyen, Vinh Q. and Blaeschke, Franziska and Ye, Chun Jimmie and Marson, Alexander},
+  year      = {2022},
+  month     = feb,
+  note      = {[VERIFIED] Fetched via DOI content negotiation. Primary CD4+ T-cell Perturb-seq assay (Marson lab). Referenced in-text as the T1D-relevant primary CD4+ dataset.}
+}
+
+@article{norman2019exploring,
+  title     = {Exploring genetic interaction manifolds constructed from rich single-cell phenotypes},
+  volume    = {365},
+  number    = {6455},
+  issn      = {1095-9203},
+  doi       = {10.1126/science.aax4438},
+  url       = {http://dx.doi.org/10.1126/science.aax4438},
+  journal   = {Science},
+  publisher = {American Association for the Advancement of Science},
+  author    = {Norman, Thomas M. and Horlbeck, Max A. and Replogle, Joseph M. and Ge, Alex Y. and Xu, Albert and Jost, Marco and Gilbert, Luke A. and Weissman, Jonathan S.},
+  year      = {2019},
+  month     = aug,
+  pages     = {786--793},
+  note      = {[VERIFIED] Fetched via DOI content negotiation. K562 genome-scale genetic-interaction Perturb-seq; GEO GSE133344. Used as the independent cross-assay transfer dataset.}
+}
+
+
+% ---------------------------------------------------------------------
+% Previously-unverified entries — NOW RESOLVED  [VERIFIED 2026-07-12]
+% Both entries below were [VERIFY] stubs at authoring time. Each has been
+% confirmed to a real publication with a genuine DOI via web search against
+% primary sources (NeurIPS proceedings, Nature Biotechnology, PubMed, arXiv).
+% No DOI was ever fabricated; the placeholder paraphrase titles have been
+% replaced with the verbatim published titles. No [VERIFY] stubs remain.
+% ---------------------------------------------------------------------
+
+@inproceedings{correia2024information,
+  title     = {An Information Theoretic Perspective on Conformal Prediction},
+  author    = {Correia, Alvaro H.C. and Massoli, Fabio Valerio and Louizos, Christos and Behboodi, Arash},
+  booktitle = {Advances in Neural Information Processing Systems 37 (NeurIPS 2024)},
+  year      = {2024},
+  pages     = {101000--101041},
+  eprint    = {2405.02140},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  doi       = {10.48550/arXiv.2405.02140},
+  url       = {https://arxiv.org/abs/2405.02140},
+  note      = {[VERIFIED 2026-07-12] The project skeleton cited this as "Correia et al., NeurIPS 2024" on incorporating side information into the nonconformity score. The prior placeholder title ("Conformal Prediction with Side Information via Learned Nonconformity Scores") was a paraphrase; the actual NeurIPS 2024 paper is titled "An Information Theoretic Perspective on Conformal Prediction." Section 5 of that paper is precisely the side-information-into-CP contribution the skeleton referenced. Authors/venue/DOI confirmed via the NeurIPS 2024 proceedings page, the arXiv record (2405.02140), and Semantic Scholar. Volume 37, pp. 101000-101041.}
+}
+
+@article{vinastorne2026systema,
+  title     = {Systema: a framework for evaluating genetic perturbation response prediction beyond systematic variation},
+  author    = {Vi{\~n}as Torn{\'e}, Ramon and Wiatrak, Maciej and Piran, Zoe and Fan, Shuyang and Jiang, Liangze and Teichmann, Sarah A. and Nitzan, Mor and Brbi{\'c}, Maria},
+  journal   = {Nature Biotechnology},
+  volume    = {44},
+  pages     = {1050--1059},
+  year      = {2026},
+  publisher = {Springer Nature},
+  doi       = {10.1038/s41587-025-02777-8},
+  url       = {https://doi.org/10.1038/s41587-025-02777-8},
+  note      = {[VERIFIED 2026-07-12] The project skeleton referenced this as "Systema" (systematic variation, mean baselines competitive with foundation models). Confirmed real: EPFL/Brbic-lab evaluation framework showing existing perturbation-prediction methods largely capture systematic variation and simple mean baselines match state-of-the-art. Published online 2025 Aug 25; issue vol 44, pp. 1050-1059 (2026). PubMed PMID 40854979. Authors/venue/DOI confirmed via the Nature Biotechnology article page, PubMed, and the Cambridge/HUJI institutional repositories. The prior placeholder title was a paraphrase; title above is verbatim.}
+}

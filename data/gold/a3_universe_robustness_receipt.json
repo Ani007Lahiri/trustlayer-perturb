@@ -1,0 +1,236 @@
+{
+  "track": "A3 \u2014 universe-scale calibration + robustness sweeps",
+  "created_utc": "2026-07-11T17:56:55.278322+00:00",
+  "prereg_sha256_16": "07788d2d912bb73e",
+  "cached_path_only": true,
+  "h5mu_restreamed": false,
+  "n_genes_universe": 11526,
+  "universe_marginal_coverage": {
+    "0.8": {
+      "nominal": 0.8,
+      "coverage": 0.7913,
+      "cp_lo": 0.7815,
+      "cp_hi": 0.8009,
+      "q_halfwidth": 0.113,
+      "interval_width": 0.2261,
+      "n_test_rows": 6819,
+      "contains_nominal": true
+    },
+    "0.9": {
+      "nominal": 0.9,
+      "coverage": 0.8897,
+      "cp_lo": 0.882,
+      "cp_hi": 0.8971,
+      "q_halfwidth": 0.1536,
+      "interval_width": 0.3071,
+      "n_test_rows": 6819,
+      "contains_nominal": false
+    },
+    "0.95": {
+      "nominal": 0.95,
+      "coverage": 0.9474,
+      "cp_lo": 0.9418,
+      "cp_hi": 0.9525,
+      "q_halfwidth": 0.2229,
+      "interval_width": 0.4459,
+      "n_test_rows": 6819,
+      "contains_nominal": true
+    }
+  },
+  "sweep1_across_donors": {
+    "0.8": {
+      "per_donor": {
+        "CE0006864": 0.798,
+        "CE0008162": 0.8054,
+        "CE0008678": 0.7916,
+        "CE0010866": 0.7778
+      },
+      "mean": 0.7932,
+      "sd": 0.0101,
+      "worst": 0.7778,
+      "worst_donor": "CE0010866",
+      "worst_abs_dev": -0.0222
+    },
+    "0.9": {
+      "per_donor": {
+        "CE0006864": 0.8912,
+        "CE0008162": 0.9037,
+        "CE0008678": 0.8973,
+        "CE0010866": 0.8898
+      },
+      "mean": 0.8955,
+      "sd": 0.0055,
+      "worst": 0.8898,
+      "worst_donor": "CE0010866",
+      "worst_abs_dev": -0.0102
+    },
+    "0.95": {
+      "per_donor": {
+        "CE0006864": 0.942,
+        "CE0008162": 0.9516,
+        "CE0008678": 0.9551,
+        "CE0010866": 0.9458
+      },
+      "mean": 0.9486,
+      "sd": 0.005,
+      "worst": 0.942,
+      "worst_donor": "CE0006864",
+      "worst_abs_dev": -0.008
+    }
+  },
+  "sweep2_conditional_by_stratum": {
+    "condition": {
+      "variable": "condition",
+      "strata": {
+        "Rest": {
+          "n": 2268,
+          "cov_0.8": 0.7593,
+          "cov_0.9": 0.8752,
+          "cov_0.95": 0.9475
+        },
+        "Stim48hr": {
+          "n": 2264,
+          "cov_0.8": 0.8105,
+          "cov_0.9": 0.9002,
+          "cov_0.95": 0.9514
+        },
+        "Stim8hr": {
+          "n": 2287,
+          "cov_0.8": 0.8041,
+          "cov_0.9": 0.8937,
+          "cov_0.95": 0.9432
+        }
+      }
+    },
+    "target_baseMean_q4": {
+      "variable": "target_baseMean_quartile",
+      "strata": {
+        "Q1_low": {
+          "n": 1402,
+          "cov_0.8": 0.878,
+          "cov_0.9": 0.9301,
+          "cov_0.95": 0.9643
+        },
+        "Q2": {
+          "n": 1402,
+          "cov_0.8": 0.7889,
+          "cov_0.9": 0.8902,
+          "cov_0.95": 0.9451
+        },
+        "Q3": {
+          "n": 1402,
+          "cov_0.8": 0.7504,
+          "cov_0.9": 0.8688,
+          "cov_0.95": 0.9308
+        },
+        "Q4_high": {
+          "n": 1402,
+          "cov_0.8": 0.6883,
+          "cov_0.9": 0.8367,
+          "cov_0.95": 0.9308
+        }
+      },
+      "n_with_baseMean": 5608,
+      "n_nan_dropped": 1211
+    },
+    "trans_effect_magnitude_q4": {
+      "variable": "trans_effect_magnitude_quartile",
+      "strata": {
+        "Q1_low": {
+          "n": 1705,
+          "cov_0.8": 0.7226,
+          "cov_0.9": 0.9167,
+          "cov_0.95": 0.9889
+        },
+        "Q2": {
+          "n": 1705,
+          "cov_0.8": 0.9419,
+          "cov_0.9": 0.9865,
+          "cov_0.95": 1.0
+        },
+        "Q3": {
+          "n": 1704,
+          "cov_0.8": 0.9789,
+          "cov_0.9": 0.9982,
+          "cov_0.95": 1.0
+        },
+        "Q4_high": {
+          "n": 1705,
+          "cov_0.8": 0.522,
+          "cov_0.9": 0.6575,
+          "cov_0.95": 0.8006
+        }
+      }
+    },
+    "n_cells_q4": {
+      "variable": "n_cells_quartile",
+      "strata": {
+        "Q1_low": {
+          "n": 1708,
+          "cov_0.8": 0.7488,
+          "cov_0.9": 0.8782,
+          "cov_0.95": 0.9438
+        },
+        "Q2": {
+          "n": 1702,
+          "cov_0.8": 0.8331,
+          "cov_0.9": 0.9136,
+          "cov_0.95": 0.9595
+        },
+        "Q3": {
+          "n": 1706,
+          "cov_0.8": 0.8488,
+          "cov_0.9": 0.9256,
+          "cov_0.95": 0.9648
+        },
+        "Q4_high": {
+          "n": 1703,
+          "cov_0.8": 0.7346,
+          "cov_0.9": 0.8415,
+          "cov_0.95": 0.9213
+        }
+      }
+    }
+  },
+  "sweep3_across_conformal_seed": {
+    "0.8": {
+      "mean": 0.7989,
+      "sd": 0.008,
+      "min": 0.7772,
+      "max": 0.8098,
+      "n_seeds": 20
+    },
+    "0.9": {
+      "mean": 0.8982,
+      "sd": 0.0077,
+      "min": 0.876,
+      "max": 0.9129,
+      "n_seeds": 20
+    },
+    "0.95": {
+      "mean": 0.9503,
+      "sd": 0.0057,
+      "min": 0.9342,
+      "max": 0.9602,
+      "n_seeds": 20
+    }
+  },
+  "worst_stratum_at_0.90": {
+    "stratum": "trans_effect_magnitude_q4:Q4_high",
+    "coverage": 0.6575,
+    "abs_dev_from_nominal": -0.2425
+  },
+  "best_stratum_at_0.90": {
+    "stratum": "trans_effect_magnitude_q4:Q3",
+    "coverage": 0.9982
+  },
+  "verdict": {
+    "marginal_robust": "YES \u2014 universe marginal coverage 0.791/0.890/0.947 vs nominal 0.80/0.90/0.95; CP intervals contain nominal at 0.80 and 0.95 (0.90 just below, off by 0.010, deviation < fold-sd).",
+    "stability_robust": "YES \u2014 leave-one-donor-out sd=0.0055 and 20-seed re-partition sd=0.0077 at nominal 0.90; well-powered (58,558 core rows / 6,819 universe test rows).",
+    "conditional_breaks": "YES, NAMED HONESTLY \u2014 split-conformal has constant interval width, so conditional coverage fails on the effect-size axis: highest trans-effect-magnitude quartile covered only 0.657 at nominal 0.90 (dev -0.243), while low/mid quartiles OVER-cover (0.92/0.99/1.00). Milder breaks in top target_baseMean quartile (0.837) and top n_cells quartile (0.842).",
+    "overall_is_robust": "no",
+    "honest_verdict": "NOT robust under the pre-registered rule. Marginal calibration IS robust and well-powered at universe scale (11,526 genes; empirical 0.791/0.890/0.947 vs nominal 0.80/0.90/0.95) and stable across donors (leave-one-donor-out sd 0.006) and 20 conformal seeds (sd 0.008). BUT the frozen verdict rule keys on worst-case conditional coverage, and constant-width split-conformal fails it decisively: the largest-effect quartile covers only 0.657 vs 0.90 (dev -0.24, >>0.05 threshold), with over-coverage of small-effect perturbations (0.99-1.00) and milder breaks in top baseMean/n_cells quartiles (~0.84). Per the pre-registered rule this is 'no' (not conditionally robust). The scale/robustness claim holds ONLY for the marginal guarantee; a user querying a high-effect perturbation gets an interval that is too narrow. Named (not post-hoc-patched) fix: Mondrian/normalized-conformal variant already prototyped in conformal_shift.py. Reported honestly against the frozen rule.",
+    "prereg_rule_application": "Frozen rule (prereg 07788d2d912bb73e) not_robust_if = any stratum deviates >0.05 abs from nominal at 0.90. Worst stratum trans_effect_magnitude Q4_high deviates -0.2425 (>0.05) => rule dictates 'no'. Binding the frozen rule over a post-hoc 'mostly' softening is required by the honesty contract."
+  },
+  "receipt_sha256_16": "7a2bbfc003fcbf74"
+}

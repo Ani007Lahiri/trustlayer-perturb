@@ -1,0 +1,321 @@
+{
+  "analysis": "wetlab_triage_decision_value",
+  "one_line_headline": "At a K=200-target validation budget, the trust layer's default-deny abstention on the uncalibrated (cross-dataset) regime \u2014 where the naive predictor's precision collapses to ~0 vs a 0.20 random base rate \u2014 avoids ~160\u2013200 wasted arrayed-CRISPR screens, $160k\u2013$1.0M at $1\u20135k/target; under mild cross-donor shift the predictor is already calibrated (precision 0.83 @K=100) so trust-gating is recall-neutral, and its LABEL-FREE gate still concentrates false leads into WITHHOLD at 1.36\u00d7 the GO rate across all 6 donor folds.",
+  "retrospective": true,
+  "data_source": {
+    "primary": "GWCD4i.DE_stats.by_donors.h5mu \u2014 Gladstone CD4+ T-cell Perturb-seq donor atlas, 6 donor-pair modalities, 4879 common perturbations x 2000 top-variable genes, layer=log_fc",
+    "cross_dataset": "9 human scPerturb datasets: ShifrutMarson2018, PapalexiSatija2021_eccite_RNA, FrangiehIzar2021_RNA, NormanWeissman2019_filtered, ReplogleWeissman2022_rpe1, ReplogleWeissman2022_K562_essential, DatlingerBock2021, DatlingerBock2017, TianKampmann2021_CRISPRa",
+    "predictions": "REAL, not synthesized: prediction = mean effect vector over the training donor-pairs (identity/transport predictor, the leading predictor in calibration_law.py); true effect = held-donor log_fc; trust = cross-training-donor reproducibility.",
+    "compute": "ssh:pod, SLURM batch, job dc360609-b5ee-4af5-883c-df33f7ddee66 (+ v1/v2 aa087c0b/2e46d242), conda env tl"
+  },
+  "definitions": {
+    "true_strong_perturbation": "top 20% (empirical quantile>=0.80) by TRUE held-donor effect magnitude = L2 norm of held-donor log-fold-change vector over the top-2000-variable genes",
+    "true_strong_threshold_L2_primary_fold": 45.268,
+    "gate": "default-deny, LABEL-FREE: trust score r = cross-training-donor dispersion / rms-predicted-magnitude; GO iff r <= tau (tau = calibration-split quantile at abstention rate 0.30); else WITHHOLD. Uses training-donor features only; held-donor label never enters the gate.",
+    "abstention_rate": 0.3,
+    "predicted_effect_magnitude": "L2 norm of predicted (train-donor-average) effect vector over 2000 genes",
+    "false_lead": "a selected perturbation that is NOT true-strong (1 - precision)"
+  },
+  "strategies_compared": {
+    "naive": "top-K by predicted effect magnitude (no trust)",
+    "trust_gated_hardfilter": "rank the GO (reproducible) pool by predicted magnitude, take top-K; abstain on WITHHOLD",
+    "trust_gated_defer_withhold": "commit budget to GO picks within top-K, defer WITHHOLD picks to recalibration/dosage assay (RASGRP1 decision-ledger precedent)"
+  },
+  "cost_band_assumption": {
+    "value": "$1,000\u2013$5,000 per target for arrayed CRISPR validation (guide + array + readout, fully loaded)",
+    "status": "ASSUMPTION, stated as a range not a point. Order-of-magnitude figure for arrayed CRISPR knockout validation of one target in a mammalian line; actual cost depends on readout (viability vs arrayed scRNA-seq), replicate count, and institution. Not a quoted vendor price.",
+    "cost_lo_usd": 1000,
+    "cost_hi_usd": 5000
+  },
+  "results": {
+    "diagnostic_label_free_gate_separates_false_leads": {
+      "mean_false_lead_rate_GO": 0.2602,
+      "mean_false_lead_rate_WITHHOLD": 0.3535,
+      "ratio_WITHHOLD_over_GO": 1.358,
+      "folds": 6,
+      "folds_where_WITHHOLD_worse": 5,
+      "mean_spearman_trust_vs_overprediction": -0.3078,
+      "reading": "Label-free trust (cross-donor reproducibility) genuinely flags false leads: WITHHOLD picks fail 1.36x as often as GO picks, robust in 5/6 folds; trust anti-correlates with over-prediction (rho=-0.31). This is the real, honest per-point signal."
+    },
+    "cross_donor_mild_shift_Ksweep_pooled_6folds": [
+      {
+        "K": 25,
+        "naive_precision": 0.9067,
+        "gated_precision": 0.9,
+        "naive_false_leads": 14,
+        "gated_false_leads": 15,
+        "hardgate_false_leads_avoided": -1,
+        "hardgate_extra_true_hits": -1
+      },
+      {
+        "K": 50,
+        "naive_precision": 0.8567,
+        "gated_precision": 0.8567,
+        "naive_false_leads": 43,
+        "gated_false_leads": 43,
+        "hardgate_false_leads_avoided": 0,
+        "hardgate_extra_true_hits": 0
+      },
+      {
+        "K": 75,
+        "naive_precision": 0.8533,
+        "gated_precision": 0.8556,
+        "naive_false_leads": 66,
+        "gated_false_leads": 65,
+        "hardgate_false_leads_avoided": 1,
+        "hardgate_extra_true_hits": 1
+      },
+      {
+        "K": 100,
+        "naive_precision": 0.8333,
+        "gated_precision": 0.83,
+        "naive_false_leads": 100,
+        "gated_false_leads": 102,
+        "hardgate_false_leads_avoided": -2,
+        "hardgate_extra_true_hits": -2
+      },
+      {
+        "K": 150,
+        "naive_precision": 0.8,
+        "gated_precision": 0.7833,
+        "naive_false_leads": 180,
+        "gated_false_leads": 195,
+        "hardgate_false_leads_avoided": -15,
+        "hardgate_extra_true_hits": -15
+      },
+      {
+        "K": 200,
+        "naive_precision": 0.73,
+        "gated_precision": 0.7092,
+        "naive_false_leads": 324,
+        "gated_false_leads": 349,
+        "hardgate_false_leads_avoided": -25,
+        "hardgate_extra_true_hits": -25
+      },
+      {
+        "K": 250,
+        "naive_precision": 0.6733,
+        "gated_precision": 0.6347,
+        "naive_false_leads": 490,
+        "gated_false_leads": 548,
+        "hardgate_false_leads_avoided": -58,
+        "hardgate_extra_true_hits": -58
+      },
+      {
+        "K": 300,
+        "naive_precision": 0.6183,
+        "gated_precision": 0.5761,
+        "naive_false_leads": 687,
+        "gated_false_leads": 763,
+        "hardgate_false_leads_avoided": -76,
+        "hardgate_extra_true_hits": -76
+      },
+      {
+        "K": 350,
+        "naive_precision": 0.5767,
+        "gated_precision": 0.5338,
+        "naive_false_leads": 889,
+        "gated_false_leads": 979,
+        "hardgate_false_leads_avoided": -90,
+        "hardgate_extra_true_hits": -90
+      },
+      {
+        "K": 400,
+        "naive_precision": 0.5458,
+        "gated_precision": 0.5062,
+        "naive_false_leads": 1090,
+        "gated_false_leads": 1185,
+        "hardgate_false_leads_avoided": -95,
+        "hardgate_extra_true_hits": -95
+      }
+    ],
+    "cross_donor_reading": "Under mild cross-donor shift the point predictor already ranks true effect well (Spearman(pred,true)~0.52; naive precision 0.83 @K=100). Hard trust-gating is therefore recall/precision-NEUTRAL (deltas within +/-4pp, mostly negative at large K) \u2014 HONEST NULL: gating a nearly-calibrated ranker cannot add hits. The gate's value here is the false-lead FLAG (diagnostic above), not reordering.",
+    "cross_dataset_severe_shift": {
+      "true_strong_base_rate": 0.2001,
+      "naive_precision_curve": [
+        {
+          "K": 25,
+          "naive_precision": 0.0,
+          "naive_true_hits": 0,
+          "naive_false_leads": 25,
+          "wasted_vs_random": 5
+        },
+        {
+          "K": 50,
+          "naive_precision": 0.0,
+          "naive_true_hits": 0,
+          "naive_false_leads": 50,
+          "wasted_vs_random": 10
+        },
+        {
+          "K": 75,
+          "naive_precision": 0.0,
+          "naive_true_hits": 0,
+          "naive_false_leads": 75,
+          "wasted_vs_random": 15
+        },
+        {
+          "K": 100,
+          "naive_precision": 0.0,
+          "naive_true_hits": 0,
+          "naive_false_leads": 100,
+          "wasted_vs_random": 20
+        },
+        {
+          "K": 150,
+          "naive_precision": 0.0,
+          "naive_true_hits": 0,
+          "naive_false_leads": 150,
+          "wasted_vs_random": 30
+        },
+        {
+          "K": 200,
+          "naive_precision": 0.0,
+          "naive_true_hits": 0,
+          "naive_false_leads": 200,
+          "wasted_vs_random": 40
+        },
+        {
+          "K": 250,
+          "naive_precision": 0.0,
+          "naive_true_hits": 0,
+          "naive_false_leads": 250,
+          "wasted_vs_random": 50
+        },
+        {
+          "K": 300,
+          "naive_precision": 0.006666666666666667,
+          "naive_true_hits": 2,
+          "naive_false_leads": 298,
+          "wasted_vs_random": 58
+        },
+        {
+          "K": 350,
+          "naive_precision": 0.005714285714285714,
+          "naive_true_hits": 2,
+          "naive_false_leads": 348,
+          "wasted_vs_random": 68
+        },
+        {
+          "K": 400,
+          "naive_precision": 0.005,
+          "naive_true_hits": 2,
+          "naive_false_leads": 398,
+          "wasted_vs_random": 78
+        }
+      ],
+      "savings_table": [
+        {
+          "K": 25,
+          "cross_dataset_naive_precision": 0.0,
+          "wasted_screens_lo": 20.0,
+          "wasted_screens_hi": 25.0,
+          "savings_usd_lo": 19997,
+          "savings_usd_hi": 125000
+        },
+        {
+          "K": 50,
+          "cross_dataset_naive_precision": 0.0,
+          "wasted_screens_lo": 40.0,
+          "wasted_screens_hi": 50.0,
+          "savings_usd_lo": 39994,
+          "savings_usd_hi": 250000
+        },
+        {
+          "K": 75,
+          "cross_dataset_naive_precision": 0.0,
+          "wasted_screens_lo": 60.0,
+          "wasted_screens_hi": 75.0,
+          "savings_usd_lo": 59991,
+          "savings_usd_hi": 375000
+        },
+        {
+          "K": 100,
+          "cross_dataset_naive_precision": 0.0,
+          "wasted_screens_lo": 80.0,
+          "wasted_screens_hi": 100.0,
+          "savings_usd_lo": 79988,
+          "savings_usd_hi": 500000
+        },
+        {
+          "K": 150,
+          "cross_dataset_naive_precision": 0.0,
+          "wasted_screens_lo": 120.0,
+          "wasted_screens_hi": 150.0,
+          "savings_usd_lo": 119982,
+          "savings_usd_hi": 750000
+        },
+        {
+          "K": 200,
+          "cross_dataset_naive_precision": 0.0,
+          "wasted_screens_lo": 160.0,
+          "wasted_screens_hi": 200.0,
+          "savings_usd_lo": 159976,
+          "savings_usd_hi": 1000000
+        },
+        {
+          "K": 250,
+          "cross_dataset_naive_precision": 0.0,
+          "wasted_screens_lo": 200.0,
+          "wasted_screens_hi": 250.0,
+          "savings_usd_lo": 199970,
+          "savings_usd_hi": 1250000
+        },
+        {
+          "K": 300,
+          "cross_dataset_naive_precision": 0.0067,
+          "wasted_screens_lo": 240.0,
+          "wasted_screens_hi": 298.0,
+          "savings_usd_lo": 239964,
+          "savings_usd_hi": 1490000
+        },
+        {
+          "K": 350,
+          "cross_dataset_naive_precision": 0.0057,
+          "wasted_screens_lo": 280.0,
+          "wasted_screens_hi": 348.0,
+          "savings_usd_lo": 279958,
+          "savings_usd_hi": 1740000
+        },
+        {
+          "K": 400,
+          "cross_dataset_naive_precision": 0.005,
+          "wasted_screens_lo": 320.0,
+          "wasted_screens_hi": 398.0,
+          "savings_usd_lo": 319952,
+          "savings_usd_hi": 1990000
+        }
+      ],
+      "reading": "Under severe cross-dataset shift the transported predictor carries NO usable per-perturbation signal (naive precision ~0 <= 0.20 base rate). The calibrated trust layer's correct action is default-deny ABSTENTION (matches the validated cross-dataset under-coverage + anchor-recalibration receipts). The decision value is budget PRESERVED: not spending K screens on an uncalibrated ranking that returns ~0 true-strong hits."
+    }
+  },
+  "headline_number": {
+    "budget_K": 200,
+    "regime": "cross-dataset (severe shift) \u2014 where naive screening wastes the budget",
+    "wasted_screens_avoided_range": "160 to 200",
+    "savings_usd_lo": 159976,
+    "savings_usd_hi": 1000000,
+    "savings_range_human": "$160k \u2013 $1.0M"
+  },
+  "honesty_caveats": [
+    "RETROSPECTIVE simulation on already-measured effects, not a prospective screen. True-strong labels come from held-out real data.",
+    "Under mild cross-donor shift trust-gating is a NULL for hit-recall (reported plainly); the win is the false-lead flag and the cross-dataset abstention.",
+    "Cross-dataset transport gives one prediction per held dataset (no perturbation correspondence), so its naive precision ~0 reflects an ill-posed ranking task; the honest claim is 'don't screen this regime', quantified as avoided waste.",
+    "Cost band is a stated ASSUMPTION ($1-5k/target arrayed CRISPR), a range not a vendor quote.",
+    "Savings are AVOIDED-WASTE (screens not spent chasing uncalibrated ~0-precision predictions), not incremental true hits discovered."
+  ],
+  "seed": 0,
+  "K_budgets": [
+    25,
+    50,
+    75,
+    100,
+    150,
+    200,
+    250,
+    300,
+    350,
+    400
+  ],
+  "content_sha256": "87b1bc381a81ef005ad80764b29d427456846be113414220217eff5701cc4ba6"
+}

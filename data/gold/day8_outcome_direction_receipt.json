@@ -1,0 +1,172 @@
+{
+ "purpose": "Day-8 THIRD external axis \u2014 clinical-trial OUTCOME DIRECTION (drug SUCCESS vs FAILURE in autoimmune indications) vs the committed binary GO/WITHHELD gate. Scores the REAL committed gate (commit_gate.evaluate reproduced on the 98-gene universe = 49 GO/49 WITHHELD), NOT a surrogate.",
+ "date_utc": "2026-07-11T17:11:06.043838+00:00",
+ "honesty_contract": "Labels+evidence hash-frozen BEFORE scoring (prereg 78448a46, labels 4910d817). No tuning. Real gate only. Negatives/nulls reported plainly incl. gate's own false negatives.",
+ "prereg_sha256": "78448a4692a7fb88...(see day8_outcome_direction_prereg.json)",
+ "labels_sha256": "4910d8170419afe8...(see prereg file)",
+ "real_gate_reproduction": {
+  "rule": "GO iff ot_t1d>=0.20 AND eqtl_nsig>0 (trust non-binding, leakage-clean by construction, direction not-inconsistent at scale)",
+  "eqtl_source": "EBI eQTL Catalogue API v2, 11 T-cell datasets (QTD000031/036/464/469/479/484/600/611/612/613/614), nlog10p>=5.0",
+  "universe_split": "49 GO / 49 WITHHELD over 98 genes \u2014 EXACT match to the prior committed run (faithful reproduction, not a proxy)"
+ },
+ "n_scored_direction": 8,
+ "n_success": 7,
+ "n_failure_strict": 1,
+ "n_failure_borderline": 2,
+ "primary_result": {
+  "genes": [
+   "CD3E",
+   "CD52",
+   "CD6",
+   "FKBP1A",
+   "IL2RB",
+   "PPIA",
+   "TNF",
+   "IL10"
+  ],
+  "n": 8,
+  "n_success": 7,
+  "n_failure": 1,
+  "confusion_TP_FP_FN_TN": [
+   5,
+   0,
+   2,
+   1
+  ],
+  "gate_MCC": 0.488,
+  "gate_sens": 0.714,
+  "gate_spec": 1.0,
+  "gate_balacc": 0.857,
+  "fisher_oddsratio": null,
+  "fisher_p_onesided": 0.375
+ },
+ "sensitivity_result": {
+  "genes": [
+   "CD3E",
+   "CD52",
+   "CD6",
+   "FKBP1A",
+   "IL2RB",
+   "PPIA",
+   "TNF",
+   "IL10",
+   "IL7R",
+   "GATA3"
+  ],
+  "n": 10,
+  "n_success": 7,
+  "n_failure": 3,
+  "confusion_TP_FP_FN_TN": [
+   5,
+   0,
+   2,
+   3
+  ],
+  "gate_MCC": 0.655,
+  "gate_sens": 0.714,
+  "gate_spec": 1.0,
+  "gate_balacc": 0.857,
+  "fisher_oddsratio": null,
+  "fisher_p_onesided": 0.0833
+ },
+ "baseline_comparison": {
+  "existence_RETRACTED_baseline": "DEGENERATE on the direction axis: all scored genes have an autoimmune drug program by construction, so has_any_autoimmune_drug=1 for all 8/10 => 0 discrimination (MCC undefined/0). This is exactly why 'drug existence' is a weak axis and 'outcome direction' is the stronger test.",
+  "ot_t1d_assoc": "continuous OT-T1D score does NOT order SUCCESS>FAILURE: IL10 (FAILURE) has ot_t1d=0.533, higher than 5 of 7 SUCCESS genes => association-alone is anti-correlated with outcome here.",
+  "eqtl_nsig": "eqtl_nsig is the gate's binding variable; all 3 FAILURES have eqtl_nsig=0 while 5/7 SUCCESS have eqtl_nsig>0 => the gate's own signal carries the direction."
+ },
+ "per_gene": {
+  "CD3E": {
+   "outcome": "SUCCESS",
+   "tier": "-",
+   "gate": "GO",
+   "eqtl_nsig": 1,
+   "ot_t1d": 0.5641,
+   "gate_correct": true,
+   "evidence": "Teplizumab (anti-CD3E) FDA-approved 2022 to delay T1D onset; multiple approved anti-CD3 (muromonab, blinatumomab). maxStage=APPROVAL."
+  },
+  "CD52": {
+   "outcome": "SUCCESS",
+   "tier": "-",
+   "gate": "GO",
+   "eqtl_nsig": 7,
+   "ot_t1d": 0.344,
+   "gate_correct": true,
+   "evidence": "Alemtuzumab (anti-CD52) approved for relapsing multiple sclerosis. maxStage=APPROVAL."
+  },
+  "CD6": {
+   "outcome": "SUCCESS",
+   "tier": "-",
+   "gate": "GO",
+   "eqtl_nsig": 1,
+   "ot_t1d": 0.3547,
+   "gate_correct": true,
+   "evidence": "Itolizumab (anti-CD6) approved (India, plaque psoriasis) / Phase III SLE & aGVHD. maxStage=PHASE_3."
+  },
+  "FKBP1A": {
+   "outcome": "SUCCESS",
+   "tier": "-",
+   "gate": "GO",
+   "eqtl_nsig": 1,
+   "ot_t1d": 0.3998,
+   "gate_correct": true,
+   "evidence": "Tacrolimus/sirolimus/pimecrolimus (FKBP1A binders) approved immunosuppressants (transplant, atopic dermatitis, psoriasis). maxStage=APPROVAL."
+  },
+  "IL2RB": {
+   "outcome": "SUCCESS",
+   "tier": "-",
+   "gate": "WITHHELD",
+   "eqtl_nsig": 0,
+   "ot_t1d": 0.3778,
+   "gate_correct": false,
+   "evidence": "Basiliximab/daclizumab (anti-IL2R) approved (transplant rejection; daclizumab was approved for MS). maxStage=APPROVAL."
+  },
+  "PPIA": {
+   "outcome": "SUCCESS",
+   "tier": "-",
+   "gate": "GO",
+   "eqtl_nsig": 3,
+   "ot_t1d": 0.3436,
+   "gate_correct": true,
+   "evidence": "Cyclosporine (cyclophilin/PPIA binder) approved for RA, psoriasis, atopic dermatitis. maxStage=APPROVAL."
+  },
+  "TNF": {
+   "outcome": "SUCCESS",
+   "tier": "-",
+   "gate": "WITHHELD",
+   "eqtl_nsig": 0,
+   "ot_t1d": 0.3302,
+   "gate_correct": false,
+   "evidence": "Adalimumab/etanercept/infliximab (anti-TNF) approved across RA, IBD, psoriasis \u2014 cornerstone autoimmune therapy. maxStage=APPROVAL."
+  },
+  "IL10": {
+   "outcome": "FAILURE",
+   "tier": "strict",
+   "gate": "WITHHELD",
+   "eqtl_nsig": 0,
+   "ot_t1d": 0.5328,
+   "gate_correct": true,
+   "evidence": "Recombinant human IL-10 (ilodecakin/tenovil) failed in large placebo-controlled RCTs in Crohn's disease and RA (no efficacy; dose-dependent anemia, PMID 12165551 n=329); no approved autoimmune drug for the target."
+  },
+  "IL7R": {
+   "outcome": "FAILURE",
+   "tier": "borderline",
+   "gate": "WITHHELD",
+   "eqtl_nsig": 0,
+   "ot_t1d": 0.4577,
+   "gate_correct": true,
+   "evidence": "Anti-IL7R programs: RN168/PF T1D stopped at Phase 1 (NCT02038764); OSE-127/lusvertikimab UC Phase 2 completed (later mixed/positive). No approved autoimmune drug for the target; net program non-advancement, but NOT an unambiguous efficacy failure."
+  },
+  "GATA3": {
+   "outcome": "FAILURE",
+   "tier": "borderline",
+   "gate": "WITHHELD",
+   "eqtl_nsig": 0,
+   "ot_t1d": 0.3248,
+   "gate_correct": true,
+   "evidence": "SB010 (GATA3 DNAzyme) showed a POSITIVE Phase 2a asthma signal (Krug NEJM 2015, PMID 25981191); SB012 UC did not advance. No approved drug; borderline \u2014 early positive signal means this is NOT a clean failure."
+  }
+ },
+ "concordance": "partial / underpowered",
+ "honest_verdict": "DIRECTION IS RIGHT-SIGNED BUT UNDERPOWERED. Among the 98 gate-scored genes, only 7 carry a genuine autoimmune immune-mechanism drug program and ALL 7 SUCCEEDED (approved/Phase-III); clean documented target-level efficacy FAILURES are near-absent (recombinant IL-10 in Crohn's/RA is the one unambiguous case, PMID 12165551). On the primary SUCCESS(7)-vs-FAILURE-strict(1) set the gate is perfectly specific (WITHHELD the 1 failure, IL10) and 5/7 sensitive (WITHHELD two successes, IL2RB & TNF, both eqtl_nsig=0): confusion [TP5,FP0,FN2,TN1], MCC +0.49, bal-acc 0.86 \u2014 but Fisher one-sided p=0.375, NOT significant at n=8. Adding the two borderline failures (IL7R, GATA3, both WITHHELD) keeps specificity 1.0, lifts MCC to +0.66, and moves Fisher to p=0.083 \u2014 a consistent but still non-significant trend. The RETRACTED drug-existence baseline is DEGENERATE on this axis (every scored gene has a drug, so it cannot separate success from failure), and OT-association-alone is anti-correlated (IL10 outranks 5/7 successes). So the gate's direction is real and the right sign \u2014 it never GO'd a failure \u2014 but the autoimmune-outcome axis cannot reach significance because the FAILURE class is essentially empty (n=1 clean). Reported as UNDERPOWERED, not a win. This does not add an independent external win beyond the surviving mouse-KO axis; it is a corroborating-direction null.",
+ "receipt_sha256": "c86957abf5e55cf2c808ce06be256c09900cb41af1f1d0225850e1fc4bbbafb0"
+}

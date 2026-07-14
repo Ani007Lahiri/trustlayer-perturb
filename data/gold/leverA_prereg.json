@@ -1,0 +1,67 @@
+{
+  "base_predictor": {
+    "features": [
+      "log_baseMean",
+      "log_n_cells",
+      "cond_Rest",
+      "cond_Stim8hr",
+      "cond_Stim48hr"
+    ],
+    "fit_on": "TRAIN-fold rows only",
+    "model": "HistGradientBoostingRegressor(max_iter=300, learning_rate=0.05, max_depth=4, l2_regularization=1.0, random_state=20260708)",
+    "target": "y = log1p(trans_effect_magnitude)  [L2 norm of zscore vector EXCLUDING perturbed gene; leakage-safe]"
+  },
+  "confound_controls": {
+    "a_n_cells_alone_auroc": "score = gene-level max(log_n_cells); AUROC vs de_max>=10",
+    "b_log_baseMean_alone_auroc": "score = gene-level max(log_baseMean); AUROC vs de_max>=10",
+    "c_depth_stratified_auroc": "predictor-score AUROC within quartiles of gene-level max(n_cells); WIN requires AUROC>0.5 to persist within quartiles",
+    "d_partial_spearman": "partial Spearman(gene_score, de_max | log_n_cells); WIN requires it to stay positive",
+    "survival_rule": "effect SURVIVES depth control iff depth-stratified AUROC remains >0.5 across quartiles AND partial Spearman remains positive"
+  },
+  "created_utc": "2026-07-11T22:19:35.857181+00:00",
+  "data": {
+    "feature_table": "data/interim/day2_feature_table.parquet (COMMITTED leakage-safe table)",
+    "h5ad": "data/raw/GWCD4i.DE_stats.h5ad (33983 contrasts=11526 genes x 3 conditions; var 10282 genes)",
+    "h5mu": "data/raw/GWCD4i.DE_stats.by_donors.h5mu (6 donor-pair modalities from 4 donors CE0006864,CE0008162,CE0008678,CE0010866)",
+    "labels": "data/interim/leverA_obs_labels.parquet (n_total_de_genes per row, extracted from obs)"
+  },
+  "honesty_contract": "prereg frozen (sha256) BEFORE scoring; timestamp EXCLUDED from hash; effect must SURVIVE depth control to count as a win; per-donor LODO reported honestly (n=4); no fabrication; negatives reported plainly; this validates WITHIN-ASSAY recalibration, NOT frozen transfer to a new assay.",
+  "leave_condition_out": {
+    "design": "train base predictor on TRAIN-fold genes Rest+Stim8hr rows; test on TEST-fold genes Stim48hr rows (condition- AND gene-disjoint)",
+    "metric": "AUROC of predicted y vs (row n_total_de_genes>=10) on held-out Stim48hr test rows"
+  },
+  "lodo_4donor": {
+    "caveat": "n=4 donors is small; effect-separation rows are NOT gene-disjoint across folds (donor-generalization test, not gene-generalization)",
+    "design": "for each held-out donor d: calib = 3 donor-pairs NOT containing d, test = 3 pairs containing d (conformal.py run_lodo design)",
+    "report": "per-donor conformal coverage @ 80/90/95 AND row-level AUROC of predicted y vs (row n_total_de_genes>=10) on held-out donor"
+  },
+  "prereg_sha256": "949aee23dd879ccc358581e0e76c8b39d2dc6ab1dad6b9ad903ba865b0aa55a3",
+  "primary": {
+    "ci": "2000x gene-resample bootstrap 95% percentile CI",
+    "gene_score": "max over the gene's conditions of predicted y (matched to de_max = max over conditions of n_total_de_genes)",
+    "label": "de_max = max_{conditions} n_total_de_genes; positive iff de_max>=10",
+    "metric": "AUROC of base-predictor score separating de_max>=10 (real transcriptional effect) on gene-disjoint TEST genes",
+    "perm_p": "2000x label-permutation (shuffle de_max>=10 among test genes), one-sided p = fraction perm AUROC >= observed",
+    "test_positive_rate_note": "computed at scoring; overall gene-level rate observed ~0.346 (seen during label extraction; not tuned)"
+  },
+  "purpose": "Test whether re-fitting the base predictor + conformal layer WITHIN the Zhu assay converts the frozen external null (AUROC 0.465) into a real positive on gene-disjoint held-out data. Validates within-assay recalibration, NOT frozen transfer to a new assay.",
+  "secondary": {
+    "conformal_coverage": "row-level on TEST rows @ nominal 0.80/0.90/0.95; split-conformal fit on CALIB residuals |y-pred|, quantile(level, method='higher'); ALSO report CQR coverage",
+    "spearman": "Spearman(gene_score, de_max) on TEST genes"
+  },
+  "splits": {
+    "content_hash": "45ca2893cbe7e282",
+    "n_calib_genes": 3686,
+    "n_test_genes": 2311,
+    "n_train_genes": 5529,
+    "scheme": "gene-disjoint train/calib/test; all 3 conditions of a gene kept TOGETHER in one fold (no Rest/Stim leakage)",
+    "source": "data/gold/frozen_splits.json (seed 20260708, PRE-EXISTING, reused)",
+    "test_genes_sha16": "472c2df25bdadf76"
+  },
+  "success_criterion_a_priori": {
+    "AUROC_CI_lower_bound_gt_0.5": true,
+    "coverage_within_pm_0.03_of_nominal": true,
+    "note": "BOTH must hold for a positive. A 'win' ADDITIONALLY requires the effect to SURVIVE depth control (below)."
+  },
+  "title": "Lever A \u2014 pre-registered within-assay recalibration of base predictor + conformal layer on Zhu 2025 CD4+ Perturb-seq"
+}

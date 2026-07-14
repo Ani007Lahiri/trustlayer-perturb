@@ -1,0 +1,104 @@
+{
+  "purpose": "Item 3 rule ablation (flip-count-first, B5 fix)",
+  "decision_set": "demo trio (CD226/RASGRP1/PRKCQ) \u2014 n=3",
+  "baseline_verdicts": {
+    "CD226": "GO",
+    "RASGRP1": "WITHHELD",
+    "PRKCQ": "WITHHELD"
+  },
+  "single_rule_ablation": {
+    "leakage": {
+      "flips": 0,
+      "changed": {},
+      "label": "inactive - undetermined"
+    },
+    "genetic_floor": {
+      "flips": 1,
+      "changed": {
+        "PRKCQ": {
+          "baseline": "WITHHELD",
+          "ablated": "GO"
+        }
+      },
+      "label": "ACTIVE"
+    },
+    "trust_floor": {
+      "flips": 0,
+      "changed": {},
+      "label": "inactive - undetermined"
+    },
+    "eqtl": {
+      "flips": 1,
+      "changed": {
+        "RASGRP1": {
+          "baseline": "WITHHELD",
+          "ablated": "GO"
+        }
+      },
+      "label": "ACTIVE"
+    }
+  },
+  "pairwise_ablation": {
+    "leakage+genetic_floor": {
+      "flips": 1,
+      "changed": {
+        "PRKCQ": {
+          "baseline": "WITHHELD",
+          "ablated": "GO"
+        }
+      },
+      "jointly_pivotal_beyond_singles": false
+    },
+    "leakage+trust_floor": {
+      "flips": 0,
+      "changed": {},
+      "jointly_pivotal_beyond_singles": false
+    },
+    "leakage+eqtl": {
+      "flips": 1,
+      "changed": {
+        "RASGRP1": {
+          "baseline": "WITHHELD",
+          "ablated": "GO"
+        }
+      },
+      "jointly_pivotal_beyond_singles": false
+    },
+    "genetic_floor+trust_floor": {
+      "flips": 1,
+      "changed": {
+        "PRKCQ": {
+          "baseline": "WITHHELD",
+          "ablated": "GO"
+        }
+      },
+      "jointly_pivotal_beyond_singles": false
+    },
+    "genetic_floor+eqtl": {
+      "flips": 2,
+      "changed": {
+        "RASGRP1": {
+          "baseline": "WITHHELD",
+          "ablated": "GO"
+        },
+        "PRKCQ": {
+          "baseline": "WITHHELD",
+          "ablated": "GO"
+        }
+      },
+      "jointly_pivotal_beyond_singles": true
+    },
+    "trust_floor+eqtl": {
+      "flips": 1,
+      "changed": {
+        "RASGRP1": {
+          "baseline": "WITHHELD",
+          "ablated": "GO"
+        }
+      },
+      "jointly_pivotal_beyond_singles": false
+    }
+  },
+  "precision_test_status": "\u0394(validated precision) is UNDEFINED \u2014 item 1 was dropped (B2: T1D has only 9 ClinVar genes; no powered truth set). Flip count is the measurable quantity. A precision-CI test (rule pivotal iff \u0394lift CI excludes 0) is future work, contingent on a genetics-INDEPENDENT powered truth channel.",
+  "preregistered_discount": "The genetic floor flips PRKCQ (and appears 'pivotal'); this is EXPECTED and, per B1, genetics-confounded, so its pivotalness is DISCOUNTED, not headlined."
+}

@@ -1,0 +1,41 @@
+{
+  "_sha256_self": "b7743cae256bc859bbbb192f248e8bf0c90f65bd57c102ae84a4ae5309962509",
+  "analysis": "Principled conformal under donor covariate shift: naive-LODO vs Mondrian + weighted covariate-shift conformal",
+  "author": "trustlayer iter5 methodological-extension track",
+  "base_predictor": "HistGradientBoostingRegressor (same hyperparams as conformal.py), fit on calibration rows only, per fold.",
+  "covariate_for_weighting_FROZEN": [
+    "log_baseMean(on-target)",
+    "culture_condition one-hot (Rest,Stim8hr,Stim48hr)"
+  ],
+  "diagnostics_prereg": [
+    "domain-classifier AUC (calib-vs-test) per fold: magnitude of the covariate shift.",
+    "per-condition coverage for Mondrian: does stratification tighten conditional coverage?",
+    "Y|X-invariance indirect check: if naive per-fold coverage is already near nominal, covariate shift is mild."
+  ],
+  "exchangeability_assumptions_stated": {
+    "mondrian_by_condition": "Requires exchangeability WITHIN each condition stratum across the cal/test donor split. Weaker per-stratum requirement; still assumes donor does not shift the residual distribution within a condition.",
+    "naive_LODO": "Requires cal u test exchangeable. VIOLATED by donor-blocking (different donor composition). => no valid guarantee, only empirical coverage.",
+    "weighted_covariate_shift": "Requires COVARIATE SHIFT ONLY: P_test(Y|X)=P_cal(Y|X), the shift is confined to the X-marginal, and the density ratio w(x) is (approximately) correct. Under this assumption weighted split-conformal restores VALID marginal coverage (Tibshirani et al. 2019, Thm 2)."
+  },
+  "folds": "4 leave-one-donor-out folds over donors [CE0006864, CE0008162, CE0008678, CE0010866].",
+  "generated_utc": "2026-07-11T07:22:33.962825+00:00",
+  "honesty": "Null / no-improvement is an acceptable and expected outcome. No tuning of weights or strata to hit nominal. Weights estimated once from frozen covariates; no post-hoc selection.",
+  "levels_FROZEN": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "mondrian_taxonomy_FROZEN": "culture_condition",
+  "motivation": "Naive donor-blocked LODO split-conformal breaks exchangeability BY DESIGN: calibration = donor-pairs NOT containing held-out donor d; test = donor-pairs containing d. Calibration and test are therefore drawn from different donor compositions, so standard split-conformal's exchangeability precondition (cal u test i.i.d./exchangeable) does not hold. The reported coverage is an EMPIRICAL observation, not a guaranteed one.",
+  "success_criteria_PREREG": {
+    "failed": "principled variant degrades empirical coverage or its assumption is demonstrably violated (e.g. Y|X shifts across donors).",
+    "genuine_improvement": "principled variant delivers empirical coverage AT LEAST AS CLOSE to nominal as naive at all 3 levels AND rests on a defensible (weaker/valid) guarantee. If empirical coverage is comparable but the guarantee is strictly more defensible -> report as 'marginal' (guarantee-level win, empirical tie).",
+    "no_naive_was_fine": "naive already achieves near-nominal coverage AND the domain shift is negligible (domain-classifier AUC ~0.5), so no principled correction is needed empirically."
+  },
+  "target_definition": "y = log1p( L2norm( DE zscore over trans genes, on-target excluded ) ), recomputed per pair \u2014 IDENTICAL to conformal.py build_pair_table.",
+  "variants_prereg": {
+    "mondrian_by_condition": "Class-conditional (Mondrian) split-conformal: separate calibration quantile per culture_condition stratum in {Rest,Stim8hr,Stim48hr}; each test row uses its own condition's quantile.",
+    "naive_LODO": "Unweighted split-conformal quantile of |residual| on calibration pairs; single q per fold/level (reproduces committed conformal_lodo_receipt.json).",
+    "weighted_covariate_shift": "Tibshirani et al. 2019 weighted split-conformal. Density ratio w(x)=p_test(x)/p_cal(x) estimated by a domain classifier (calib=0 vs test=1) on covariates X=[log_baseMean, condition one-hot]. Per-test-point weighted quantile of calibration |residual| with the +inf point-mass from the test weight."
+  }
+}

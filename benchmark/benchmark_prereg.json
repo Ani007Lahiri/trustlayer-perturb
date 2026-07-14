@@ -1,0 +1,96 @@
+{
+ "title": "Calibration & Selective-Prediction Benchmark for Perturbation Prediction (minimal public v1)",
+ "date": "2026-07-12",
+ "seed": 20260708,
+ "thesis": "A model-agnostic split-conformal + locally-adaptive trust gate delivers VALID marginal coverage and a useful risk-coverage tradeoff regardless of which perturbation predictor it wraps, across TWO independent datasets. This is a calibration/selective-prediction eval, NOT an accuracy leaderboard.",
+ "datasets": [
+  {
+   "name": "Gladstone_CD4T_T1D",
+   "context": "CD4+ T-cell Perturb-seq (Rest/Stim8/Stim48), T1D",
+   "split": "committed train/calib/test folds (16307/10857/6819)",
+   "target": "log mean expression of target gene",
+   "features": [
+    "log_baseMean",
+    "log_n_cells",
+    "trans_effect_magnitude",
+    "cond_Rest",
+    "cond_Stim8hr",
+    "cond_Stim48hr"
+   ]
+  },
+  {
+   "name": "Norman2019_K562",
+   "context": "K562 CRISPRa Perturb-seq (GSE133344), PUBLIC",
+   "split": "repeated random calib/test split 50/50, 200 repeats (n=105, SMALL \u2014 flagged)",
+   "target": "log mean expression",
+   "features": [
+    "log_baseMean"
+   ]
+  },
+  {
+   "name": "Datlinger2017_Jurkat_Tcell",
+   "context": "Jurkat T-cell CROP-seq, TCR-stimulated/unstim (GSE92872), PUBLIC",
+   "split": "repeated random calib/test 50/50, 200 repeats (n=64: 32 perts x 2 conditions \u2014 SMALL, flagged)",
+   "target": "log1p(||z_trans||) \u2014 SAME as Gladstone/Norman",
+   "features": [
+    "log_baseMean",
+    "cond_unstim",
+    "cond_stim"
+   ],
+   "feature_note": "log_n_cells DROPPED: corr -0.95 with y is a target-construction artifact (Welch z ~ 1/sqrt(n_cells)), not signal \u2014 leakage at small n."
+  }
+ ],
+ "predictors": [
+  {
+   "id": "mean_baseline",
+   "desc": "predict training-mean of y (trivial control; MUST still calibrate)"
+  },
+  {
+   "id": "linear",
+   "desc": "Ridge regression on features (MANDATORY simple baseline, per Ahlmann-Eltze 2025 Nat Methods)"
+  },
+  {
+   "id": "hist_gbr",
+   "desc": "HistGradientBoostingRegressor (the project's base learner)"
+  },
+  {
+   "id": "random_forest",
+   "desc": "RandomForestRegressor (third independent learner)"
+  },
+  {
+   "id": "relational_gears_style",
+   "desc": "GEARS-STYLE relational predictor: held-out perturbation effect = co-expression-similarity-weighted avg of RELATED training perturbations; similarity from target-gene co-expression in CONTROL cells (leakage-free); leave-one-PERTURBATION-out. NOT GEARS itself (no GNN/GO-graph/cell-level training; laptop-feasible analog of GEARS' inductive bias). Evaluated on Datlinger (the dataset with full control-cell data)."
+  }
+ ],
+ "conformal": {
+  "marginal": "split conformal on |y-pred| calib residuals; q = ceil((n+1)(1-alpha))/n empirical quantile; constant-width interval pred\u00b1q. Used for the COVERAGE-VALIDITY axis.",
+  "locally_adaptive": "normalized nonconformity |y-pred|/sigma(x), sigma(x)=auxiliary HistGBR fit of |resid|~features on calib (Lei 2018 / Papadopoulos 2008). Per-point width \u2192 ranks points for the SELECTIVE-PREDICTION axis.",
+  "nominal_levels": [
+   0.8,
+   0.9,
+   0.95
+  ]
+ },
+ "primary_metrics": {
+  "coverage_validity": "empirical coverage at each nominal level; PASS iff |empirical-nominal| <= 0.03 (marginal) OR within Clopper-Pearson 95% CI. Calibration error = mean_abs(empirical-nominal) across a 19-level sweep (0.05..0.95).",
+  "selective_prediction": "risk-coverage curve = RMSE on the (1-abstain) most-confident points (ranked by locally-adaptive sigma(x)) vs retained fraction; AURC = area under it; compare to random-abstention null (mean over 100 shuffles) \u2014 PASS iff AURC < random-null AURC."
+ },
+ "secondary_metrics": [
+  "RMSE",
+  "R2",
+  "Spearman (comparability only, NOT scored)"
+ ],
+ "success_criteria": "Calibration VALIDITY holds (within tolerance) for the generic predictors on ALL THREE datasets = model-agnostic claim across contexts. Relational predictor: does the trust gate calibrate a STRUCTURALLY DIFFERENT (relational, not feature-regression) predictor? Report honestly incl. small-n failures.",
+ "honesty_guards": [
+  "respect committed folds / no leakage",
+  "linear baseline reported prominently",
+  "claim is calibration-validity + model-agnosticism, NOT SOTA accuracy",
+  "small-n Norman (105) flagged",
+  "metric defs frozen by this prereg hash before running",
+  "relational predictor is GEARS-STYLE (inductive bias only), NOT GEARS \u2014 stated everywhere",
+  "target y identical across all 3 datasets; calibration assessed WITHIN dataset, never by comparing raw y across datasets (different gene universes)",
+  "Datlinger log_n_cells dropped as a target-construction confound (documented pre-run)"
+ ],
+ "prereg_sha256": "3a41ee682ea903c1ee4fb5fee288cd24c410e7d0709b74f735bc9da26dcdd21f",
+ "version": "v2 (2026-07-12): +3rd dataset, +5th relational predictor"
+}

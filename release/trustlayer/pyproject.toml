@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "trustlayer-perturb"
+version = "0.1.0"
+description = "A calibrated-trust layer for perturbation-biology prediction: conformal coverage, a default-deny commit gate, and pre-registered shift-robustness diagnostics."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Anirudh Lahiri"}]
+dependencies = ["numpy", "scipy", "scikit-learn"]
+
+[project.urls]
+Homepage = "https://github.com/anilahiri/trustlayer-perturb"

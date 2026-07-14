@@ -1,0 +1,74 @@
+{
+  "title": "The Perturbation Calibration Law \u2014 pre-registration",
+  "frozen_utc": "2026-07-13T18:16:48.664122Z",
+  "primary_claim": "Under biologically-meaningful distribution shift, split-conformal prediction undercovers its nominal target, and the MAGNITUDE of the undercoverage gap is a MODEL-INDEPENDENT quantity (it depends on the shift regime, not the predictor architecture). The calibrated response is abstention proportional to the gap, not post-hoc repair.",
+  "secondary_claims": [
+    "The undercoverage gap grows monotonically along a pre-registered shift ladder (in-distribution < held-out-perturbation < cross-donor).",
+    "Coverage-gap ranking across shift regimes is preserved across ALL predictor families (Kendall tau > 0.5 vs the mean-predictor ordering)."
+  ],
+  "falsifiers": [
+    "If under cross-donor shift the mean empirical coverage at nominal 0.90 is >= 0.88 for the majority of predictors, the 'severe undercoverage' claim is FALSE.",
+    "If the coverage gap at fixed nominal differs across predictor families by more than 0.10 (max-min) within a shift regime, MODEL-INDEPENDENCE is FALSE.",
+    "If the shift ladder does NOT produce monotonically increasing gaps for the majority of predictors, the ladder claim is FALSE."
+  ],
+  "predictors_frozen": [
+    "identity_no_effect",
+    "mean_baseline",
+    "ridge_linear",
+    "hist_gbr",
+    "deep_mlp_ensemble"
+  ],
+  "predictor_note": "Architecturally distinct families (identity, global-mean, linear, gradient-boosted trees, deep ensemble). Foundation-model extension (scGPT/Geneformer/GEARS) is declared OUT OF SCOPE for this pre-registration due to environment/time constraints and will be a separate registered addendum; NO FM result will be claimed here.",
+  "datasets_frozen": {
+    "cross_donor": "GWCD4i by_donors.h5mu \u2014 6 donor-pair modalities (Gladstone T1D CD4+ atlas)",
+    "cross_dataset": [
+      "ShifrutMarson2018 (CD8 T)",
+      "PapalexiSatija2021_eccite_RNA",
+      "FrangiehIzar2021_RNA (melanoma)"
+    ]
+  },
+  "shift_ladder_frozen": [
+    {
+      "level": 0,
+      "name": "in_distribution",
+      "def": "random 60/20/20 split of perturbations within a single donor modality"
+    },
+    {
+      "level": 1,
+      "name": "held_out_perturbation",
+      "def": "leave-perturbation-out within a single donor modality (cal and test are disjoint perturbation sets)"
+    },
+    {
+      "level": 2,
+      "name": "cross_donor",
+      "def": "leave-one-donor-pair-out (train on 5 modalities, test on held-out donor pair)"
+    },
+    {
+      "level": 3,
+      "name": "cross_dataset",
+      "def": "leave-one-DATASET-out across independent public perturb-seq datasets"
+    }
+  ],
+  "nominal_levels": [
+    0.8,
+    0.9,
+    0.95
+  ],
+  "nonconformity_score": "per-target residual magnitude RMS over genes: ||y_true - y_pred||_2 / sqrt(n_genes)",
+  "conformal_method": "split-conformal (marginal); calibration quantile via method='higher'",
+  "bootstrap_resamples": 500,
+  "metrics_frozen": [
+    "empirical_coverage",
+    "undercoverage_gap (nominal - empirical)",
+    "abstention_rate_at_gap_threshold",
+    "mean_set_size"
+  ],
+  "explicitly_not_measured": [
+    "accuracy / R^2 / Spearman as a HEADLINE metric \u2014 the thesis is calibration, not accuracy; point metrics reported only as context, never ranked"
+  ],
+  "analysis_frozen_before_any_model_run": true,
+  "k_genes": 2000,
+  "ensemble_size": 5,
+  "seed": 0,
+  "_self_sha256_of_sorted_body": "3799ac42e72e08f81f06a942641d45984c35b0fec6b73fff82ae01219d7762ec"
+}

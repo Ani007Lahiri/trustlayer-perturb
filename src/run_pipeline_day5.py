@@ -33,30 +33,29 @@ TRUST_MARGIN = (
 
 ROLES = {"CD226": "ANCHOR", "RASGRP1": "BET", "PRKCQ": "CONTROL"}
 
-# v3 human-curated eQTL ruling (CITED — see methodology Limitations). The gate treats
-# these as evidence; they are NOT model-generated and largely predetermine the veto.
+# v4 eQTL ruling: celltype_matched_eqtl is now DERIVED FROM A LIVE eQTL Catalogue QUERY
+# (src/trustlayer/eqtl_gate.py), not hand-typed. The recorded query (data/gold/
+# eqtl_gate_receipt.json) tested every CD4/Treg/T-cell dataset for a significant cis-eQTL:
+#   CD226   -> True  (4/11 CD4/Treg datasets; OneK1K CD4_TCM -log10p=30)
+#   RASGRP1 -> False (0/120 T-cell datasets; risk variant absent in CD4 T) <- load-bearing veto
+#   PRKCQ   -> True  (3/11; prior hand-typed False was WRONG — but NON-BINDING, see below)
+# genome_wide_sig_snp / eqtl_direction_consistent / proxy_tissue_only remain human-curated
+# from the cited literature (a directional/mechanistic call, not a catalogue lookup).
+from trustlayer.eqtl_gate import load_or_query as _eqtl_query  # noqa: E402
+
+# Human-curated fields (literature-derived direction/GWS status; cited).
+_CURATED = {
+    "CD226": dict(genome_wide_sig_snp=True, eqtl_direction_consistent=True, proxy_tissue_only=False,
+                  cite="rs763361 (Ser307/Gly307Ser) coding missense GWS T1D lead; KD mimics protection"),
+    "RASGRP1": dict(genome_wide_sig_snp=True, eqtl_direction_consistent=None, proxy_tissue_only=True,
+                    cite="rs72727394 p=4e-10; NO significant cis-eQTL in 120 T-cell datasets (live)"),
+    "PRKCQ": dict(genome_wide_sig_snp=False, eqtl_direction_consistent=None, proxy_tissue_only=True,
+                  cite="sub-GWS (GA=0.162); vetoed on genetic floor; eQTL non-binding"),
+}
+# celltype_matched_eqtl injected from the live/recorded eQTL query.
 EQTL_RULING = {
-    "CD226": dict(
-        genome_wide_sig_snp=True,
-        celltype_matched_eqtl=True,
-        eqtl_direction_consistent=True,
-        proxy_tissue_only=False,
-        cite="rs763361 (Ser307) GoF; cell-type-consistent; KD mimics protection",
-    ),
-    "RASGRP1": dict(
-        genome_wide_sig_snp=True,
-        celltype_matched_eqtl=False,
-        eqtl_direction_consistent=None,
-        proxy_tissue_only=True,
-        cite="rs72727394 p=4e-10; GTEx LCL-proxy only; NO CD4/Treg eQTL",
-    ),
-    "PRKCQ": dict(
-        genome_wide_sig_snp=False,
-        celltype_matched_eqtl=False,
-        eqtl_direction_consistent=None,
-        proxy_tissue_only=True,
-        cite="sub-GWS; thyroid/allergy locus; direction unanchorable",
-    ),
+    s: dict(_CURATED[s], celltype_matched_eqtl=_eqtl_query(s)["celltype_matched_eqtl"])
+    for s in ("CD226", "RASGRP1", "PRKCQ")
 }
 
 
@@ -143,12 +142,15 @@ def main() -> int:
         f"    RASGRP1 + cell-type eQTL -> {cf1.decision}  "
         f"(was WITHHELD; flips to GO iff eQTL is the only blocker)"
     )
-    # PRKCQ: raise GA above floor -> is trust then binding? (should still GO if trust>=floor)
+    # PRKCQ: raise GA above the floor. With the LIVE eQTL correction, PRKCQ genuinely HAS a
+    # CD4/Treg eQTL (3/11 datasets) -> its ONLY binding constraint is the genetic floor. Lift
+    # GA above the floor and it flips to GO. This proves trust (0.883, the HIGHEST of the trio)
+    # was never the binding constraint -- PRKCQ is withheld purely on genetics.
     v2 = build_verdict("PRKCQ", 0.50, trust["PRKCQ"]["trust"])  # hypothetical GA=0.50
     cf2 = gate.evaluate(v2, role="CONTROL")
     print(
         f"    PRKCQ + GA=0.50 (hypothetical) -> {cf2.decision}  "
-        f"(trust={trust['PRKCQ']['trust']:.3f} does NOT bind; still needs eQTL)"
+        f"(trust={trust['PRKCQ']['trust']:.3f} does NOT bind; genetic floor was the SOLE blocker)"
     )
 
     receipt = {

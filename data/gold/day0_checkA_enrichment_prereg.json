@@ -1,0 +1,48 @@
+{
+ "purpose": "Iteration-3 honest positive-class enrichment for Check A \u2014 pre-registered on LIVE genetics BEFORE scoring",
+ "objective_rule": "GO iff (>=1 T-cell/immune GO) AND (OT T1D>T2D) AND (not GWAS-T2D-tagged) AND (measured Treg Rest score>0)",
+ "new_candidates_live_verified": {
+  "UBASH3A": {
+   "ot_t1d": 0.484,
+   "ot_t2d": 0.0,
+   "immune": true,
+   "t1d_gt_t2d": true,
+   "biology": "bona-fide T1D T-cell negative regulator (TCR signalling); classic T1D GWAS locus",
+   "provisional_label": "GO (pending Treg-direction gate)"
+  },
+  "IL7R": {
+   "ot_t1d": 0.458,
+   "ot_t2d": 0.0,
+   "immune": true,
+   "t1d_gt_t2d": true,
+   "biology": "IL-7 receptor; T-cell homeostasis; autoimmune-associated",
+   "provisional_label": "GO (pending Treg-direction gate)"
+  },
+  "CD3E": {
+   "ot_t1d": 0.564,
+   "ot_t2d": 0.0,
+   "immune": true,
+   "t1d_gt_t2d": true,
+   "biology": "core TCR complex; canonical T-cell",
+   "provisional_label": "GO (pending Treg-direction gate)"
+  },
+  "ITPR3": {
+   "ot_t1d": 0.446,
+   "ot_t2d": 0.0,
+   "immune": true,
+   "t1d_gt_t2d": true,
+   "biology": "IP3 receptor; T-cell Ca2+ signalling; T1D-associated",
+   "provisional_label": "GO (pending Treg-direction gate)"
+  },
+  "GLIS3": {
+   "ot_t1d": 0.463,
+   "ot_t2d": 0.519,
+   "immune": false,
+   "t1d_gt_t2d": false,
+   "biology": "beta-cell transcription factor; T2D>T1D",
+   "provisional_label": "NO-GO (metabolic confounder)"
+  }
+ },
+ "eligibility": "all 5 perturbed in Marson screen; none gold-set or axis-forbidden (verified against frozen_splits.json)",
+ "HONEST_BOUNDARY": "The rule's 4th condition (measured Treg Rest direction>0) requires streaming the 16GB donor h5mu, which this kernel cannot load. So these GO labels are LIVE-GENETICS-COMPLETE but Treg-direction-PENDING. The rule-exact enriched score can only be finalized on a machine with the data (the repo .venv). Reporting this as a boundary, not skipping it."
+}

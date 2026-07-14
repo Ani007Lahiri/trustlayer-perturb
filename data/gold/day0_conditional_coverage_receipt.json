@@ -1,0 +1,390 @@
+{
+  "_receipt_sha256": "b60585c925d1567162325fdbecc75814a3052eea14558fd9bb4875f95126ec15",
+  "best_deployable_method_marson": "cqr",
+  "break_reproduced": {
+    "marson_committed_headline_expected": {
+      "0.8": 0.793,
+      "0.9": 0.895,
+      "0.95": 0.949
+    },
+    "marson_large_effect_stratum_cov_at_0.90": {
+      "K4_top": 0.6788,
+      "K5_top": 0.5984
+    },
+    "marson_marginal_coverage": {
+      "0.8": 0.7932,
+      "0.9": 0.8955,
+      "0.95": 0.9486
+    },
+    "norman_frozen_transfer_reproduces_iter4": {
+      "0.8": 0.0476,
+      "0.9": 0.0762,
+      "0.95": 0.1714
+    },
+    "norman_large_effect_stratum_cov_at_0.90": {
+      "K4_top": 0.6429,
+      "K5_top": 0.5455
+    },
+    "note": "K=4 top-bin baseline coverage 0.679 (Marson) matches the disclosed ~0.657/0.69 range; K=5 top-bin is 0.598. Break confirmed on the committed pipeline."
+  },
+  "committed_pipeline": "src/trustlayer/conformal.py (Marson LODO) + src/run_norman_recalibration.py (Norman K562)",
+  "generated_utc": "2026-07-11T19:04:26.774522+00:00",
+  "marson_t1d_lodo": {
+    "level": 0.9,
+    "methods": {
+      "baseline": {
+        "frac_infinite_interval": 0.0,
+        "marginal_ci95": [
+          0.887,
+          0.904
+        ],
+        "marginal_coverage": 0.8955,
+        "mean_finite_halfwidth": 0.2289,
+        "per_stratum_coverage_K5": [
+          0.879,
+          1.0,
+          1.0,
+          1.0,
+          0.5984
+        ],
+        "top_stratum_ci95": [
+          0.575,
+          0.623
+        ],
+        "top_stratum_coverage_K4": 0.6788,
+        "top_stratum_coverage_K5": 0.5984,
+        "worst_stratum_ci95": [
+          0.575,
+          0.623
+        ],
+        "worst_stratum_coverage_K4": 0.6788,
+        "worst_stratum_coverage_K5": 0.5984
+      },
+      "cqr": {
+        "frac_infinite_interval": 0.0,
+        "marginal_ci95": [
+          0.887,
+          0.902
+        ],
+        "marginal_coverage": 0.8951,
+        "mean_finite_halfwidth": 0.2437,
+        "per_stratum_coverage_K5": [
+          0.7317,
+          0.9998,
+          1.0,
+          1.0,
+          0.7438
+        ],
+        "top_stratum_ci95": [
+          0.72,
+          0.767
+        ],
+        "top_stratum_coverage_K4": 0.795,
+        "top_stratum_coverage_K5": 0.7438,
+        "worst_stratum_ci95": [
+          0.714,
+          0.745
+        ],
+        "worst_stratum_coverage_K4": 0.7852,
+        "worst_stratum_coverage_K5": 0.7317
+      },
+      "mondrian_oracle": {
+        "frac_infinite_interval": 0.0,
+        "marginal_ci95": [
+          0.887,
+          0.898
+        ],
+        "marginal_coverage": 0.8923,
+        "mean_finite_halfwidth": 0.189,
+        "per_stratum_coverage_K5": [
+          0.8799,
+          0.8882,
+          0.914,
+          0.9022,
+          0.8772
+        ],
+        "top_stratum_ci95": [
+          0.858,
+          0.897
+        ],
+        "top_stratum_coverage_K4": 0.8865,
+        "top_stratum_coverage_K5": 0.8772,
+        "worst_stratum_ci95": [
+          0.858,
+          0.886
+        ],
+        "worst_stratum_coverage_K4": 0.8827,
+        "worst_stratum_coverage_K5": 0.8772
+      },
+      "mondrian_pred": {
+        "frac_infinite_interval": 0.0,
+        "marginal_ci95": [
+          0.888,
+          0.904
+        ],
+        "marginal_coverage": 0.8962,
+        "mean_finite_halfwidth": 0.2298,
+        "per_stratum_coverage_K5": [
+          0.8801,
+          1.0,
+          1.0,
+          1.0,
+          0.6011
+        ],
+        "top_stratum_ci95": [
+          0.578,
+          0.625
+        ],
+        "top_stratum_coverage_K4": 0.6802,
+        "top_stratum_coverage_K5": 0.6011,
+        "worst_stratum_ci95": [
+          0.578,
+          0.625
+        ],
+        "worst_stratum_coverage_K4": 0.6802,
+        "worst_stratum_coverage_K5": 0.6011
+      },
+      "normalized": {
+        "frac_infinite_interval": 0.0,
+        "marginal_ci95": [
+          0.886,
+          0.903
+        ],
+        "marginal_coverage": 0.8948,
+        "mean_finite_halfwidth": 0.2293,
+        "per_stratum_coverage_K5": [
+          0.8806,
+          1.0,
+          1.0,
+          1.0,
+          0.5935
+        ],
+        "top_stratum_ci95": [
+          0.57,
+          0.618
+        ],
+        "top_stratum_coverage_K4": 0.6748,
+        "top_stratum_coverage_K5": 0.5935,
+        "worst_stratum_ci95": [
+          0.57,
+          0.618
+        ],
+        "worst_stratum_coverage_K4": 0.6748,
+        "worst_stratum_coverage_K5": 0.5935
+      }
+    },
+    "n_test": 58558,
+    "strata_K": 5,
+    "stratum_edges": [
+      4.3035,
+      4.6542,
+      4.7147,
+      4.7774,
+      4.8746,
+      6.111
+    ]
+  },
+  "mechanism": {
+    "corr_pred_true_marson": 0.0708,
+    "corr_pred_true_norman": -0.0693,
+    "explanation": "The committed leakage-safe base predictor is near-constant (corr(pred,y)~0.07 on Marson, ~-0.07 on Norman: the disclosed modest regime R2~0.10). So |residual|~|y-const| and a single global quantile under-covers BOTH effect tails while over-covering the middle (middle strata reach 1.0). Crucially, predicted magnitude and any model-derived difficulty estimate carry almost no signal about the TRUE effect stratum -> deployable conditioning variables cannot recover the true-effect stratum. This is a fundamental information limit, not a tuning failure."
+  },
+  "methods_deployable": [
+    "baseline",
+    "mondrian_pred",
+    "normalized",
+    "cqr"
+  ],
+  "methods_tested": [
+    "baseline",
+    "mondrian_pred",
+    "mondrian_oracle",
+    "normalized",
+    "cqr"
+  ],
+  "module": "src/trustlayer/conformal_conditional.py",
+  "norman_k562": {
+    "level": 0.9,
+    "methods": {
+      "baseline": {
+        "frac_infinite_interval": 0.0,
+        "marginal_ci95": [
+          0.792,
+          0.962
+        ],
+        "marginal_coverage": 0.8868,
+        "mean_finite_halfwidth": 0.437,
+        "per_stratum_coverage_K5": [
+          0.9091,
+          1.0,
+          1.0,
+          1.0,
+          0.5455
+        ],
+        "top_stratum_ci95": [
+          0.222,
+          0.833
+        ],
+        "top_stratum_coverage_K4": 0.6429,
+        "top_stratum_coverage_K5": 0.5455,
+        "worst_stratum_ci95": [
+          0.222,
+          0.824
+        ],
+        "worst_stratum_coverage_K4": 0.6429,
+        "worst_stratum_coverage_K5": 0.5455
+      },
+      "cqr": {
+        "frac_infinite_interval": 0.0,
+        "marginal_ci95": [
+          0.792,
+          0.962
+        ],
+        "marginal_coverage": 0.8868,
+        "mean_finite_halfwidth": 0.432,
+        "per_stratum_coverage_K5": [
+          0.9091,
+          1.0,
+          1.0,
+          1.0,
+          0.5455
+        ],
+        "top_stratum_ci95": [
+          0.222,
+          0.833
+        ],
+        "top_stratum_coverage_K4": 0.6429,
+        "top_stratum_coverage_K5": 0.5455,
+        "worst_stratum_ci95": [
+          0.222,
+          0.824
+        ],
+        "worst_stratum_coverage_K4": 0.6429,
+        "worst_stratum_coverage_K5": 0.5455
+      },
+      "mondrian_oracle": {
+        "frac_infinite_interval": 0.0,
+        "marginal_ci95": [
+          0.792,
+          0.962
+        ],
+        "marginal_coverage": 0.8868,
+        "mean_finite_halfwidth": 0.3624,
+        "per_stratum_coverage_K5": [
+          0.9091,
+          0.9,
+          0.9091,
+          1.0,
+          0.7273
+        ],
+        "top_stratum_ci95": [
+          0.438,
+          1.0
+        ],
+        "top_stratum_coverage_K4": 0.6429,
+        "top_stratum_coverage_K5": 0.7273,
+        "worst_stratum_ci95": [
+          0.429,
+          0.9
+        ],
+        "worst_stratum_coverage_K4": 0.6429,
+        "worst_stratum_coverage_K5": 0.7273
+      },
+      "mondrian_pred": {
+        "frac_infinite_interval": 0.1132,
+        "marginal_ci95": [
+          0.811,
+          0.981
+        ],
+        "marginal_coverage": 0.9057,
+        "mean_finite_halfwidth": 0.4537,
+        "per_stratum_coverage_K5": [
+          0.9091,
+          1.0,
+          1.0,
+          1.0,
+          0.6364
+        ],
+        "top_stratum_ci95": [
+          0.333,
+          0.9
+        ],
+        "top_stratum_coverage_K4": 0.7143,
+        "top_stratum_coverage_K5": 0.6364,
+        "worst_stratum_ci95": [
+          0.333,
+          0.889
+        ],
+        "worst_stratum_coverage_K4": 0.7143,
+        "worst_stratum_coverage_K5": 0.6364
+      },
+      "normalized": {
+        "frac_infinite_interval": 0.0,
+        "marginal_ci95": [
+          0.736,
+          0.925
+        ],
+        "marginal_coverage": 0.8491,
+        "mean_finite_halfwidth": 0.4296,
+        "per_stratum_coverage_K5": [
+          0.9091,
+          1.0,
+          1.0,
+          1.0,
+          0.3636
+        ],
+        "top_stratum_ci95": [
+          0.083,
+          0.667
+        ],
+        "top_stratum_coverage_K4": 0.5,
+        "top_stratum_coverage_K5": 0.3636,
+        "worst_stratum_ci95": [
+          0.083,
+          0.667
+        ],
+        "worst_stratum_coverage_K4": 0.5,
+        "worst_stratum_coverage_K5": 0.3636
+      }
+    },
+    "n_test": 53,
+    "strata_K": 5,
+    "stratum_edges": [
+      4.7784,
+      5.0861,
+      5.3373,
+      5.4296,
+      5.59,
+      6.1071
+    ]
+  },
+  "power": {
+    "bootstrap": "cluster bootstrap over perturbation genes",
+    "marson_well_powered": true,
+    "n_boot": 2000,
+    "norman_note": "n=105 perturbations -> worst-stratum 95% CIs span ~0.6; methods statistically indistinguishable.",
+    "norman_underpowered": true
+  },
+  "prereg_file": "data/gold/day0_conditional_coverage_prereg.json",
+  "prereg_hash": "d98447dfe713c264b4023ea6380518a79f177c217441e56591ce23ef86275611",
+  "seed": 20260711,
+  "title": "A3 conditional-coverage break: principled conformal fixes (committed pipeline)",
+  "verdict": {
+    "baseline_marson_worst_ci": [
+      0.575,
+      0.623
+    ],
+    "best_deployable": "CQR (Conformalized Quantile Regression)",
+    "cqr_marson_worst_before_after": [
+      0.5984,
+      0.7317
+    ],
+    "cqr_marson_worst_ci": [
+      0.714,
+      0.745
+    ],
+    "fully_closes_gap": "partial",
+    "honest_verdict": "PARTIAL FIX + a fundamental limit, honestly reported. CQR is the best distribution-free deployable method and delivers a real, statistically significant reduction of the conditional-coverage break, but it does not fully close it. The gap between the best deployable method (0.73) and the oracle ceiling (0.88) is an information limit of the committed near-constant base predictor, not a conformal-calibration failure. The honest operational conclusion: the trust gate should widen intervals via CQR AND flag the largest-effect stratum as residually under-covered until the base predictor carries effect-magnitude signal. No method fully closes the gap; we do not claim closure.",
+    "residual_gap": "CQR lifts Marson worst-stratum coverage from 0.598 [0.575,0.623] to 0.732 [0.714,0.745] at nominal 0.90 (non-overlapping CIs -> a real, powered improvement) but does NOT reach the 0.85 target band: a residual gap of ~0.17 remains. Mondrian-on-predicted-magnitude and normalized/localized conformal do NOT improve the true-effect stratum (CIs overlap baseline) because the near-constant base predictor gives them no signal. The ORACLE Mondrian (conditioning on TRUE effect magnitude) reaches 0.877 [0.858,0.886], nearly closing the gap -> this proves the residual gap is closable ONLY with information about the true effect that no deployable predictor here observes."
+  }
+}

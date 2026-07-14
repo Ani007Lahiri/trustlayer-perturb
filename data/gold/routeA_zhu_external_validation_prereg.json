@@ -1,0 +1,41 @@
+{
+  "title": "Route A \u2014 blind external validation of the frozen commit-gate vs Zhu 2025 genome-scale Perturb-seq (primary human CD4+ T cells)",
+  "gate_under_test": {
+    "module": "src/trustlayer/commit_gate.py::CommitGate.evaluate",
+    "rule": "default-deny GO iff leakage_audit_passed AND genetic_association>=0.20 AND trust_score>=0.50 AND celltype_matched_eqtl AND eqtl_direction_consistent is not False",
+    "universe": "98 curated T1D/immune genes (handoff/axis3_eqtl_nsig.json); GA=OpenTargets t1d, celltype_matched_eqtl=(eqtl_nsig>0)",
+    "committed_split": "49 GO / 49 WITHHELD (reproduced via CommitGate.evaluate; genetic floor passes for all 98 -> GO<=>eQTL present)",
+    "eqtl_scores_sha256_16": "f72792b2b7da18d7"
+  },
+  "external_truth": {
+    "dataset": "Zhu, Dann, ... Pritchard, Marson (2025), Genome-scale Perturb-seq in primary human CD4+ T cells, bioRxiv 2025.12.23.696273, doi 10.64898/2025.12.23.696273",
+    "source_on_disk": "data/raw/GWCD4i.DE_stats.h5ad (16.79GB, CZI VCP S3 s3://genome-scale-tcell-perturb-seq/marson2025_data/, MIT, byte-verified)",
+    "effect_field": "obs.n_total_de_genes = number of downstream DE genes per (perturbed target x culture_condition); authors' own per-perturbation transcriptional-effect summary",
+    "conditions": [
+      "Rest",
+      "Stim8hr",
+      "Stim48hr"
+    ],
+    "n_perturbed_targets": 11526
+  },
+  "test_set": {
+    "definition": "intersection(gate 98-gene universe, Zhu perturbed targets)",
+    "n_overlap": 98,
+    "genes_sha256_16": "79eb11b312de2905"
+  },
+  "hypothesis": "GATE GO calls (eQTL+genetics-anchored credible T1D CD4 T-cell targets) correspond to LARGER real transcriptional effects in Zhu than WITHHELD calls; WITHHELD are the weaker/no-effect ones.",
+  "metrics": {
+    "PRIMARY": "AUROC of Zhu effect magnitude (score = log1p(de_max), n_total_de_genes max across conditions) separating GO(pos) vs WITHHELD(neg); = P(GO effect > WITHHELD effect). 10000-resample bootstrap 95% CI.",
+    "SECONDARY_MCC": "MCC of binary gate-call (GO=1) vs binary 'real transcriptional effect' = de_max >= 10 DE genes (gate-blind, round threshold; genome-wide 75th pct is 8).",
+    "confusion": "TP/FP/FN/TN of GO vs real-effect(de_max>=10)",
+    "context_split": "PRIMARY AUROC recomputed separately for Rest and for Stim(max of 8hr/48hr)."
+  },
+  "success_criterion": {
+    "POSITIVE_yes": "AUROC point>0.5 AND bootstrap95 lower bound>0.5 AND MCC>0.2",
+    "PARTIAL": "AUROC point>0.55 but CI includes 0.5, OR only one context (rest|stim) separates",
+    "NEGATIVE_or_OOD_FAILURE_no": "AUROC point<=0.55 with CI spanning 0.5 AND MCC<=0.2 -> frozen gate calls do NOT track transcriptional effect OOD; report plainly (prior: Marson->Norman transfer FAILED, recalibration was needed)"
+  },
+  "honesty_notes": "Metric+criterion fixed a priori (standard AUROC/MCC, conventional CI>0.5 bound); nothing tunable. A group-mean descriptive of de_max was seen during table assembly and already suggests a null \u2014 this is therefore a CONFIRMATORY pre-registration of an anticipated OOD-null, direction not tuned. No fabricated/simulated data. Committed gate scored, not a surrogate.",
+  "prereg_sha256": "387698a20e3afd5fd29a9c43057c6f3f90f9ece6df4baf72e104cf6eb2fbe8aa",
+  "created_utc": "2026-07-11T20:23:36.995350+00:00"
+}

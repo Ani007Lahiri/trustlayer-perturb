@@ -1,0 +1,45 @@
+{
+  "_prereg_sha256": "16aca796223a7821b6f7929c65d05159df8c205f93baaa4a2b136ea2dec615c7",
+  "check": "TRACK A2 item 1+3: Distribution-free RISK CONTROL (RCPS) on the committed conformal machinery",
+  "comparison_to_naive_LODO": {
+    "naive_statement": "committed conformal reports fold_mean +/- fold_std coverage (e.g. 90% -> 0.8955 +/- 0.0055) as the honest uncertainty, and 'fold_interval contains nominal'.",
+    "question": "Does the RCPS finite-sample high-probability CERTIFICATE materially improve on the naive empirical fold-spread statement, or was the naive version already adequate?"
+  },
+  "confidence_delta": 0.1,
+  "guarantee_form": "P_calib( R(lambda_hat) <= alpha ) >= 1-delta, PROVIDED the calibration units are exchangeable with the test unit.",
+  "honesty_note": "RCPS controls CALIBRATION-SAMPLING error under exchangeability; it does NOT repair distribution shift. Under the LODO donor shift the exchangeability precondition is the SAME one the project flags as violated. No claim that RCPS 'fixes' the donor-shift is permitted.",
+  "loss_definition": "miscoverage indicator L_i(lambda) = 1[ |y_i - pred_i| > lambda ] in {0,1}; risk R(lambda)=E[L(lambda)].",
+  "method_chosen": "RCPS (Risk-Controlling Prediction Sets; Bates, Angelopoulos, Lei, Malik, Jordan, JACM 2021)",
+  "note_alpha_delta": "Certify miscoverage risk <= alpha=0.10 (i.e. >=90% coverage) with confidence 1-delta=0.90. Chosen to match the committed 90% conformal level.",
+  "prereg_success_criterion": "is_genuine_improvement = 'yes' iff RCPS yields a NON-VACUOUS finite-sample certificate (UCB well inside [0,1]) that the naive fold-spread statement does NOT provide, in the assumption-FAITHFUL regime (R1). 'marginal' iff RCPS adds a valid certificate only in the per-item regime (R3) but is vacuous in the LODO donor regime (R1). 'no-naive-was-fine' iff RCPS is vacuous exactly where the naive statement already summarized coverage adequately and adds nothing actionable in the committed LODO setting. Chosen BEFORE scoring; reported whichever way it lands.",
+  "reproducibility": "R1/R2 from committed conformal_lodo_receipt.json (no re-stream). R3 from cached norman_group_stats.npz + frozen_marson_calibration.joblib. No 16GB h5mu access.",
+  "target_risk_alpha": 0.1,
+  "three_regimes_prereg": {
+    "R1_LODO_donor_level": {
+      "assumption": "the 4 donors are exchangeable draws from a donor population (the assumption-FAITHFUL granularity for the flagged donor covariate shift).",
+      "bound": "Hoeffding (loss is a fraction in [0,1]).",
+      "exchangeable_unit": "held-out DONOR (n=4). Loss per unit = that fold's miscoverage FRACTION at a fixed lambda.",
+      "lambda_source": "committed frozen quantiles (conformal_lodo_receipt.json) at 80/90/95 \u2014 no h5mu re-stream; per-fold coverage read from the committed receipt.",
+      "prediction_hazard": "n=4 -> Hoeffding UCB is expected to be LOOSE/vacuous. Reported either way."
+    },
+    "R2_LODO_pooled_row_level": {
+      "assumption": "rows exchangeable across the calib/test donor boundary \u2014 THIS IS THE ASSUMPTION THE PROJECT HAS FLAGGED AS VIOLATED (non-independent rows + donor shift). Reported as false-precision contrast, NOT as a claimed guarantee.",
+      "bound": "Clopper-Pearson (binary miss).",
+      "exchangeable_unit": "test ROW (n=58,558) \u2014 the OPTIMISTIC granularity.",
+      "source": "committed receipt row_empirical + n_rows."
+    },
+    "R3_Norman_per_item_recalibrated": {
+      "assumption": "calib/test are a RANDOM split of the same 105 perturbations -> exchangeable BY CONSTRUCTION (valid, non-vacuous). This is the recalibrated-transfer regime (item 2 tie-in).",
+      "bound": "Clopper-Pearson (binary miss).",
+      "exchangeable_unit": "Norman K562 single-gene perturbation (n=105).",
+      "procedure": "reproduce Norman residuals from data/interim/norman_group_stats.npz + frozen_marson_calibration.joblib (matches committed transfer receipt EXACTLY: 0.0476/0.0762/0.1714 frozen); 50/50 split seed 20260711; RCPS scans lambda on CALIB, picks lambda_hat certifying alpha at 1-delta; realized miscoverage checked on held-out TEST."
+    }
+  },
+  "upper_confidence_bounds": {
+    "PRIMARY_binary": "Clopper-Pearson upper limit on the miss-rate: R+ = Beta.ppf(1-delta, k+1, n-k), k=#misses, n=#units. Exact & tightest valid UCB for BERNOULLI losses (the Bentkus/binomial special case of the RCPS bound).",
+    "distribution_free_any_bounded": "Hoeffding: R+ = Rhat + sqrt(ln(1/delta)/(2n)) \u2014 valid for ANY [0,1]-bounded loss (used for the donor-fold regime whose per-fold loss is a coverage FRACTION in [0,1], not binary).",
+    "hoeffding_bentkus": "Bates et al. HB bound reported as a tightness cross-check."
+  },
+  "why_RCPS_over_LTT": "The controlled risk is miscoverage R(lambda)=P(|y-pred|>lambda), a single-parameter, monotone-DECREASING function of the interval half-width lambda (nested prediction sets). RCPS is purpose-built for exactly this monotone-risk / nested-set case: scan lambda, stop at the smallest lambda whose pointwise upper-confidence bound on the risk stays <= alpha. Learn-then-Test generalizes to multiple / non-monotone parameters via family-wise-error multiple testing; with one monotone lambda it certifies the SAME guarantee through a looser (FWER-corrected) route. We therefore use RCPS as the tighter, assumption-matched instrument, and note LTT would reach an equivalent-or-weaker certificate here.",
+  "written_utc": "2026-07-11T18:05:50.660720+00:00"
+}

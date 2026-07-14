@@ -1,0 +1,455 @@
+\documentclass{article}
+
+% ---------------------------------------------------------------------
+% Self-contained NeurIPS Datasets & Benchmarks-style preprint.
+% Uses only base LaTeX packages so it compiles without the neurips.sty
+% file. To submit to NeurIPS D&B, drop the body into neurips_2025.sty
+% and remove the geometry/font block below.
+% ---------------------------------------------------------------------
+\usepackage[letterpaper,margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{caption}
+\usepackage{authblk}
+\usepackage{natbib}
+
+\title{A Calibration and Selective-Prediction Benchmark for
+Perturbation-Effect Uncertainty: Distribution-Free Methods Hold,
+Parametric Priors Miscover, and a Genetics Taxonomy Does Not Help}
+
+\author{Anonymous Author(s)}
+\affil{Hackathon submission (Datasets \& Benchmarks track)}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We introduce a rigorous, donor-blocked calibration benchmark for
+uncertainty quantification (UQ) of single-cell perturbation effects,
+built on a CD4$^{+}$ T-cell Perturb-seq assay and an independent K562
+Perturb-seq assay. The benchmark holds the point predictor fixed across
+all UQ methods so that any difference in marginal coverage is
+attributable to the calibration layer alone, and it evaluates methods on
+a leave-one-donor-out (LODO) split of $58{,}558$ test rows spanning
+$2{,}591$ perturbations and four donors. Our headline result is an
+\emph{honest tie}: six distribution-free methods (jackknife$+$, Mondrian,
+weighted and split conformal, naive-global quantile, and quantile
+regression) are statistically indistinguishable in mean absolute
+marginal coverage error, and the best conformal method does not separate
+from the strongest non-conformal distribution-free baseline (paired
+cluster-bootstrap $\Delta$ confidence interval includes zero). The
+benchmark does, however, resolve a clear and significant contrast:
+distribution-free calibration decisively outperforms a parametric
+Gaussian prior, which over-covers by roughly $6.7$ percentage points at
+the $80\%$ level under donor shift. We further contribute (i) a
+cross-assay transfer protocol showing that frozen quantiles fail
+($4.8/7.6/17.1\%$ empirical coverage at nominal $80/90/95\%$) but that
+re-fitting the identical method on the target assay restores near-nominal
+coverage across six calibration fractions and $500$ resplits; (ii) a
+distribution-free risk-control certificate that is valid per-assay yet
+honestly vacuous at $n{=}4$ exchangeable donors; and (iii) a
+pre-registered negative showing that conditioning conformal prediction on
+an external eQTL taxonomy does not sharpen intervals. All results were
+hash-frozen and pre-registered before scoring, an independent audit
+re-derived the benchmark surface from the raw $16.87$~GB data with zero
+discrepancy, and we openly report the self-retraction of two earlier
+surrogate ``wins.'' This is a benchmark and methods contribution; no
+biological target is validated in scope.
+\end{abstract}
+
+% =====================================================================
+\section{Introduction}
+% =====================================================================
+
+Machine-learning models for single-cell perturbation prediction are
+proliferating, but a growing body of evidence suggests that headline
+accuracy numbers in this field are frequently inflated. Recent audits
+report that deep-learning perturbation-effect predictors do not yet
+outperform simple linear baselines \citep{ahlmanneltze2025deep}, and
+systematic benchmarks find that mean baselines are competitive with
+foundation models on standard scores \citep{wu2024perturbench}. Much of
+this fragility traces to a single methodological gap: point-prediction
+metrics reward memorization of population structure and say nothing about
+whether a model \emph{knows what it does not know}. A prediction of a
+perturbation effect that is confidently wrong is more dangerous than one
+that is honestly uncertain, yet the community lacks a rigorous, shared
+protocol for measuring calibrated uncertainty under the distribution
+shifts that matter for this data, namely shifts across biological donors
+and across assays.
+
+We address this gap with a calibration and selective-prediction
+benchmark rather than a new predictor. Our motivating application is
+CD4$^{+}$ T-cell Perturb-seq relevant to autoimmune biology, but we
+stress at the outset that this is a measurement contribution: we ask
+whether the uncertainty around a perturbation-effect estimate is
+correct and useful, not whether any specific gene is a validated disease
+target. The disease context supplies the data and the donor structure;
+it supplies no biological claim.
+
+The benchmark is designed around one controlling principle. Because
+different UQ methods can differ both in their point predictions and in
+their calibration, comparisons in the literature often conflate the two.
+We eliminate that confound by fixing an identical base point predictor
+(a histogram gradient-boosted regressor) across every method, so that
+the only quantity that varies is the interval-construction layer. On top
+of this fixed surface we evaluate nine UQ methods under a donor-blocked
+leave-one-donor-out (LODO) split, which is the assumption-faithful
+granularity for the donor shift that practitioners actually face.
+
+Our contributions are as follows.
+\begin{itemize}
+\item \textbf{A powered, point-prediction-controlled head-to-head of nine
+UQ methods} on $58{,}558$ LODO test rows across four donors, with paired
+cluster-bootstrap significance testing over $2{,}591$ perturbations.
+The result is an \emph{honest tie} among six distribution-free methods,
+and a significant, reproducible loss for parametric priors.
+\item \textbf{A cross-assay transfer protocol} demonstrating that frozen
+calibration quantiles fail on an independent assay but that the
+underlying method transfers once recalibrated, characterized across six
+calibration fractions and $500$ resplits.
+\item \textbf{A distribution-free risk-control analysis} (RCPS /
+Learn-then-Test) that yields a valid non-vacuous certificate per assay
+and honestly reports vacuity at $n{=}4$ donors, quantifying the price of
+exchangeability rather than hiding it.
+\item \textbf{A pre-registered negative result} showing that conditioning
+conformal prediction on an external cis-eQTL taxonomy does not produce
+sharper intervals at matched coverage.
+\item \textbf{An integrity protocol}: hash-frozen pre-registration before
+scoring, an independent audit that re-derives the benchmark surface from
+the raw data, and an explicit self-retraction of two earlier surrogate
+results.
+\end{itemize}
+
+% =====================================================================
+\section{Benchmark Design}
+% =====================================================================
+
+\subsection{Data and target}
+
+The primary benchmark surface is derived from a CD4$^{+}$ T-cell
+Perturb-seq assay in primary human T cells
+\citep{schmidt2022crispr}. For each perturbation we define the effect
+target as $y = \log(1 + \lVert z \rVert_2)$, where $z$ is the vector of
+differential-expression $z$-scores over a shared readout gene panel with
+the on-target gene excluded, and the $z$-scores are Welch two-sample
+statistics computed against negative-control cells. The independent
+transfer assay is the Norman et al. K562 genome-scale genetic-interaction
+Perturb-seq dataset \citep{norman2019exploring} (GEO accession
+GSE133344), scored with an identical target definition over a shared
+panel of $9{,}780$ genes ($95.1\%$ of the primary panel).
+
+\subsection{The donor-blocked LODO surface}
+
+The benchmark evaluates on a leave-one-donor-out split with four donor
+folds. Each fold holds out all cells from one donor for testing and
+calibrates on the remaining three, so that no donor appears in both
+calibration and test. The pooled test set comprises $58{,}558$ rows
+spanning $2{,}591$ unique perturbations, with per-fold test sizes of
+$14{,}640$, $14{,}639$, $14{,}639$, and $14{,}640$ rows. This design
+targets the shift that matters in practice: a model calibrated on some
+donors must produce trustworthy uncertainty on a new donor.
+
+\subsection{The point-prediction control}
+
+The central design choice is that an identical base point predictor and
+identical point predictions are held fixed across all nine UQ methods.
+Consequently, any difference in marginal coverage or interval width
+reflects the calibration layer alone and not a difference in the
+underlying regression. We verified that the committed split-conformal
+method reproduces its receipted empirical coverage exactly
+($0.7932/0.8955/0.9486$ at $80/90/95\%$) on this surface, confirming that
+the benchmark harness faithfully re-scores the committed pipeline rather
+than a surrogate.
+
+\subsection{Methods compared}
+
+We evaluate nine UQ methods that fall into three families. The
+\emph{distribution-free conformal} family comprises split conformal,
+Mondrian conformal conditioned on culture condition
+\citep{vovk2005algorithmic}, weighted conformal
+\citep{tibshirani2019conformal}, and the jackknife$+$
+\citep{barber2021jackknife}. The \emph{distribution-free adaptive} family
+comprises quantile regression, conformalized quantile regression (CQR)
+\citep{romano2019conformalized}, and a naive-global quantile baseline.
+The \emph{parametric} family comprises a parametric Gaussian interval and
+a naive Gaussian ensemble-variance interval. All methods target marginal
+coverage at the $80$, $90$, and $95\%$ levels.
+
+\subsection{Evaluation metrics and significance testing}
+
+The primary metric is the mean absolute marginal coverage error across
+the three levels, defined as the mean of $\lvert \hat{c}_\ell -
+\ell\rvert$ for $\ell \in \{0.80, 0.90, 0.95\}$, where $\hat{c}_\ell$ is
+the empirical coverage. We report interval width as an efficiency metric
+and area under the risk-coverage curve (AURC) for selective prediction.
+Significance is assessed with a paired cluster bootstrap ($2{,}000$
+replicates) that resamples the $2{,}591$ perturbations as clusters, which
+respects the dependence induced by shared perturbations across rows and
+yields confidence intervals on pairwise differences between methods.
+
+% =====================================================================
+\section{Results}
+% =====================================================================
+
+\subsection{The core result: an honest tie among distribution-free methods}
+
+Table~\ref{tab:main} reports mean absolute coverage error and mean
+interval width at $90\%$ for all nine methods. Six distribution-free
+methods form a tight cluster in coverage error, from jackknife$+$ at
+$0.0018$ through Mondrian and weighted conformal at $0.0037$,
+naive-global at $0.0040$, split conformal at $0.0042$, quantile
+regression at $0.0049$, and CQR at $0.0054$. The paired cluster bootstrap
+confirms that this cluster is statistically indistinguishable: the
+comparison between the best committed conformal method (Mondrian) and the
+strongest non-conformal distribution-free baseline (quantile regression)
+gives a $\Delta$ of $-0.00074$ with a $95\%$ confidence interval of
+$[-0.0034, +0.0023]$, which includes zero. Similarly, jackknife$+$ versus
+split ($[-0.0028, +0.0025]$), Mondrian versus split
+($[-0.0014, +0.0007]$), and CQR versus split ($[-0.0021, +0.0031]$) all
+straddle zero.
+
+This is the honest headline. On this surface, conformal prediction does
+not beat every prior-art distribution-free method; quantile regression,
+itself a distribution-free adaptive method, ties it. We report the tie
+because it is the truth of the measurement, and because a tie among
+principled distribution-free methods is itself a useful result for
+practitioners choosing a calibration layer.
+
+\begin{table}[t]
+\centering
+\caption{Head-to-head of nine UQ methods on the donor-blocked LODO
+surface ($58{,}558$ test rows, four donor folds). Point predictions are
+held identical across all methods. Coverage error is the mean absolute
+marginal coverage error across the $80/90/95\%$ levels. Width is the mean
+interval width at $90\%$. Lower is better for both. The six
+distribution-free methods (top block) are statistically indistinguishable
+in coverage error; the two parametric methods (bottom block) miscover.}
+\label{tab:main}
+\begin{tabular}{lccc}
+\toprule
+Method & Family & Coverage error $\downarrow$ & Width @90\% $\downarrow$ \\
+\midrule
+Jackknife$+$          & distribution-free & \textbf{0.0018} & 0.4605 \\
+Mondrian conformal    & distribution-free & 0.0037 & 0.4581 \\
+Weighted conformal    & distribution-free & 0.0037 & 0.4589 \\
+Naive-global quantile & distribution-free & 0.0040 & 0.4581 \\
+Split conformal       & distribution-free & 0.0042 & 0.4578 \\
+Quantile regression   & distribution-free & 0.0049 & 0.4869 \\
+CQR                   & distribution-free & 0.0054 & 0.4862 \\
+\midrule
+Parametric Gaussian   & parametric        & 0.0339 & 0.5328 \\
+Ensemble-variance Gaussian & parametric   & 0.7887 & 0.0362 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{The significant contrast: parametric priors miscover under shift}
+
+The benchmark does resolve a clear and significant difference: the
+distribution-free family decisively outperforms the parametric family.
+The parametric Gaussian interval over-covers, reaching $86.67\%$
+empirical coverage at the nominal $80\%$ level, an over-coverage of $6.7$
+percentage points, with a mean absolute coverage error of $0.0339$,
+nearly an order of magnitude worse than the distribution-free cluster.
+The paired cluster bootstrap places the split-versus-parametric
+difference at $-0.0287$ with a $95\%$ confidence interval of
+$[-0.0376, -0.0152]$, which excludes zero; the Mondrian-versus-parametric
+difference is $-0.0292$ with interval $[-0.0373, -0.0159]$, also
+excluding zero. The naive Gaussian ensemble-variance interval collapses
+entirely, achieving roughly $8\%$ coverage at the $90\%$ level (mean
+absolute coverage error $0.7887$), because its variance estimate badly
+underestimates the residual spread.
+
+Two secondary observations sharpen the picture. First, adaptive-width
+methods buy no sharpness here: at approximately equal coverage, the CQR
+$90\%$ interval is significantly \emph{wider} than split conformal by
+$+0.028$ log$_2$FC units (interval $[+0.0278, +0.0291]$), so CQR does not
+Pareto-dominate the simpler incumbent, a consequence of the residual
+distribution being close to homoscedastic in these leakage-safe features.
+Second, on selective prediction all methods sit in a narrow AURC band of
+roughly $0.112$ to $0.120$, far above the oracle lower bound of $0.048$
+and close to the no-skill random line of $0.118$, indicating that
+uncertainty-based trust ordering is only weakly informative on this
+surface and does not separate the methods.
+
+\subsection{Cross-assay transfer: frozen quantiles fail, recalibration fixes}
+
+Calibration guarantees are exchangeability-bound, so a natural benchmark
+question is whether quantiles calibrated on one assay transfer to
+another. We applied the frozen CD4$^{+}$ conformal quantiles unchanged to
+the independent K562 assay. Coverage collapsed to $4.8/7.6/17.1\%$ at
+nominal $80/90/95\%$: a decisive failure. A diagnostic decomposition
+shows the failure is both location and scale, since the K562 residual
+spread is $2.6\times$ wider than the CD4$^{+}$ calibration spread, so even
+oracle mean-recentering leaves coverage at only $0.41/0.49/0.68$. We
+report this as a negative rather than tuning it away; it is the expected
+behavior of split conformal under distribution shift.
+
+Crucially, the \emph{method} transfers even though the specific quantiles
+do not. Re-fitting the identical split-conformal procedure on the K562
+assay's own calibration split restores near-nominal coverage on a
+held-out K562 test split: a primary $50/50$ split gives $0.849/0.887/0.943$,
+and a robustness sweep over $500$ random resplits gives mean coverage of
+$0.755/0.864/0.927$, all three within the pre-registered $\pm0.05$ band of
+nominal. A frozen-base sensitivity variant that recalibrates only the
+quantiles (keeping the CD4$^{+}$ base predictor fixed) is even tighter at
+$0.792/0.886/0.943$, showing that the assay-bound quantity is the quantile
+and not the base predictor. Figure-level robustness holds at every
+calibration fraction from $0.2$ to $0.7$: at each fraction the $95\%$
+resplit distribution of coverage brackets the nominal level. This yields
+a portable, cross-dataset calibration protocol with an honest failure
+mode and its fix.
+
+\subsection{Distribution-free risk control, honestly scoped}
+
+We ask whether a finite-sample distribution-free certificate on
+miscoverage can be issued using Risk-Controlling Prediction Sets (RCPS)
+\citep{bates2021rcps} and Learn-then-Test \citep{angelopoulos2021learn}.
+The certificate is exactly as strong as its exchangeability precondition.
+Under donor-blocked LODO the assumption-faithful exchangeable unit is the
+donor, of which there are only four. At $n{=}4$ donors the
+distribution-free upper confidence bound on miscoverage is
+$0.74/0.64/0.59$ (Hoeffding) against targets of $0.20/0.10/0.05$: the
+certificate is honestly \emph{vacuous}. A row-level version that appears
+tight ($n{=}58{,}558$) rests on row exchangeability across the donor
+boundary, which is precisely the assumption the benchmark flags as
+violated, so we report it only as a false-precision contrast, not a
+guarantee.
+
+In the per-assay recalibrated regime, however, exchangeability holds by
+construction under a random calibration/test split of the $105$ K562
+single-gene perturbations, and the certificate becomes valid and
+non-vacuous. RCPS certifies a half-width $\hat{\lambda}=0.527$ at the
+$90\%$ level (upper confidence bound $0.099 \le 0.10$) with realized
+held-out coverage of $0.943$; certificates at $80/90/95\%$ all hold with
+realized test coverage $0.887/0.943/0.943$. The contribution here is to
+make the price of exchangeability explicit and quantified: risk control
+is deployable per assay but cannot certify the donor-shift setting at
+$n{=}4$, and we say so rather than overclaiming.
+
+\subsection{A pre-registered negative: a genetics taxonomy does not help}
+
+A plausible idea for sharpening perturbation intervals is to condition
+the conformal calibration on an external, orthogonal genetics channel,
+partitioning perturbations by a cis-eQTL tier and running Mondrian
+conformal per tier. We pre-registered this hypothesis and tested it on
+the $612$ genetics-annotated LODO test rows (tier sizes $360/168/84$).
+The genetics-conditioned Mondrian method does not sharpen intervals
+relative to plain split conformal; if anything it makes them
+\emph{wider}. The paired-bootstrap difference in mean interval width
+(genetics-Mondrian minus split) is $+0.020$ at $80\%$ (CI
+$[+0.001,+0.034]$, excludes zero), $+0.022$ at $90\%$ (CI
+$[-0.016,+0.057]$, includes zero), and $+0.219$ at $95\%$ (CI
+$[+0.032,+0.438]$, excludes zero). At two of the three levels the
+external genetics taxonomy is thus \emph{significantly worse} than plain
+split conformal, and at no level is it better. Coverage was held (tier
+coverages of $0.897/0.887/0.845$ at the $90\%$ level, all with confidence
+intervals overlapping nominal). We report this as a first-class negative
+result: it saves other groups from pursuing an intuitive but empirically
+empty (indeed counterproductive) idea, which is exactly the kind of
+result a benchmark paper should publish. We note the analysis is scoped
+to $n{=}612$ annotated rows and is therefore underpowered, so the
+confidence intervals are wide; we report it either way per
+pre-registration.
+
+% =====================================================================
+\section{Reproducibility and Integrity}
+% =====================================================================
+
+Because this field is under active scrutiny for inflated metrics, we
+built integrity guarantees into the benchmark protocol rather than
+treating them as an afterthought. Every result was pre-registered and
+hash-frozen before scoring: the primary benchmark carries a
+pre-registration SHA-256 fingerprint, and the recalibration and
+risk-control analyses each carry their own pre-registration hashes with
+success bands declared before any number was computed. Receipts are
+content-hashed, so any post-hoc alteration is detectable.
+
+We commissioned an independent audit that re-derives the benchmark
+surface directly from the raw $16.87$~GB single-cell data with fresh code
+that does not reuse the pipeline's cache. For the audited donor fold, the
+audit reproduces the effect-target multiset to within $10^{-6}$, with a
+maximum sorted absolute difference of exactly $0.0$ and matching row
+counts and feature columns, establishing that the cached benchmark
+surface is a faithful materialization of the raw data and not a
+fabrication. A second re-scoring audit confirms that the conformal
+arithmetic on that surface is reproducible.
+
+Finally, in the interest of full disclosure, we retract two earlier
+surrogate results from this project's development history that did not
+survive scrutiny. Reporting a self-retraction alongside a tie and a
+negative result is uncomfortable, but it is the honest record of the
+measurement, and it is the standard we believe perturbation UQ should be
+held to.
+
+% =====================================================================
+\section{Limitations}
+% =====================================================================
+
+This benchmark has real limits that bound its claims. First, the
+donor-blocked design has only \emph{four donors}, and the
+exchangeable unit for the donor-shift guarantee is the donor. This is
+adequate for measuring marginal calibration under LODO, which is our
+purpose, but it is underpowered for any inferential claim that requires
+more than a handful of exchangeable units, including the risk-control
+certificate in the LODO regime, which is honestly vacuous at $n{=}4$. Any
+extension that treats the donor as the inferential unit inherits this
+ceiling.
+
+Second, the genetics-conditioning experiment is a negative result scoped
+to $612$ annotated rows and is underpowered; its confidence intervals are
+wide, and we do not claim that no genetics-based conditioning could ever
+help, only that this natural instantiation did not on this data.
+
+Third, and most importantly, \emph{no biological outcome is validated in
+scope}. This is a calibration and selective-prediction benchmark. The
+CD4$^{+}$ T-cell and autoimmune context motivates the choice of data and
+donor structure, but we make no claim that any perturbation is a
+validated disease target. Calibrated uncertainty about a
+perturbation-effect estimate is not evidence about biological efficacy.
+
+Fourth, the transfer study uses a single external assay (K562), so the
+recalibration protocol is demonstrated on one cross-assay pair rather
+than a broad panel; generalization across many assays remains future
+work.
+
+% =====================================================================
+\section{Conclusion}
+% =====================================================================
+
+We have presented a calibration and selective-prediction benchmark for
+perturbation-effect uncertainty that leads with an honest tie:
+distribution-free calibration methods are statistically
+indistinguishable from one another on a fair, point-prediction-controlled
+donor-blocked surface, and conformal prediction earns no measurable edge
+over quantile regression. The benchmark nonetheless resolves a clear and
+reproducible contrast, showing that parametric priors miscover under
+donor shift while distribution-free methods do not. Alongside the core
+head-to-head, we contribute a cross-assay transfer protocol with an
+honest failure mode and its fix, a distribution-free risk-control
+analysis that quantifies the price of exchangeability rather than hiding
+it, and a pre-registered negative showing that an external genetics
+taxonomy does not sharpen intervals. At a moment when the field is
+alarmed about inflated perturbation metrics
+\citep{ahlmanneltze2025deep, wu2024perturbench}, we hope a benchmark that
+foregrounds its tie, its negative, its exchangeability limits, and its
+self-retraction offers a useful and credible standard for measuring
+calibrated uncertainty in single-cell perturbation prediction.
+
+\paragraph{Availability.} All benchmark receipts are content-hashed and
+deterministically reproducible from the committed pipeline, and the
+external transfer analyses reproduce from cached group statistics for the
+K562 assay.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

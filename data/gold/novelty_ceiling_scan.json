@@ -1,0 +1,43 @@
+{
+  "scan_date": "2026-07-11",
+  "question": "Is 'calibrated conformal prediction + default-deny decision gate for single-cell Perturb-seq perturbation-effect prediction' novel?",
+  "negative_signal_pubmed": {
+    "conformal prediction Perturb-seq": 0,
+    "selective prediction abstention genomics": 0,
+    "calibrated uncertainty CRISPR screen transcriptomic prediction": 0,
+    "note": "No PubMed record couples conformal prediction OR selective abstention to Perturb-seq / perturbation-effect prediction."
+  },
+  "closest_prior_art": [
+    {
+      "name": "PRESCRIBE",
+      "id": "arXiv:2510.07964 (Oct 2025)",
+      "what": "Deep-evidential-regression Bayesian UQ emitting a per-prediction confidence score for single-cell perturbation-effect prediction; score correlates with accuracy and is used to FILTER untrustworthy predictions.",
+      "difference": "Self-concordant Bayesian/evidential UQ; NOT conformal (no distribution-free coverage), NOT a commit gate, NOT grounded in orthogonal genetic evidence."
+    },
+    {
+      "name": "Conformal inference for reliable single-cell RNA-seq annotation",
+      "id": "Bioinformatics 2025 btaf521 / PMID 40973204",
+      "difference": "Conformal in single-cell but task is cell-type ANNOTATION (classification), not perturbation regression; no LODO, no orthogonal gate."
+    },
+    {
+      "name": "Conformal selective prediction w/ cost-aware deferral for clinical triage",
+      "id": "Sci Rep 2026 s41598-026-40637-w",
+      "difference": "Establishes conformal+abstention+deferral pattern but in clinical triage; deferral to human, not gated on genetics."
+    },
+    {
+      "name": "Uncertainty-aware synthetic lethality prediction w/ foundation models",
+      "id": "bioRxiv 2026 PMID 42124720",
+      "difference": "USES conformal prediction (calibrated prediction sets) on a perturbation-adjacent genomics task \u2014 so it is closer prior art than first assessed. Differs: task is synthetic-lethality gene PAIRS (classification) from in-silico KOs, NOT Perturb-seq perturbation-effect regression; no leave-one-donor-out exchangeability, no default-deny COMMIT gate, and trust is NOT grounded in orthogonal causal-genetics evidence.",
+      "what": "Cilantro-sl: foundation-model in-silico gene knockouts + CONFORMAL prediction producing calibrated, interpretable prediction sets to prioritize high-confidence synthetic-lethality candidates."
+    },
+    {
+      "name": "Perturbation-prediction benchmarks (PertEval-scFM, PerturBench, VCC/Cell-Eval, systematic comparison 2024.12.23.630036)",
+      "id": "multiple 2024-2025",
+      "difference": "Evaluate point-prediction accuracy only; none add calibrated abstention, trust score, or commit gate."
+    }
+  ],
+  "what_is_novel": "Ingredients all exist; the specific ASSEMBLY does not. New = a default-deny COMMIT GATE for Perturb-seq perturbation-effect prediction whose trust signal is (i) a distribution-free CONFORMAL score under leave-one-donor-out exchangeability with an explicit honesty caveat, AND (ii) gated on ORTHOGONAL, non-self-concordant genetic evidence (cell-type-matched eQTL direction-consistency + GWAS/OT genetic association) rather than the model's own uncertainty. The evidence-grounding move \u2014 independent causal-genetics corroboration required before a GO \u2014 has no direct precedent in perturbation-prediction UQ.",
+  "novelty_class": "novel-combination",
+  "plausible_published_tier": "~58-65 (Nobel-anchored). Well-powered published version = competent novel-combination methods paper (Bioinformatics / Genome Biology methods tier). NOT first-of-kind (conformal-in-single-cell and UQ-for-perturbation both published 2025), NOT field-changing. Upper end (~65) only if the orthogonal-evidence gate is shown to beat self-concordant UQ (PRESCRIBE-style) on a POWERED downstream validation.",
+  "honest_verdict": "Novelty is real but bounded and cannot alone deliver +20 to ~72. PRESCRIBE (Oct 2025) already claims a per-prediction confidence score for single-cell perturbation prediction, so the 'pLDDT for perturbation' framing is no longer first-of-kind. Defensible novelty is narrower: conformal trust score + DEFAULT-DENY gate grounded in ORTHOGONAL genetics \u2014 a legitimate novel-combination worth ~58-65 published. Exceeding that requires the EMPIRICAL axis: a powered demonstration that the orthogonal-evidence gate makes decisions a self-concordant UQ baseline provably would not. Absent that head-to-head, novelty alone tops out well below 72 \u2014 consistent with the honesty contract."
+}

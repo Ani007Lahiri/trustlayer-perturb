@@ -1,0 +1,26 @@
+{
+  "calibration_metric": "reliability (ECE) of sign confidence + Venn-Abers p0/p1 validity interval width.",
+  "caps": "perturbations<=3000 test / subsample if needed; downstream genes full (fast).",
+  "data": "data/raw/GWCD4i.DE_stats.h5ad (33983 target-contrasts x 10282 downstream genes; signed log_fc + adj_p_value layers).",
+  "method": "HistGBR sign classifier trained on train fold (covariates: condition dummies, log_baseMean, log_n_cells, trans_effect_magnitude, base-predictor pred & residual). Calibrated on calib fold via isotonic + Venn-Abers multiprobability. Selective prediction: abstain where calibrated confidence < tau; sweep tau for selective-accuracy vs coverage.",
+  "parent_project": "calibrated-trust commit-gate (pLDDT-for-perturbation)",
+  "prereg_frozen_before_test_eval": true,
+  "prereg_sha256_self": "73bb99fcffd37ad2cabcbbc04761c13cf5761a05d8434b267f36947e2f7dbd0a",
+  "primary_metric": "selective accuracy vs coverage curve on TEST fold.",
+  "scope_expansion": "Gate trusts effect MAGNITUDE; test whether SIGN of a perturbation's dominant downstream program can be calibrated with valid abstention.",
+  "sign_task_definition": {
+    "defined_only_when": "n_sig_downstream>=3 AND NOT distal_offtarget_flag AND NOT neighboring_gene_KD AND fold assigned",
+    "explicitly_NOT": "NOT trivial self-knockdown sign (on-target always down) \u2014 on-target column zeroed before summation.",
+    "positive_class": "net-up (net_signed>0)",
+    "target": "Sign of the NET dominant downstream PROGRAM response = sign(sum over significant downstream genes of signed log_fc), on-target knockdown column EXCLUDED per row."
+  },
+  "success_bar": "selective accuracy > marginal base rate (0.684) at useful coverage (>=50%) WITH valid calibration (ECE small, reliability monotone), strictly above trivial baselines.",
+  "title": "Calibrated Direction/Sign Trust for CD4+ T-cell Perturb-seq (T1D) \u2014 pre-registration",
+  "trivial_guard": {
+    "fold_split": "gene-disjoint (train/calib/test); leave-gene-out analog of LODO. Verified: test\u2229train genes = 0.",
+    "on_target_excluded": true,
+    "trivial_baseline_1": "marginal majority-class base rate = 0.684 net-up (must beat WITH calibration).",
+    "trivial_baseline_2": "gene-identity memorization impossible because folds gene-disjoint; predicting from unseen-gene covariates only.",
+    "trivial_baseline_3": "predicted-magnitude covariates are the SAME space the magnitude gate uses \u2014 sign must add information beyond magnitude."
+  }
+}

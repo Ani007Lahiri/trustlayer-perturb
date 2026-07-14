@@ -1,0 +1,125 @@
+{
+  "purpose": "Day-0 Check A FROZEN reasoning-dependent set (LLM-free, pre-registered).",
+  "date_utc": "2026-07-09T22:41:25Z",
+  "classification_rule": "R1 trait-confound (T2D/metabolic gene w/ high T1D GA) | R2 direction-conflict (eQTL present, therapeutic direction not structurally encoded) | R3 coloc-ambiguity. REASONING_DEPENDENT dominates BOOLEAN_RESOLVABLE.",
+  "source": "Check-B survivor table (rule sha256 in day0_checkB_novel_go_receipt.json)",
+  "orthogonal_truth_spec": "For each reasoning-dependent gene, ground-truth adjudication (is this a credible T1D T-cell GO target?) is set by an OMIM/curated-immune source + measured perturbation direction in the held-out Perturb-seq data \u2014 sources the query-all baseline does NOT read. Frozen so Check-A cannot be cherry-picked.",
+  "win_metric": "adjudication accuracy: Claude free-text synthesis vs frozen query-all/NER baseline, on this set, scored against the orthogonal truth. Claude must beat baseline by a pre-registered margin, else honest negative.",
+  "pre_registered_floor": 8,
+  "n_reasoning_dependent": 9,
+  "n_boolean_resolvable": 3,
+  "floor_met": true,
+  "reasoning_dependent_genes": [
+    {
+      "symbol": "SIRPG",
+      "genetic_association": 0.842,
+      "eqtl_n_sig": 2,
+      "label": "REASONING_DEPENDENT",
+      "reasons": [
+        "R2 DIRECTION-CONFLICT: eQTL present but protective-on-perturbation direction not encoded in any structured field (needs mechanism)."
+      ]
+    },
+    {
+      "symbol": "SUOX",
+      "genetic_association": 0.842,
+      "eqtl_n_sig": 6,
+      "label": "REASONING_DEPENDENT",
+      "reasons": [
+        "R1 TRAIT-CONFOUND: high T1D GA=0.842 but SUOX is a known T2D/metabolic/beta-cell gene; raw score pleiotropic -> naive GO would be wrong."
+      ]
+    },
+    {
+      "symbol": "TCF7L2",
+      "genetic_association": 0.827,
+      "eqtl_n_sig": 2,
+      "label": "REASONING_DEPENDENT",
+      "reasons": [
+        "R1 TRAIT-CONFOUND: high T1D GA=0.827 but TCF7L2 is a known T2D/metabolic/beta-cell gene; raw score pleiotropic -> naive GO would be wrong."
+      ]
+    },
+    {
+      "symbol": "APOBR",
+      "genetic_association": 0.773,
+      "eqtl_n_sig": 3,
+      "label": "REASONING_DEPENDENT",
+      "reasons": [
+        "R1 TRAIT-CONFOUND: high T1D GA=0.773 but APOBR is a known T2D/metabolic/beta-cell gene; raw score pleiotropic -> naive GO would be wrong."
+      ]
+    },
+    {
+      "symbol": "HNF1A",
+      "genetic_association": 0.754,
+      "eqtl_n_sig": 0,
+      "label": "REASONING_DEPENDENT",
+      "reasons": [
+        "R1 TRAIT-CONFOUND: high T1D GA=0.754 but HNF1A is a known T2D/metabolic/beta-cell gene; raw score pleiotropic -> naive GO would be wrong."
+      ]
+    },
+    {
+      "symbol": "FTO",
+      "genetic_association": 0.745,
+      "eqtl_n_sig": 0,
+      "label": "REASONING_DEPENDENT",
+      "reasons": [
+        "R1 TRAIT-CONFOUND: high T1D GA=0.745 but FTO is a known T2D/metabolic/beta-cell gene; raw score pleiotropic -> naive GO would be wrong."
+      ]
+    },
+    {
+      "symbol": "CDKAL1",
+      "genetic_association": 0.676,
+      "eqtl_n_sig": 1,
+      "label": "REASONING_DEPENDENT",
+      "reasons": [
+        "R1 TRAIT-CONFOUND: high T1D GA=0.676 but CDKAL1 is a known T2D/metabolic/beta-cell gene; raw score pleiotropic -> naive GO would be wrong."
+      ]
+    },
+    {
+      "symbol": "KCNQ1",
+      "genetic_association": 0.669,
+      "eqtl_n_sig": 0,
+      "label": "REASONING_DEPENDENT",
+      "reasons": [
+        "R1 TRAIT-CONFOUND: high T1D GA=0.669 but KCNQ1 is a known T2D/metabolic/beta-cell gene; raw score pleiotropic -> naive GO would be wrong."
+      ]
+    },
+    {
+      "symbol": "PGM1",
+      "genetic_association": 0.663,
+      "eqtl_n_sig": 0,
+      "label": "REASONING_DEPENDENT",
+      "reasons": [
+        "R1 TRAIT-CONFOUND: high T1D GA=0.663 but PGM1 is a known T2D/metabolic/beta-cell gene; raw score pleiotropic -> naive GO would be wrong."
+      ]
+    }
+  ],
+  "boolean_resolvable_genes": [
+    {
+      "symbol": "IL10",
+      "genetic_association": 0.835,
+      "eqtl_n_sig": 0,
+      "label": "BOOLEAN_RESOLVABLE",
+      "reasons": [
+        "no structured conflict detected."
+      ]
+    },
+    {
+      "symbol": "ZFP36L1",
+      "genetic_association": 0.692,
+      "eqtl_n_sig": 2,
+      "label": "BOOLEAN_RESOLVABLE",
+      "reasons": [
+        "clean immune gene, GA>=floor, CD4/Treg eQTL present, no trait conflict -> query-all script adjudicates correctly."
+      ]
+    },
+    {
+      "symbol": "AFF3",
+      "genetic_association": 0.664,
+      "eqtl_n_sig": 4,
+      "label": "BOOLEAN_RESOLVABLE",
+      "reasons": [
+        "clean immune gene, GA>=floor, CD4/Treg eQTL present, no trait conflict -> query-all script adjudicates correctly."
+      ]
+    }
+  ],
+  "frozen_set_sha256": "af7310ba1f9b368be821c40c15499d5271ed54a08e19f00f0f412919ed8d31fd"
+}

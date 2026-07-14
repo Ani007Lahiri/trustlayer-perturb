@@ -62,10 +62,14 @@ def test_counterfactual_rasgrp1_eqtl_flips_to_go():
     assert r["counterfactuals"]["RASGRP1_add_celltype_eqtl"] == "GO"
 
 
-def test_counterfactual_prkcq_high_ga_still_withheld():
-    """Even with GA raised above the floor, PRKCQ still needs the eQTL -> trust never binds."""
+def test_counterfactual_prkcq_high_ga_flips_to_go():
+    """v4 (live eQTL correction): PRKCQ genuinely HAS a CD4/Treg eQTL (3/11 datasets), so its
+    ONLY binding constraint is the genetic floor. Raise GA above the floor -> flips to GO.
+    This proves trust (0.883, the trio's HIGHEST) was never binding: PRKCQ is withheld purely
+    on genetics. (Prior test asserted WITHHELD under the hand-typed eQTL=False, which the live
+    query falsified.)"""
     r = _receipt()
-    assert r["counterfactuals"]["PRKCQ_raise_GA_to_0.50"] == "WITHHELD"
+    assert r["counterfactuals"]["PRKCQ_raise_GA_to_0.50"] == "GO"
 
 
 def test_gate_is_deterministic():

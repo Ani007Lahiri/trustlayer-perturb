@@ -1,0 +1,101 @@
+{
+ "experiment": "IMP4 \u2014 do conditional conformal methods clear the absolute high-synergy coverage bar?",
+ "prereg_sha256": "9b8887f3c4f5805ec5fa4f4bb1339b733d88cf7bb96ca1268d2a5696ad54b778",
+ "methods": [
+  "vanilla_split",
+  "scc_scalar_prior",
+  "mondrian_synergy_tercile",
+  "conditional_quantile_local"
+ ],
+ "results": {
+  "norman": {
+   "vanilla": {
+    "marg": 0.893,
+    "hi": 0.788,
+    "hi_ci": [
+     0.682,
+     0.879
+    ],
+    "width": 3.533,
+    "clears": false
+   },
+   "scc": {
+    "marg": 0.893,
+    "hi": 0.818,
+    "hi_ci": [
+     0.727,
+     0.909
+    ],
+    "width": 3.157,
+    "clears": true
+   },
+   "mondrian": {
+    "marg": 0.87,
+    "hi": 0.833,
+    "hi_ci": [
+     0.742,
+     0.924
+    ],
+    "width": 2.766,
+    "clears": false
+   },
+   "condq": {
+    "marg": 0.885,
+    "hi": 0.773,
+    "hi_ci": [
+     0.667,
+     0.864
+    ],
+    "width": 3.155,
+    "clears": false
+   }
+  },
+  "carpool": {
+   "vanilla": {
+    "marg": 0.894,
+    "hi": 0.789,
+    "hi_ci": [
+     0.69,
+     0.873
+    ],
+    "width": 4.376,
+    "clears": false
+   },
+   "scc": {
+    "marg": 0.894,
+    "hi": 0.859,
+    "hi_ci": [
+     0.775,
+     0.93
+    ],
+    "width": 4.231,
+    "clears": true
+   },
+   "mondrian": {
+    "marg": 0.887,
+    "hi": 0.873,
+    "hi_ci": [
+     0.789,
+     0.944
+    ],
+    "width": 4.068,
+    "clears": true
+   },
+   "condq": {
+    "marg": 0.88,
+    "hi": 0.789,
+    "hi_ci": [
+     0.69,
+     0.873
+    ],
+    "width": 3.934,
+    "clears": false
+   }
+  }
+ },
+ "HONEST_VERDICT": "No conditional method DOMINATES the scalar SCC prior. Mondrian (per-tercile quantile) improves high-synergy coverage on CaRPool but DEGRADES marginal coverage on Norman (0.87<0.88). Conditional-quantile is no better than vanilla. SCC satisfies the pre-registered bar (high-synergy CI contains 0.90 AND marginal>=0.88) on BOTH datasets, but its POINT coverage stays below nominal (0.82 Norman / 0.86 CaRPool) \u2014 the CI includes 0.90 largely because n~130-140 is small. So the honest reading is 'statistically consistent with nominal', NOT 'demonstrably achieves nominal'.",
+ "what_this_ADDS": "Rigor: we pre-registered and tested 3 alternative conditional-conformal methods against the current scalar SCC. None beats it cleanly. This strengthens the claim that the SCC scalar prior is a reasonable choice, and it honestly confirms the absolute-coverage bar is HARD at this sample size \u2014 not a framing artifact.",
+ "what_this_does_NOT_claim": "Does NOT claim the absolute coverage problem is solved. Does NOT change the merit tier (78). The point estimate remains below nominal on both datasets; a demonstrable clear would need either more data (tighter CI) or a genuinely better conditional method, neither found here.",
+ "no_free_lunch": "Widths: conditional methods clear (where they do) partly by adjusting width; none achieves nominal point coverage at lower width without cost.",
+ "receipt_sha256": "e852818bb62da070f7523a5f0c6dfca15a5e7e5b46534e19bd7c9d5385fc8ff2"
+}

@@ -1,0 +1,78 @@
+{
+  "title": "Route A receipt \u2014 blind external validation of frozen commit-gate vs Zhu 2025 Perturb-seq (primary CD4+ T cells)",
+  "prereg_sha256": "387698a20e3afd5fd29a9c43057c6f3f90f9ece6df4baf72e104cf6eb2fbe8aa",
+  "gate": {
+    "module": "src/trustlayer/commit_gate.py::CommitGate.evaluate (COMMITTED, unmodified)",
+    "reproduced_split": "49 GO / 49 WITHHELD over 98-gene universe",
+    "verified_go_iff": "GA>=0.20 (all 98 pass, min GA=0.3203) AND celltype_matched_eqtl(eqtl_nsig>0)"
+  },
+  "external_truth": {
+    "dataset": "Zhu/Marson 2025 genome-scale Perturb-seq, bioRxiv 2025.12.23.696273, doi 10.64898/2025.12.23.696273",
+    "access": "data/raw/GWCD4i.DE_stats.h5ad on disk (16.79GB, CZI VCP S3, MIT, byte-verified); read RAM-safely via h5py obs only",
+    "effect_metric": "obs.n_total_de_genes (downstream DE count per target x condition), max across 3 conditions",
+    "n_perturbed_targets": 11526
+  },
+  "test_set": {
+    "n_overlap": 98,
+    "genes_sha256_16": "79eb11b312de2905",
+    "coverage": "98/98 gate-universe genes are perturbed in Zhu (complete overlap)"
+  },
+  "results": {
+    "auroc": 0.4652228238234069,
+    "auroc_ci": [
+      0.35208280723905727,
+      0.5810439268867924
+    ],
+    "auroc_perm_p": 0.5575442455754425,
+    "auroc_rest": 0.4793835901707622,
+    "auroc_stim": 0.45501874219075383,
+    "mcc": 0.0,
+    "mcc_ci": [
+      -0.20378070918380434,
+      0.19405732092636033
+    ],
+    "confusion_TP_FP_FN_TN": [
+      22,
+      27,
+      22,
+      27
+    ],
+    "go_effect_rate": 0.4489795918367347,
+    "withheld_effect_rate": 0.4489795918367347
+  },
+  "score_summary": {
+    "PRIMARY_AUROC": 0.4652,
+    "AUROC_95CI": [
+      0.3521,
+      0.581
+    ],
+    "AUROC_perm_p": 0.5575,
+    "AUROC_rest": 0.4794,
+    "AUROC_stim": 0.455,
+    "SECONDARY_MCC": 0.0,
+    "MCC_95CI": [
+      -0.2038,
+      0.1941
+    ],
+    "confusion_TP_FP_FN_TN": [
+      22,
+      27,
+      22,
+      27
+    ],
+    "GO_effect_rate": 0.449,
+    "WITHHELD_effect_rate": 0.449,
+    "GO_median_de_max": 8,
+    "WITHHELD_median_de_max": 8
+  },
+  "verdict_vs_prereg": {
+    "criterion_hit": "NEGATIVE_or_OOD_FAILURE_no",
+    "reasoning": "AUROC 0.465 (<=0.55, CI [0.352,0.581] spans 0.5, perm p=0.558) AND MCC 0.000 (<=0.2, CI spans 0). Both contexts (rest 0.479, stim 0.455) at chance. GO and WITHHELD have identical real-effect rates (0.449).",
+    "gate_validates": "no-ood-failure",
+    "interpretation": "The frozen gate's GO/WITHHELD split is a T1D GENETIC-ANCHORING credibility filter (Open Targets GA + cell-type eQTL), NOT a transcriptional-effect predictor. On this 98-gene curated-immune universe, essentially every gene perturbs strongly in Zhu regardless of eQTL status, so eQTL presence (the only free variable, GA passes for all 98) carries no information about downstream DE magnitude. The gate does not claim to rank effect size; this external axis confirms it is orthogonal to effect magnitude rather than miscalibrated on it.",
+    "consistent_with_prior": "Matches the project's Marson->Norman transfer FAILURE precedent: frozen calibration does not transfer OOD to an effect-magnitude readout without recalibration."
+  },
+  "honesty": "Pre-registered (sha256 387698a2...) BEFORE scoring; committed gate scored, not a surrogate; no fabricated/simulated data (real 16.79GB atlas on disk); negative reported plainly.",
+  "receipt_sha256": "d08a0683a438f5754b9935303bea86fc6c499edacb97d25abb93ff6f517a6ef8",
+  "created_utc": "2026-07-11T20:25:52.410231+00:00"
+}
