@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TrustLayer — a pLDDT for perturbation biology</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Roboto,sans-serif;
+background:#f4f6fb;color:#15243b;line-height:1.55}
+.wrap{max-width:860px;margin:0 auto;padding:44px 22px 60px}
+h1{font-size:34px;letter-spacing:-.025em;margin-bottom:6px}
+.tag{font-size:18px;color:#5b6b82;margin-bottom:4px}
+.lead{font-size:16px;color:#37455c;margin:18px 0 26px;max-width:720px}
+.lead b{color:#15243b}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:10px 0 30px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}}
+a.card{display:block;background:#fff;border:1px solid #e2e8f2;border-radius:14px;padding:18px 20px;
+text-decoration:none;color:inherit;transition:.15s}
+a.card:hover{border-color:#2563eb;transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,235,.12)}
+a.card .k{font-size:11px;font-weight:800;color:#2563eb;letter-spacing:.09em}
+a.card .t{font-size:18px;font-weight:800;margin:3px 0 4px}
+a.card .d{font-size:13.5px;color:#5b6b82}
+.sec{font-size:13px;font-weight:800;color:#5b6b82;letter-spacing:.1em;margin:14px 0 10px;text-transform:uppercase}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e2e8f2;border-radius:12px;overflow:hidden;font-size:14px;margin-bottom:26px}
+td,th{padding:11px 14px;text-align:left;border-bottom:1px solid #eef2f8}
+th{background:#f7f9fc;font-size:12px;letter-spacing:.04em;color:#5b6b82}
+tr:last-child td{border-bottom:none}
+code{background:#eef2f8;padding:2px 7px;border-radius:6px;font-size:13px}
+.pill{display:inline-block;font-size:11px;font-weight:800;padding:2px 9px;border-radius:20px;color:#fff}
+.go{background:#1a7f4b}.ab{background:#4a4a4a}.wh{background:#b5761f}
+.foot{font-size:13px;color:#5b6b82;margin-top:10px}
+.foot a{color:#2563eb}
+</style></head><body><div class="wrap">
+<h1>TrustLayer</h1>
+<div class="tag">A calibrated-trust layer for perturbation-biology prediction — <i>"a pLDDT for perturbation biology."</i></div>
+<p class="lead">Foundation models don't reliably beat linear baselines at predicting perturbation
+effects (Ahlmann-Eltze, Huber &amp; Anders, <i>Nat Methods</i> 2025). So the bottleneck isn't
+accuracy — it's knowing <b>which prediction to trust</b> before spending scarce wet-lab budget.
+TrustLayer wraps any predictor with split-conformal calibration and a <b>default-deny commit
+gate</b>. Everything below is pre-registered, hash-verified, and self-red-teamed.</p>
+
+<div class="sec">Interactive demos</div>
+<div class="grid">
+<a class="card" href="honesty_ledger.html"><div class="k">CLAUDE USE</div><div class="t">The Honesty Ledger</div><div class="d">Claude's self-correcting loop — every claim linked to a hash-verifiable receipt. It caught and retracted its own bug.</div></a>
+<a class="card" href="Live_Abstention_Demo.html"><div class="k">THE GATE</div><div class="t">Watch the gate decide</div><div class="d">Interactive GO / WITHHOLD / ABSTAIN on real T1D targets.</div></a>
+<a class="card" href="Trust_Atlas.html"><div class="k">THE PRODUCT</div><div class="t">The Trust Atlas</div><div class="d">Which perturbation predictions to believe, and why.</div></a>
+<a class="card" href="project_report.html"><div class="k">FULL WRITEUP</div><div class="t">Project report</div><div class="d">All figures + methods in plain language.</div></a>
+</div>
+
+<div class="sec">What we found (pre-registered, self-falsified)</div>
+<table>
+<tr><th>Question</th><th>Result</th></tr>
+<tr><td>Coverage under cross-donor shift</td><td>Mild (0.88–0.91 @ nominal 0.90) — falsified our own "severe collapse" claim</td></tr>
+<tr><td>Model-independence (incl. real Geneformer-V2-104M)</td><td>Holds cross-donor (spread <b>0.021</b>); breaks cross-dataset (0.44–0.67)</td></tr>
+<tr><td>Does the trust gap transport label-free?</td><td><b>No</b> (9 datasets, Spearman +0.32 n.s.) — a 5–20% anchor recalibrates it</td></tr>
+<tr><td>Decision value</td><td>Avoids <b>~$160k–$1M</b> in wasted screens at a 200-target budget</td></tr>
+</table>
+
+<div class="sec">The gate, on real T1D targets</div>
+<table>
+<tr><td>CD226</td><td><span class="pill go">GO</span> genetics-anchored, direction consistent</td></tr>
+<tr><td>RASGRP1</td><td><span class="pill ab">ABSTAIN</span> no evidence either way</td></tr>
+<tr><td>PRKCQ</td><td><span class="pill wh">WITHHOLD</span> vetoed on the genetic floor</td></tr>
+</table>
+
+<p class="foot"><code>pip install trustlayer-perturb</code> &nbsp;·&nbsp;
+Code, receipts &amp; tests: <a href="https://github.com/Ani007Lahiri/trustlayer-perturb">github.com/Ani007Lahiri/trustlayer-perturb</a> &nbsp;·&nbsp; MIT license</p>
+</div></body></html>
